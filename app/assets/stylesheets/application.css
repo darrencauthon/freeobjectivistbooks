@@ -2,6 +2,99 @@
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require 960gs/reset
+ *= require 960gs/text
+ *= require 960gs/960_16_col
  *= require_self
- *= require_tree . 
 */
+
+body {
+    font-family: georgia, serif;
+    background: url(background.jpg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+h1, h2, h3, h4, h5, h6, label, .header {
+    font-family: 'gill sans', helvetica, sans-serif;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+p {
+    line-height: 1.4;
+    margin-bottom: 6px;
+}
+
+a {
+    color: #0A1E89;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    color: #1636EC;
+}
+
+label {
+    font-size: 1.1em;
+}
+
+.title {
+    font-style: italic;
+}
+
+.header {
+    background-color: #16711f;
+    height: 40px;
+    color: white;
+    padding-left: 10px;
+}
+
+.header a {
+    color: white;
+}
+
+.header .home {
+    font-size: 2em;
+    text-decoration: none;
+}
+
+.header .topnav {
+    float: right;
+    font-size: 1.1em;
+    margin: 10px;
+}
+
+.thankyou img {
+    width: 100%;
+    border: 1px solid #c8c8c8;
+}
+
+.thankyou .text {
+    margin-bottom: 5px;
+}
+
+.thankyou .attribution {
+    color: #000080;
+    margin-bottom: 1px;
+}
+
+.thankyou .date {
+    color: #707070;
+    margin-bottom: 0;
+}
+
+.hr {
+    height: 1px;
+    padding: 12px 0;
+}
