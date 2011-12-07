@@ -3,11 +3,17 @@
 <head>
   <title>Free Ayn Rand and Objectivist Books for Students</title>
   <%= stylesheet_link_tag "homepage" %>
+  <style><%= yield :stylesheet %></style>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+
+<div class="container_24">
 <%= yield %>
+<div class="clear"></div>
+<p>&nbsp;</p>
+</div>
 
 <%= javascript_include_tag "application" %>
 </body>
