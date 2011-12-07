@@ -7,7 +7,18 @@
 </head>
 <body>
 
+<div class="header">
+    <a class="home" href="/">Free Objectivist Books</a>
+    <span class="topnav">
+        <a href="/signup/read">Read</a> | <a href="/signup/donate">Donate</a> | <a href="/about">About</a>
+    </span>
+</div>
+
+<div class="container_16">
 <%= yield %>
+<div class="clear"></div>
+<p>&nbsp;</p>
+</div>
 
 <%= javascript_include_tag "application" %>
 </body>
