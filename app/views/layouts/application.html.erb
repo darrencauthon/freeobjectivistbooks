@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Free Ayn Rand and Objectivist Books for Students</title>
+  <title><%= content_for?(:title) ? "#{yield :title} – " : "" %>Free Ayn Rand and Objectivist Books for Students</title>
   <%= stylesheet_link_tag "application" %>
   <style><%= yield :stylesheet %></style>
   <%= csrf_meta_tags %>
