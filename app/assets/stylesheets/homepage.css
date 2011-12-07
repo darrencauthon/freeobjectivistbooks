@@ -4,6 +4,6 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require 960gs/reset
  *= require 960gs/text
- *= require 960gs/960_16_col
+ *= require 960gs/960_24_col
  *= require main
 */
