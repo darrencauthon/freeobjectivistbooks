@@ -3,12 +3,9 @@
 <% content_for :stylesheet do %>
 .submit {
     height: 56px;
-    border: 0;
     margin-top: 24px;
-    background: url(/assets/get-book-button.png) no-repeat top;
+    background-image: url(/assets/get-book-button.png);
 }
-.submit:hover { background: url(/assets/get-book-button.png) no-repeat center; }
-.submit:active { background: url(/assets/get-book-button.png) no-repeat bottom; }
 <% end %>
 
 <h1 class="grid_16">Sign Up for Your Free Objectivist Book</h1>
@@ -84,5 +81,5 @@
     </label>
     <div class="clear"></div>
 
-    <input class="grid_4 submit" type="submit" value=""><div class="clear"></div>
+    <input class="grid_4 submit button" type="submit" value=""><div class="clear"></div>
 </form>

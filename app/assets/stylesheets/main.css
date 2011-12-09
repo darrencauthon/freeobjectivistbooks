@@ -35,6 +35,15 @@ a:active {
     color: #1636EC;
 }
 
+.button {
+    border: 0;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: transparent;
+}
+.button:hover { background-position: center; }
+.button:active { background-position: bottom; }
+
 label {
     font-size: 1.1em;
 }
