@@ -1,0 +1,41 @@
+<% content_for :stylesheet do %>
+h2 {
+    margin-top: 12px;
+}
+
+.label {
+    font-family: 'gill sans', helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.goback {
+    margin-top: 20px;
+}
+<% end %>
+
+<h1 class="grid_16">Thank you!</h1>
+
+<p class="grid_16">You are signed up. Your information:</p>
+
+<h2 class="grid_16">Public profile</h2>
+
+<p class="grid_2 label">Name</p><p class="grid_6">Howard Roark</p><div class="clear"></div>
+<p class="grid_2 label">Wants to read</p><p class="grid_6 title">Atlas Shrugged</p><div class="clear"></div>
+<p class="grid_2 label">Studying</p><p class="grid_6">architecture</p><div class="clear"></div>
+<p class="grid_2 label">At</p><p class="grid_6">Stanton Institute of Technology</p><div class="clear"></div>
+<p class="grid_2 label">In</p><p class="grid_6">New York, NY</p><div class="clear"></div>
+<p class="grid_2 label">Why</p>
+<p class="grid_6">I've heard so much about this... can't wait to find out who is John Galt!</p>
+<div class="clear"></div>
+
+<h2 class="grid_16">Private account info</h2>
+
+<p class="grid_2 label">Email</p><p class="grid_6">roark@stanton.edu</p><div class="clear"></div>
+<p class="grid_2 label">Address</p>
+<p class="grid_6">
+    123 Main St<br>
+    Cambridge, MA 01234
+</p>
+<div class="clear"></div>
+
+<p class="grid_16 goback">If any of this is wrong, hit the back button to change it or just <%= link_to 'sign up again', signup_read_path %>.</p>
