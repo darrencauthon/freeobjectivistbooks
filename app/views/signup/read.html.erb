@@ -1,6 +1,17 @@
 <% content_for :title do %>Sign Up to Read<% end %>
 
 <% content_for :stylesheet do %>
+.page-explanation {
+    font-size: 1.4em;
+    padding-top: 12px;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.page-explanation li {
+    margin: 0;
+}
+
 .submit {
     height: 56px;
     margin-top: 24px;
@@ -9,6 +20,10 @@
 <% end %>
 
 <h1 class="grid_16">Sign Up for Your Free Objectivist Book</h1>
+<ul class="grid_12 page-explanation">
+    <li>Your profile will be listed for donors to browse.</li>
+    <li>A donor will choose you and send you the book directly.</li>
+</ul>
 
 <form>
     <h2 class="grid_16">What book do you want to read?</h2>

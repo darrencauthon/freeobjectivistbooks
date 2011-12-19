@@ -1,6 +1,17 @@
 <% content_for :title do %>Sign Up to Donate<% end %>
 
 <% content_for :stylesheet do %>
+.page-explanation {
+    font-size: 1.4em;
+    padding-top: 12px;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.page-explanation li {
+    margin: 0;
+}
+
 .pledge-explanation {
     padding-top: 10px;
 }
@@ -13,6 +24,12 @@
 <% end %>
 
 <h1 class="grid_16">Sign Up to Donate Objectivist Books</h1>
+<ul class="grid_12 page-explanation">
+    <li>We'll send you a link to browse students and their requests.</li>
+    <li>You will send the books to them directly.</li>
+    <li>You will <em>not</em> send money to us or to any student.</li>
+</ul>
+<div class="clear"></div>
 
 <form>
     <h2 class="grid_16">Public profile</h2>
@@ -42,10 +59,7 @@
         I pledge to donate <input name="pledge" type="text" value="5" size="1"> books to students.
     </label>
     <div class="clear"></div>
-    <p class="grid_8 pledge-explanation">We'll send you a link to browse students and their requests, and you will
-        send the books to them directly. You can usually buy books for $5 to $10 a copy.
-    </p>
-    <div class="clear"></div>
+    <p class="grid_16 pledge-explanation">You can usually buy books for $5 to $10 a copy.</p>
 
     <h2 class="grid_16">Why do you want to donate Objectivist books? (optional)</h2>
 
