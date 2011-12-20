@@ -1,0 +1,26 @@
+<% content_for :title do %>Not Found<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+img {
+    margin-top: 20px;
+}
+.quote {
+    font-style: italic;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+</style>
+<% end %>
+
+<img class="grid_4" src="http://ecx.images-amazon.com/images/I/5139Z9VGNGL.jpg">
+<div class="grid_8">
+    <h1>Page not found</h1>
+    <p class="quote">She had felt as if a dark map of Colorado were spread before her like a traffic control panel,
+        with a few lights scattered through its mountains. One after another, the lights had gone out. One after
+        another, the men had vanished.
+    </p>
+    <p>This page has vanished. Or maybe you typed it in wrong. Try starting from
+        <%= link_to 'our homepage', root_path %>.
+    </p>
+</div>
