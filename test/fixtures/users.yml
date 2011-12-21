@@ -1,0 +1,7 @@
+howard:
+  name: Howard Roark
+  email: roark@stanton.edu
+  password_digest: <%= BCrypt::Password.create "roark" %>
+  location: "New York, NY"
+  school: Stanton Institute of Technology
+  studying: architecture
