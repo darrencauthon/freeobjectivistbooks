@@ -34,12 +34,18 @@ class UserTest < ActiveSupport::TestCase
 
   test "password" do
     assert !@howard.authenticate("wrong")
-    assert_equal @howard, @howard.authenticate("roark")
+    assert @howard.authenticate("roark")
   end
 
   test "create" do
     assert @john.save
     assert User.exists? @john
+  end
+
+  test "password required on create" do
+    @john.password = nil
+    @john.password_confirmation = nil
+    assert !@john.save
   end
 
   test "password confirmation required on create" do

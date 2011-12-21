@@ -4,6 +4,7 @@ FreeBooks::Application.routes.draw do
 
   get "signup/read"
   get "signup/donate"
+  post "signup/submit"
 
   # For testing exceptions
   get "barf" => "home#barf"

@@ -97,3 +97,22 @@ label {
     height: 1px;
     padding: 12px 0;
 }
+
+.errorExplanation, .field_with_errors {
+    color: #d80000;
+}
+
+div.errorExplanation {
+    border: 1px solid #d80000;
+    margin-top: 20px;
+    padding: 6px 12px;
+}
+
+.errorExplanation h2 {
+    margin-top: 0;
+}
+
+.errorExplanation ul {
+    font-family: 'gill sans', helvetica, sans-serif;
+    margin-bottom: 0;
+}

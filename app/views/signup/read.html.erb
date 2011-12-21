@@ -27,8 +27,12 @@
     <li>A donor will choose you and send you the book directly.</li>
 </ul>
 
-<form>
+<%= form_for @user, url: { action: :submit } do |f| %>
+    <div class="grid_8"><%= f.error_messages header_message: "There were problems with your signup", message: nil %></div>
+    <div class="clear"></div>
+
     <h2 class="grid_16">What book do you want to read?</h2>
+
     <label class="grid_8">
         <input name="book" type="radio" value="atlas-shrugged" checked>
         Atlas Shrugged (start here if you don't know what to choose!)
@@ -58,45 +62,58 @@
 
     <h2 class="grid_16">Public profile</h2>
 
-    <label class="grid_5" for="name">Name</label><div class="clear"></div>
-    <input class="grid_5" id="name" name="name" type="text"><div class="clear"></div>
-
-    <label class="grid_5" for="school">School</label><div class="clear"></div>
-    <input class="grid_5" id="scholl" name="school" type="text" placeholder="College, university or high school">
+    <%= f.label :name, class: "grid_5" %><div class="clear"></div>
+    <%= f.text_field :name, class: "grid_5" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:name].join(", ") %></span>
     <div class="clear"></div>
 
-    <label class="grid_5" for="studying">Studying</label><div class="clear"></div>
-    <input class="grid_5" id="studying" name="studying" type="text"
-        placeholder="E.g., architecture, philosophy, business">
+    <%= f.label :school, class: "grid_5" %><div class="clear"></div>
+    <%= f.text_field :school, class: "grid_5", placeholder: "College, university or high school" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:school].join(", ") %></span>
     <div class="clear"></div>
 
-    <label class="grid_5" for="location">Location</label><div class="clear"></div>
-    <input class="grid_5" id="location" name="location" type="text" placeholder="City and state or country">
+    <%= f.label :studying, class: "grid_5" %><div class="clear"></div>
+    <%= f.text_field :studying, class: "grid_5", placeholder: "E.g.: architecture, philosophy, business" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:studying].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :location, class: "grid_5" %><div class="clear"></div>
+    <%= f.text_field :location, class: "grid_5", placeholder: "City and state or country" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:location].join(", ") %></span>
     <div class="clear"></div>
 
     <h2 class="grid_16">Private account info</h2>
 
-    <label class="grid_5" for="email">Email</label><div class="clear"></div>
-    <input class="grid_5" id="email" name="email" type="text"><div class="clear"></div>
-
-    <label class="grid_5" for="password">Password</label><div class="clear"></div>
-    <input class="grid_5" id="password" name="password" type="password" placeholder="So you can log in later">
+    <%= f.label :email, class: "grid_5" %><div class="clear"></div>
+    <%= f.text_field :email, class: "grid_5" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:email].join(", ") %></span>
     <div class="clear"></div>
 
-    <label class="grid_5" for="confirm_pw">Confirm password</label><div class="clear"></div>
-    <input class="grid_5" id="confirm_pw" name="confirm_pw" type="password"><div class="clear"></div>
+    <%= f.label :password, class: "grid_5" %><div class="clear"></div>
+    <%= f.password_field :password, class: "grid_5", placeholder: "So you can log in later" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:password].join(", ") %></span>
+    <div class="clear"></div>
 
-    <label class="grid_5" for="address">Mailing address (for the book)</label><div class="clear"></div>
-    <textarea class="grid_5" id="address" name="address" cols="35" rows="5"></textarea>
-    <p class="grid_4">Only shared with your donor. You can enter this later.</p>
+    <%= f.label :password_confirmation, "Confirm password", class: "grid_5" %><div class="clear"></div>
+    <%= f.password_field :password_confirmation, class: "grid_5" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:password_confirmation].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :address, "Mailing address (for the book)", class: "grid_5" %><div class="clear"></div>
+    <%= f.text_area :address, class: "grid_5", rows: 5 %>
+    <div class="grid_4">
+        <p>Only shared with your donor. You can enter this later.</p>
+        <p class="field_with_errors"><%= @user.errors[:address].join(", ") %></p>
+    </div>
     <div class="clear"></div>
 
     <h2 class="grid_16">Your pledge</h2>
 
     <label class="grid_8">
-        <input name="pledge" type="checkbox"> I pledge to read this book if a donor sends it to me.
+        <%= check_box_tag :pledge %> I pledge to read this book if a donor sends it to me.
     </label>
+    <p class="grid_8"><%= @user.errors[:pledge].join(", ") %></p>
     <div class="clear"></div>
 
-    <input class="grid_4 submit button" type="submit" value=""><div class="clear"></div>
-</form>
+    <%= submit_tag "", class: "grid_4 submit button" %><div class="clear"></div>
+<% end %>
