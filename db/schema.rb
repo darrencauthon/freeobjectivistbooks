@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221104821) do
+ActiveRecord::Schema.define(:version => 20111222111416) do
+
+  create_table "pledges", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "quantity"
+    t.text     "reason"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pledges", ["user_id"], :name => "index_pledges_on_user_id"
 
   create_table "requests", :force => true do |t|
     t.integer  "user_id"

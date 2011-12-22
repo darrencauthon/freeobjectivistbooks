@@ -5,3 +5,9 @@ howard:
   location: "New York, NY"
   school: Stanton Institute of Technology
   studying: architecture
+
+hugh:
+  name: Hugh Akston
+  email: akston@patrickhenry.edu
+  password_digest: <%= BCrypt::Password.create "akston" %>
+  location: "Boston, MA"

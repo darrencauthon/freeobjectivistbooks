@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   attr_reader :password
 
   has_many :requests
+  has_many :pledges
 
   validates_presence_of :name, :location, :email
   validates_presence_of :password, on: :create
