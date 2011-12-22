@@ -35,6 +35,15 @@ h2 {
 <p class="grid_6"><%= @request.reason %></p>
 <div class="clear"></div>
 <% end %>
+<% if @pledge %>
+<p class="grid_2 label">Pledged</p><p class="grid_6"><%= @pledge.quantity %> books</p>
+<div class="clear"></div>
+<% if @pledge.reason.present? %>
+<p class="grid_2 label">Because</p>
+<p class="grid_6"><%= @pledge.reason %></p>
+<div class="clear"></div>
+<% end %>
+<% end %>
 
 <h2 class="grid_16">Private account info</h2>
 
@@ -45,4 +54,4 @@ h2 {
 <div class="clear"></div>
 <% end %>
 
-<p class="grid_16 goback">If any of this is wrong, hit the back button to change it or just <%= link_to 'sign up again', signup_read_path %>.</p>
+<p class="grid_16 goback">If any of this is wrong, hit the back button to change it or just <%= link_to 'sign up again', action: params[:from_action] %>.</p>

@@ -1,17 +1,25 @@
 class SignupController < ApplicationController
+  before_filter :load_models
+
+  def load_models
+    @user = User.new params[:user]
+    @request = @user.requests.build params[:request] if params[:request]
+    @pledge = @user.pledges.build params[:pledge] if params[:pledge]
+  end
+
   def read
-    @user = User.new
-    @request = @user.requests.build
+    @request ||= @user.requests.build
+  end
+
+  def donate
+    @pledge ||= @user.pledges.build quantity: 5
   end
 
   def submit
-    @user = User.new params[:user]
-    @request = @user.requests.build params[:request]
-
     if @user.save
       render :confirmation, status: :created
     else
-      render :read, status: :unprocessable_entity
+      render params[:from_action], status: :unprocessable_entity
     end
   end
 end

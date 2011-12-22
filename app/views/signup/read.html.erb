@@ -113,5 +113,6 @@
     <div class="clear"></div>
     <% end %>
 
-    <%= submit_tag "", class: "grid_4 submit button" %><div class="clear"></div>
+    <%= hidden_field_tag :from_action, "read" %>
+    <%= f.submit "", class: "grid_4 submit button" %><div class="clear"></div>
 <% end %>
