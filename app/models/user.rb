@@ -3,6 +3,8 @@ require 'bcrypt'
 class User < ActiveRecord::Base
   attr_reader :password
 
+  has_many :requests
+
   validates_presence_of :name, :location, :email
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create, message: "didn't match confirmation"

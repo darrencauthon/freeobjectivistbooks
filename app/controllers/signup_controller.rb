@@ -1,15 +1,17 @@
 class SignupController < ApplicationController
   def read
     @user = User.new
+    @request = @user.requests.build
   end
 
   def submit
     @user = User.new params[:user]
-    success = @user.save
-    if success
-      render :confirmation
+    @request = @user.requests.build params[:request]
+
+    if @user.save
+      render :confirmation, status: :created
     else
-      render :read
+      render :read, status: :unprocessable_entity
     end
   end
 end

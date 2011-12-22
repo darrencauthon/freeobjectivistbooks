@@ -28,37 +28,33 @@
 </ul>
 
 <%= form_for @user, url: { action: :submit } do |f| %>
-    <div class="grid_8"><%= f.error_messages header_message: "There were problems with your signup", message: nil %></div>
+    <% unless @user.errors.empty? && @request.errors.empty? %>
+    <div class="grid_8 errorExplanation">
+        <h2>There were problems with your signup</h2>
+        <p>Please see below and make corrections.</p>
+    </div>
     <div class="clear"></div>
+    <% end %>
 
     <h2 class="grid_16">What book do you want to read?</h2>
 
+    <%= fields_for @request do |r| %>
+    <p class="grid_8 field_with_errors"><%= @request.errors[:book].join(", ") %></p><div class="clear"></div>
+    <% Request::BOOKS.each do |book| %>
+    <label class="grid_8"><%= r.radio_button :book, book %> <%= book %> <%= Request::BOOK_NOTES[book] %></label>
+    <div class="clear"></div>
+    <% end %>
     <label class="grid_8">
-        <input name="book" type="radio" value="atlas" checked>
-        Atlas Shrugged (start here if you don't know what to choose!)
-    </label>
-    <div class="clear"></div>
-    <label class="grid_8"><input name="book" type="radio" value="fountainhead"> The Fountainhead</label>
-    <div class="clear"></div>
-    <label class="grid_8"><input name="book" type="radio" value="wtl"> We the Living</label>
-    <div class="clear"></div>
-    <label class="grid_8"><input name="book" type="radio" value="vos"> The Virtue of Selfishness</label>
-    <div class="clear"></div>
-    <label class="grid_8"><input name="book" type="radio" value="cui"> Capitalism: The Unknown Ideal</label>
-    <div class="clear"></div>
-    <label class="grid_8">
-        <input name="book" type="radio" value="opar"> Objectivism: The Philosophy of Ayn Rand (by Leonard Peikoff)
-    </label>
-    <div class="clear"></div>
-    <label class="grid_8">
-        <input name="book" type="radio" value="other"> Other: <input name="other_book" type="text" size="50">
+        <%= r.radio_button :book, "other" %> Other: <%= r.text_field :other_book %>
     </label>
     <div class="clear"></div>
 
     <h2 class="grid_16">Why do you want to read it?</h2>
 
-    <textarea class="grid_8" name="reason" cols="35" rows="6"></textarea>
+    <p class="grid_8 field_with_errors"><%= @request.errors[:reason].join(", ") %></p><div class="clear"></div>
+    <%= r.text_area :reason, class: "grid_8", rows: 6 %>
     <div class="clear"></div>
+    <% end %>
 
     <h2 class="grid_16">Public profile</h2>
 
@@ -109,11 +105,13 @@
 
     <h2 class="grid_16">Your pledge</h2>
 
+    <%= fields_for @request do |r| %>
+    <p class="grid_8 field_with_errors"><%= @request.errors[:pledge].join(", ") %></p><div class="clear"></div>
     <label class="grid_8">
-        <%= check_box_tag :pledge %> I pledge to read this book if a donor sends it to me.
+        <%= r.check_box :pledge %> I pledge to read this book if a donor sends it to me.
     </label>
-    <p class="grid_8"><%= @user.errors[:pledge].join(", ") %></p>
     <div class="clear"></div>
+    <% end %>
 
     <%= submit_tag "", class: "grid_4 submit button" %><div class="clear"></div>
 <% end %>

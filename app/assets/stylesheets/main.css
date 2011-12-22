@@ -102,6 +102,10 @@ label {
     color: #d80000;
 }
 
+div.field_with_errors {
+    display: inline;
+}
+
 div.errorExplanation {
     border: 1px solid #d80000;
     margin-top: 20px;
