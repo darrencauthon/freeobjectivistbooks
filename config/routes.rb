@@ -6,6 +6,8 @@ FreeBooks::Application.routes.draw do
   get "signup/donate"
   post "signup/submit"
 
+  resources :admin, only: :index
+
   # For testing exceptions
   get "barf" => "home#barf"
 

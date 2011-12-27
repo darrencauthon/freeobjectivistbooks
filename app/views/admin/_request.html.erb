@@ -1,0 +1,6 @@
+<div class="request">
+    <p class="summary"><%= request.user.name %> (<%= request.user.email %>) wants <%= request.book %></p>
+    <p><%= user_tagline request.user %></p>
+    <% if request.reason.present? %><p>"<%= request.reason %>"</p><% end %>
+    <p class="timestamp"><%= l request.created_at %></p>
+</div>

@@ -1,0 +1,31 @@
+<% content_for :title do %>Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+h2 {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.overview {
+    font-size: 1.5em;
+}
+
+.request, .pledge { margin-bottom: 12px; }
+.request p, .pledge p { margin-bottom: 0; }
+.summary { font-weight: bold; }
+.timestamp { color: #707070; }
+</style>
+<% end %>
+
+<h1>Admin</h1>
+
+<p class="overview"><%= @request_total %> books requested, <%= @pledge_total %> pledged</p>
+
+<h2>Requests</h2>
+
+<%= render partial: "admin/request", collection: @requests %>
+
+<h2>Pledges</h2>
+
+<%= render partial: "admin/pledge", collection: @pledges %>

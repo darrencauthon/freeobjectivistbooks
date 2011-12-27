@@ -71,4 +71,6 @@ FreeBooks::Application.configure do
     email_prefix: "FBP Exception: ",
     sender_address: %{"FBP Exceptions" <exceptions@freeobjectivistbooks.mailgun.org>},
     exception_recipients: %w{jason@rationalegoist.com}
+
+  config.admin_password_hash = "4cbc6da50253f97d2fb2fc2e88f80df5"
 end

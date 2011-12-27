@@ -1,0 +1,6 @@
+<div class="pledge">
+    <p class="summary"><%= pledge.user.name %> (<%= pledge.user.email %>) pledged <%= pledge.quantity %> books</p>
+    <p><%= user_tagline pledge.user %></p>
+    <% if pledge.reason.present? %><p>"<%= pledge.reason %>"</p><% end %>
+    <p class="timestamp"><%= l pledge.created_at %></p>
+</div>
