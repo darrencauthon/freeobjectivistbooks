@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
     render template: "errors/404", status: 404
   end
 
-  def render_error
+  def render_error(exception)
     render template: "errors/500", status: 500
+    ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
   end
 end
