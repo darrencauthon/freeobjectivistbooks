@@ -1,3 +1,6 @@
+/****************************************************************************************************/
+/* Main */
+
 body {
     font-family: georgia, serif;
     background: url(background.jpg);
@@ -22,6 +25,13 @@ p {
     margin-bottom: 6px;
 }
 
+label {
+    font-size: 1.1em;
+}
+
+/****************************************************************************************************/
+/* Links */
+
 a {
     color: #0A1E89;
     text-decoration: none;
@@ -35,22 +45,43 @@ a:active {
     color: #1636EC;
 }
 
-.button {
-    border: 0;
-    background-repeat: no-repeat;
-    background-position: top;
-    background-color: transparent;
-}
-.button:hover { background-position: center; }
-.button:active { background-position: bottom; }
+/****************************************************************************************************/
+/* General styling */
 
-label {
-    font-size: 1.1em;
+.overview {
+    font-size: 1.4em;
+    margin-bottom: 24px;
 }
 
 .title {
     font-style: italic;
 }
+
+.hr {
+    height: 1px;
+    padding: 12px 0;
+}
+
+.headline {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.tagline {
+    color: #006000;
+}
+
+.reason {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.timestamp {
+    color: #707070;
+}
+
+/****************************************************************************************************/
+/* Header */
 
 .header {
     background-color: #16711f;
@@ -74,6 +105,21 @@ label {
     margin: 10px;
 }
 
+/****************************************************************************************************/
+/* Buttons */
+
+.button {
+    border: 0;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: transparent;
+}
+.button:hover { background-position: center; }
+.button:active { background-position: bottom; }
+
+/****************************************************************************************************/
+/* Thank-you */
+
 .thankyou img {
     width: 100%;
     border: 1px solid #c8c8c8;
@@ -88,15 +134,8 @@ label {
     margin-bottom: 1px;
 }
 
-.thankyou .date {
-    color: #707070;
-    margin-bottom: 0;
-}
-
-.hr {
-    height: 1px;
-    padding: 12px 0;
-}
+/****************************************************************************************************/
+/* Errors */
 
 .errorExplanation, .field_with_errors {
     color: #d80000;

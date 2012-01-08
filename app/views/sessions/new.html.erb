@@ -1,10 +1,5 @@
 <% content_for :title do %>Login<% end %>
 
-<% content_for :stylesheet do %>
-<style>
-</style>
-<% end %>
-
 <h1 class="grid_16">Log in</h1>
 
 <%= form_for @user, url: login_path, method: :post do |f| %>

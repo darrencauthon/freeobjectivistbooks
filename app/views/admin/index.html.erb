@@ -3,29 +3,26 @@
 <% content_for :stylesheet do %>
 <style>
 h2 {
-    margin-top: 12px;
+    margin-top: 24px;
     margin-bottom: 12px;
 }
 
 .overview {
     font-size: 1.5em;
 }
-
-.request, .pledge { margin-bottom: 12px; }
-.request p, .pledge p { margin-bottom: 0; }
-.summary { font-weight: bold; }
-.timestamp { color: #707070; }
 </style>
 <% end %>
 
-<h1>Admin</h1>
+<div class="grid_16">
+    <h1>Admin</h1>
 
-<p class="overview"><%= @request_total %> books requested, <%= @pledge_total %> pledged</p>
+    <p class="overview"><%= @request_total %> books requested, <%= @pledge_total %> pledged</p>
 
-<h2>Requests</h2>
+    <h2>Requests</h2>
 
-<%= render partial: "admin/request", collection: @requests %>
+    <%= render partial: "admin/request", collection: @requests, spacer_template: "spacer" %>
 
-<h2>Pledges</h2>
+    <h2>Pledges</h2>
 
-<%= render partial: "admin/pledge", collection: @pledges %>
+    <%= render partial: "admin/pledge", collection: @pledges, spacer_template: "spacer" %>
+</div>

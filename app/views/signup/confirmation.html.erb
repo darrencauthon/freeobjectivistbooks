@@ -4,10 +4,6 @@ h2 {
     margin-top: 12px;
 }
 
-.page-explanation {
-    font-size: 1.4em;
-}
-
 .label {
     font-family: 'gill sans', helvetica, sans-serif;
     font-weight: bold;
@@ -21,7 +17,7 @@ h2 {
 
 <h1 class="grid_16">Thank you!</h1>
 
-<p class="grid_16 page-explanation">
+<p class="grid_16 overview">
 <% if @request %>You are signed up. We will look for a donor to send you <span class="title"><%= @request.book %></span>
 and let you know by email when we've found someone. This may take a week or two.<% end %>
 <% if @pledge %>We appreciate your pledge of <%= @pledge.quantity %> books. We will send you a link soon (within a week
