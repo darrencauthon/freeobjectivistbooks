@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :find_current_user
+  before_filter :find_current_user, :load_models
 
   def find_current_user
     @current_user = User.find session[:user_id] if session[:user_id]
@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
     reset_session
     session[:user_id] = user && user.id
     @current_user = user
+  end
+
+  def load_models
   end
 
   unless Rails.application.config.consider_all_requests_local

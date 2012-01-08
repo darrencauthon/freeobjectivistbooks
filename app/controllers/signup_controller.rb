@@ -1,6 +1,4 @@
 class SignupController < ApplicationController
-  before_filter :load_models
-
   def load_models
     @user = User.new params[:user]
     @request = @user.requests.build params[:request] if params[:request]
