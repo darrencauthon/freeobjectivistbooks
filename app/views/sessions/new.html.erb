@@ -1,0 +1,31 @@
+<% content_for :title do %>Login<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+</style>
+<% end %>
+
+<h1 class="grid_16">Log in</h1>
+
+<%= form_for @user, url: login_path, method: :post do |f| %>
+    <% if @user.errors.any? %>
+    <div class="grid_8">
+        <span class="field_with_errors"><%= @user.errors[:base].join(", ") %></span>
+        <%= mail_to "jason@rationalegoist.com", "Forgot your password?", subject: "I forgot my password",
+            body: "I forgot my password to freeobjectivistbooks.org for email address #{@user.email}." %>
+    </div>
+    <div class="clear"></div>
+    <% end %>
+
+    <%= f.label :email, class: "grid_1" %>
+    <%= f.text_field :email, class: "grid_4" %>
+    <div class="clear"></div>
+
+    <%= f.label :password, class: "grid_1" %>
+    <%= f.password_field :password, class: "grid_4" %>
+    <div class="clear"></div>
+
+    <div class="grid_1">&nbsp;</div>
+    <%= f.submit "Log in", class: "grid_2" %>
+    <div class="clear"></div>
+<% end %>

@@ -52,4 +52,23 @@ class UserTest < ActiveSupport::TestCase
     @john.password_confirmation = "oops"
     assert !@john.save
   end
+
+  test "login" do
+    user = User.login email: "roark@stanton.edu", password: "roark"
+    assert_equal @howard, user
+    assert user.errors.empty?, user.errors.inspect
+  end
+
+  test "wrong password" do
+    user = User.login email: "roark@stanton.edu", password: "wrong"
+    assert_equal @howard, user
+    assert_match /incorrect/i, user.errors[:base].first
+  end
+
+  test "wrong email" do
+    user = User.login email: "nobody@nowhere.com", password: "whatever"
+    assert_not_nil user
+    assert_equal "nobody@nowhere.com", user.email
+    assert_match /incorrect/i, user.errors[:base].first
+  end
 end
