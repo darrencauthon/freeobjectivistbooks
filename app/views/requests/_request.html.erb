@@ -1,0 +1,7 @@
+<div class="request grid_9 alpha">
+    <div class="headline"><%= request.user.name %> wants <span class="title"><%= request.book %></span></div>
+    <div class="tagline"><%= user_tagline request.user %></div>
+    <div class="reason"><%= request.reason %></div>
+    <div class="timestamp"><%= l request.created_at.to_date %></div>
+</div>
+<%= link_to "#", class: "grid_3 omega" do %><div class="donate button"></div><% end %>

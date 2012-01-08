@@ -8,6 +8,8 @@ FreeBooks::Application.routes.draw do
   post "login" => "sessions#create"
   match "logout" => "sessions#destroy"
 
+  get "donate" => "requests#index"
+
   get "signup/read"
   get "signup/donate"
   post "signup/submit"

@@ -1,0 +1,21 @@
+<% content_for :title do %>Donate<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.button {
+    height: 56px;
+    background-image: url(/assets/donate-one-button.png);
+}
+</style>
+<% end %>
+
+<h1 class="grid_16">Donate</h1>
+
+<div class="grid_16 overview">
+    <p>These students have pledged to read Objectivist books. Choose which ones you want to fulfill.</p>
+    <% if @pledge %><p>You have pledged to donate <%= @pledge.quantity %> books.</p><% end %>
+</div>
+
+<div class="grid_12">
+    <%= render partial: "request", collection: @requests, spacer_template: "spacer" %>
+</div>
