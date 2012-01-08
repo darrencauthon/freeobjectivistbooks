@@ -4,3 +4,9 @@ howard_wants_atlas:
   user: howard
   book: Atlas Shrugged
   reason: I've heard so much about this... can't wait to find out who is John Galt!
+
+quentin_wants_vos:
+  user: quentin
+  book: The Virtue of Selfishness
+  reason: Someone told me I need to read this before I figure out the secret of the motor.
+  donor: hugh

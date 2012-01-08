@@ -6,6 +6,14 @@ howard:
   school: Stanton Institute of Technology
   studying: architecture
 
+quentin:
+  name: Quentin Daniels
+  email: quentin@mit.edu
+  password_digest: <%= BCrypt::Password.create "daniels" %>
+  location: "Boston, MA"
+  school: MIT
+  studying: physics
+
 hugh:
   name: Hugh Akston
   email: akston@patrickhenry.edu

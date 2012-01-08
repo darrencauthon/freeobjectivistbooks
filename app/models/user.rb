@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_many :requests
   has_many :pledges
+  has_many :donations, class_name: "Request", foreign_key: "donor_id"
 
   validates_presence_of :name, :location, :email
   validates_presence_of :password, on: :create
