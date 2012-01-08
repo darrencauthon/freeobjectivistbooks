@@ -61,7 +61,7 @@ class SignupControllerTest < ActionController::TestCase
 
     assert_equal [], user.pledges
 
-    assert_select 'p.page-explanation', /We will look for a donor/
+    assert_select 'p.overview', /We will look for a donor/
     assert_select 'p', /John Galt/
     assert_select 'p', /Atlantis/
     assert_select 'p', /Fountainhead/
@@ -108,7 +108,7 @@ class SignupControllerTest < ActionController::TestCase
 
     assert_equal [], user.requests
 
-    assert_select 'p.page-explanation', /We appreciate your pledge/
+    assert_select 'p.overview', /We appreciate your pledge/
     assert_select 'p', /John Galt/
     assert_select 'p', /Atlantis/
     assert_select 'p', pledge_reason
