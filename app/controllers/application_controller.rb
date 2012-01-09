@@ -16,6 +16,13 @@ class ApplicationController < ActionController::Base
   def load_models
   end
 
+  def require_login
+    if !@current_user
+      @destination = request.url
+      render "sessions/new"
+    end
+  end
+
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_error
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found

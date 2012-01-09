@@ -7,16 +7,19 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "index" do
-    get :index
+    get(:index, {}, @session)
     assert_response :success
     assert_select '.request', 1
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
+    assert_select '.donations h2', "Your donations (1)"
+    assert_select '.donations li', /The Virtue of Selfishness to Quentin Daniels/
+    assert_select '.donations p', "You have pledged 5 books."
   end
 
-  test "index shows pledge" do
-    get(:index, {}, @session)
+  test "index requires login" do
+    get :index
     assert_response :success
-    assert_select '.overview p', "You have pledged to donate 5 books."
+    assert_select 'h1', 'Log in'
   end
 
   test "grant" do

@@ -61,22 +61,15 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "login" do
-    user = User.login email: "roark@stanton.edu", password: "roark"
-    assert_equal @howard, user
-    assert user.errors.empty?, user.errors.inspect
+    assert_equal @howard, User.login("roark@stanton.edu", "roark")
   end
 
   test "wrong password" do
-    user = User.login email: "roark@stanton.edu", password: "wrong"
-    assert_equal @howard, user
-    assert_match /incorrect/i, user.errors[:base].first
+    assert_nil User.login("roark@stanton.edu", "wrong")
   end
 
   test "wrong email" do
-    user = User.login email: "nobody@nowhere.com", password: "whatever"
-    assert_not_nil user
-    assert_equal "nobody@nowhere.com", user.email
-    assert_match /incorrect/i, user.errors[:base].first
+    assert_nil User.login("nobody@nowhere.com", "whatever")
   end
 
   # Associations

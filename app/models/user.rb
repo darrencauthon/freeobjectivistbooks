@@ -11,15 +11,9 @@ class User < ActiveRecord::Base
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create, message: "didn't match confirmation"
 
-  def self.login(attributes)
-    user = find_by_email attributes[:email]
-
-    if !user || !user.authenticate(attributes[:password])
-      user ||= User.new attributes
-      user.errors[:base] = "Incorrect email or password."
-    end
-
-    user
+  def self.login(email, password)
+    user = find_by_email email
+    return user if user && user.authenticate(password)
   end
 
   def password=(password)
