@@ -9,6 +9,9 @@ FreeBooks::Application.routes.draw do
   match "logout" => "sessions#destroy"
 
   get "donate" => "requests#index"
+  resources :requests, only: [] do
+    post "grant", on: :member
+  end
 
   get "signup/read"
   get "signup/donate"

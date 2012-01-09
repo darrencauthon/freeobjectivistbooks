@@ -58,7 +58,7 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal [@request], Request.open.all
   end
 
-  test "donated" do
-    assert_equal [@quentin_request], Request.donated.all
+  test "granted" do
+    assert_equal [@quentin_request], Request.granted.all
   end
 end

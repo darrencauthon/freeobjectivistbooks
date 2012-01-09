@@ -3,9 +3,9 @@ require 'bcrypt'
 class User < ActiveRecord::Base
   attr_reader :password
 
-  has_many :requests
-  has_many :pledges
-  has_many :donations, class_name: "Request", foreign_key: "donor_id"
+  has_many :requests, order: :created_at
+  has_many :pledges, order: :created_at
+  has_many :donations, class_name: "Request", foreign_key: "donor_id", order: :updated_at
 
   validates_presence_of :name, :location, :email
   validates_presence_of :password, on: :create

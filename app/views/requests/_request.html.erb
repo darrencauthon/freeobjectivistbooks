@@ -4,4 +4,6 @@
     <div class="reason"><%= request.reason %></div>
     <div class="timestamp"><%= l request.created_at.to_date %></div>
 </div>
-<%= link_to "#", class: "grid_3 omega" do %><div class="donate button"></div><% end %>
+<%= link_to grant_request_path(request), method: :post, class: "grid_3 omega" do %>
+    <div class="donate button"></div>
+<% end %>

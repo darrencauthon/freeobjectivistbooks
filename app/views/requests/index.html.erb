@@ -6,16 +6,68 @@
     height: 56px;
     background-image: url(/assets/donate-one-button.png);
 }
+
+.donations img {
+    vertical-align: top;
+}
+.donations .content {
+    padding: 0 24px;
+    background-image: url(/assets/content-bg-220-middle.png);
+}
+.donations h2 {
+    font-size: 1.6em;
+    margin-top: 0;
+}
+.donations ul {
+    margin-bottom: 0;
+}
+.donations li {
+    margin: 0;
+    padding: 4px 0;
+    list-style: none;
+}
+.donations p {
+    margin: 0;
+    padding: 4px 0;
+}
 </style>
 <% end %>
 
 <h1 class="grid_16">Donate</h1>
 
 <div class="grid_16 overview">
+    <% if @requests.any? %>
     <p>These students have pledged to read Objectivist books. Choose which ones you want to fulfill.</p>
-    <% if @pledge %><p>You have pledged to donate <%= @pledge.quantity %> books.</p><% end %>
+    <% else %>
+    <p>All student requests have been granted for now! Check back soon for more eager minds.</p>
+    <% end %>
 </div>
 
+<% if @requests.any? %>
 <div class="grid_12">
     <%= render partial: "request", collection: @requests, spacer_template: "spacer" %>
+</div>
+<% end %>
+
+<div class="grid_4 donations">
+    <img src="/assets/content-bg-220-top.png">
+    <div class="content">
+        <h2>Your donations<% if @donations.any? %> (<%= @donations.count %>)<% end %></h2>
+        <ul>
+            <% if @donations.any? %>
+            <% @donations.each do |donation| %>
+            <li>
+                <span class="title"><%= donation.book %></span> to <%= donation.user.name %> in
+                <%= donation.user.location %>
+            </li>
+            <% end %>
+            <% else %>
+            <li>None yet.</li>
+            <% end %>
+        </ul>
+        <% if @pledge %>
+        <p>You have pledged <%= @pledge.quantity %> books.</p>
+        <% end %>
+    </div>
+    <img src="/assets/content-bg-220-bottom.png">
 </div>

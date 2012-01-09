@@ -18,4 +18,13 @@ class RequestsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select '.overview p', "You have pledged to donate 5 books."
   end
+
+  test "grant" do
+    request = requests :howard_wants_atlas
+    post(:grant, {id: request.id}, @session)
+    assert_redirected_to donate_url
+
+    request.reload
+    assert_equal @hugh, request.donor
+  end
 end
