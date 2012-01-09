@@ -2,6 +2,8 @@ FreeBooks::Application.routes.draw do
   # User-facing
 
   root to: "home#index"
+  get "home" => "home#home"
+  get "profile" => "home#profile"
   get "about" => "home#about"
 
   get "login" => "sessions#new"

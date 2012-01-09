@@ -1,0 +1,69 @@
+<% content_for :stylesheet do %>
+<style>
+.profile, .request, .pledge {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.profile p, .request p, .pledge p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.request .donation {
+    margin-top: 6px;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16"><%= @current_user.name %></h1>
+
+<p class="grid_16 profile tagline"><%= user_tagline @current_user %></p>
+
+<% if @current_user.requests.any? %>
+<% @current_user.requests.each do |request| %>
+<div class="grid_8 request">
+    <p class="headline">You want to read <span class="title"><%= request.book %></span></p>
+    <p class="reason"><%= request.reason %></p>
+    <p class="donation">
+        <% if request.donor %>
+        We have found you a donor! <%= request.donor.name %> in <%= request.donor.location %>. They will send you
+        <span class="title"><%= request.book %></span> soon.
+        <% else %>
+        We are looking for a donor for you. We'll let you know when we find someone.
+        <% end %>
+    </p>
+</div>
+<div class="clear"></div>
+<% end %>
+<% end %>
+
+<% if @current_user.pledges.any? %>
+<% @current_user.pledges.each do |pledge| %>
+<div class="grid_8 pledge">
+    <p class="headline">You pledged to donate <%= pledge.quantity %> books</p>
+    <% if pledge.reason.present? %><p class="reason"><%= pledge.reason %></p><% end %>
+</div>
+<div class="clear"></div>
+<% end %>
+<% end %>
+
+<% if @current_user.donations.any? || @current_user.pledges.any? %>
+<h2 class="grid_16">Your donations</h2>
+<% if @current_user.donations.any? %>
+<p class="grid_16">Please send the following books:</p>
+<% @current_user.donations.each do |request| %>
+<div class="grid_8 request">
+    <p class="headline"><span class="title"><%= request.book %></span> to <%= request.user.name %> in
+        <%= request.user.location %>
+    </p>
+    <% if request.user.address.present? %>
+    <p class="address"><%= raw format_address request.user.address %></p>
+    <% else %>
+    <p>This student hasn't given their full address yet. We'll contact them to fill it in and then notify you.</p>
+    <% end %>
+</div>
+<div class="clear"></div>
+<% end %>
+<% else %>
+<p class="grid_8">None yet. <%= link_to 'Find students to donate books to', donate_path %></p><div class="clear"></div>
+<% end %>
+<% end %>

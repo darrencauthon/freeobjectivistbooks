@@ -53,18 +53,19 @@
     <img src="/assets/content-bg-220-top.png">
     <div class="content">
         <h2>Your donations<% if @donations.any? %> (<%= @donations.count %>)<% end %></h2>
+        <% if @donations.any? %>
         <ul>
-            <% if @donations.any? %>
             <% @donations.each do |donation| %>
             <li>
                 <span class="title"><%= donation.book %></span> to <%= donation.user.name %> in
                 <%= donation.user.location %>
             </li>
             <% end %>
-            <% else %>
-            <li>None yet.</li>
-            <% end %>
         </ul>
+        <p><%= link_to 'See full details', profile_path %></p>
+        <% else %>
+        <p>None yet.</p>
+        <% end %>
         <% if @pledge %>
         <p>You have pledged <%= @pledge.quantity %> books.</p>
         <% end %>
