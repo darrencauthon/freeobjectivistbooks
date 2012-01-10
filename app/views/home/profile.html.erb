@@ -52,9 +52,8 @@
 <p class="grid_16">Please send the following books:</p>
 <% @current_user.donations.each do |request| %>
 <div class="grid_8 request">
-    <p class="headline"><span class="title"><%= request.book %></span> to <%= request.user.name %> in
-        <%= request.user.location %>
-    </p>
+    <p class="headline"><span class="title"><%= request.book %></span> to:</p>
+    <p class="name"><%= request.user.name %></p>
     <p class="address">
         <% if request.user.address.present? %>
         <%= raw format_address request.user.address %>

@@ -46,7 +46,8 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Hugh Akston"
     assert_select '.pledge .headline', /You pledged to donate 5 books/
-    assert_select '.request .headline', /Virtue of Selfishness to Quentin Daniels/
+    assert_select '.request .headline', /Virtue of Selfishness to/
+    assert_select '.request .name', /Quentin Daniels/
     assert_select '.request .address', /123 Main St/
   end
 
@@ -58,7 +59,8 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Hugh Akston"
     assert_select '.pledge .headline', /You pledged to donate 5 books/
-    assert_select '.request .headline', /Virtue of Selfishness to Quentin Daniels/
+    assert_select '.request .headline', /Virtue of Selfishness to/
+    assert_select '.request .name', /Quentin Daniels/
     assert_select '.request .address', /This student hasn't given their full address yet/
   end
 
