@@ -15,7 +15,12 @@ class SignupController < ApplicationController
 
   def submit
     if @user.save
-      render :confirmation, status: :created
+      set_current_user @user
+      if @user.pledges.any?
+        redirect_to donate_url
+      else
+        render :confirmation, status: :created
+      end
     else
       render params[:from_action], status: :unprocessable_entity
     end

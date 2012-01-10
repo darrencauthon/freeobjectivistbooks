@@ -54,6 +54,8 @@ class SignupControllerTest < ActionController::TestCase
     assert_equal "Atlantis, CO", user.location
     assert user.authenticate "dagny"
 
+    assert_equal user.id, session[:user_id]
+
     request = user.requests.first
     assert_not_nil request
     assert_equal "The Fountainhead", request.book
@@ -93,7 +95,7 @@ class SignupControllerTest < ActionController::TestCase
     pledge = pledge_attributes
 
     post :submit, user: user, pledge: pledge, from_action: "donate"
-    assert_response :success
+    assert_redirected_to donate_url
 
     user = User.find_by_name "John Galt"
     assert_not_nil user
@@ -101,18 +103,14 @@ class SignupControllerTest < ActionController::TestCase
     assert_equal "Atlantis, CO", user.location
     assert user.authenticate "dagny"
 
+    assert_equal user.id, session[:user_id]
+
     pledge = user.pledges.first
     assert_not_nil pledge
     assert_equal 5, pledge.quantity
     assert_equal pledge_reason, pledge.reason
 
     assert_equal [], user.requests
-
-    assert_select 'p.overview', /We appreciate your pledge/
-    assert_select 'p', /John Galt/
-    assert_select 'p', /Atlantis/
-    assert_select 'p', pledge_reason
-    assert_select 'p', /galt@gulch.com/
   end
 
   test "donate submit failure" do
