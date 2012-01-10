@@ -13,6 +13,9 @@ class AdminController < ApplicationController
     @pledge_count = Pledge.count
     @pledge_quantity = Pledge.sum :quantity
 
+    @book_counts = Request.group(:book).count
+    @books = @book_counts.keys.sort
+
     @requests = Request.includes(:user).order('created_at desc')
     @pledges = Pledge.includes(:user).order('created_at desc')
   end

@@ -7,6 +7,10 @@ h2 {
     margin-bottom: 12px;
 }
 
+td {
+    padding-right: 12px;
+}
+
 .overview {
     font-size: 1.5em;
     margin-bottom: 0;
@@ -29,6 +33,13 @@ h2 {
     <p><%= @request_count %> books requested: <%= @granted_request_count %> granted, <%= @open_request_count %> open</p>
     <p><%= @pledge_quantity %> books pledged from <%= @pledge_count %> donors</p>
 </div>
+
+<h2 class="grid_16">Books</h2>
+<table class="grid_16 overview">
+    <% @books.each do |book| %>
+    <tr><td><%= book %></td><td><%= @book_counts[book] %></td></tr>
+    <% end %>
+</table>
 
 <h2 class="grid_16">Requests</h2>
 <%= render partial: "admin/request", collection: @requests, spacer_template: "spacer" %>
