@@ -16,13 +16,10 @@
 
 <h1 class="grid_16"><%= @current_user.name %></h1>
 
-<p class="grid_16 profile tagline"><%= user_tagline @current_user %></p>
-
 <% if @current_user.requests.any? %>
 <% @current_user.requests.each do |request| %>
 <div class="grid_8 request">
     <p class="headline">You want to read <span class="title"><%= request.book %></span></p>
-    <p class="reason"><%= request.reason %></p>
     <p class="donation">
         <% if request.donor %>
         We have found you a donor! <%= request.donor.name %> in <%= request.donor.location %>. They will send you
@@ -40,7 +37,6 @@
 <% @current_user.pledges.each do |pledge| %>
 <div class="grid_8 pledge">
     <p class="headline">You pledged to donate <%= pledge.quantity %> books</p>
-    <% if pledge.reason.present? %><p class="reason"><%= pledge.reason %></p><% end %>
 </div>
 <div class="clear"></div>
 <% end %>
