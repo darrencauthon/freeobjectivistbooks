@@ -9,6 +9,7 @@ h2 {
 
 .overview {
     font-size: 1.5em;
+    margin-bottom: 0;
 }
 
 .dupe {
@@ -24,7 +25,10 @@ h2 {
 
 <h1 class="grid_16">Admin</h1>
 
-<p class="grid_12 overview"><%= @request_total %> books requested, <%= @pledge_total %> pledged</p>
+<div class="grid_12 overview">
+    <p><%= @request_count %> books requested: <%= @granted_request_count %> granted, <%= @open_request_count %> open</p>
+    <p><%= @pledge_quantity %> books pledged from <%= @pledge_count %> donors</p>
+</div>
 
 <h2 class="grid_16">Requests</h2>
 <%= render partial: "admin/request", collection: @requests, spacer_template: "spacer" %>
