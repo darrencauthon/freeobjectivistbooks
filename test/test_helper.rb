@@ -10,18 +10,30 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  def digest_auth(path, username, realm, password)
-    token = @request.env['action_dispatch.secret_token']
+end
 
-    credentials = {
-      uri: "http://test.host/#{path}",
-      realm: realm,
-      username: username,
-      nonce: ActionController::HttpAuthentication::Digest.nonce(token),
-      opaque: ActionController::HttpAuthentication::Digest.opaque(token),
-    }
+# from https://gist.github.com/1282275
+class ActionController::TestCase
+  require 'digest/md5'
 
-    @request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Digest.encode_credentials(
-      @request.request_method, credentials, password, false)
+  def authenticate_with_http_digest(user, password, realm)
+    ActionController::Base.class_eval { include ActionController::Testing }
+
+    @controller.instance_eval %Q(
+      alias real_process_with_new_base_test process_with_new_base_test
+
+      def process_with_new_base_test(request, response)
+        credentials = {
+      	  :uri => request.url,
+      	  :realm => "#{realm}",
+      	  :username => "#{user}",
+      	  :nonce => ActionController::HttpAuthentication::Digest.nonce(request.env['action_dispatch.secret_token']),
+      	  :opaque => ActionController::HttpAuthentication::Digest.opaque(request.env['action_dispatch.secret_token'])
+        }
+        request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Digest.encode_credentials(request.request_method, credentials, "#{password}", false)
+
+        real_process_with_new_base_test(request, response)
+      end
+    )
   end
 end

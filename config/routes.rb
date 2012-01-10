@@ -20,7 +20,10 @@ FreeBooks::Application.routes.draw do
   post "signup/submit"
 
   # Admin
-  resources :admin, only: :index
+  get "admin" => "admin#index"
+  namespace :admin do
+    resources :users, only: :destroy
+  end
 
   # For testing exceptions
   get "barf" => "home#barf"

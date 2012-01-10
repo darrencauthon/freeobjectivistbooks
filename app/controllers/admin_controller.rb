@@ -8,7 +8,7 @@ class AdminController < ApplicationController
   def index
     @request_total = Request.count
     @pledge_total = Pledge.sum :quantity
-    @requests = Request.includes(:user)
-    @pledges = Pledge.includes(:user)
+    @requests = Request.includes(:user).order('created_at desc')
+    @pledges = Pledge.includes(:user).order('created_at desc')
   end
 end

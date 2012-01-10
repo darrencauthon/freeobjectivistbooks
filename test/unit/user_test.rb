@@ -4,6 +4,7 @@ class UserTest < ActiveSupport::TestCase
   def setup
     @howard = users :howard
     @hugh = users :hugh
+    @quentin = users :quentin
     @john = User.new name: "John Galt", email: "galt@gulch.com", location: "Atlantis, CO", password: "dagny",
       password_confirmation: "dagny"
   end
@@ -84,5 +85,41 @@ class UserTest < ActiveSupport::TestCase
 
   test "donations" do
     assert_equal [requests(:quentin_wants_vos)], @hugh.donations
+  end
+
+  # Association dependencies
+
+  test "dependent requests are destroyed" do
+    request = @howard.requests.first
+    @howard.destroy
+    assert !Request.exists?(request)
+  end
+
+  test "dependent pledges are destroyed" do
+    pledge = @hugh.pledges.first
+    @hugh.destroy
+    assert !Pledge.exists?(pledge)
+  end
+
+  test "dependent donations are nullified" do
+    request = @hugh.donations.first
+    @hugh.destroy
+    assert Request.exists?(request)
+    request.reload
+    assert_nil request.donor
+  end
+
+  # Duplicates
+
+  test "possible dupe?" do
+    assert !@howard.possible_dupe?
+    user = User.create! name: @howard.name, email: "something@else.com", location: "Somewhere", password: "asdf",
+      password_confirmation: "asdf"
+    assert user.possible_dupe?
+
+    assert !@quentin.possible_dupe?
+    user = User.create! name: "Something Else", email: @quentin.email, location: "Somewhere", password: "asdf",
+      password_confirmation: "asdf"
+    assert user.possible_dupe?
   end
 end

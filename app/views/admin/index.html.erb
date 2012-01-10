@@ -10,19 +10,24 @@ h2 {
 .overview {
     font-size: 1.5em;
 }
+
+.dupe {
+    color: #d80000;
+}
+
+.button {
+    height: 56px;
+    background-image: url(/assets/delete-button.png);
+}
 </style>
 <% end %>
 
-<div class="grid_16">
-    <h1>Admin</h1>
+<h1 class="grid_16">Admin</h1>
 
-    <p class="overview"><%= @request_total %> books requested, <%= @pledge_total %> pledged</p>
+<p class="grid_12 overview"><%= @request_total %> books requested, <%= @pledge_total %> pledged</p>
 
-    <h2>Requests</h2>
+<h2 class="grid_16">Requests</h2>
+<%= render partial: "admin/request", collection: @requests, spacer_template: "spacer" %>
 
-    <%= render partial: "admin/request", collection: @requests, spacer_template: "spacer" %>
-
-    <h2>Pledges</h2>
-
-    <%= render partial: "admin/pledge", collection: @pledges, spacer_template: "spacer" %>
-</div>
+<h2 class="grid_16">Pledges</h2>
+<%= render partial: "admin/pledge", collection: @pledges, spacer_template: "spacer" %>
