@@ -59,6 +59,11 @@ h2 {
     <h2 class="prefix_4 grid_16">Questions? <%= link_to 'Read our FAQ', about_path %></h2>
     <div class="clear"></div>
 
+    <% if !@current_user %>
+    <h2 class="prefix_4 grid_16">Already signed up? <%= link_to 'Log in', login_path %></h2>
+    <div class="clear"></div>
+    <% end %>
+
     <h2 class="prefix_4 grid_16">What recipients are saying</h2>
     <div class="clear"></div>
 
