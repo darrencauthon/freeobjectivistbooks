@@ -33,12 +33,14 @@ class SignupControllerTest < ActionController::TestCase
 
     assert_select '#request_book_atlas_shrugged[checked="checked"]'
     assert_select '.errorExplanation', false
+    assert_select '.sidebar h2', "Already signed up?"
   end
 
   test "donate" do
     get :donate
     assert_response :success
     assert_select '.errorExplanation', false
+    assert_select '.sidebar h2', "Already signed up?"
   end
 
   test "read submit" do
@@ -130,5 +132,19 @@ class SignupControllerTest < ActionController::TestCase
     assert_select '.field_with_errors', /can't be blank/
     assert_select '.field_with_errors', /didn't match/
     assert_select '.field_with_errors', /Please enter a number/
+  end
+
+  test "read when logged in" do
+    get :read, params, session_for(users :howard)
+    assert_response :success
+    assert_select '.sidebar h2', "Already signed in"
+    assert_select '.sidebar p', /already signed in as Howard Roark/
+  end
+
+  test "donate when logged in" do
+    get :donate, params, session_for(users :howard)
+    assert_response :success
+    assert_select '.sidebar h2', "Already signed in"
+    assert_select '.sidebar p', /already signed in as Howard Roark/
   end
 end

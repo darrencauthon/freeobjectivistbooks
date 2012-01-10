@@ -10,6 +10,14 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def params(params = {})
+    params
+  end
+
+  def session_for(user)
+    {user_id: user.id}
+  end
 end
 
 # from https://gist.github.com/1282275

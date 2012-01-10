@@ -7,14 +7,6 @@ class HomeControllerTest < ActionController::TestCase
     @quentin = users :quentin
   end
 
-  def params
-    Hash.new
-  end
-
-  def session_for(user)
-    {user_id: user.id}
-  end
-
   test "index is home if not logged in" do
     get :index
     assert_response :success

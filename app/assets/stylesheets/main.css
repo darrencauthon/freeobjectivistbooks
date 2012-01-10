@@ -105,6 +105,40 @@ a:active {
 }
 
 /****************************************************************************************************/
+/* Sidebar */
+
+.sidebar img {
+    vertical-align: top;
+}
+
+.sidebar .top {
+    background-image: url(/assets/content-bg-220-top.png);
+}
+
+.sidebar .bottom {
+    background-image: url(/assets/content-bg-220-bottom.png);
+}
+
+.sidebar .content {
+    padding: 0 24px;
+    background-image: url(/assets/content-bg-220-middle.png);
+}
+
+.sidebar h2 {
+    font-size: 1.6em;
+    margin-top: 0;
+}
+
+.sidebar p {
+    margin: 0;
+    padding: 4px 0;
+}
+
+.sidebar ul {
+    margin-bottom: 0;
+}
+
+/****************************************************************************************************/
 /* Buttons */
 
 .button {

@@ -7,28 +7,14 @@
     background-image: url(/assets/donate-one-button.png);
 }
 
-.donations img {
-    vertical-align: top;
+.center {
+    margin-top: 5px;
 }
-.donations .content {
-    padding: 0 24px;
-    background-image: url(/assets/content-bg-220-middle.png);
-}
-.donations h2 {
-    font-size: 1.6em;
-    margin-top: 0;
-}
-.donations ul {
-    margin-bottom: 0;
-}
-.donations li {
+
+.sidebar li {
     margin: 0;
     padding: 4px 0;
     list-style: none;
-}
-.donations p {
-    margin: 0;
-    padding: 4px 0;
 }
 </style>
 <% end %>
@@ -44,13 +30,13 @@
 </div>
 
 <% if @requests.any? %>
-<div class="grid_12">
+<div class="grid_12 center">
     <%= render partial: "request", collection: @requests, spacer_template: "spacer" %>
 </div>
 <% end %>
 
-<div class="grid_4 donations">
-    <img src="/assets/content-bg-220-top.png">
+<div class="grid_4 sidebar">
+    <div class="top">&nbsp;</div>
     <div class="content">
         <h2>Your donations<% if @donations.any? %> (<%= @donations.count %>)<% end %></h2>
         <% if @donations.any? %>
@@ -70,5 +56,5 @@
         <p>You have pledged <%= @pledge.quantity %> books.</p>
         <% end %>
     </div>
-    <img src="/assets/content-bg-220-bottom.png">
+    <div class="bottom">&nbsp;</div>
 </div>

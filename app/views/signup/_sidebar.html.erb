@@ -1,0 +1,16 @@
+<div class="grid_4 sidebar">
+    <div class="top">&nbsp;</div>
+    <div class="content">
+        <% if @current_user %>
+        <h2>Already signed in</h2>
+        <p>
+            You are already signed in as <%= @current_user.name %>.
+            <%= link_to 'Go to your homepage', profile_path %>
+        </p>
+        <% else %>
+        <h2>Already signed up?</h2>
+        <p><%= link_to 'Log in', login_path %></p>
+        <% end %>
+    </div>
+    <div class="bottom">&nbsp;</div>
+</div>

@@ -11,9 +11,9 @@ class RequestsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select '.request', 1
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
-    assert_select '.donations h2', "Your donations (1)"
-    assert_select '.donations li', /The Virtue of Selfishness to Quentin Daniels/
-    assert_select '.donations p', "You have pledged 5 books."
+    assert_select '.sidebar h2', "Your donations (1)"
+    assert_select '.sidebar li', /The Virtue of Selfishness to Quentin Daniels/
+    assert_select '.sidebar p', "You have pledged 5 books."
   end
 
   test "index requires login" do
