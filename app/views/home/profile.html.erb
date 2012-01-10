@@ -11,6 +11,10 @@
 .request .donation {
     margin-top: 6px;
 }
+
+.missing {
+    color: #d80000;
+}
 </style>
 <% end %>
 
@@ -51,14 +55,17 @@
     <p class="headline"><span class="title"><%= request.book %></span> to <%= request.user.name %> in
         <%= request.user.location %>
     </p>
-    <% if request.user.address.present? %>
-    <p class="address"><%= raw format_address request.user.address %></p>
-    <% else %>
-    <p>This student hasn't given their full address yet. We'll contact them to fill it in and then notify you.</p>
-    <% end %>
+    <p class="address">
+        <% if request.user.address.present? %>
+        <%= raw format_address request.user.address %>
+        <% else %>
+        This student hasn't given their full address yet. We'll contact them to fill it in and then notify you.
+        <% end %>
+    </p>
 </div>
 <div class="clear"></div>
 <% end %>
+<p class="grid_16">Problems with any of these addresses? <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %></p>
 <% else %>
 <p class="grid_8">None yet. <%= link_to 'Find students to donate books to', donate_path %></p><div class="clear"></div>
 <% end %>

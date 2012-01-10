@@ -47,6 +47,19 @@ class HomeControllerTest < ActionController::TestCase
     assert_select 'h1', "Hugh Akston"
     assert_select '.pledge .headline', /You pledged to donate 5 books/
     assert_select '.request .headline', /Virtue of Selfishness to Quentin Daniels/
+    assert_select '.request .address', /123 Main St/
+  end
+
+  test "profile for donor when student is missing address" do
+    @quentin.address = ""
+    @quentin.save!
+
+    get :profile, params, session_for(@hugh)
+    assert_response :success
+    assert_select 'h1', "Hugh Akston"
+    assert_select '.pledge .headline', /You pledged to donate 5 books/
+    assert_select '.request .headline', /Virtue of Selfishness to Quentin Daniels/
+    assert_select '.request .address', /This student hasn't given their full address yet/
   end
 
   test "profile requires login" do

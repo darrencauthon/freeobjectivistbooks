@@ -13,6 +13,7 @@ quentin:
   location: "Boston, MA"
   school: MIT
   studying: physics
+  address: "123 Main St Apt 456\nBoston, MA 12345"
 
 hugh:
   name: Hugh Akston
