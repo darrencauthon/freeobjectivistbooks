@@ -12,6 +12,8 @@ class RequestsController < ApplicationController
   end
 
   def grant
+    logger.info "#{@current_user.name} (#{@current_user.id}) granting request #{@request.id} " +
+      "from #{@request.user.name} (#{@request.user.id}) for #{@request.book}"
     @request.donor = @current_user
     @request.save!
     redirect_to donate_url

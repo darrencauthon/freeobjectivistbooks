@@ -15,6 +15,7 @@ class SignupController < ApplicationController
 
   def submit
     if @user.save
+      logger.info "new signup: #{@user.name} (#{@user.id})"
       set_current_user @user
       if @user.pledges.any?
         redirect_to donate_url

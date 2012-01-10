@@ -5,9 +5,11 @@ class ApplicationController < ActionController::Base
 
   def find_current_user
     @current_user = User.find session[:user_id] if session[:user_id]
+    logger.info "current user: " + (@current_user ? "#{@current_user.name} (#{@current_user.id})" : "none")
   end
 
   def set_current_user(user)
+    logger.info "setting current user: " + (@current_user ? "#{@current_user.name} (#{@current_user.id})" : "none")
     reset_session
     session[:user_id] = user && user.id
     @current_user = user
@@ -18,6 +20,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     if !@current_user
+      logger.info "no current user, rendering login page"
       @destination = request.url
       render "sessions/new"
     end
