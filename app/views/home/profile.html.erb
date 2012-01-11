@@ -4,12 +4,18 @@
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
 .profile p, .request p, .pledge p {
     margin-top: 0;
     margin-bottom: 0;
 }
+
 .request .donation {
     margin-top: 6px;
+}
+
+.notes {
+    margin-top: 12px;
 }
 
 .missing {
@@ -64,7 +70,10 @@
 </div>
 <div class="clear"></div>
 <% end %>
-<p class="grid_16">Problems with any of these addresses? <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %></p>
+<div class="grid_8 notes">
+<p>If ordering online to ship directly to the student, you may need to put in a phone number. We don't collect student's phone numbers right now; best to enter your own number.</p>
+<p>Problems with any of these addresses? <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %></p>
+<div class="clear"></div>
 <% else %>
 <p class="grid_8">None yet. <%= link_to 'Find students to donate books to', donate_path %></p><div class="clear"></div>
 <% end %>
