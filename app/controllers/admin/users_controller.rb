@@ -6,7 +6,7 @@ class Admin::UsersController < AdminController
   def destroy
     logger.info "deleting user #{@user.name} (#{@user.id})"
     @user.destroy
-    flash[:message] = "#{@user.name} deleted."
+    flash[:notice] = "#{@user.name} deleted."
     redirect_to admin_url
   end
 end
