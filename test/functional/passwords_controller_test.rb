@@ -56,6 +56,7 @@ class PasswordsControllerTest < ActionController::TestCase
   test "edit" do
     get :edit, @user.letmein_params
     validate_reset_form
+    assert_nil session[:user_id]
   end
 
   test "edit with invalid letmein" do
@@ -77,10 +78,12 @@ class PasswordsControllerTest < ActionController::TestCase
 
     if options[:expect_error]
       validate_reset_form
+      assert_nil session[:user_id]
       assert_select '.field_with_errors', options[:expect_error]
       assert !@user.authenticate(password)
     else
       assert_redirected_to root_url
+      assert_equal @user.id, session[:user_id]
       assert @user.authenticate(password)
     end
   end

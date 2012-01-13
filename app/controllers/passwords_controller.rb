@@ -13,6 +13,7 @@ class PasswordsController < ApplicationController
   end
 
   def validate_letmein
+    set_current_user nil
     @user = User.find_by_id params[:id]
     result = @user ? @user.letmein?(params) : :invalid
     render "#{result}_reset" if result != :valid
