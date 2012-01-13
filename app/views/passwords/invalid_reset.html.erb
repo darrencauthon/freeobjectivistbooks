@@ -1,0 +1,9 @@
+<% content_for :title do %>Reset Invalid<% end %>
+
+<h1 class="grid_16">Invalid reset link</h1>
+
+<p class="grid_12">
+    Something went wrong with this password reset request.
+    <%= link_to 'Request a password reset again', forgot_password_path %> or
+    <%= mail_to 'jason@rationalegoist.com', 'contact Jason for help' %> if this keeps happening.
+</p>

@@ -1,0 +1,23 @@
+<% content_for :title do %>Reset Password<% end %>
+
+<h1 class="grid_16">Reset password</h1>
+
+<%= form_for @user, url: password_path, method: :put do |f| %>
+    <%= f.label :password, class: "grid_1" %>
+    <%= f.password_field :password, class: "grid_4", placeholder: "New password" %>
+    <span class="grid_8 field_with_errors"><%= @user.errors[:password].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :password_confirmation, "Confirm", class: "grid_1" %>
+    <%= f.password_field :password_confirmation, class: "grid_4", placeholder: "Repeat password" %>
+    <span class="grid_8 field_with_errors"><%= @user.errors[:password_confirmation].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= hidden_field_tag :id, params[:id] %>
+    <%= hidden_field_tag :timestamp, params[:timestamp] %>
+    <%= hidden_field_tag :auth, params[:auth] %>
+
+    <div class="grid_1">&nbsp;</div>
+    <%= f.submit "Reset password", class: "grid_2" %>
+    <div class="clear"></div>
+<% end %>

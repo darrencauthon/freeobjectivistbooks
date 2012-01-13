@@ -45,3 +45,13 @@ class ActionController::TestCase
     )
   end
 end
+
+class User
+  def invalid_letmein_params
+    letmein_params.merge auth: "wrong"
+  end
+
+  def expired_letmein_params
+    letmein_params.merge timestamp: 1.year.ago.iso8601
+  end
+end

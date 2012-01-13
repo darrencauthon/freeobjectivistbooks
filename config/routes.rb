@@ -10,6 +10,13 @@ FreeBooks::Application.routes.draw do
   post "login" => "sessions#create"
   match "logout" => "sessions#destroy"
 
+  resource :password, only: [:edit, :update], path_names: {edit: "reset"} do
+    member do
+      get "forgot"
+      post "request_reset"
+    end
+  end
+
   get "donate" => "requests#index"
   resources :requests, only: [] do
     post "grant", on: :member
