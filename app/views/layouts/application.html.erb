@@ -26,11 +26,22 @@
 </div>
 
 <div class="container_16">
-<div class="grid_16 flash">
+<div class="grid_12 flash">
     <% [:error, :notice].each do |type| %>
-    <% if flash[type].present? %><p class="<%= type %>"><%= flash[type] %></p><% end %>
+    <% if flash[type] %>
+    <div class="message <%= type %>">
+        <% case flash[type] %>
+        <% when String %>
+        <p class="headline"><%= flash[type] %></p>
+        <% when Hash %>
+        <% if flash[type][:headline].present? %><p class="headline"><%= flash[type][:headline] %></p><% end %>
+        <% if flash[type][:detail].present? %><p class="detail"><%= flash[type][:detail] %></p><% end %>
+        <% end %>
+    </div>
+    <% end %>
     <% end %>
 </div>
+<div class="clear"></div>
 <%= yield %>
 <div class="clear"></div>
 <p>&nbsp;</p>

@@ -111,30 +111,41 @@ a:active {
     margin-top: 24px;
 }
 
-.flash p {
-    border: 2px solid;
-    padding: 4px 12px 4px 30px;
-    background-position: 6px center;
-    background-repeat: no-repeat;
-    margin-bottom: 12px;
-    font-family: 'gill sans', helvetica, sans-serif;
-    font-size: 1.2em;
-}
-
-.flash p:last-child {
+.flash :last-child {
     margin-bottom: 0;
 }
 
-.flash .notice {
+/****************************************************************************************************/
+/* Message boxes */
+
+.message {
+    border: 2px solid;
+    background-position: 6px 4px;
+    background-repeat: no-repeat;
+    margin-bottom: 12px;
+}
+
+.message.error {
+    border-color: #940e0a;
+    background-color: #ffbcbd;
+    background-image: url(/assets/error-icon.png);
+}
+
+.message.notice {
     border-color: #16711f;
     background-color: #b4fcbc;
     background-image: url(/assets/notice-icon.png);
 }
 
-.flash .error {
-    border-color: #940e0a;
-    background-color: #ffbcbd;
-    background-image: url(/assets/error-icon.png);
+.message p {
+    padding: 4px 12px 4px 30px;
+    margin-bottom: 0;
+}
+
+.message .headline {
+    font-family: 'gill sans', helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 1.2em;
 }
 
 /****************************************************************************************************/
