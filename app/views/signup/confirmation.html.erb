@@ -55,7 +55,7 @@ or two) to browse student requests and choose which ones you want to fulfill.<% 
 <p class="grid_2 label">Email</p><p class="grid_6"><%= @user.email %></p><div class="clear"></div>
 <% if @user.address.present? %>
 <p class="grid_2 label">Address</p>
-<p class="grid_6"><%= raw format_address @user.address %></p>
+<p class="grid_6"><%= format_address @user.address %></p>
 <div class="clear"></div>
 <% end %>
 

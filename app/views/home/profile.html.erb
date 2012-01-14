@@ -62,7 +62,7 @@
     <p class="name"><%= request.user.name %></p>
     <p class="address">
         <% if request.user.address.present? %>
-        <%= raw format_address request.user.address %>
+        <%= format_address request.user.address %>
         <% else %>
         This student hasn't given their full address yet. We'll contact them to fill it in and then notify you.
         <% end %>
