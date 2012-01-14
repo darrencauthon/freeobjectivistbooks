@@ -4,7 +4,13 @@ class ApplicationController < ActionController::Base
   before_filter :find_current_user, :load_models
 
   def find_current_user
-    @current_user = User.find session[:user_id] if session[:user_id]
+    if session[:user_id]
+      @current_user = User.find_by_id session[:user_id]
+      if !@current_user
+        logger.warn "couldn't find current user #{session[:user_id]}, clearing session"
+        reset_session
+      end
+    end
     logger.info "current user: " + (@current_user ? "#{@current_user.name} (#{@current_user.id})" : "none")
   end
 
