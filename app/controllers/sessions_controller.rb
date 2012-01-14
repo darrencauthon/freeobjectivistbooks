@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       set_current_user user
       redirect_to @destination || root_url
     else
-      flash.now[:error] = "Incorrect email or password."
+      @error = "Incorrect email or password."
       render :new
     end
   end

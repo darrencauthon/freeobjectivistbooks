@@ -7,7 +7,7 @@ class PasswordsController < ApplicationController
     if @user
       UserMailer.reset_password(@user).deliver
     else
-      flash.now[:error] = email.blank? ? "Please enter an email address" : "No user with that email"
+      @error = email.blank? ? "Please enter an email address" : "No user with that email"
       render :forgot
     end
   end
@@ -21,8 +21,8 @@ class PasswordsController < ApplicationController
 
   def update
     if @user.reset_password params[:user]
-      flash[:notice] = "Your password has been reset."
       set_current_user @user
+      flash[:notice] = "Your password has been reset."
       redirect_to root_url
     else
       render :edit

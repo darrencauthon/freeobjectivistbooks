@@ -105,6 +105,39 @@ a:active {
 }
 
 /****************************************************************************************************/
+/* Flash */
+
+.flash {
+    margin-top: 24px;
+}
+
+.flash p {
+    border: 2px solid;
+    padding: 4px 12px 4px 30px;
+    background-position: 6px center;
+    background-repeat: no-repeat;
+    margin-bottom: 12px;
+    font-family: 'gill sans', helvetica, sans-serif;
+    font-size: 1.2em;
+}
+
+.flash p:last-child {
+    margin-bottom: 0;
+}
+
+.flash .notice {
+    border-color: #16711f;
+    background-color: #b4fcbc;
+    background-image: url(/assets/notice-icon.png);
+}
+
+.flash .error {
+    border-color: #940e0a;
+    background-color: #ffbcbd;
+    background-image: url(/assets/error-icon.png);
+}
+
+/****************************************************************************************************/
 /* Sidebar */
 
 .sidebar img {
@@ -144,11 +177,11 @@ a:active {
 .button {
     border: 0;
     background-repeat: no-repeat;
-    background-position: top;
+    background-position-y: top;
     background-color: transparent;
 }
-.button:hover { background-position: center; }
-.button:active { background-position: bottom; }
+.button:hover { background-position-y: center; }
+.button:active { background-position-y: bottom; }
 
 /****************************************************************************************************/
 /* Thank-you */
