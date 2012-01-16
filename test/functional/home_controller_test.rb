@@ -66,7 +66,7 @@ class HomeControllerTest < ActionController::TestCase
 
   test "profile requires login" do
     get :profile
-    assert_response :success
+    assert_response :unauthorized
     assert_select 'h1', 'Log in'
   end
 

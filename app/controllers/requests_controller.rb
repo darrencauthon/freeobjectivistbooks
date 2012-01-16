@@ -1,8 +1,13 @@
 class RequestsController < ApplicationController
   before_filter :require_login
+  before_filter :require_request_owner, only: [:show, :edit, :update]
 
   def load_models
     @request = Request.find params[:id] if params[:id]
+  end
+
+  def require_request_owner
+    require_user @request.user
   end
 
   def index

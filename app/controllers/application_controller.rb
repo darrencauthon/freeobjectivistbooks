@@ -1,3 +1,6 @@
+class UnauthorizedException < Exception; end
+class ForbiddenException < Exception; end
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
@@ -25,19 +28,34 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    if !@current_user
-      logger.info "no current user, rendering login page"
-      @destination = request.url
-      render "sessions/new"
-    end
+    raise UnauthorizedException if !@current_user
   end
 
+  def require_user(user)
+    require_login
+    raise ForbiddenException if @current_user != user
+  end
+
+  rescue_from UnauthorizedException, with: :render_unauthorized
+  rescue_from ForbiddenException, with: :render_forbidden
+
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception, with: :render_error
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     rescue_from ActionController::RoutingError, with: :render_not_found
     rescue_from ActionController::UnknownController, with: :render_not_found
     rescue_from ActionController::UnknownAction, with: :render_not_found
+    rescue_from Exception, with: :render_error
+  end
+
+  def render_unauthorized
+    logger.info "no current user, rendering login page"
+    @destination = request.url
+    render "sessions/new", status: 401
+  end
+
+  def render_forbidden
+    @destination = request.url
+    render template: "errors/403", status: 403
   end
 
   def render_not_found

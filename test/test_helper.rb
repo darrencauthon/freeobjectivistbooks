@@ -16,7 +16,7 @@ class ActiveSupport::TestCase
   end
 
   def session_for(user)
-    {user_id: user.id}
+    user ? {user_id: user.id} : {}
   end
 end
 

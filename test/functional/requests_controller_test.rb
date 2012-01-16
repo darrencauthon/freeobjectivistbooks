@@ -9,6 +9,16 @@ class RequestsControllerTest < ActionController::TestCase
     @quentin_request = requests :quentin_wants_vos
   end
 
+  def verify_login_page
+    assert_response :unauthorized
+    assert_select 'h1', 'Log in'
+  end
+
+  def verify_wrong_login_page
+    assert_response :forbidden
+    assert_select 'h1', 'Wrong login?'
+  end
+
   # Index
 
   test "index" do
@@ -23,8 +33,7 @@ class RequestsControllerTest < ActionController::TestCase
 
   test "index requires login" do
     get :index
-    assert_response :success
-    assert_select 'h1', 'Log in'
+    verify_login_page
   end
 
   # Show
@@ -45,6 +54,16 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.address', /123 Main St/
     assert_select 'a', /update/i
     assert_select 'h2', /status: donor found/i
+  end
+
+  test "show requires login" do
+    get :show, id: @howard_request.id
+    verify_login_page
+  end
+
+  test "show requires request owner" do
+    get :show, {id: @howard_request.id}, session_for(@quentin)
+    verify_wrong_login_page
   end
 
   # Edit
@@ -69,19 +88,34 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'input[type="submit"]'
   end
 
+  test "edit requires login" do
+    get :edit, id: @howard_request.id
+    verify_login_page
+  end
+
+  test "edit requires request owner" do
+    get :edit, {id: @howard_request.id}, session_for(@quentin)
+    verify_wrong_login_page
+  end
+
   # Update
 
   def update(request, options)
     user = request.user
     user_params = options.subhash :name, :address
-    post :update, {id: request.id, user: user_params}, session_for(user)
+    current_user = options.has_key?(:current_user) ? options[:current_user] : user
+    post :update, {id: request.id, user: user_params}, session_for(current_user)
 
-    assert_redirected_to request
-    assert_match /updated/, flash[:notice]
+    if block_given?
+      yield
+    else
+      assert_redirected_to request
+      assert_match /updated/, flash[:notice]
 
-    user.reload
-    assert_equal options[:name], user.name
-    assert_equal options[:address], user.address
+      user.reload
+      assert_equal options[:name], user.name
+      assert_equal options[:address], user.address
+    end
   end
 
   test "update no donor" do
@@ -90,6 +124,18 @@ class RequestsControllerTest < ActionController::TestCase
 
   test "update with donor" do
     update @quentin_request, name: "Quentin Daniels", address: "123 Quantum Ln"
+  end
+
+  test "update requires login" do
+    update @howard_request, name: "Howard Roark", address: "123 Independence St", current_user: nil do
+      verify_login_page
+    end
+  end
+
+  test "update requires request owner" do
+    update @howard_request, name: "Howard Roark", address: "123 Independence St", current_user: @quentin do
+      verify_wrong_login_page
+    end
   end
 
   # Grant

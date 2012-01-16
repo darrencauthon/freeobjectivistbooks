@@ -1,0 +1,31 @@
+<% content_for :title do %>Wrong Login<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+img {
+    margin-top: 20px;
+}
+.quote {
+    font-style: italic;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+</style>
+<% end %>
+
+<img class="grid_4" src="http://ecx.images-amazon.com/images/I/5139Z9VGNGL.jpg">
+<div class="grid_8">
+    <h1>Wrong login?</h1>
+    <!-- <p class="quote">She had felt as if a dark map of Colorado were spread before her like a traffic control panel,
+        with a few lights scattered through its mountains. One after another, the lights had gone out. One after
+        another, the men had vanished.
+    </p> -->
+    <p>You've reached this page in error.</p>
+    <ul>
+        <li>If you are not <%= @current_user.name %>,
+            <%= link_to 'log in to access this page', login_path(destination: @destination) %>.
+        </li>
+        <li>Otherwise, try starting from <%= link_to 'your homepage', root_path %>.</li>
+        <li>If you need help, <%= mail_to 'jason@rationalegoist.com', 'contact Jason' %>.</li>
+    </ul>
+</div>
