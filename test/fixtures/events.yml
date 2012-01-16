@@ -1,0 +1,46 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+hugh_granted_quentin:
+  type: granted
+  request: quentin_wants_vos
+  user: hugh
+  donor: hugh
+  happened_at: 2012-01-16 00:14:25
+  notified_at: 2012-01-16 00:14:25
+
+hugh_flagged_quentin:
+  type: flagged
+  request: quentin_wants_vos
+  user: hugh
+  donor: hugh
+  message: I need your full name and address
+  happened_at: 2012-01-17 00:14:25
+  notified_at: 2012-01-17 00:14:25
+
+quentin_added_name:
+  type: updated
+  request: quentin_wants_vos
+  user: quentin
+  donor: hugh
+  detail: added their full name
+  happened_at: 2012-01-18 00:14:25
+  notified_at: 2012-01-18 00:14:25
+
+quentin_added_address:
+  type: updated
+  request: quentin_wants_vos
+  user: quentin
+  donor: hugh
+  detail: added a shipping address
+  message: There you go
+  happened_at: 2012-01-18 00:15:25
+  notified_at: 2012-01-18 00:15:25
+
+hugh_messaged_quentin:
+  type: messaged
+  request: quentin_wants_vos
+  user: hugh
+  donor: hugh
+  message: Thanks! I will send you the book
+  happened_at: 2012-01-19 00:15:25
+  notified_at: 2012-01-19 00:15:25
