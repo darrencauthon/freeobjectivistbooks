@@ -32,4 +32,8 @@ class Request < ActiveRecord::Base
   before_validation do |request|
     request.book = request.other_book if request.book == "other"
   end
+
+  def granted?
+    donor.present?
+  end
 end

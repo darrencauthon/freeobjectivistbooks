@@ -18,7 +18,7 @@ FreeBooks::Application.routes.draw do
   end
 
   get "donate" => "requests#index"
-  resources :requests, only: [] do
+  resources :requests, only: [:show, :edit, :update] do
     post "grant", on: :member
   end
 

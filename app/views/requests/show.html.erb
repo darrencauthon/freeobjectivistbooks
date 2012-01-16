@@ -1,0 +1,34 @@
+<% content_for :title do %><%= @request.user.name %> wants <%= @request.book %><% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.name {
+    margin-bottom: 0;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16"><%= @request.user.name %> wants <span class="title"><%= @request.book %></span></h1>
+<div class="request grid_12">
+    <p class="reason"><%= @request.reason %></p>
+
+    <h2>Ship to</h2>
+    <p class="name"><%= @request.user.name %></p>
+    <% if @request.user.address.present? %>
+    <p class="address"><%= format_address @request.user.address %></p>
+    <p><%= link_to 'Update shipping info', edit_request_path(@request) %></p>
+    <% else %>
+    <p class="address">No address given</p>
+    <p><%= link_to 'Add your address', edit_request_path(@request) %></p>
+    <% end %>
+
+    <% if @request.donor %>
+    <h2>Status: Donor found</h2>
+    <p class="status">Good news! We have found you a donor: <%= @request.donor.name %> in <%= @request.donor.location %>.
+        They will send your book soon.
+    </p>
+    <% else %>
+    <h2>Status: Looking for donor</h2>
+    <p class="status">We are looking for a donor to send you this book.</p>
+    <% end %>
+</div>
