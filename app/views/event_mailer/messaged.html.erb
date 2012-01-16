@@ -1,0 +1,25 @@
+<p>Hi <%= @event.to.first_name %>,</p>
+
+<p><%= @event.user.name %> sent you a message on Free Objectivist Books.</p>
+
+<p>"<%= @event.message %>"</p>
+
+<% if @event.to_donor? %>
+<p>Please send <%= @event.request.book %> to:</p>
+
+<p>
+<%= @event.request.user.name %><br>
+<%= format_address @event.request.user.address %>
+</p>
+
+<p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>
+<% end %>
+
+<% if @event.to_student? %>
+<%= link_to 'See the status of your request', request_url(@event.request) %>
+<% end %>
+
+<p>Thanks,<br>
+Free Objectivist Books<br>
+<%= link_to "http://freeobjectivistbooks.org", root_url %>
+</p>

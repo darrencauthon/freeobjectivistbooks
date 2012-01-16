@@ -42,7 +42,7 @@ class PasswordsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Reset sent"
 
-    mail = ActionMailer::Base.deliveries.first
+    mail = ActionMailer::Base.deliveries.last
     assert_match /password/i, mail.subject
   end
 

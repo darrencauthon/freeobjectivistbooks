@@ -1,0 +1,18 @@
+Hi <%= @event.to.first_name %>,
+
+<%= @event.user.name %> sent you a message on Free Objectivist Books:
+
+"<%= @event.message %>"
+<% if @event.to_donor? %>
+Please send <%= @event.request.book %> to:
+
+<%= @event.request.user.name %>
+<%= @event.request.user.address %>
+
+See this and all the latest books you have pledged to donate at: <%= profile_url %><% end %>
+<% if @event.to_student? %>
+See the status of your request: <%= request_url @event.request %><% end %>
+
+Thanks,
+Free Objectivist Books
+http://freeobjectivistbooks.org

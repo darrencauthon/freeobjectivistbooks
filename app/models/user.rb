@@ -23,6 +23,14 @@ class User < ActiveRecord::Base
     return user if user && user.authenticate(password)
   end
 
+  def names
+    name ? name.strip.split(/\s+/) : []
+  end
+
+  def first_name
+    names.first
+  end
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create password
