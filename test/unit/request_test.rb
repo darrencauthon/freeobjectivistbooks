@@ -4,8 +4,11 @@ class RequestTest < ActiveSupport::TestCase
   def setup
     @howard = users :howard
     @hugh = users :hugh
-    @request = requests :howard_wants_atlas
+    @dagny = users :dagny
+
+    @howard_request = requests :howard_wants_atlas
     @quentin_request = requests :quentin_wants_vos
+    @dagny_request = requests :dagny_wants_cui
   end
 
   def reason
@@ -44,11 +47,11 @@ class RequestTest < ActiveSupport::TestCase
   # Associations
 
   test "user" do
-    assert_equal @howard, @request.user
+    assert_equal @howard, @howard_request.user
   end
 
   test "donor" do
-    assert_nil @request.donor
+    assert_nil @howard_request.donor
     assert_equal @hugh, @quentin_request.donor
   end
 
@@ -64,5 +67,41 @@ class RequestTest < ActiveSupport::TestCase
     granted = Request.granted
     assert granted.any?
     granted.each {|request| assert request.granted?}
+  end
+
+  # Update user
+
+  test "update user: added address" do
+    assert @howard_request.update_user({name: "Howard Roark", address: "123 Independence St"}, "")
+    event = @howard_request.events.last
+    assert Event.exists?(event)
+    assert_equal "update", event.type
+    assert_equal "added a shipping address", event.detail
+    assert event.message.blank?, event.message
+  end
+
+  test "update user: added name" do
+    assert @dagny_request.update_user({name: "Dagny Taggart", address: ""}, "Here you go")
+    event = @dagny_request.events.last
+    assert_equal "update", event.type
+    assert_equal "added their full name", event.detail
+    assert_equal "Here you go", event.message
+  end
+
+  test "new update: updated info" do
+    attributes = {name: "Quentin Daniels", address: "123 Quantum Ln\nGalt's Gulch, CO"}
+    assert @quentin_request.update_user(attributes, "I have a new address")
+    event = @quentin_request.events.last
+    assert_equal "update", event.type
+    assert_equal "updated shipping info", event.detail
+    assert_equal "I have a new address", event.message
+  end
+
+  test "new update: message only" do
+    assert @dagny_request.update_user({name: @dagny.name, address: @dagny.address}, "just a message")
+    event = @dagny_request.events.last
+    assert_equal @dagny, event.user
+    assert_equal "message", event.type
+    assert_equal "just a message", event.message
   end
 end

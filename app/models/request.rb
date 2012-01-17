@@ -17,6 +17,7 @@ class Request < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :donor, class_name: "User"
+  has_many :events
 
   validates_presence_of :book, message: "Please choose a book."
   validates_presence_of :reason, message: "This is required."
@@ -39,5 +40,19 @@ class Request < ActiveRecord::Base
 
   def open?
     !granted?
+  end
+
+  def update_user(attributes, message = nil)
+    user.attributes = attributes
+    return false if user.invalid?
+
+    event = if user.changed?
+      Event.new_update self, message
+    elsif message.present?
+      Event.new_message self, user, message
+    end
+
+    events << event if event
+    user.save
   end
 end
