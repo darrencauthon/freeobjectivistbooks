@@ -119,7 +119,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "donations" do
-    assert_equal [requests(:quentin_wants_vos)], @hugh.donations
+    assert @hugh.donations.any?
+    @hugh.donations.each {|request| assert_equal @hugh, request.donor}
   end
 
   # Association dependencies

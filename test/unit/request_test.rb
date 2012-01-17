@@ -55,10 +55,14 @@ class RequestTest < ActiveSupport::TestCase
   # Scopes
 
   test "open" do
-    assert_equal [@request], Request.open.all
+    open = Request.open
+    assert open.any?
+    open.each {|request| assert request.open?}
   end
 
   test "granted" do
-    assert_equal [@quentin_request], Request.granted.all
+    granted = Request.granted
+    assert granted.any?
+    granted.each {|request| assert request.granted?}
   end
 end

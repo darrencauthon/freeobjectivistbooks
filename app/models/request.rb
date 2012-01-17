@@ -36,4 +36,8 @@ class Request < ActiveRecord::Base
   def granted?
     donor.present?
   end
+
+  def open?
+    !granted?
+  end
 end
