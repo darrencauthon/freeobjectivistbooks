@@ -21,4 +21,26 @@ class Event < ActiveRecord::Base
   def to_student?
     to == request.user
   end
+
+  def notified?
+    notified_at.present?
+  end
+
+  # Actions
+
+  def notified
+    self.notified_at = Time.now
+  end
+
+  def notified!
+    notified
+    save!
+  end
+
+  def notify
+    return if !to || notified?
+    mail = EventMailer.mail_for_event self
+    mail.deliver
+    self.notified!
+  end
 end

@@ -43,4 +43,10 @@ hugh_messages_quentin:
   donor: hugh
   message: Thanks! I will send you the book
   happened_at: 2012-01-19 00:15:25
-  notified_at: 2012-01-19 00:15:25
+
+howard_updates_info:
+  type: update
+  request: howard_wants_atlas
+  user: howard
+  detail: updated shipping info
+  happened_at: 2012-01-20 00:15:25

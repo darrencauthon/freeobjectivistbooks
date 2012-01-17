@@ -44,4 +44,27 @@ class EventTest < ActiveSupport::TestCase
     assert !events(:hugh_grants_quentin).to_donor?
     assert events(:quentin_adds_name).to_donor?
   end
+
+  # Actions
+
+  test "notify" do
+    event = events :hugh_messages_quentin
+    assert !event.notified?
+    assert_difference("ActionMailer::Base.deliveries.count") { event.notify }
+    assert event.notified?
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal "Hugh Akston sent you a message on Free Objectivist Books", mail.subject
+  end
+
+  test "notify is idempotent" do
+    event = events :quentin_adds_name
+    assert event.notified?
+    assert_no_difference("ActionMailer::Base.deliveries.count") { event.notify }
+  end
+
+  test "notify is noop if no recipient" do
+    event = events :howard_updates_info
+    assert !event.notified?
+    assert_no_difference("ActionMailer::Base.deliveries.count") { event.notify }
+  end
 end
