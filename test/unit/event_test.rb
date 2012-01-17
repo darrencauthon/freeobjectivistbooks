@@ -10,16 +10,16 @@ class EventTest < ActiveSupport::TestCase
   # Associations
 
   test "request" do
-    assert_equal @quentin_wants_vos, events(:hugh_granted_quentin).request
+    assert_equal @quentin_wants_vos, events(:hugh_grants_quentin).request
   end
 
   test "user" do
-    assert_equal @hugh, events(:hugh_granted_quentin).user
-    assert_equal @quentin, events(:quentin_added_name).user
+    assert_equal @hugh, events(:hugh_grants_quentin).user
+    assert_equal @quentin, events(:quentin_adds_name).user
   end
 
   test "donor" do
-    assert_equal @hugh, events(:hugh_granted_quentin).donor
+    assert_equal @hugh, events(:hugh_grants_quentin).donor
   end
 
   # Validations
@@ -31,17 +31,17 @@ class EventTest < ActiveSupport::TestCase
   # Derived attributes
 
   test "to" do
-    assert_equal @quentin, events(:hugh_granted_quentin).to
-    assert_equal @hugh, events(:quentin_added_name).to
+    assert_equal @quentin, events(:hugh_grants_quentin).to
+    assert_equal @hugh, events(:quentin_adds_name).to
   end
 
   test "to student?" do
-    assert events(:hugh_granted_quentin).to_student?
-    assert !events(:quentin_added_name).to_student?
+    assert events(:hugh_grants_quentin).to_student?
+    assert !events(:quentin_adds_name).to_student?
   end
 
   test "to donor?" do
-    assert !events(:hugh_granted_quentin).to_donor?
-    assert events(:quentin_added_name).to_donor?
+    assert !events(:hugh_grants_quentin).to_donor?
+    assert events(:quentin_adds_name).to_donor?
   end
 end

@@ -7,8 +7,8 @@ class EventMailerTest < ActionMailer::TestCase
     @quentin = users :quentin
   end
 
-  test "added name" do
-    mail = EventMailer.mail_for_event events(:quentin_added_name)
+  test "add name" do
+    mail = EventMailer.mail_for_event events(:quentin_adds_name)
     assert_equal "Quentin Daniels added their full name on Free Objectivist Books", mail.subject
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
@@ -26,8 +26,8 @@ class EventMailerTest < ActionMailer::TestCase
     end
   end
 
-  test "added address" do
-    mail = EventMailer.mail_for_event events(:quentin_added_address)
+  test "add address" do
+    mail = EventMailer.mail_for_event events(:quentin_adds_address)
     assert_equal "Quentin Daniels added a shipping address on Free Objectivist Books", mail.subject
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
@@ -45,8 +45,8 @@ class EventMailerTest < ActionMailer::TestCase
     end
   end
 
-  test "messaged" do
-    mail = EventMailer.mail_for_event events(:hugh_messaged_quentin)
+  test "message" do
+    mail = EventMailer.mail_for_event events(:hugh_messages_quentin)
     assert_equal "Hugh Akston sent you a message on Free Objectivist Books", mail.subject
     assert_equal ["quentin@mit.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from

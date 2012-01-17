@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-hugh_granted_quentin:
-  type: granted
+hugh_grants_quentin:
+  type: grant
   request: quentin_wants_vos
   user: hugh
   donor: hugh
   happened_at: 2012-01-16 00:14:25
   notified_at: 2012-01-16 00:14:25
 
-hugh_flagged_quentin:
-  type: flagged
+hugh_flags_quentin:
+  type: flag
   request: quentin_wants_vos
   user: hugh
   donor: hugh
@@ -17,8 +17,8 @@ hugh_flagged_quentin:
   happened_at: 2012-01-17 00:14:25
   notified_at: 2012-01-17 00:14:25
 
-quentin_added_name:
-  type: updated
+quentin_adds_name:
+  type: update
   request: quentin_wants_vos
   user: quentin
   donor: hugh
@@ -26,8 +26,8 @@ quentin_added_name:
   happened_at: 2012-01-18 00:14:25
   notified_at: 2012-01-18 00:14:25
 
-quentin_added_address:
-  type: updated
+quentin_adds_address:
+  type: update
   request: quentin_wants_vos
   user: quentin
   donor: hugh
@@ -36,8 +36,8 @@ quentin_added_address:
   happened_at: 2012-01-18 00:15:25
   notified_at: 2012-01-18 00:15:25
 
-hugh_messaged_quentin:
-  type: messaged
+hugh_messages_quentin:
+  type: message
   request: quentin_wants_vos
   user: hugh
   donor: hugh

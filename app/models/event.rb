@@ -6,9 +6,9 @@ class Event < ActiveRecord::Base
   belongs_to :donor, class_name: "User"
 
   validates_presence_of :type
-  validates_inclusion_of :type, in: %w{granted flagged updated messaged}
+  validates_inclusion_of :type, in: %w{grant flag update message}
 
-  validates_presence_of :message, if: "type == 'messaged'"
+  validates_presence_of :message, if: "type == 'message'"
 
   def to
     user == request.user ? donor : request.user
