@@ -23,12 +23,8 @@ class User < ActiveRecord::Base
     return user if user && user.authenticate(password)
   end
 
-  def names
-    name ? name.strip.split(/\s+/) : []
-  end
-
   def first_name
-    names.first
+    name.words.first if name
   end
 
   def password=(password)

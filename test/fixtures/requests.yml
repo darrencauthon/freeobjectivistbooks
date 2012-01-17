@@ -10,3 +10,9 @@ quentin_wants_vos:
   book: The Virtue of Selfishness
   reason: Someone told me I need to read this before I figure out the secret of the motor.
   donor: hugh
+
+dagny_wants_cui:
+  user: dagny
+  book: "Capitalism: The Unknown Ideal"
+  reason: I need this to morally defend my business!
+  donor: hugh

@@ -20,3 +20,11 @@ hugh:
   email: akston@patrickhenry.edu
   password_digest: <%= BCrypt::Password.create "akston" %>
   location: "Boston, MA"
+
+dagny:
+  name: Dagny
+  email: dagny@taggart.com
+  password_digest: <%= BCrypt::Password.create "taggart" %>
+  location: "Chicago, IL"
+  school: Northwestern University
+  studying: business
