@@ -3,6 +3,11 @@ class EventMailer < ApplicationMailer
     self.send "#{event.type}_event", event
   end
 
+  def flag_event(event)
+    @event = event
+    mail_to_user @event.to, subject: "Problem with your shipping info on Free Objectivist Books"
+  end
+
   def update_event(event)
     @event = event
     mail_to_user @event.to, subject: "#{@event.user.name} #{@event.detail} on Free Objectivist Books"

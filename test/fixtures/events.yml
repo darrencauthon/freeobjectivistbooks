@@ -8,6 +8,14 @@ hugh_grants_quentin:
   happened_at: 2012-01-16 00:14:25
   notified_at: 2012-01-16 00:14:25
 
+hugh_grants_dagny:
+  type: grant
+  request: dagny_wants_cui
+  user: hugh
+  donor: hugh
+  happened_at: 2012-01-16 00:15:25
+  notified_at: 2012-01-16 00:15:25
+
 hugh_flags_quentin:
   type: flag
   request: quentin_wants_vos
@@ -16,6 +24,15 @@ hugh_flags_quentin:
   message: I need your full name and address
   happened_at: 2012-01-17 00:14:25
   notified_at: 2012-01-17 00:14:25
+
+hugh_flags_dagny:
+  type: flag
+  request: dagny_wants_cui
+  user: hugh
+  donor: hugh
+  message: Please add your full name and address
+  happened_at: 2012-01-17 00:15:25
+  notified_at: 2012-01-17 00:15:25
 
 quentin_adds_name:
   type: update

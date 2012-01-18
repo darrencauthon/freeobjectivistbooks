@@ -7,6 +7,20 @@ class EventMailerTest < ActionMailer::TestCase
     @quentin = users :quentin
   end
 
+  test "flag" do
+    mail = EventMailer.mail_for_event events(:hugh_flags_dagny)
+    assert_equal "Problem with your shipping info on Free Objectivist Books", mail.subject
+    assert_equal ["dagny@taggart.com"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Dagny/
+      assert_select 'p', 'Your donor (Hugh Akston) says: "Please add your full name and address"'
+      assert_select 'a', /update/i
+    end
+  end
+
   test "add name" do
     mail = EventMailer.mail_for_event events(:quentin_adds_name)
     assert_equal "Quentin Daniels added their full name on Free Objectivist Books", mail.subject

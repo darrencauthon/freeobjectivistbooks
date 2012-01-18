@@ -33,6 +33,10 @@ class Event < ActiveRecord::Base
     create_event! request, user, "update", detail: detail, message: message
   end
 
+  def self.create_flag!(request, message)
+    create_event! request, request.donor, "flag", message: message
+  end
+
   def self.create_message!(request, user, message)
     create_event! request, user, "message", message: message
   end

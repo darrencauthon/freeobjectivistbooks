@@ -1,13 +1,23 @@
 class RequestsController < ApplicationController
   before_filter :require_login
-  before_filter :require_request_owner, only: [:show, :edit, :update]
+  before_filter :require_student, only: [:edit, :update]
+  before_filter :require_donor, only: [:flag, :update_flag]
+  before_filter :require_student_or_donor, only: :show
 
   def load_models
     @request = Request.find params[:id] if params[:id]
   end
 
-  def require_request_owner
+  def require_student
     require_user @request.user
+  end
+
+  def require_donor
+    require_user @request.donor
+  end
+
+  def require_student_or_donor
+    require_user @request.user, @request.donor
   end
 
   def index
@@ -36,6 +46,15 @@ class RequestsController < ApplicationController
       redirect_to @request
     else
       render :edit
+    end
+  end
+
+  def update_flag
+    if @request.flag params[:message]
+      flash[:notice] = "The request has been flagged, and your message has been sent to #{@request.user.name}."
+      redirect_to @request
+    else
+      render :flag
     end
   end
 

@@ -1,0 +1,44 @@
+<% content_for :title do %>Flag Request<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.request {
+    margin-top: 24px;
+}
+
+.request p {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.submit {
+    height: 46px;
+    margin-top: 24px;
+    background-image: url(/assets/update-button.png);
+    background-position-x: left;
+}
+ </style>
+<% end %>
+
+<h1 class="grid_16">Flag shipping info</h1>
+
+<div class="request grid_12">
+    <p class="name"><%= @request.user.name %></p>
+    <p class="address">
+        <% if @request.user.address.present? %><%= format_address @request.user.address %><% else %>No address given<% end %>
+    </p>
+</div>
+
+<div class="grid_10">
+<%= form_for flag_request_path(@request) do |f| %>
+    <h2>What is the problem?</h2>
+
+    <p>We'll send your message to the student and ask them to fix it:</p>
+    <p class="field_with_errors"><%= @request.errors[:message].join(", ") %></p>
+    <%= text_area_tag :message, "", rows: 6, cols: 60 %>
+    <div class="clear"></div>
+
+    <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
+<% end %>
+</div>

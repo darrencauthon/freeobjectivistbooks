@@ -19,7 +19,11 @@ FreeBooks::Application.routes.draw do
 
   get "donate" => "requests#index"
   resources :requests, only: [:show, :edit, :update] do
-    post "grant", on: :member
+    member do
+      post "grant"
+      get "flag"
+      post "flag" => "requests#update_flag"
+    end
   end
 
   get "signup/read"

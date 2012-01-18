@@ -31,9 +31,10 @@ class ApplicationController < ActionController::Base
     raise UnauthorizedException if !@current_user
   end
 
-  def require_user(user)
+  def require_user(*users)
     require_login
-    raise ForbiddenException if @current_user != user
+    users = users.flatten.compact
+    raise ForbiddenException if !@current_user.in?(users)
   end
 
   rescue_from UnauthorizedException, with: :render_unauthorized

@@ -11,6 +11,13 @@
  </style>
 <% end %>
 
+<% if @request.flagged? && @current_user == @request.user %>
+<div class="grid_12 message error">
+    <p class="headline">There seems to be a problem with your shipping info.</p>
+    <p class="detail"><%= @request.flag_detail %></p>
+</div>
+<% end %>
+
 <h1 class="grid_16">Your shipping info</h1>
 
 <div class="grid_10">

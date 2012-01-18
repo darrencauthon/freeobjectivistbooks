@@ -5,15 +5,6 @@
     margin-bottom: 8px;
 }
 
-.profile p, .request p, .pledge p {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.request .donation {
-    margin-top: 6px;
-}
-
 .notes {
     margin-top: 12px;
 }
@@ -38,6 +29,7 @@
         We are looking for a donor for you. We'll let you know when we find someone.
         <% end %>
     </p>
+    <p><%= link_to 'See full request details', request_path(request) %></p>
 </div>
 <div class="clear"></div>
 <% end %>
@@ -56,23 +48,16 @@
 <h2 class="grid_16">Your donations</h2>
 <% if @current_user.donations.any? %>
 <p class="grid_16">Please send the following books:</p>
-<% @current_user.donations.each do |request| %>
-<div class="grid_8 request">
-    <p class="headline"><span class="title"><%= request.book %></span> to:</p>
-    <p class="name"><%= request.user.name %></p>
-    <p class="address">
-        <% if request.user.address.present? %>
-        <%= format_address request.user.address %>
-        <% else %>
-        This student hasn't given their full address yet. We'll contact them to fill it in and then notify you.
-        <% end %>
-    </p>
-</div>
-<div class="clear"></div>
-<% end %>
+<%= render partial: "requests/spacer" %>
+<%= render partial: "donation", collection: @current_user.donations, spacer_template: "requests/spacer" %>
+<%= render partial: "requests/spacer" %>
 <div class="grid_8 notes">
-<p>If ordering online to ship directly to the student, you may need to put in a phone number. We don't collect student's phone numbers right now; best to enter your own number.</p>
-<p>Problems with any of these addresses? <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %></p>
+<p>If ordering online to ship directly to the student, you may need to put in a phone number. We don't collect student's phone numbers
+    right now; best to enter your own number.
+</p>
+<p>Problems with any of these addresses?
+    <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %>
+</p>
 </div>
 <div class="clear"></div>
 <% else %>

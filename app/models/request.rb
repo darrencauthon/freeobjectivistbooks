@@ -34,6 +34,8 @@ class Request < ActiveRecord::Base
     request.book = request.other_book if request.book == "other"
   end
 
+  # Derived attributes
+
   def granted?
     donor.present?
   end
@@ -42,9 +44,18 @@ class Request < ActiveRecord::Base
     !granted?
   end
 
+  def flag_detail
+    flag_event = events.where(type: "flag").order('created_at desc').first
+    "Your donor says: \"#{flag_event.message}\"" if flag_event
+  end
+
+  # Actions
+
   def update_user(attributes, message = nil)
     user.attributes = attributes
     return :error if user.invalid?
+
+    self.flagged = false
 
     event = if user.changed?
       Event.create_update! self, message
@@ -53,7 +64,20 @@ class Request < ActiveRecord::Base
     end
     Rails.logger.info "event: #{event.inspect}"
 
+    save!
     user.save!
     event.type.to_sym if event
+  end
+
+  def flag(message)
+    if message.blank?
+      self.errors.add(:message, "This is required.")
+      return false
+    end
+
+    self.flagged = true
+    save!
+    Event.create_flag! self, message
+    true
   end
 end

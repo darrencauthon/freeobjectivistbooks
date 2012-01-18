@@ -69,12 +69,38 @@ class RequestTest < ActiveSupport::TestCase
     granted.each {|request| assert request.granted?}
   end
 
+  # Flagging
+
+  test "flag" do
+    assert_difference "@quentin_request.events.count" do
+      assert @quentin_request.flag("Is this address correct?")
+    end
+
+    event = @quentin_request.events.last
+    assert_equal "flag", event.type
+    assert_equal "Is this address correct?", event.message
+  end
+
+  test "flag requires message" do
+    assert_no_difference "@quentin_request.events.count" do
+      assert !@quentin_request.flag("")
+    end
+  end
+
+  test "flag detail" do
+    detail = 'Your donor says: "Please add your full name and address"'
+    assert_equal detail, @dagny_request.flag_detail
+  end
+
   # Update user
 
   test "update user: added address" do
     assert_difference "@howard_request.events.count" do
       assert_equal :update, @howard_request.update_user({name: "Howard Roark", address: "123 Independence St"}, "")
     end
+
+    @howard_request.reload
+    assert !@howard_request.flagged?
 
     event = @howard_request.events.last
     assert_equal "update", event.type
@@ -86,6 +112,9 @@ class RequestTest < ActiveSupport::TestCase
     assert_difference "@dagny_request.events.count" do
       assert_equal :update, @dagny_request.update_user({name: "Dagny Taggart", address: ""}, "Here you go")
     end
+
+    @dagny_request.reload
+    assert !@dagny_request.flagged?
 
     event = @dagny_request.events.last
     assert_equal "update", event.type
@@ -99,6 +128,9 @@ class RequestTest < ActiveSupport::TestCase
       assert_equal :update, @quentin_request.update_user(attributes, "I have a new address")
     end
 
+    @quentin_request.reload
+    assert !@quentin_request.flagged?
+
     event = @quentin_request.events.last
     assert_equal "update", event.type
     assert_equal "updated shipping info", event.detail
@@ -109,6 +141,9 @@ class RequestTest < ActiveSupport::TestCase
     assert_difference "@dagny_request.events.count" do
       assert_equal :message, @dagny_request.update_user({name: @dagny.name, address: @dagny.address}, "just a message")
     end
+
+    @dagny_request.reload
+    assert !@dagny_request.flagged?
 
     event = @dagny_request.events.last
     assert_equal @dagny, event.user

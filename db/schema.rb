@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120116061425) do
+ActiveRecord::Schema.define(:version => 20120118060513) do
 
   create_table "events", :force => true do |t|
     t.integer  "request_id"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20120116061425) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "donor_id"
+    t.boolean  "flagged"
   end
 
   add_index "requests", ["user_id"], :name => "index_requests_on_user_id"

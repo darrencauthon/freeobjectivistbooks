@@ -31,6 +31,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_select 'h1', "Howard Roark"
     assert_select '.request .headline', /Atlas Shrugged/
     assert_select '.request .donation', /We are looking for a donor for you/
+    assert_select '.request a', /see full/i
   end
 
   test "profile for requester with donor" do
@@ -39,6 +40,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_select 'h1', "Quentin Daniels"
     assert_select '.request .headline', /Virtue of Selfishness/
     assert_select '.request .donation', /We have found you a donor! Hugh Akston in Boston, MA/
+    assert_select '.request a', /see full/i
   end
 
   test "profile for donor" do
@@ -49,6 +51,8 @@ class HomeControllerTest < ActionController::TestCase
     assert_select '.request .headline', /Virtue of Selfishness to/
     assert_select '.request .name', /Quentin Daniels/
     assert_select '.request .address', /123 Main St/
+    assert_select '.request.actions a', /see full/i
+    assert_select '.request.actions a', /flag/i
   end
 
   test "profile for donor when student is missing address" do
