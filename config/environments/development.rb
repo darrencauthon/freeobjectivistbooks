@@ -25,6 +25,8 @@ FreeBooks::Application.configure do
     password: "47yry7f8jtl8"
   }
 
+  config.email_recipient_override = "jason.crawford@gmail.com"
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
