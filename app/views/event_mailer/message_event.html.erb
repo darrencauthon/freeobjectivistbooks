@@ -1,11 +1,11 @@
 <p>Hi <%= @event.to.first_name %>,</p>
 
-<p><%= @event.user.name %> sent you a message on Free Objectivist Books.</p>
+<p><%= @event.user.name %> sent you a message on Free Objectivist Books:</p>
 
 <p>"<%= @event.message %>"</p>
 
 <% if @event.to_donor? %>
-<p>Please send <%= @event.request.book %> to:</p>
+<p>Please send <i><%= @event.request.book %></i> to:</p>
 
 <p>
 <%= @event.request.user.name %><br>

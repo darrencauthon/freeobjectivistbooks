@@ -7,7 +7,7 @@
 <% end %>
 
 <% if @event.to_donor? %>
-<p>Please send <%= @event.request.book %> to:</p>
+<p>Please send <i><%= @event.request.book %></i> to:</p>
 
 <p>
 <%= @event.request.user.name %><br>
