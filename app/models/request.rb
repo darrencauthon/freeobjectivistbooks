@@ -44,15 +44,16 @@ class Request < ActiveRecord::Base
 
   def update_user(attributes, message = nil)
     user.attributes = attributes
-    return false if user.invalid?
+    return :error if user.invalid?
 
     event = if user.changed?
-      Event.new_update self, message
+      Event.create_update! self, message
     elsif message.present?
-      Event.new_message self, user, message
+      Event.create_message! self, user, message
     end
+    Rails.logger.info "event: #{event.inspect}"
 
-    events << event if event
-    user.save
+    user.save!
+    event.type.to_sym if event
   end
 end

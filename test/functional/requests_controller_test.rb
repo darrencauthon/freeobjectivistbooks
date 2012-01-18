@@ -7,6 +7,7 @@ class RequestsControllerTest < ActionController::TestCase
     @quentin = users :quentin
     @howard_request = requests :howard_wants_atlas
     @quentin_request = requests :quentin_wants_vos
+    @dagny_request = requests :dagny_wants_cui
   end
 
   def verify_login_page
@@ -26,8 +27,9 @@ class RequestsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select '.request', 1
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
-    assert_select '.sidebar h2', "Your donations (1)"
+    assert_select '.sidebar h2', "Your donations (2)"
     assert_select '.sidebar li', /The Virtue of Selfishness to Quentin Daniels/
+    assert_select '.sidebar li', /Capitalism: The Unknown Ideal to Dagny/
     assert_select '.sidebar p', "You have pledged 5 books."
   end
 
@@ -103,39 +105,75 @@ class RequestsControllerTest < ActionController::TestCase
   def update(request, options)
     user = request.user
     user_params = options.subhash :name, :address
+    message = options[:message]
     current_user = options.has_key?(:current_user) ? options[:current_user] : user
-    post :update, {id: request.id, user: user_params}, session_for(current_user)
 
-    if block_given?
-      yield
-    else
-      assert_redirected_to request
-      assert_match /updated/, flash[:notice]
-
-      user.reload
-      assert_equal options[:name], user.name
-      assert_equal options[:address], user.address
+    assert_difference "request.events.count", (options[:expect_events] || 1) do
+      post :update, {id: request.id, user: user_params, message: message}, session_for(current_user)
     end
+  end
+
+  def verify_update(request, params, notice)
+    assert_redirected_to request
+    assert_match notice, flash[:notice], flash.inspect
+
+    user = request.user
+    user.reload
+    assert_equal params[:name], user.name
+    assert_equal params[:address], user.address
+  end
+
+  def verify_event(request, type, options = {})
+    event = request.events.last
+    assert_equal type, event.type
+    assert_equal options[:detail], event.detail if options[:detail]
+    assert_equal options[:notified], event.notified? if options[:notified].present?
+  end
+
+  def verify_notification(event, subject)
+    assert event.notified?
+    mail = ActionMailer::Base.deliveries.last
+    assert_match subject, mail.subject
   end
 
   test "update no donor" do
-    update @howard_request, name: "Howard Roark", address: "123 Independence St"
+    options = {name: "Howard Roark", address: "123 Independence St"}
+    update @howard_request, options
+    verify_update @howard_request, options, /updated/i
+    verify_event @howard_request, "update", detail: "added a shipping address", notified: false
   end
 
-  test "update with donor" do
-    update @quentin_request, name: "Quentin Daniels", address: "123 Quantum Ln"
+  test "update add name" do
+    options = {name: "Dagny Taggart", address: "", message: "Added my full name"}
+    update @dagny_request, options
+    verify_update @dagny_request, options, /notified/i
+    verify_event @dagny_request, "update", detail: "added their full name"
+  end
+
+  test "update shipping info" do
+    options = {name: "Quentin Daniels", address: "123 Quantum Ln"}
+    update @quentin_request, options
+    verify_update @quentin_request, options, /has been notified/i
+    verify_event @quentin_request, "update", detail: "updated shipping info", notified: true
+  end
+
+  test "update only message" do
+    options = {name: "Quentin Daniels", address: @quentin.address, message: "No changes here"}
+    update @quentin_request, options
+    verify_update @quentin_request, options, /message has been sent/i
+    verify_event @quentin_request, "message", notified: true
   end
 
   test "update requires login" do
-    update @howard_request, name: "Howard Roark", address: "123 Independence St", current_user: nil do
-      verify_login_page
-    end
+    options = {name: "Howard Roark", address: "123 Independence St", current_user: nil, expect_events: 0}
+    update @howard_request, options
+    verify_login_page
   end
 
   test "update requires request owner" do
-    update @howard_request, name: "Howard Roark", address: "123 Independence St", current_user: @quentin do
-      verify_wrong_login_page
-    end
+    options = {name: "Howard Roark", address: "123 Independence St", current_user: @quentin, expect_events: 0}
+    update @howard_request, options
+    verify_wrong_login_page
   end
 
   # Grant

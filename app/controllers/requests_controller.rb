@@ -16,10 +16,23 @@ class RequestsController < ApplicationController
     @pledge = @current_user.pledges.last if @current_user
   end
 
+  def notice_for_update(result)
+    case result
+    when :update
+      notice = "Your info has been updated"
+      notice += " and your donor (#{@request.donor.name}) has been notified" if @request.donor
+      notice += "."
+      notice
+    when :message
+      "Your message has been sent to your donor (#{@request.donor.name})."
+    end
+  end
+
   def update
     # The edit field only actually lets you update user fields for now
-    if @request.user.update_attributes params[:user]
-      flash[:notice] = "Your shipping info has been updated."
+    result = @request.update_user params[:user], params[:message]
+    unless result == :error
+      flash[:notice] = notice_for_update(result)
       redirect_to @request
     else
       render :edit

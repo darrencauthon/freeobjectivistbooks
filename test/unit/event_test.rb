@@ -37,7 +37,7 @@ class EventTest < ActiveSupport::TestCase
 
   test "new update: added address" do
     @howard_request.user.address = "123 Independence St"
-    event = Event.new_update @howard_request
+    event = Event.create_update! @howard_request
     assert_equal @howard_request, event.request
     assert_equal @howard, event.user
     assert_nil event.donor
@@ -48,7 +48,7 @@ class EventTest < ActiveSupport::TestCase
 
   test "new update: added name" do
     @dagny_request.user.name = "Dagny Taggart"
-    event = Event.new_update @dagny_request, "Here you go"
+    event = Event.create_update! @dagny_request, "Here you go"
     assert_equal @dagny_request, event.request
     assert_equal @dagny, event.user
     assert_equal @hugh, event.donor
@@ -59,7 +59,7 @@ class EventTest < ActiveSupport::TestCase
 
   test "new update: updated info" do
     @quentin_request.user.address = "123 Quantum Ln\nGalt's Gulch, CO"
-    event = Event.new_update @quentin_request, "I have a new address"
+    event = Event.create_update! @quentin_request, "I have a new address"
     assert_equal @quentin_request, event.request
     assert_equal @quentin, event.user
     assert_equal @hugh, event.donor
@@ -69,7 +69,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "new message" do
-    event = Event.new_message @dagny_request, @hugh, "Thanks, I will send your book"
+    event = Event.create_message! @dagny_request, @hugh, "Thanks, I will send your book"
     assert_equal @dagny_request, event.request
     assert_equal @hugh, event.user
     assert_equal @hugh, event.donor

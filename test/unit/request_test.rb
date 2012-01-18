@@ -72,16 +72,21 @@ class RequestTest < ActiveSupport::TestCase
   # Update user
 
   test "update user: added address" do
-    assert @howard_request.update_user({name: "Howard Roark", address: "123 Independence St"}, "")
+    assert_difference "@howard_request.events.count" do
+      assert_equal :update, @howard_request.update_user({name: "Howard Roark", address: "123 Independence St"}, "")
+    end
+
     event = @howard_request.events.last
-    assert Event.exists?(event)
     assert_equal "update", event.type
     assert_equal "added a shipping address", event.detail
     assert event.message.blank?, event.message
   end
 
   test "update user: added name" do
-    assert @dagny_request.update_user({name: "Dagny Taggart", address: ""}, "Here you go")
+    assert_difference "@dagny_request.events.count" do
+      assert_equal :update, @dagny_request.update_user({name: "Dagny Taggart", address: ""}, "Here you go")
+    end
+
     event = @dagny_request.events.last
     assert_equal "update", event.type
     assert_equal "added their full name", event.detail
@@ -90,7 +95,10 @@ class RequestTest < ActiveSupport::TestCase
 
   test "new update: updated info" do
     attributes = {name: "Quentin Daniels", address: "123 Quantum Ln\nGalt's Gulch, CO"}
-    assert @quentin_request.update_user(attributes, "I have a new address")
+    assert_difference "@quentin_request.events.count" do
+      assert_equal :update, @quentin_request.update_user(attributes, "I have a new address")
+    end
+
     event = @quentin_request.events.last
     assert_equal "update", event.type
     assert_equal "updated shipping info", event.detail
@@ -98,7 +106,10 @@ class RequestTest < ActiveSupport::TestCase
   end
 
   test "new update: message only" do
-    assert @dagny_request.update_user({name: @dagny.name, address: @dagny.address}, "just a message")
+    assert_difference "@dagny_request.events.count" do
+      assert_equal :message, @dagny_request.update_user({name: @dagny.name, address: @dagny.address}, "just a message")
+    end
+
     event = @dagny_request.events.last
     assert_equal @dagny, event.user
     assert_equal "message", event.type
