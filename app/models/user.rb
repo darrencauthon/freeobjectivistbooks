@@ -25,10 +25,6 @@ class User < ActiveRecord::Base
     return user if user && user.authenticate(password)
   end
 
-  def first_name
-    name.words.first if name
-  end
-
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create password

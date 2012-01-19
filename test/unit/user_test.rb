@@ -45,13 +45,6 @@ class UserTest < ActiveSupport::TestCase
     assert_nil User.find_by_email("nobody@nowhere.com")
   end
 
-  # Derived attributes
-
-  test "first name" do
-    assert_equal "Howard", @howard.first_name
-    assert_equal "Hugh", @hugh.first_name
-  end
-
   # Signup
 
   test "create" do

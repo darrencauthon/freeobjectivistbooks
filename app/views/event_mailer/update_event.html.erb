@@ -1,9 +1,9 @@
-<p>Hi <%= @event.to.first_name %>,</p>
+<p>Hi <%= @event.to.name %>,</p>
 
 <p><%= @event.user.name %> <%= @event.detail %> on Free Objectivist Books.</p>
 
 <% if @event.message.present? %>
-<p><%= @event.user.first_name %> says: "<%= @event.message %>"</p>
+<p><%= @event.user.name %> says: "<%= @event.message %>"</p>
 <% end %>
 
 <% if @event.to_donor? %>

@@ -1,8 +1,8 @@
-Hi <%= @event.to.first_name %>,
+Hi <%= @event.to.name %>,
 
 <%= @event.user.name %> <%= @event.detail %> on Free Objectivist Books.
 <% if @event.message.present? %>
-<%= @event.user.first_name %> says: "<%= @event.message %>"<% end %>
+<%= @event.user.name %> says: "<%= @event.message %>"<% end %>
 <% if @event.to_donor? %>
 Please send <%= @event.request.book %> to:
 
