@@ -5,6 +5,8 @@ class HomeControllerTest < ActionController::TestCase
     @howard = users :howard
     @hugh = users :hugh
     @quentin = users :quentin
+    @dagny = users :dagny
+    @hank = users :hank
   end
 
   test "index is home if not logged in" do
@@ -30,7 +32,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Howard Roark"
     assert_select '.request .headline', /Atlas Shrugged/
-    assert_select '.request .donation', /We are looking for a donor for you/
+    assert_select '.request .status', /We are looking for a donor for you/
     assert_select '.request a', /see full/i
   end
 
@@ -39,7 +41,29 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Quentin Daniels"
     assert_select '.request .headline', /Virtue of Selfishness/
-    assert_select '.request .donation', /We have found you a donor! Hugh Akston in Boston, MA/
+    assert_select '.request .status', /We have found you a donor! Hugh Akston in Boston, MA/
+    assert_select '.request a', /see full/i
+  end
+
+  test "profile for requester with donor but no address" do
+    get :profile, params, session_for(@dagny)
+    assert_response :success
+    assert_select 'h1', "Dagny"
+    assert_select '.request .headline', /Capitalism/
+    assert_select '.request .status', /We have found you a donor!/
+    assert_select '.request .flagged', /We need your address/
+    assert_select '.request a', /add your address/i
+    assert_select '.request a', /see full/i
+  end
+
+  test "profile for requester with flagged address" do
+    get :profile, params, session_for(@hank)
+    assert_response :success
+    assert_select 'h1', "Hank Rearden"
+    assert_select '.request .headline', /Atlas Shrugged/
+    assert_select '.request .status', /We have found you a donor!/
+    assert_select '.request .flagged', /problem with your shipping info/
+    assert_select '.request a', /update/i
     assert_select '.request a', /see full/i
   end
 
