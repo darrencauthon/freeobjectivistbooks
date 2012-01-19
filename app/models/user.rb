@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   validates_presence_of :password_confirmation, if: :password_digest_changed?
   validates_confirmation_of :password, message: "didn't match confirmation"
 
+  validates_presence_of :address, on: :granted, message: "We need your address to send you your book."
+
   def self.find_by_email(email)
     where("lower(email) = ?", email.downcase).first
   end

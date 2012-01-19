@@ -66,7 +66,8 @@ class Request < ActiveRecord::Base
   def update_user(attributes, message = nil)
     Rails.logger.info "#{user.name} updating request #{id} for #{user.name}: #{attributes.inspect}, message: '#{message}'"
     user.attributes = attributes
-    return :error if user.invalid?
+    context = :granted if granted?
+    return :error if user.invalid?(context)
 
     self.flagged = false
 

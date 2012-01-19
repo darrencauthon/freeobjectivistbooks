@@ -297,7 +297,10 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "update add name" do
-    options = {name: "Dagny Taggart", address: "", message: "Added my full name"}
+    @dagny.address = "123 Somewhere Road"
+    @dagny.save!
+
+    options = {name: "Dagny Taggart", address: "123 Somewhere Road", message: "Added my full name"}
     update @dagny_request, options
     verify_update @dagny_request, options, /notified/i
     verify_event @dagny_request, "update", detail: "added their full name", notified: true
@@ -315,6 +318,13 @@ class RequestsControllerTest < ActionController::TestCase
     update @quentin_request, options
     verify_update @quentin_request, options, /message has been sent/i
     verify_event @quentin_request, "message", message: "No changes here", notified: true
+  end
+
+  test "update requires address if granted" do
+    options = {name: "Dagny Taggart", address: "", message: "Added my full name", expect_events: 0}
+    update @dagny_request, options
+    assert_response :success
+    assert_select '.field_with_errors', /We need your address/
   end
 
   test "update requires login" do

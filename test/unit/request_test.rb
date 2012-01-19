@@ -5,6 +5,7 @@ class RequestTest < ActiveSupport::TestCase
     @howard = users :howard
     @hugh = users :hugh
     @dagny = users :dagny
+    @quentin = users :quentin
 
     @howard_request = requests :howard_wants_atlas
     @quentin_request = requests :quentin_wants_vos
@@ -137,8 +138,11 @@ class RequestTest < ActiveSupport::TestCase
   end
 
   test "update user: added name" do
+    @dagny.address = "123 Somewhere Rd"
+    @dagny.save!
+
     assert_difference "@dagny_request.events.count" do
-      assert_equal :update, @dagny_request.update_user({name: "Dagny Taggart", address: ""}, "Here you go")
+      assert_equal :update, @dagny_request.update_user({name: "Dagny Taggart", address: "123 Somewhere Rd"}, "Here you go")
     end
 
     @dagny_request.reload
@@ -166,16 +170,25 @@ class RequestTest < ActiveSupport::TestCase
   end
 
   test "new update: message only" do
-    assert_difference "@dagny_request.events.count" do
-      assert_equal :message, @dagny_request.update_user({name: @dagny.name, address: @dagny.address}, "just a message")
+    assert_difference "@quentin_request.events.count" do
+      assert_equal :message, @quentin_request.update_user({name: @quentin.name, address: @quentin.address}, "just a message")
+    end
+
+    @quentin_request.reload
+    assert !@quentin_request.flagged?
+
+    event = @quentin_request.events.last
+    assert_equal @quentin, event.user
+    assert_equal "message", event.type
+    assert_equal "just a message", event.message
+  end
+
+  test "update user requires address if granted" do
+    assert_no_difference "@dagny_request.events.count" do
+      assert_equal :error, @dagny_request.update_user({name: "Dagny Taggart", address: ""}, "Here you go")
     end
 
     @dagny_request.reload
-    assert !@dagny_request.flagged?
-
-    event = @dagny_request.events.last
-    assert_equal @dagny, event.user
-    assert_equal "message", event.type
-    assert_equal "just a message", event.message
+    assert @dagny_request.flagged?
   end
 end
