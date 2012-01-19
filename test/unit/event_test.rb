@@ -35,6 +35,17 @@ class EventTest < ActiveSupport::TestCase
 
   # Constructors
 
+  test "create grant" do
+    @howard_request.donor = @hugh
+    event = Event.create_grant! @howard_request
+    assert_equal @howard_request, event.request
+    assert_equal @hugh, event.user
+    assert_equal @hugh, event.donor
+    assert_equal "grant", event.type
+    assert_nil event.detail
+    assert_nil event.message
+  end
+
   test "create flag" do
     event = Event.create_flag! @quentin_request, "I still can't find this address"
     assert_equal @quentin_request, event.request

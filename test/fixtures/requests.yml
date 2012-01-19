@@ -17,3 +17,8 @@ dagny_wants_cui:
   reason: I need this to morally defend my business!
   donor: hugh
   flagged: true
+
+quentin_wants_opar:
+  user: quentin
+  book: "Objectivism: The Philosophy of Ayn Rand"
+  reason: The Virtue of Selfishness was great! I want to learn more about this philosophy.

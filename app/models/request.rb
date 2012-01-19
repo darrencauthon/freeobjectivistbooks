@@ -46,12 +46,25 @@ class Request < ActiveRecord::Base
 
   def flag_detail
     flag_event = events.where(type: "flag").order('created_at desc').first
-    "Your donor says: \"#{flag_event.message}\"" if flag_event
+    if flag_event
+      "Your donor says: \"#{flag_event.message}\""
+    elsif user.address.blank?
+      "Add your mailing address to get your book."
+    end
   end
 
   # Actions
 
+  def grant(donor, options = {})
+    Rails.logger.info "#{donor.name} (#{donor.id}) granting request #{id} from #{user.name} (#{user.id}) for #{book}"
+    self.donor = donor
+    self.flagged = true if user.address.blank?
+    save!
+    Event.create_grant! self, options
+  end
+
   def update_user(attributes, message = nil)
+    Rails.logger.info "#{user.name} updating request #{id} for #{user.name}: #{attributes.inspect}, message: '#{message}'"
     user.attributes = attributes
     return :error if user.invalid?
 
@@ -62,7 +75,6 @@ class Request < ActiveRecord::Base
     elsif message.present?
       Event.create_message! self, user, message
     end
-    Rails.logger.info "event: #{event.inspect}"
 
     save!
     user.save!
@@ -70,6 +82,8 @@ class Request < ActiveRecord::Base
   end
 
   def flag(message)
+    Rails.logger.info "#{donor.name} flagging request #{id}: '#{message}'"
+
     if message.blank?
       self.errors.add(:message, "This is required.")
       return false

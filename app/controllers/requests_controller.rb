@@ -26,6 +26,11 @@ class RequestsController < ApplicationController
     @pledge = @current_user.pledges.last if @current_user
   end
 
+  def grant
+    @request.grant @current_user
+    redirect_to donate_url
+  end
+
   def notice_for_update(result)
     case result
     when :update
@@ -56,13 +61,5 @@ class RequestsController < ApplicationController
     else
       render :flag
     end
-  end
-
-  def grant
-    logger.info "#{@current_user.name} (#{@current_user.id}) granting request #{@request.id} " +
-      "from #{@request.user.name} (#{@request.user.id}) for #{@request.book}"
-    @request.donor = @current_user
-    @request.save!
-    redirect_to donate_url
   end
 end

@@ -3,6 +3,11 @@ class EventMailer < ApplicationMailer
     self.send "#{event.type}_event", event
   end
 
+  def grant_event(event)
+    @event = event
+    mail_to_user @event.to, subject: "We found a donor to send you #{@event.request.book}!"
+  end
+
   def flag_event(event)
     @event = event
     mail_to_user @event.to, subject: "Problem with your shipping info on Free Objectivist Books"

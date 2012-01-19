@@ -18,6 +18,10 @@ class Event < ActiveRecord::Base
     create! attributes
   end
 
+  def self.create_grant!(request, options = {})
+    create_event! request, request.donor, "grant", options
+  end
+
   def self.create_update!(request, message = nil)
     user = request.user
     detail = if user.address_was.blank? && user.address.present?

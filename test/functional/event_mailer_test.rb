@@ -7,6 +7,39 @@ class EventMailerTest < ActionMailer::TestCase
     @quentin = users :quentin
   end
 
+  test "grant" do
+    mail = EventMailer.mail_for_event events(:hugh_grants_quentin)
+    assert_equal "We found a donor to send you The Virtue of Selfishness!", mail.subject
+    assert_equal ["quentin@mit.edu"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Quentin/
+      assert_select 'p', /found a donor to send you The Virtue of Selfishness/
+      assert_select 'p', /Hugh Akston in Boston, MA/
+      @quentin.address.split("\n").each do |line|
+        assert_select 'p', /#{line}/
+      end
+      assert_select 'a', /update/i
+    end
+  end
+
+  test "grant no address" do
+    mail = EventMailer.mail_for_event events(:hugh_grants_dagny)
+    assert_equal "We found a donor to send you Capitalism: The Unknown Ideal!", mail.subject
+    assert_equal ["dagny@taggart.com"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Dagny/
+      assert_select 'p', /found a donor to send you Capitalism: The Unknown Ideal/
+      assert_select 'p', /Hugh Akston in Boston, MA/
+      assert_select 'a', /add your address/i
+    end
+  end
+
   test "flag" do
     mail = EventMailer.mail_for_event events(:hugh_flags_dagny)
     assert_equal "Problem with your shipping info on Free Objectivist Books", mail.subject

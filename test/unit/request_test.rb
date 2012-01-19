@@ -69,6 +69,35 @@ class RequestTest < ActiveSupport::TestCase
     granted.each {|request| assert request.granted?}
   end
 
+  # Grant
+
+  test "grant" do
+    request = requests :quentin_wants_opar
+    assert_difference "request.events.count" do
+      request.grant @hugh
+    end
+
+    assert request.granted?
+    assert !request.flagged?
+    assert_equal @hugh, request.donor
+
+    event = request.events.last
+    assert_equal "grant", event.type
+  end
+
+  test "grant no address" do
+    assert_difference "@howard_request.events.count" do
+      @howard_request.grant @hugh
+    end
+
+    assert @howard_request.granted?
+    assert @howard_request.flagged?
+    assert_equal @hugh, @howard_request.donor
+
+    event = @howard_request.events.last
+    assert_equal "grant", event.type
+  end
+
   # Flagging
 
   test "flag" do

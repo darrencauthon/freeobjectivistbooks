@@ -1,0 +1,17 @@
+Hi <%= @event.to.name %>,
+
+Good news: We found a donor to send you <%= @event.request.book %>! <%= @event.donor.name %> in <%= @event.donor.location %>.
+<% if @event.request.user.address.present? %>
+Your book will arrive shortly. The address you gave was:
+
+<%= @event.request.user.name %>
+<%= @event.request.user.address %>
+
+You can update this info if needed: <%= request_url @event.request %>
+<% else %>
+However, you haven't given us your address! Add your address to get your book:
+<%= edit_request_url @event.request %>
+<% end %>
+Happy reading,
+Free Objectivist Books
+http://freeobjectivistbooks.org

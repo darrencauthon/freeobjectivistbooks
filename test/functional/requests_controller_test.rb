@@ -35,7 +35,6 @@ class RequestsControllerTest < ActionController::TestCase
   test "index" do
     get :index, params, session_for(@hugh)
     assert_response :success
-    assert_select '.request', 1
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
     assert_select '.sidebar h2', "Your donations (2)"
     assert_select '.sidebar li', /The Virtue of Selfishness to Quentin Daniels/
@@ -104,6 +103,40 @@ class RequestsControllerTest < ActionController::TestCase
   test "show requires request owner or donor" do
     get :show, {id: @howard_request.id}, session_for(@quentin)
     verify_wrong_login_page
+  end
+
+  # Grant
+
+  test "grant" do
+    request = requests :quentin_wants_opar
+    assert_difference "request.events.count" do
+      post :grant, {id: request.id}, session_for(@hugh)
+    end
+    assert_redirected_to donate_url
+
+    request.reload
+    assert_equal @hugh, request.donor
+    assert !request.flagged?
+
+    verify_event request, "grant", notified: true
+  end
+
+  test "grant no address" do
+    assert_difference "@howard_request.events.count" do
+      post :grant, {id: @howard_request.id}, session_for(@hugh)
+    end
+    assert_redirected_to donate_url
+
+    @howard_request.reload
+    assert_equal @hugh, @howard_request.donor
+    assert @howard_request.flagged?
+
+    verify_event @howard_request, "grant", notified: true
+  end
+
+  test "grant requires login" do
+    post :grant, id: @howard_request.id
+    verify_login_page
   end
 
   # Flag
@@ -266,16 +299,5 @@ class RequestsControllerTest < ActionController::TestCase
     options = {name: "Howard Roark", address: "123 Independence St", current_user: @quentin, expect_events: 0}
     update @howard_request, options
     verify_wrong_login_page
-  end
-
-  # Grant
-
-  test "grant" do
-    request = requests :howard_wants_atlas
-    post :grant, {id: request.id}, session_for(@hugh)
-    assert_redirected_to donate_url
-
-    request.reload
-    assert_equal @hugh, request.donor
   end
 end
