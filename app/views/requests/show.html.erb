@@ -5,6 +5,10 @@
 .name {
     margin-bottom: 0;
 }
+
+.back {
+    margin-top: 24px;
+}
 </style>
 <% end %>
 
@@ -57,4 +61,9 @@
     <h2>Status: Looking for donor</h2>
     <p class="status">We are looking for a donor for this book.</p>
     <% end %>
+
+    <% if @current_user == @request.donor %>
+    <p class="back"><%= link_to 'Back to all donations', profile_path %></p>
+    <% end %>
 </div>
+<div class="clear"></div>
