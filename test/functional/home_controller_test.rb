@@ -48,24 +48,30 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Hugh Akston"
     assert_select '.pledge .headline', /You pledged to donate 5 books/
-    assert_select '.request .headline', /Virtue of Selfishness to/
-    assert_select '.request .name', /Quentin Daniels/
-    assert_select '.request .address', /123 Main St/
-    assert_select '.request.actions a', /see full/i
-    assert_select '.request.actions a', /flag/i
-  end
 
-  test "profile for donor when student is missing address" do
-    @quentin.address = ""
-    @quentin.save!
+    assert_select '.donation', /Quentin/ do
+      assert_select '.request .headline', /Virtue of Selfishness to/
+      assert_select '.request .name', /Quentin Daniels/
+      assert_select '.request .address', /123 Main St/
+      assert_select '.actions a', /see full/i
+      assert_select '.actions a', /flag/i
+    end
 
-    get :profile, params, session_for(@hugh)
-    assert_response :success
-    assert_select 'h1', "Hugh Akston"
-    assert_select '.pledge .headline', /You pledged to donate 5 books/
-    assert_select '.request .headline', /Virtue of Selfishness to/
-    assert_select '.request .name', /Quentin Daniels/
-    assert_select '.request .address', /This student hasn't given their full address yet/
+    assert_select '.donation', /Dagny/ do
+      assert_select '.request .headline', /Capitalism: The Unknown Ideal to/
+      assert_select '.request .name', /Dagny/
+      assert_select '.request .address', /No address/
+      assert_select '.actions a', /see full/i
+      assert_select '.actions .flagged', /Student has been contacted/i
+    end
+
+    assert_select '.donation', /Hank/ do
+      assert_select '.request .headline', /Atlas Shrugged to/
+      assert_select '.request .name', /Hank Rearden/
+      assert_select '.request .address', /987 Steel Way/
+      assert_select '.actions a', /see full/i
+      assert_select '.actions .flagged', /Shipping info flagged/i
+    end
   end
 
   test "profile requires login" do

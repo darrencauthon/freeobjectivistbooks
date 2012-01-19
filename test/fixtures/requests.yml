@@ -22,3 +22,10 @@ quentin_wants_opar:
   user: quentin
   book: "Objectivism: The Philosophy of Ayn Rand"
   reason: The Virtue of Selfishness was great! I want to learn more about this philosophy.
+
+hank_wants_atlas:
+  user: hank
+  book: Atlas Shrugged
+  reason: I want to learn about this strike
+  donor: hugh
+  flagged: true

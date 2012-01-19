@@ -13,8 +13,12 @@
 
 <% if @request.flagged? && @current_user == @request.user %>
 <div class="grid_12 message error">
+    <% if @request.address.blank? %>
+    <p class="headline">Add your address to get your book.</p>
+    <% else %>
     <p class="headline">There seems to be a problem with your shipping info.</p>
-    <p class="detail"><%= @request.flag_detail %></p>
+    <p class="detail">Your donor says: "<%= @request.flag_message %>"</p>
+    <% end %>
 </div>
 <% end %>
 
@@ -24,7 +28,7 @@
 <%= form_for @request do |f| %>
     <% unless @request.user.errors.empty? && @request.errors.empty? %>
     <div class="errorExplanation">
-        <h2>There are problems with your request</h2>
+        <h2>There are problems with your info</h2>
         <p>Please see below and make corrections.</p>
     </div>
     <% end %>
@@ -39,7 +43,7 @@
     <%= u.text_area :address, class: "grid_5 alpha", rows: 5 %>
     <div class="grid_4">
         <p>Only shared with your donor.</p>
-        <% if @request.user.address.blank? && !@request.granted? %><p>You can enter this later.</p><% end %>
+        <% if @request.address.blank? && !@request.granted? %><p>You can enter this later.</p><% end %>
         <p class="field_with_errors"><%= @request.user.errors[:address].join(", ") %></p>
     </div>
     <div class="clear"></div>

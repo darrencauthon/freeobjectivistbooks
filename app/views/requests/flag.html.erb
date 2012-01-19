@@ -25,9 +25,7 @@
 
 <div class="request grid_12">
     <p class="name"><%= @request.user.name %></p>
-    <p class="address">
-        <% if @request.user.address.present? %><%= format_address @request.user.address %><% else %>No address given<% end %>
-    </p>
+    <p class="address"><%= format_address @request.address %></p>
 </div>
 
 <div class="grid_10">

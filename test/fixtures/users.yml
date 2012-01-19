@@ -28,3 +28,12 @@ dagny:
   location: "Chicago, IL"
   school: Northwestern University
   studying: business
+
+hank:
+  name: Hank Rearden
+  email: hank@rearden.com
+  password_digest: <%= BCrypt::Password.create "rearden" %>
+  location: "Philadelphia, PA"
+  school: University of Pittsburgh
+  studying: manufacturing
+  address: "987 Steel Way\nPhiladelphia, PA 12345"

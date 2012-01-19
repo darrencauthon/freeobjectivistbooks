@@ -10,8 +10,14 @@
 
 <% if @request.flagged? && @current_user == @request.user %>
 <div class="grid_12 message error">
-    <p class="headline">There seems to be a problem with your shipping info.
+    <p class="headline">
+        <% if @request.address.blank? %>
+        We need your address to send you your book.
+        <%= link_to 'Add your address', edit_request_path(@request) %>
+        <% else %>
+        There seems to be a problem with your shipping info.
         <%= link_to 'Update your shipping info', edit_request_path(@request) %>
+        <% end %>
     </p>
 </div>
 <% end %>
@@ -22,24 +28,25 @@
 
     <h2>Ship to</h2>
     <p class="name"><%= @request.user.name %></p>
+    <p class="address"><%= format_address @request.address %></p>
 
-    <% if @request.user.address.present? %>
-    <p class="address"><%= format_address @request.user.address %></p>
-        <% if @current_user == @request.user %>
+    <% if @current_user == @request.user %>
+        <% if @request.address.present? %>
         <p><%= link_to 'Update shipping info', edit_request_path(@request) %></p>
-        <% elsif @current_user == @request.donor %>
-            <% if @request.flagged? %>
-            <p class="flagged">Shipping info flagged</p>
-            <% else %>
-            <p><%= link_to 'Flag problem with shipping info', flag_request_path(@request) %></p>
-            <% end %>
-        <% end %>
-    <% else %>
-    <p class="address">No address given</p>
-        <% if @current_user == @request.user %>
+        <% else %>
         <p><%= link_to 'Add your address', edit_request_path(@request) %></p>
-        <% elsif @current_user == @request.donor %>
-        <p>We'll contact them to fill it in and then notify you.</p>
+        <% end %>
+    <% elsif @current_user == @request.donor %>
+        <% if @request.flagged? %>
+        <p class="flagged">
+            <% if @request.address.present? %>
+            Shipping info flagged
+            <% else %>
+            Student has been contacted to add address
+            <% end %>
+        </p>
+        <% else %>
+        <p><%= link_to 'Flag problem with shipping info', flag_request_path(@request) %></p>
         <% end %>
     <% end %>
 

@@ -116,9 +116,8 @@ class RequestTest < ActiveSupport::TestCase
     end
   end
 
-  test "flag detail" do
-    detail = 'Your donor says: "Please add your full name and address"'
-    assert_equal detail, @dagny_request.flag_detail
+  test "flag message" do
+    assert_equal "Please add your full name and address", @dagny_request.flag_message
   end
 
   # Update user

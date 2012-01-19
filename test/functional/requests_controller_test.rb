@@ -6,10 +6,12 @@ class RequestsControllerTest < ActionController::TestCase
     @howard = users :howard
     @quentin = users :quentin
     @dagny = users :dagny
+    @hank = users :hank
 
     @howard_request = requests :howard_wants_atlas
     @quentin_request = requests :quentin_wants_vos
     @dagny_request = requests :dagny_wants_cui
+    @hank_request = requests :hank_wants_atlas
   end
 
   def verify_login_page
@@ -36,9 +38,10 @@ class RequestsControllerTest < ActionController::TestCase
     get :index, params, session_for(@hugh)
     assert_response :success
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
-    assert_select '.sidebar h2', "Your donations (2)"
+    assert_select '.sidebar h2', "Your donations (3)"
     assert_select '.sidebar li', /The Virtue of Selfishness to Quentin Daniels/
     assert_select '.sidebar li', /Capitalism: The Unknown Ideal to Dagny/
+    assert_select '.sidebar li', /Atlas Shrugged to Hank Rearden/
     assert_select '.sidebar p', "You have pledged 5 books."
   end
 
@@ -78,20 +81,39 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h2', /status: donor found/i
   end
 
-  test "show flagged to student" do
+  test "show to student with missing address" do
     get :show, {id: @dagny_request.id}, session_for(@dagny)
     assert_response :success
-    assert_select '.message.error', /There seems to be a problem/
-    assert_select '.message.error a', /Update/
+    assert_select '.message.error .headline', /We need your address/
+    assert_select '.message.error .headline a', /Add/
     assert_select 'h1', "Dagny wants Capitalism: The Unknown Ideal"
   end
 
-  test "show flagged to donor" do
+  test "show to student with flagged address" do
+    get :show, {id: @hank_request.id}, session_for(@hank)
+    assert_response :success
+    assert_select '.message.error .headline', /problem with your shipping info/
+    assert_select '.message.error .headline a', /Update/
+    assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
+  end
+
+  test "show to donor with missing address" do
     get :show, {id: @dagny_request.id}, session_for(@hugh)
     assert_response :success
     assert_select '.message.error', false
     assert_select 'h1', "Dagny wants Capitalism: The Unknown Ideal"
-    assert_select 'p', /no address/i
+    assert_select '.address', /no address/i
+    assert_select '.flagged', /Student has been contacted/i
+    assert_select 'a', text: /update/i, count: 0
+  end
+
+  test "show to donor with flagged address" do
+    get :show, {id: @hank_request.id}, session_for(@hugh)
+    assert_response :success
+    assert_select '.message.error', false
+    assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
+    assert_select '.address', /987 Steel Way/i
+    assert_select '.flagged', /Shipping info flagged/i
     assert_select 'a', text: /update/i, count: 0
   end
 
@@ -221,11 +243,17 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.message.error', false
   end
 
-  test "edit flagged" do
+  test "edit missing" do
     get :edit, {id: @dagny_request.id}, session_for(@dagny)
     assert_response :success
-    assert_select '.message.error .headline', /There seems to be a problem/
-    assert_select '.message.error .detail', /Please add your full name and address/
+    assert_select '.message.error .headline', /Add your address/
+  end
+
+  test "edit flagged" do
+    get :edit, {id: @hank_request.id}, session_for(@hank)
+    assert_response :success
+    assert_select '.message.error .headline', /problem/
+    assert_select '.message.error .detail', 'Your donor says: "Is your address correct?"'
   end
 
   test "edit requires login" do

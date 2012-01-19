@@ -36,6 +36,10 @@ class Request < ActiveRecord::Base
 
   # Derived attributes
 
+  def address
+    user.address
+  end
+
   def granted?
     donor.present?
   end
@@ -44,13 +48,9 @@ class Request < ActiveRecord::Base
     !granted?
   end
 
-  def flag_detail
-    flag_event = events.where(type: "flag").order('created_at desc').first
-    if flag_event
-      "Your donor says: \"#{flag_event.message}\""
-    elsif user.address.blank?
-      "Add your mailing address to get your book."
-    end
+  def flag_message
+    event = events.where(type: "flag").order('created_at desc').first
+    event.message if event
   end
 
   # Actions

@@ -1,6 +1,10 @@
 module ApplicationHelper
   def format_address(address)
-    raw (h address).gsub("\n", "<br>") if address
+    if address.present?
+      raw (h address).gsub("\n", "<br>")
+    else
+      "No address given"
+    end
   end
 
   def user_tagline(user)
