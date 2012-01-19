@@ -15,7 +15,9 @@ class Event < ActiveRecord::Base
   def self.create_event!(request, user, type, options = {})
     attributes = {request: request, user: user, donor: request.donor, type: type, happened_at: Time.now}
     attributes.merge! options
-    create! attributes
+    event = create! attributes
+    Rails.logger.info "Event: #{event.inspect}"
+    event
   end
 
   def self.create_grant!(request, options = {})
@@ -76,6 +78,7 @@ class Event < ActiveRecord::Base
 
   def notify
     return if !to || notified?
+    Rails.logger.info "Sending notification for event #{id} (#{type} #{detail}) to #{to.name} (#{to.email})"
     mail = EventMailer.mail_for_event self
     mail.deliver
     self.notified!
