@@ -64,7 +64,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_select_email do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /Quentin Daniels added their full name/
-      assert_select 'p', text: /says/, count: 0
+      assert_select 'p', text: /said/, count: 0
       assert_select 'p', /Please send The Virtue of Selfishness to/
       @quentin.address.split("\n").each do |line|
         assert_select 'p', /#{line}/
@@ -83,7 +83,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_select_email do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /Quentin Daniels added a shipping address/
-      assert_select 'p', /Quentin says: "There you go"/
+      assert_select 'p', /They said: "There you go"/
       assert_select 'p', /Please send The Virtue of Selfishness to/
       @quentin.address.split("\n").each do |line|
         assert_select 'p', /#{line}/
