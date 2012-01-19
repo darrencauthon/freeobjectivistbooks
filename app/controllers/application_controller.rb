@@ -37,9 +37,6 @@ class ApplicationController < ActionController::Base
     raise ForbiddenException if !@current_user.in?(users)
   end
 
-  rescue_from UnauthorizedException, with: :render_unauthorized
-  rescue_from ForbiddenException, with: :render_forbidden
-
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     rescue_from ActionController::RoutingError, with: :render_not_found
@@ -47,6 +44,9 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownAction, with: :render_not_found
     rescue_from Exception, with: :render_error
   end
+
+  rescue_from UnauthorizedException, with: :render_unauthorized
+  rescue_from ForbiddenException, with: :render_forbidden
 
   def render_unauthorized
     logger.info "no current user, rendering login page"
