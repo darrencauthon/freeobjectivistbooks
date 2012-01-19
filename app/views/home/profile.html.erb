@@ -1,8 +1,12 @@
 <% content_for :stylesheet do %>
 <style>
-.profile, .request, .pledge {
+.profile, .request, .pledge, .actions {
     margin-top: 8px;
     margin-bottom: 8px;
+}
+
+.name {
+    margin-bottom: 0;
 }
 
 .notes {
@@ -48,16 +52,18 @@
 <h2 class="grid_16">Your donations</h2>
 <% if @current_user.donations.any? %>
 <p class="grid_16">Please send the following books:</p>
-<%= render partial: "requests/spacer" %>
-<%= render partial: "donation", collection: @current_user.donations, spacer_template: "requests/spacer" %>
-<%= render partial: "requests/spacer" %>
-<div class="grid_8 notes">
-<p>If ordering online to ship directly to the student, you may need to put in a phone number. We don't collect student's phone numbers
-    right now; best to enter your own number.
-</p>
-<p>Problems with any of these addresses?
-    <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %>
-</p>
+<div class="grid_12">
+    <%= render partial: "requests/spacer" %>
+    <%= render partial: "donation", collection: @current_user.donations, spacer_template: "requests/spacer" %>
+    <%= render partial: "requests/spacer" %>
+    <div class="notes">
+        <p>If ordering online to ship directly to the student, you may need to put in a phone number. We don't collect
+            student's phone numbers right now; best to enter your own number.
+        </p>
+        <p>Problems with any of these addresses?
+            <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %>
+        </p>
+    </div>
 </div>
 <div class="clear"></div>
 <% else %>

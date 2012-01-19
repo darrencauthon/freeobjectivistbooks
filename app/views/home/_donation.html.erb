@@ -1,10 +1,10 @@
-<div class="donation grid_12">
+<div class="donation">
     <div class="grid_6 alpha request">
         <p class="headline"><span class="title"><%= donation.book %></span> to:</p>
         <p class="name"><%= donation.user.name %></p>
         <p class="address"><%= format_address donation.address %></p>
     </div>
-    <div class="grid_4 omega actions">
+    <div class="grid_6 omega actions">
         <p><%= link_to 'See full request details', request_path(donation) %></p>
         <% if donation.flagged? %>
         <p class="flagged">
@@ -18,5 +18,5 @@
         <p><%= link_to 'Flag problem with shipping info', flag_request_path(donation) %></p>
         <% end %>
     </div>
+    <div class="clear"></div>
 </div>
-<div class="clear"></div>
