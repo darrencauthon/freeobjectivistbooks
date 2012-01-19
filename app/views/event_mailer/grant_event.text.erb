@@ -1,11 +1,11 @@
 Hi <%= @event.to.name %>,
 
 Good news: We found a donor to send you <%= @event.request.book %>! <%= @event.donor.name %> in <%= @event.donor.location %>.
-<% if @event.request.user.address.present? %>
+<% if @event.request.address.present? %>
 Your book will arrive shortly. The address you gave was:
 
 <%= @event.request.user.name %>
-<%= @event.request.user.address %>
+<%= @event.request.address %>
 
 You can update this info if needed: <%= request_url @event.request %>
 <% else %>

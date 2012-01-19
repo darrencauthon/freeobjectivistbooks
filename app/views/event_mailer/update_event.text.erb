@@ -7,7 +7,7 @@ Hi <%= @event.to.first_name %>,
 Please send <%= @event.request.book %> to:
 
 <%= @event.request.user.name %>
-<%= @event.request.user.address %>
+<%= @event.request.address %>
 
 See this and all the latest books you have pledged to donate at: <%= profile_url %><% end %>
 
