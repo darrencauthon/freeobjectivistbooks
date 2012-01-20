@@ -16,9 +16,19 @@ h2 {
     font-size: 1.5em;
 }
 
-.content {
-    background: url(/assets/content-bg-middle.png) repeat-y;
-    padding: 18px 0;
+.main .top {
+    height: 18px;
+    background: url(/assets/content-bg-710-top.png);
+}
+
+.main .bottom {
+    height: 18px;
+    background: url(/assets/content-bg-710-bottom.png);
+}
+
+.main .content {
+    background: url(/assets/content-bg-710-middle.png) repeat-y;
+    padding: 18px 40px;
 }
 
 .button {
@@ -36,75 +46,69 @@ h2 {
 
 <p class="overview">Get any Ayn Rand novel or book about Objectivism for free. You just have to pledge to read it.</p>
 
-<img src="assets/content-bg-top.png">
-<div class="content">
-    <img class="prefix_4 grid_7" src="http://ecx.images-amazon.com/images/I/5139Z9VGNGL.jpg">
-    <img class="prefix_2 grid_7" src="http://ecx.images-amazon.com/images/I/51Y2mOswJIL.jpg">
-    <div class="clear"></div>
+<div class="main prefix_3 grid_18">
+    <div class="top">&nbsp;</div>
+    <div class="content">
+        <img class="alpha grid_7" src="http://ecx.images-amazon.com/images/I/5139Z9VGNGL.jpg">
+        <img class="prefix_2 grid_7 omega" src="http://ecx.images-amazon.com/images/I/51Y2mOswJIL.jpg">
 
-    <%= link_to signup_read_path, class: "prefix_4 grid_7" do %><div class="read button"></div><% end %>
-    <%= link_to signup_donate_path, class: "prefix_2 grid_7" do %><div class="donate button"></div><% end %>
-    <div class="clear"></div>
+        <%= link_to signup_read_path, class: "alpha grid_7" do %><div class="read button"></div><% end %>
+        <%= link_to signup_donate_path, class: "prefix_2 grid_7 omega" do %><div class="donate button"></div><% end %>
 
-    <p class="prefix_4 grid_7 detail">Simply pledge to read <span class="title">Atlas Shrugged,</span>
-        <span class="title">The Fountainhead,</span> or any other Objectivist book. We'll find you a donor who
-        will send you the book for free. <%= link_to 'Sign up now', signup_read_path %>
-    </p>
-    <p class="prefix_2 grid_7 detail">Want to give the gift of Objectivism to eager students? A few minutes and a few
-        dollars could put a book by Ayn Rand in the hands of a student who will read it.
-        <%= link_to 'Sign up to donate', signup_donate_path %>
-    </p>
-    <div class="clear"></div>
+        <p class="alpha grid_7 detail">Simply pledge to read <span class="title">Atlas Shrugged,</span>
+            <span class="title">The Fountainhead,</span> or any other Objectivist book. We'll find you a donor who
+            will send you the book for free. <%= link_to 'Sign up now', signup_read_path %>
+        </p>
+        <p class="prefix_2 grid_7 omega detail">Want to give the gift of Objectivism to eager students? A few minutes and a few
+            dollars could put a book by Ayn Rand in the hands of a student who will read it.
+            <%= link_to 'Sign up to donate', signup_donate_path %>
+        </p>
 
-    <h2 class="prefix_4 grid_16">Questions? <%= link_to 'Read our FAQ', about_path %></h2>
-    <div class="clear"></div>
+        <div class="clear"></div>
 
-    <% if !@current_user %>
-    <h2 class="prefix_4 grid_16">Already signed up? <%= link_to 'Log in', login_path %></h2>
-    <div class="clear"></div>
+        <h2>Questions? <%= link_to 'Read our FAQ', about_path %></h2>
 
-    <% if session[:seen_signup] %>
-    <h2 class="prefix_4 grid_16">Don't want to sign up?</h2>
-    <div class="clear"></div>
-    <p class="prefix_4 grid_16">
-        That's alright. Please tell me why.
-        <%= mail_to 'jason@rationalegoist.com', 'Send feedback to Jason', subject: "Feedback on Free Objectivist Books" %>
-    </p>
-    <div class="clear"></div>
-    <% end %>
-    <% end %>
+        <% if !@current_user %>
+        <h2>Already signed up? <%= link_to 'Log in', login_path %></h2>
 
-    <h2 class="prefix_4 grid_16">What recipients are saying</h2>
-    <div class="clear"></div>
+        <% if session[:seen_signup] %>
+        <h2>Don't want to sign up?</h2>
+        <p>That's alright. Please tell me why.
+            <%= mail_to 'jason@rationalegoist.com', 'Send feedback to Jason', subject: "Feedback on Free Objectivist Books" %>
+        </p>
+        <% end %>
+        <% end %>
 
-    <div class="thankyou">
-        <div class="prefix_4 grid_2"><img src="assets/poojas.png"></div>
-        <div class="grid_14">
-            <p class="text">I have been an avid Rand enthusiast, ever since I read Atlas Shrugged at the age of
-                fifteen. It changed my life, and since then, I've pushed myself as never before. ... I am incredibly
-                excited to read this book, further my understanding of a wonderful philosophy, and better know myself
-                in the process. Thank you, again, for making that possible for me.
-            </p>
-            <p class="attribution">Pooja S., Stanford University</p>
+        <h2>What recipients are saying</h2>
+
+        <div class="thankyou">
+            <div class="alpha grid_2"><img src="assets/poojas.png"></div>
+            <div class="grid_14 omega">
+                <p class="text">I have been an avid Rand enthusiast, ever since I read Atlas Shrugged at the age of
+                    fifteen. It changed my life, and since then, I've pushed myself as never before. ... I am incredibly
+                    excited to read this book, further my understanding of a wonderful philosophy, and better know myself
+                    in the process. Thank you, again, for making that possible for me.
+                </p>
+                <p class="attribution">Pooja S., Stanford University</p>
+            </div>
         </div>
-    </div>
-    <div class="clear"></div>
 
-    <img class="prefix_4 grid_16 hr" src="assets/hr.png">
-    <div class="clear"></div>
+        <img class="hr alpha grid_16 omega" src="assets/hr.png">
 
-    <div class="thankyou">
-        <div class="prefix_4 grid_2"><img src="assets/danielk.png"></div>
-        <div class="grid_14">
-            <p class="text">I can't describe how great I think it is what you do&mdash;giving away Objectivist books
-                so that people will get to know (more of) Objectivism. ... When I see people like you, doing such
-                things, it kind of gives me hope for my future&mdash;hope more like motivation, based on the few great
-                things people have done for me. I don't think I can thank you enough in an email but, I believe, you
-                have your selfish benefit from this giveaway, too. So Thank You!
-            </p>
-            <p class="attribution">Daniel K., Pernik, Bulgaria</p>
+        <div class="thankyou">
+            <div class="alpha grid_2"><img src="assets/danielk.png"></div>
+            <div class="grid_14 omega">
+                <p class="text">I can't describe how great I think it is what you do&mdash;giving away Objectivist books
+                    so that people will get to know (more of) Objectivism. ... When I see people like you, doing such
+                    things, it kind of gives me hope for my future&mdash;hope more like motivation, based on the few great
+                    things people have done for me. I don't think I can thank you enough in an email but, I believe, you
+                    have your selfish benefit from this giveaway, too. So Thank You!
+                </p>
+                <p class="attribution">Daniel K., Pernik, Bulgaria</p>
+            </div>
         </div>
+
+        <div class="clear"></div>
     </div>
-    <div class="clear"></div>
+    <div class="bottom">&nbsp;</div>
 </div>
-<img src="assets/content-bg-bottom.png">
