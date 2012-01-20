@@ -62,26 +62,20 @@ h2 {
     <% if !@current_user %>
     <h2 class="prefix_4 grid_16">Already signed up? <%= link_to 'Log in', login_path %></h2>
     <div class="clear"></div>
+
+    <% if session[:seen_signup] %>
+    <h2 class="prefix_4 grid_16">Don't want to sign up?</h2>
+    <div class="clear"></div>
+    <p class="prefix_4 grid_16">
+        That's alright. Please tell me why.
+        <%= mail_to 'jason@rationalegoist.com', 'Send feedback to Jason', subject: "Feedback on Free Objectivist Books" %>
+    </p>
+    <div class="clear"></div>
+    <% end %>
     <% end %>
 
     <h2 class="prefix_4 grid_16">What recipients are saying</h2>
     <div class="clear"></div>
-
-    <!-- <div class="thankyou">
-        <div class="prefix_4 grid_2"><img src="assets/profile.jpg"></div>
-        <div class="grid_14">
-            <p class="text">I am so excited about learning something new and appreciative of the generosity that
-                will lead me down a new road of discovery. I will pay it forward with both the ideals shared as well
-                as the kindness which allowed for the exchange. Please know that you are appreciated and that I believe
-                changing the world often comes one book at time.
-            </p>
-            <p class="attribution">Felicia N., Katy, TX</p>
-        </div>
-    </div>
-    <div class="clear"></div>
-
-    <img class="prefix_4 grid_16 hr" src="assets/hr.png">
-    <div class="clear"></div> -->
 
     <div class="thankyou">
         <div class="prefix_4 grid_2"><img src="assets/poojas.png"></div>

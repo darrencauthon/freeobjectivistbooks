@@ -6,10 +6,12 @@ class SignupController < ApplicationController
   end
 
   def read
+    session[:seen_signup] = true
     @request ||= @user.requests.build
   end
 
   def donate
+    session[:seen_signup] = true
     @pledge ||= @user.pledges.build quantity: 5
   end
 

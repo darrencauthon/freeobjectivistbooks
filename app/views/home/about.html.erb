@@ -1,66 +1,92 @@
 <% content_for :title do %>About, FAQ, Contact<% end %>
 
-<h1 class="grid_16">About this site</h1>
-<p class="grid_12">This site gets donors to send Objectivist books (books by
-    <a href="http://www.aynrand.org/site/PageServer?pagename=about_ayn_rand_aynrand_biography">Ayn Rand</a> or about
-    her philosophy of <a href="http://www.aynrand.org/site/PageServer?pagename=objectivism_intro">Objectivism</a>)
-    to students who would like to read them. Our goal is to get more students reading Ayn Rand.
-</p>
+<% content_for :stylesheet do %>
+<style>
+.signup {
+    margin-top: 72px;
+}
+.signup p {
+    font-size: 1.2em;
+}
+</style>
+<% end %>
 
-<h2 class="grid_16">How it works</h2>
-<p class="grid_12">Students create a simple public profile with their name and school, and say what book they want to
-    read. Donors browse a list of students and choose which ones they want to send books to. The donors send the books
-    to the students directly.
-</p>
+<div class="grid_12">
+    <h1>About this site</h1>
+    <p>This site gets donors to send Objectivist books (books by
+        <a href="http://www.aynrand.org/site/PageServer?pagename=about_ayn_rand_aynrand_biography">Ayn Rand</a> or about
+        her philosophy of <a href="http://www.aynrand.org/site/PageServer?pagename=objectivism_intro">Objectivism</a>)
+        to students who would like to read them. Our goal is to get more students reading Ayn Rand.
+    </p>
 
-<h1 class="grid_16">FAQ</h1>
+    <h2>How it works</h2>
+    <p>Students create a simple public profile with their name and school, and say what book they want to
+        read. Donors browse a list of students and choose which ones they want to send books to. The donors send the books
+        to the students directly.
+    </p>
 
-<h2 class="grid_16">Why are people willing to donate these books?</h2>
-<p class="grid_12">The donors are big fans of Ayn Rand and her philosophy. Most of us would say that reading her
-    works changed our lives. We want to spread her ideas and we're happy to help students discover her work.
-</p>
+    <h1>FAQ</h1>
 
-<h2 class="grid_16">Who is Ayn Rand? What is "Objectivism"?</h2>
-<p class="grid_12">Ayn Rand was a 20th-century novelist and philosopher, most famous for her novels
-    <span class="title">Atlas Shrugged</span> and <span class="title">The Fountainhead.</span> "Objectivism" is the
-    name she gave to her philosophy, which upholds reason, individualism, and capitalism. Learn more from
-    <a href="http://aynrand.org">The Ayn Rand Institute</a>.
-</p>
+    <h2>Why are people willing to donate these books?</h2>
+    <p>The donors are big fans of Ayn Rand and her philosophy. Most of us would say that reading her
+        works changed our lives. We want to spread her ideas and we're happy to help students discover her work.
+    </p>
 
-<h2 class="grid_16">Who is behind this?</h2>
-<p class="grid_12">This site is a private project by Jason Crawford, of <a href="http://rationalegoist.com">The
-    Rational Egoist</a>.
-</p>
+    <h2>Who is Ayn Rand? What is "Objectivism"?</h2>
+    <p>Ayn Rand was a 20th-century novelist and philosopher, most famous for her novels
+        <span class="title">Atlas Shrugged</span> and <span class="title">The Fountainhead.</span> "Objectivism" is the
+        name she gave to her philosophy, which upholds reason, individualism, and capitalism. Learn more from
+        <a href="http://aynrand.org">The Ayn Rand Institute</a>.
+    </p>
 
-<h2 class="grid_16">What will you do with my info?</h2>
-<p class="grid_12">Your public profile shows only your name and city (and for students, school and area of study). In
-    the future we will ask you for a picture as well. Students and the books they want to read will be displayed
-    publicly on the site so that donors can find them and fulfill their requests.
-</p>
-<p class="grid_12">Your email address will be kept private and used only by us to contact you. For students, your
-    mailing address will only be shown to the donor who send your book.
-</p>
+    <h2>Who is behind this?</h2>
+    <p>This site is a private project by Jason Crawford, of <a href="http://rationalegoist.com">The
+        Rational Egoist</a>.
+    </p>
 
-<h2 class="grid_16">Can I donate used books?</h2>
-<p class="grid_12">Yes, used books are fine.</p>
+    <h2>What will you do with my info?</h2>
+    <p>Your public profile shows only your name and city (and for students, school and area of study). In
+        the future we will ask you for a picture as well. Students and the books they want to read will be displayed
+        publicly on the site so that donors can find them and fulfill their requests.
+    </p>
+    <p>Your email address will be kept private and used only by us to contact you. For students, your
+        mailing address will only be shown to the donor who send your book.
+    </p>
 
-<h2 class="grid_16">I want to help, but do I have to send books? Can I just give money?</h2>
-<p class="grid_12">The best way to contribute is to send books directly to students. If you aren't willing to do that,
-    but still want to help, we may be able to use a cash contribution: contact me at
-    <a href="mailto:jason@rationalegoist.com">jason@rationalegoist.com</a>. (We have not yet been recognized as a
-    501(c)(3) public charity and cannot guarantee that contributions are tax-deductible.)
-</p>
+    <h2>Can I donate used books?</h2>
+    <p>Yes, used books are fine.</p>
 
-<h1 class="grid_16">Contact</h1>
+    <h2>I want to help, but do I have to send books? Can I just give money?</h2>
+    <p>The best way to contribute is to send books directly to students. If you aren't willing to do that,
+        but still want to help, we may be able to use a cash contribution: contact me at
+        <a href="mailto:jason@rationalegoist.com">jason@rationalegoist.com</a>. (We have not yet been recognized as a
+        501(c)(3) public charity and cannot guarantee that contributions are tax-deductible.)
+    </p>
 
-<p class="grid_12">
-    Jason Crawford,
-    <a href="http://rationalegoist.com">The Rational Egoist</a>
-</p>
-<div class="clear"></div>
-<p class="grid_12">
-    Follow me on Twitter (<a href="http://twitter.com/rationalegoist">@rationalegoist</a>) and
-    <a href="http://facebook.com/rationalegoist">Facebook</a>
-</p>
-<div class="clear"></div>
-<p class="grid_12">Email me: <a href="mailto:jason@rationalegoist.com">jason@rationalegoist.com</a></p>
+    <h1>Contact</h1>
+
+    <p>
+        Jason Crawford,
+        <a href="http://rationalegoist.com">The Rational Egoist</a>
+    </p>
+    <div class="clear"></div>
+    <p>
+        Follow me on Twitter (<a href="http://twitter.com/rationalegoist">@rationalegoist</a>) and
+        <a href="http://facebook.com/rationalegoist">Facebook</a>
+    </p>
+    <div class="clear"></div>
+    <p>Email me: <a href="mailto:jason@rationalegoist.com">jason@rationalegoist.com</a></p>
+</div>
+
+<% if !@current_user %>
+<div class="grid_4 sidebar signup">
+    <div class="top">&nbsp;</div>
+    <div class="content">
+        <h2>Got it?</h2>
+        <p>Good. Now go sign up to <%= link_to 'read', signup_read_path %> or <%= link_to 'donate', signup_donate_path %>.</p>
+    </div>
+    <div class="bottom">&nbsp;</div>
+</div>
+<% end %>
+
+<%= render "signup/feedback_sidebar" %>

@@ -1,0 +1,13 @@
+<% if session[:seen_signup] && !@current_user %>
+<div class="grid_4 sidebar feedback">
+    <div class="top">&nbsp;</div>
+    <div class="content">
+        <h2>Don't want to sign up?</h2>
+        <p>
+            That's alright. Please tell me why.
+            <%= mail_to 'jason@rationalegoist.com', 'Send feedback to Jason', subject: "Feedback on Free Objectivist Books" %>
+        </p>
+    </div>
+    <div class="bottom">&nbsp;</div>
+</div>
+<% end %>

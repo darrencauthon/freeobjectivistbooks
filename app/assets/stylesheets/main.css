@@ -173,7 +173,6 @@ a:active {
 }
 
 .sidebar h2 {
-    font-size: 1.6em;
     margin-top: 0;
 }
 
@@ -184,6 +183,22 @@ a:active {
 
 .sidebar ul {
     margin-bottom: 0;
+}
+
+.sidebar.login h2 {
+    font-size: 1.6em;
+}
+
+.sidebar.login p {
+    font-size: 1.2em;
+}
+
+.sidebar.feedback h2 {
+    font-size: 1.4em;
+}
+
+.sidebar.feedback p {
+    font-size: 1.0em;
 }
 
 /****************************************************************************************************/
