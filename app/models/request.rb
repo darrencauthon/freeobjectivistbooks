@@ -23,8 +23,8 @@ class Request < ActiveRecord::Base
   validates_presence_of :reason, message: "This is required."
   validates_acceptance_of :pledge, message: "You must pledge to read this book.", allow_nil: false, on: :create
 
-  scope :open, where(donor_id: nil).order(:created_at)
-  scope :granted, where('donor_id is not null').order(:created_at)
+  scope :open, where(donor_id: nil)
+  scope :granted, where('donor_id is not null')
 
   after_initialize do |request|
     request.book = "Atlas Shrugged" if request.book.blank?

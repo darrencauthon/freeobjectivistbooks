@@ -21,7 +21,7 @@ class RequestsController < ApplicationController
   end
 
   def index
-    @requests = Request.open
+    @requests = Request.open.order('created_at desc')
     @donations = @current_user.donations if @current_user
     @pledge = @current_user.pledges.last if @current_user
   end
