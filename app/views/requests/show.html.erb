@@ -28,6 +28,7 @@
 
 <h1 class="grid_16"><%= @request.user.name %> wants <span class="title"><%= @request.book %></span></h1>
 <div class="request grid_12">
+    <p class="tagline"><%= user_tagline @request.user %></p>
     <p class="reason"><%= @request.reason %></p>
 
     <h2>Ship to</h2>
