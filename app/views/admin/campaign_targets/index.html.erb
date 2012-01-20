@@ -1,0 +1,29 @@
+<% content_for :stylesheet do %>
+<style>
+th, td {
+    padding-right: 12px;
+}
+</style>
+<% end %>
+
+<div class="grid_16">
+    <h1>Campaign targets</h1>
+
+    <table>
+        <tr>
+            <th>Group</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        <% @targets.each do |target| %>
+        <tr>
+            <td><%= target.group %></td>
+            <td><%= target.name %></td>
+            <td><%= target.email %></td>
+            <td><%= link_to 'delete', admin_campaign_target_path(target), method: :delete %></td>
+        </tr>
+        <% end %>
+    </table>
+
+    <%= link_to 'Load targets', new_admin_campaign_target_path %>
+</div>

@@ -1,0 +1,16 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+cmuoc:
+  name: CMU Objectivist Club
+  email: reason@andrew.cmu.edu
+  group: Objectivist Clubs
+
+riceoc:
+  name: Rice Objectivist Club
+  email: objectivists@rice.edu
+  group: Objectivist Clubs
+
+seattletp:
+  name: Seattle Tea Party
+  email: seattle@teaparty.org
+  group: Tea Party

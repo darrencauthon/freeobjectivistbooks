@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0px;
 }
 
-h1, h2, h3, h4, h5, h6, label, .header {
+h1, h2, h3, h4, h5, h6, th, label, .header {
     font-family: 'gill sans', helvetica, sans-serif;
     font-weight: normal;
 }

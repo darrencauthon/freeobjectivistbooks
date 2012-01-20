@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120119033458) do
+ActiveRecord::Schema.define(:version => 20120120015711) do
+
+  create_table "campaign_targets", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "group"
+    t.string   "last_campaign"
+    t.datetime "emailed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "events", :force => true do |t|
     t.integer  "request_id"

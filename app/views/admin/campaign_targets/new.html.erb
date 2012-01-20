@@ -1,0 +1,15 @@
+<% content_for :stylesheet do %>
+<style>
+label, textarea {
+    display: block;
+}
+</style>
+<% end %>
+
+<h1>Load targets</h1>
+
+<%= form_tag admin_campaign_targets_path, class: "grid_12" do %>
+    <%= label_tag :targets_json, "Targets JSON" %>
+    <%= text_area_tag :targets_json, params[:targets_json], rows: 30, cols: 80 %>
+    <%= submit_tag "Load" %>
+<% end %>
