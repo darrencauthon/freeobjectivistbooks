@@ -32,14 +32,14 @@ class SignupControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_select '#request_book_atlas_shrugged[checked="checked"]'
-    assert_select '.errorExplanation', false
+    assert_select '.error', false
     assert_select '.sidebar h2', "Already signed up?"
   end
 
   test "donate" do
     get :donate
     assert_response :success
-    assert_select '.errorExplanation', false
+    assert_select '.error', false
     assert_select '.sidebar h2', "Already signed up?"
   end
 
@@ -48,7 +48,6 @@ class SignupControllerTest < ActionController::TestCase
     request = request_attributes
 
     post :submit, user: user, request: request, from_action: "read"
-    assert_response :success
 
     user = User.find_by_name "John Galt"
     assert_not_nil user
@@ -65,12 +64,7 @@ class SignupControllerTest < ActionController::TestCase
 
     assert_equal [], user.pledges
 
-    assert_select 'p.overview', /We will look for a donor/
-    assert_select 'p', /John Galt/
-    assert_select 'p', /Atlantis/
-    assert_select 'p', /Fountainhead/
-    assert_select 'p', request_reason
-    assert_select 'p', /galt@gulch.com/
+    assert_redirected_to request
   end
 
   test "read submit failure" do
@@ -86,7 +80,7 @@ class SignupControllerTest < ActionController::TestCase
 
     assert !User.exists?(name: "John Galt")
 
-    assert_select '.errorExplanation h2', /problems with your signup/
+    assert_select '.message.error .headline', /problems with your signup/
     assert_select '.field_with_errors', /can't be blank/
     assert_select '.field_with_errors', /didn't match/
     assert_select '.field_with_errors', /must pledge to read/
@@ -128,7 +122,7 @@ class SignupControllerTest < ActionController::TestCase
 
     assert !User.exists?(name: "John Galt")
 
-    assert_select '.errorExplanation h2', /problems with your signup/
+    assert_select '.message.error .headline', /problems with your signup/
     assert_select '.field_with_errors', /can't be blank/
     assert_select '.field_with_errors', /didn't match/
     assert_select '.field_with_errors', /Please enter a number/

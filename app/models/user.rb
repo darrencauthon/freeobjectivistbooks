@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_many :donations, class_name: "Request", foreign_key: "donor_id", order: :updated_at, dependent: :nullify
 
   validates_presence_of :name, :location, :email
+  validates_uniqueness_of :email, message: "There is already an account with this email."
+
   validates_presence_of :password, on: :create
   validates_presence_of :password_confirmation, if: :password_digest_changed?
   validates_confirmation_of :password, message: "didn't match confirmation"
@@ -38,10 +40,6 @@ class User < ActiveRecord::Base
     errors.add(:password, "can't be blank") if params[:password].blank?
     errors.add(:password_confirmation, "can't be blank") if params[:password_confirmation].blank?
     errors.empty? ? update_attributes(params) : false
-  end
-
-  def possible_dupe?
-    @dupe ||= User.where(email: email).count > 1 || User.where(name: name).count > 1
   end
 
   def letmein_auth(timestamp)

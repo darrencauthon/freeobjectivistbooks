@@ -1,17 +1,7 @@
 <div class="request grid_9">
-    <div class="headline">
-        <% if request.user.possible_dupe? %><span class="dupe"><% else %><span><% end %>
-            <%= request.user.name %> (<%= request.user.email %>)
-        </span>
-        wants <span class="title"><%= request.book %></span>
-    </div>
+    <div class="headline"><%= request.user.name %> (<%= request.user.email %>) wants <span class="title"><%= request.book %></span></div>
     <div class="tagline"><%= user_tagline request.user %></div>
     <div class="reason"><%= request.reason %></div>
     <div class="timestamp"><%= l request.created_at %></div>
 </div>
-<% if request.user.possible_dupe? %>
-<%= link_to admin_user_path(request.user), method: :delete, class: "grid_3" do %>
-    <div class="button"></div>
-<% end %>
-<% end %>
 <div class="clear"></div>

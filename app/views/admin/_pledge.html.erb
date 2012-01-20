@@ -1,17 +1,7 @@
 <div class="pledge grid_9">
-    <div class="headline">
-        <% if pledge.user.possible_dupe? %><span class="dupe"><% else %><span><% end %>
-            <%= pledge.user.name %> (<%= pledge.user.email %>)
-        </span>
-        pledged <%= pledge.quantity %> books
-    </div>
+    <div class="headline"><%= pledge.user.name %> (<%= pledge.user.email %>) pledged <%= pledge.quantity %> books</div>
     <div class="tagline"><%= user_tagline pledge.user %></div>
     <% if pledge.reason.present? %><div class="reason"><%= pledge.reason %></div><% end %>
     <div class="timestamp"><%= l pledge.created_at %></div>
 </div>
-<% if pledge.user.possible_dupe? %>
-<%= link_to admin_user_path(pledge.user), method: :delete, class: "grid_3" do %>
-    <div class="button"></div>
-<% end %>
-<% end %>
 <div class="clear"></div>

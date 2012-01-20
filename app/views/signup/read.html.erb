@@ -24,21 +24,21 @@
 </style>
 <% end %>
 
+<% unless @user.errors.empty? && @request.errors.empty? %>
+<div class="grid_12 message error">
+    <p class="headline">There were problems with your signup</p>
+    <p class="detail">Please see below and make corrections.</p>
+</div>
+<% end %>
+
 <h1 class="grid_16">Sign up for your free Objectivist book</h1>
 <ul class="grid_12 overview">
     <li>Your profile will be listed for donors to browse.</li>
     <li>A donor will choose you and send you the book directly.</li>
 </ul>
 
-<div class="grid_10">
+<div class="grid_12">
 <%= form_for @user, url: { action: :submit } do |f| %>
-    <% unless @user.errors.empty? && @request.errors.empty? %>
-    <div class="errorExplanation">
-        <h2>There were problems with your signup</h2>
-        <p>Please see below and make corrections.</p>
-    </div>
-    <% end %>
-
     <h2>What book do you want to read?</h2>
 
     <%= fields_for @request do |r| %>
@@ -80,7 +80,12 @@
 
     <%= f.label :email, class: "grid_5 alpha" %><div class="clear"></div>
     <%= f.text_field :email, class: "grid_5 alpha" %>
-    <span class="grid_4 field_with_errors"><%= @user.errors[:email].join(", ") %></span>
+    <% if @user.errors[:email].any? %>
+    <div class="grid_6 omega field_with_errors">
+        <p><%= @user.errors[:email].join(", ") %></p>
+        <p><%= link_to 'Log in', login_path(email: @user.email) %> if you've already signed up.</p>
+    </div>
+    <% end %>
     <div class="clear"></div>
 
     <%= f.label :password, class: "grid_5 alpha" %><div class="clear"></div>

@@ -32,6 +32,13 @@
 </style>
 <% end %>
 
+<% unless @user.errors.empty? && @pledge.errors.empty? %>
+<div class="grid_12 message error">
+    <p class="headline">There were problems with your signup</p>
+    <p class="detail">Please see below and make corrections.</p>
+</div>
+<% end %>
+
 <h1 class="grid_16">Sign up to donate Objectivist books</h1>
 <ul class="grid_12 overview">
     <li>We'll send you a link to browse students and their requests.</li>
@@ -40,15 +47,8 @@
 </ul>
 <div class="clear"></div>
 
-<div class="grid_10">
+<div class="grid_12">
 <%= form_for @user, url: { action: :submit } do |f| %>
-    <% unless @user.errors.empty? && @pledge.errors.empty? %>
-    <div class="errorExplanation">
-        <h2>There were problems with your signup</h2>
-        <p>Please see below and make corrections.</p>
-    </div>
-    <% end %>
-
     <h2>Public profile</h2>
 
     <%= f.label :name, class: "grid_5 alpha" %><div class="clear"></div>
@@ -65,7 +65,12 @@
 
     <%= f.label :email, class: "grid_5 alpha" %><div class="clear"></div>
     <%= f.text_field :email, class: "grid_5 alpha" %>
-    <span class="grid_4 field_with_errors"><%= @user.errors[:email].join(", ") %></span>
+    <% if @user.errors[:email].any? %>
+    <div class="grid_6 omega field_with_errors">
+        <p><%= @user.errors[:email].join(", ") %></p>
+        <p><%= link_to 'Log in', login_path(email: @user.email) %> if you've already signed up.</p>
+    </div>
+    <% end %>
     <div class="clear"></div>
 
     <%= f.label :password, class: "grid_5 alpha" %><div class="clear"></div>

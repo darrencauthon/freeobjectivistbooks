@@ -21,8 +21,10 @@ class SignupController < ApplicationController
       set_current_user @user
       if @user.pledges.any?
         redirect_to donate_url
+      elsif @user.requests.any?
+        redirect_to @user.requests.first
       else
-        render :confirmation, status: :created
+        redirect_to profile_path
       end
     else
       render params[:from_action], status: :unprocessable_entity

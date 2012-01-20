@@ -138,20 +138,6 @@ class UserTest < ActiveSupport::TestCase
     assert_nil request.donor
   end
 
-  # Duplicates
-
-  test "possible dupe?" do
-    assert !@howard.possible_dupe?
-    user = User.create! name: @howard.name, email: "something@else.com", location: "Somewhere", password: "asdf",
-      password_confirmation: "asdf"
-    assert user.possible_dupe?
-
-    assert !@quentin.possible_dupe?
-    user = User.create! name: "Something Else", email: @quentin.email, location: "Somewhere", password: "asdf",
-      password_confirmation: "asdf"
-    assert user.possible_dupe?
-  end
-
   # Letmein
 
   test "letmein" do
