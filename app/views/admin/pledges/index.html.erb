@@ -12,7 +12,7 @@
 <% end %>
 
 <h1 class="grid_16"><%= pluralize @pledges.count, 'pledge' %></h1>
-
 <div class="grid_12">
+    <h2>From <%= pluralize @pledge_count, 'donor' %> (average pledge size: <%= format_number@average_pledge_quantity %>)</h2>
     <%= render partial: "pledge", collection: @pledges, spacer_template: "requests/spacer" %>
 </div>

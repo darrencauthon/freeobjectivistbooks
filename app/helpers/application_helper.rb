@@ -7,6 +7,10 @@ module ApplicationHelper
     end
   end
 
+  def format_number(number, precision = 2)
+    number_with_precision number, precision: precision, significant: true, strip_insignificant_zeros: true
+  end
+
   def user_tagline(user)
     parts = []
     parts << "studying #{user.studying}" unless user.studying.blank?

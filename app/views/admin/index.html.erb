@@ -34,7 +34,9 @@ td {
     <p><%= link_to pluralize(@request_count, 'book') + " requested", admin_requests_path %>:
         <%= @granted_request_count %> granted (<%= @flagged_request_count %> flagged), <%= @open_request_count %> open
     </p>
-    <p><%= link_to pluralize(@pledge_quantity, 'book') + " pledged", admin_pledges_path %> from <%= pluralize @pledge_count, 'donor' %></p>
+    <p><%= link_to pluralize(@pledge_quantity, 'book') + " pledged", admin_pledges_path %>
+        from <%= pluralize @pledge_count, 'donor' %> (average pledge size: <%= format_number @average_pledge_quantity %>)
+    </p>
 </div>
 
 <h2 class="grid_16">Books</h2>
