@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :location, :email
   validates_uniqueness_of :email, message: "There is already an account with this email."
 
+  validate :name_must_have_proper_format, on: :create, if: lambda {|user| user.name.present? }
+
   validates_presence_of :password, on: :create
   validates_presence_of :password_confirmation, if: :password_digest_changed?
   validates_confirmation_of :password, message: "didn't match confirmation"
@@ -25,6 +27,23 @@ class User < ActiveRecord::Base
   def self.login(email, password)
     user = find_by_email email
     return user if user && user.authenticate(password)
+  end
+
+  def name_must_have_proper_format
+    has_upper = name =~ /[A-Z]/
+    has_lower = name =~ /[a-z]/
+
+    if has_upper && !has_lower
+      self.name = name.titleize
+      errors.add :name, "don't use ALL CAPS"
+    end
+
+    if has_lower && !has_upper
+      self.name = name.titleize
+      errors.add :name, "please use proper capitalization"
+    end
+
+    errors.add(:name, "please include full first and last name") if (!has_upper && !has_lower) || name.words.size < 2
   end
 
   def password=(password)

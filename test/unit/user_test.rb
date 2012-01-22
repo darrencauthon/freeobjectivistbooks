@@ -36,6 +36,26 @@ class UserTest < ActiveSupport::TestCase
     assert @howard.valid?
   end
 
+  test "name must be two words" do
+    @john.name = "John"
+    assert @john.invalid?
+    assert_match /first and last/, @john.errors[:name].first
+  end
+
+  test "name can't be all caps" do
+    @john.name = "JOHN GALT"
+    assert @john.invalid?
+    assert_match /ALL CAPS/, @john.errors[:name].first
+    assert_equal "John Galt", @john.name
+  end
+
+  test "name can't be all lowercase" do
+    @john.name = "john galt"
+    assert @john.invalid?
+    assert_match /capitalization/, @john.errors[:name].first
+    assert_equal "John Galt", @john.name
+  end
+
   # Finders
 
   test "find by email" do
