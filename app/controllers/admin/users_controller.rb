@@ -3,10 +3,25 @@ class Admin::UsersController < AdminController
     @user = User.find_by_id params[:id]
   end
 
+  def index
+    @users = User.order('created_at desc')
+  end
+
+  def update
+    @user.attributes = params[:user]
+    changed = @user.changed
+    if @user.save
+      flash[:notice] = changed.any? ? "Updated #{changed.join ', '}" : "No changes."
+      redirect_to [:admin, @user]
+    else
+      render :edit
+    end
+  end
+
   def destroy
     logger.info "deleting user #{@user.name} (#{@user.id})"
     @user.destroy
     flash[:notice] = "#{@user.name} deleted."
-    redirect_to admin_url
+    redirect_to action: :index
   end
 end

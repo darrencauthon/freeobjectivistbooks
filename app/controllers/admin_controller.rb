@@ -6,6 +6,7 @@ class AdminController < ApplicationController
   end
 
   def index
+    @user_count = User.count
     @request_count = Request.count
     @open_request_count = Request.open.count
     @granted_request_count = Request.granted.count

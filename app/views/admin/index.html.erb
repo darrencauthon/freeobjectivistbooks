@@ -30,6 +30,7 @@ td {
 <h1 class="grid_16">Admin</h1>
 
 <div class="grid_12 overview">
+    <p><%= link_to pluralize(@user_count, 'user'), admin_users_path %></p>
     <p><%= @request_count %> books requested: <%= @granted_request_count %> granted, <%= @open_request_count %> open</p>
     <p><%= @pledge_quantity %> books pledged from <%= @pledge_count %> donors</p>
 </div>

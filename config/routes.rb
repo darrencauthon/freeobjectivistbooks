@@ -33,7 +33,7 @@ FreeBooks::Application.routes.draw do
   # Admin
   get "admin" => "admin#index"
   namespace :admin do
-    resources :users, only: :destroy
+    resources :users
     resources :campaign_targets, only: [:index, :new, :create, :destroy]
   end
 

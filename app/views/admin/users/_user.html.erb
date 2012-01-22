@@ -1,0 +1,13 @@
+<div class="user">
+    <p class="headline"><%= link_to user.name, admin_user_path(user) %> (<%= user.email %>)</p>
+    <p class="tagline"><%= user_tagline user %></p>
+    <% user.requests.each do |request| %>
+    <p>Wants <span class="title"><%= request.book %></span></p>
+    <% end %>
+    <% user.pledges.each do |pledge| %>
+    <p>Pledged <%= pluralize pledge.quantity, 'book' %></p>
+    <% end %>
+    <% if user.donations.any? %>
+    <p>Sponsored <%= pluralize user.donations.count, 'book' %></p>
+    <% end %>
+</div>

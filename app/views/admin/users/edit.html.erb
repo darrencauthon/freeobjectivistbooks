@@ -1,0 +1,60 @@
+<% content_for :title do %>Edit User – Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.submit {
+    height: 46px;
+    margin-top: 24px;
+    background-image: url(/assets/update-button.png);
+}
+</style>
+<% end %>
+
+<h1 class="grid_16">Edit user</h1>
+
+<% if @user.errors.any? %>
+<div class="grid_12 message error">
+    <p class="headline">There were problems with your signup</p>
+    <p class="detail">Please see below and make corrections.</p>
+</div>
+<% end %>
+
+<div class="grid_12">
+<%= form_for [:admin, @user] do |f| %>
+    <h2>Public profile</h2>
+
+    <%= f.label :name, class: "grid_5 alpha" %><div class="clear"></div>
+    <%= f.text_field :name, class: "grid_5 alpha" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:name].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :school, class: "grid_5 alpha" %><div class="clear"></div>
+    <%= f.text_field :school, class: "grid_5 alpha", placeholder: "College, university or high school" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:school].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :studying, class: "grid_5 alpha" %><div class="clear"></div>
+    <%= f.text_field :studying, class: "grid_5 alpha", placeholder: "E.g.: architecture, philosophy, business" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:studying].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :location, class: "grid_5 alpha" %><div class="clear"></div>
+    <%= f.text_field :location, class: "grid_5 alpha", placeholder: "City and state or country" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:location].join(", ") %></span>
+    <div class="clear"></div>
+
+    <h2>Private account info</h2>
+
+    <%= f.label :email, class: "grid_5 alpha" %><div class="clear"></div>
+    <%= f.text_field :email, class: "grid_5 alpha" %>
+    <span class="grid_4 field_with_errors"><%= @user.errors[:email].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :address, class: "grid_5 alpha" %><div class="clear"></div>
+    <%= f.text_area :address, class: "grid_5 alpha", rows: 5 %>
+    <p class="grid_4 field_with_errors"><%= @user.errors[:address].join(", ") %></p>
+    <div class="clear"></div>
+
+    <%= f.submit "", class: "grid_4 alpha submit button" %><div class="clear"></div>
+<% end %>
+</div>

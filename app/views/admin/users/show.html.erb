@@ -1,0 +1,88 @@
+<% content_for :title do %><%= @user.name %> – Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.user, .request, .pledge, .donation {
+    margin-top: 12px;
+}
+
+.user p, .pledge p, .donation p {
+    margin-bottom: 0;
+}
+
+.button {
+    height: 56px;
+    margin-top: 24px;
+}
+
+.button.edit {
+    background-image: url(/assets/edit-button.png);
+}
+
+.button.delete {
+    background-image: url(/assets/delete-button.png);
+}
+</style>
+<% end %>
+
+<h1 class="grid_16"><%= @user.name %></h1>
+
+<div class="grid_12">
+    <p class="tagline"><%= user_tagline @user %></p>
+    <p class="email"><%= @user.email %></p>
+    <p class="address"><%= format_address @user.address %></p>
+
+    <% if @user.requests.any? %>
+    <h2><% if @user.requests.count == 1 %>Request<% else %>Requests<% end %></h2>
+    <% @user.requests.each do |request| %>
+    <div class="request">
+        <p class="headline"><span class="title"><%= request.book %></span></p>
+        <p class="reason"><%= request.reason %></p>
+        <p class="donor">
+            <% if request.donor %>
+            Donor: <%= link_to request.donor.name, admin_user_path(request.donor) %> in <%= request.donor.location %>
+            <% else %>
+            No donor yet
+            <% end %>
+        </p>
+        <% if request.flagged %>
+        <p class="flagged">
+            <% if request.address.blank? %>
+            Missing address flagged
+            <% else %>
+            Shipping info flagged: "<%= request.flag_message %>"
+            <% end %>
+        </p>
+        <% end %>
+    </div>
+    <% end %>
+    <% end %>
+
+    <% if @user.pledges.any? %>
+    <h2><% if @user.pledges.count == 1 %>Pledge<% else %>Pledges<% end %></h2>
+    <% @user.pledges.each do |pledge| %>
+    <div class="pledge">
+        <p class="headline"><%= pluralize pledge.quantity, 'book' %></p>
+        <% if pledge.reason.present? %><p class="reason"><%= pledge.reason %></p><% end %>
+    </div>
+    <% end %>
+    <% end %>
+
+    <% if @user.donations.any? %>
+    <h2>Donations</h2>
+    <% @user.donations.each do |donation| %>
+    <p class="donation"><span class="title"><%= donation.book %></span> to <%= link_to donation.user.name, admin_user_path(donation.user) %>
+        in <%= donation.user.location %>
+    </p>
+    <% end %>
+    <% end %>
+</div>
+
+<div class="actions grid_3">
+<%= link_to edit_admin_user_path(@user) do %>
+    <div class="edit button"></div>
+<% end %>
+<%= link_to admin_user_path(@user), method: :delete, confirm: "Delete #{@user.name}?" do %>
+    <div class="delete button"></div>
+<% end %>
+</div>
