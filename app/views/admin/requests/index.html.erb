@@ -1,0 +1,18 @@
+<% content_for :title do %>Requests – Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.request {
+    margin-top: 12px;
+}
+.request p {
+    margin-bottom: 0;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16"><%= pluralize @requests.count, 'request' %></h1>
+
+<div class="grid_12">
+    <%= render partial: "request", collection: @requests, spacer_template: "requests/spacer" %>
+</div>

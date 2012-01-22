@@ -31,8 +31,10 @@ td {
 
 <div class="grid_12 overview">
     <p><%= link_to pluralize(@user_count, 'user'), admin_users_path %></p>
-    <p><%= @request_count %> books requested: <%= @granted_request_count %> granted, <%= @open_request_count %> open</p>
-    <p><%= @pledge_quantity %> books pledged from <%= @pledge_count %> donors</p>
+    <p><%= link_to pluralize(@request_count, 'book') + " requested", admin_requests_path %>:
+        <%= @granted_request_count %> granted (<%= @flagged_request_count %> flagged), <%= @open_request_count %> open
+    </p>
+    <p><%= link_to pluralize(@pledge_quantity, 'book') + " pledged", admin_pledges_path %> from <%= pluralize @pledge_count, 'donor' %></p>
 </div>
 
 <h2 class="grid_16">Books</h2>
@@ -41,9 +43,3 @@ td {
     <tr><td><%= book %></td><td><%= @book_counts[book] %></td></tr>
     <% end %>
 </table>
-
-<h2 class="grid_16">Requests</h2>
-<%= render partial: "admin/request", collection: @requests, spacer_template: "spacer" %>
-
-<h2 class="grid_16">Pledges</h2>
-<%= render partial: "admin/pledge", collection: @pledges, spacer_template: "spacer" %>

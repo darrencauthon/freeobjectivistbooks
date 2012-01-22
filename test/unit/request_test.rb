@@ -70,6 +70,12 @@ class RequestTest < ActiveSupport::TestCase
     granted.each {|request| assert request.granted?}
   end
 
+  test "flagged" do
+    flagged = Request.flagged
+    assert flagged.any?
+    flagged.each {|request| assert request.flagged?}
+  end
+
   # Grant
 
   test "grant" do

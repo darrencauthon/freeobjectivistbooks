@@ -7,17 +7,16 @@ class AdminController < ApplicationController
 
   def index
     @user_count = User.count
+
     @request_count = Request.count
     @open_request_count = Request.open.count
     @granted_request_count = Request.granted.count
+    @flagged_request_count = Request.flagged.count
 
     @pledge_count = Pledge.count
     @pledge_quantity = Pledge.sum :quantity
 
     @book_counts = Request.group(:book).count
-    @books = @book_counts.keys.sort
-
-    @requests = Request.includes(:user).order('created_at desc')
-    @pledges = Pledge.includes(:user).order('created_at desc')
+    @books = @book_counts.keys.sort {|a,b| @book_counts[b] <=> @book_counts[a]}
   end
 end

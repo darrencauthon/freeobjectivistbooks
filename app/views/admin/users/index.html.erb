@@ -11,6 +11,8 @@
 </style>
 <% end %>
 
-<h1><%= pluralize @users.count, 'user' %></h1>
+<h1 class="grid_16"><%= pluralize @users.count, 'user' %></h1>
 
-<%= render @users %>
+<div class="grid_12">
+    <%= render @users %>
+</div>

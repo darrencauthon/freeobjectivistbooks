@@ -5,8 +5,9 @@ class AdminControllerTest < ActionController::TestCase
     authenticate_with_http_digest "admin", "password", "Admin"
     get :index
     assert_response :success
-    assert_select '.request .headline', /Howard Roark \(roark@stanton.edu\) wants Atlas Shrugged/
-    assert_select '.pledge .headline', /Hugh Akston \(akston@patrickhenry.edu\) pledged 5 books/
+    assert_select 'a', /user/
+    assert_select 'a', /requested/
+    assert_select 'a', /pledged/
   end
 
   test "admin password is required" do

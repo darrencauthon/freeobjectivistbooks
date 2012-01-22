@@ -1,7 +1,0 @@
-<div class="pledge grid_9">
-    <div class="headline"><%= pledge.user.name %> (<%= pledge.user.email %>) pledged <%= pledge.quantity %> books</div>
-    <div class="tagline"><%= user_tagline pledge.user %></div>
-    <% if pledge.reason.present? %><div class="reason"><%= pledge.reason %></div><% end %>
-    <div class="timestamp"><%= l pledge.created_at %></div>
-</div>
-<div class="clear"></div>

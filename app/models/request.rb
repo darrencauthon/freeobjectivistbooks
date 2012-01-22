@@ -25,6 +25,7 @@ class Request < ActiveRecord::Base
 
   scope :open, where(donor_id: nil)
   scope :granted, where('donor_id is not null')
+  scope :flagged, where(flagged: true)
 
   after_initialize do |request|
     request.book = "Atlas Shrugged" if request.book.blank?

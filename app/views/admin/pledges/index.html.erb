@@ -1,0 +1,18 @@
+<% content_for :title do %>Pledges – Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.pledge {
+    margin-top: 12px;
+}
+.pledge p {
+    margin-bottom: 0;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16"><%= pluralize @pledges.count, 'pledge' %></h1>
+
+<div class="grid_12">
+    <%= render partial: "pledge", collection: @pledges, spacer_template: "requests/spacer" %>
+</div>
