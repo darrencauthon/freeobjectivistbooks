@@ -101,6 +101,21 @@ class EventTest < ActiveSupport::TestCase
 
   # Derived attributes
 
+  test "from" do
+    assert_equal @hugh, events(:hugh_grants_quentin).from
+    assert_equal @quentin, events(:quentin_adds_name).from
+  end
+
+  test "from student?" do
+    assert !events(:hugh_grants_quentin).from_student?
+    assert events(:quentin_adds_name).from_student?
+  end
+
+  test "from donor?" do
+    assert events(:hugh_grants_quentin).from_donor?
+    assert !events(:quentin_adds_name).from_donor?
+  end
+
   test "to" do
     assert_equal @quentin, events(:hugh_grants_quentin).to
     assert_equal @hugh, events(:quentin_adds_name).to

@@ -49,16 +49,28 @@ class Event < ActiveRecord::Base
 
   # Derived attributes
 
-  def to
-    user == request.user ? donor : request.user
+  def from
+    user
+  end
+
+  def from_student?
+    from == request.user
+  end
+
+  def from_donor?
+    from == donor
   end
 
   def to_donor?
-    to == donor
+    from_student?
   end
 
   def to_student?
-    to == request.user
+    from_donor?
+  end
+
+  def to
+    to_donor? ? donor : request.user
   end
 
   def notified?
