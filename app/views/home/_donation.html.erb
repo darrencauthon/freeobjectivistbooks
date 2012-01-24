@@ -15,7 +15,7 @@
             <% end %>
         </p>
         <% else %>
-        <p><%= link_to 'Flag problem with shipping info', flag_request_path(donation) %></p>
+        <p><%= link_to 'Flag problem with shipping info', edit_request_path(donation, form: "flag") %></p>
         <% end %>
     </div>
     <div class="clear"></div>

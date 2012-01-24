@@ -21,8 +21,7 @@ FreeBooks::Application.routes.draw do
   resources :requests, only: [:show, :edit, :update] do
     member do
       post "grant"
-      get "flag"
-      post "flag" => "requests#update_flag"
+      put "flag"
     end
   end
 

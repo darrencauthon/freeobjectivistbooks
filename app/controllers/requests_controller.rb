@@ -1,29 +1,43 @@
 class RequestsController < ApplicationController
   before_filter :require_login
-  before_filter :require_student, only: [:edit, :update]
-  before_filter :require_donor, only: [:flag, :update_flag]
-  before_filter :require_student_or_donor, only: :show
+  before_filter :check_user
+
+  # Filters
 
   def load_models
     @request = Request.find params[:id] if params[:id]
   end
 
-  def require_student
-    require_user @request.user
+  def allowed_users_for_action(action)
+    case action
+    when "update" then @request.user
+    when "flag" then @request.donor
+    end
   end
 
-  def require_donor
-    require_user @request.donor
+  def allowed_users
+    case params[:action]
+    when "show" then [@request.user, @request.donor]
+    when "edit" then allowed_users_for_action(params[:form] || "update")
+    else allowed_users_for_action(params[:action])
+    end
   end
 
-  def require_student_or_donor
-    require_user @request.user, @request.donor
+  def check_user
+    users = Array(allowed_users)
+    require_user users unless users.empty?
   end
+
+  # Actions
 
   def index
     @requests = Request.open.order('created_at desc')
     @donations = @current_user.donations if @current_user
     @pledge = @current_user.pledges.last if @current_user
+  end
+
+  def edit
+    render params[:form] || :edit
   end
 
   def grant
@@ -54,7 +68,7 @@ class RequestsController < ApplicationController
     end
   end
 
-  def update_flag
+  def flag
     if @request.flag params[:message]
       flash[:notice] = "The request has been flagged, and your message has been sent to #{@request.user.name}."
       redirect_to @request

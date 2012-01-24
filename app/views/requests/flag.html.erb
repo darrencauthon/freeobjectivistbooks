@@ -29,7 +29,7 @@
 </div>
 
 <div class="grid_10">
-<%= form_for flag_request_path(@request) do |f| %>
+<%= form_for @request, url: flag_request_path(@request) do |f| %>
     <h2>What is the problem?</h2>
 
     <p>We'll send your message to the student and ask them to fix it:</p>

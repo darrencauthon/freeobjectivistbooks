@@ -164,10 +164,10 @@ class RequestsControllerTest < ActionController::TestCase
     verify_login_page
   end
 
-  # Flag
+  # Flag form
 
-  test "flag" do
-    get :flag, {id: @quentin_request.id}, session_for(@hugh)
+  test "flag form" do
+    get :edit, {id: @quentin_request.id, form: "flag"}, session_for(@hugh)
     assert_response :success
     assert_select 'h1', /flag/i
     assert_select '.address', /123 Main St/
@@ -175,21 +175,21 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'input[type="submit"]'
   end
 
-  test "flag requires login" do
-    get :flag, id: @quentin_request.id
+  test "flag form requires login" do
+    get :edit, id: @quentin_request.id, form: "flag"
     verify_login_page
   end
 
-  test "flag requires donor" do
-    get :flag, {id: @quentin_request.id}, session_for(@howard)
+  test "flag form requires donor" do
+    get :edit, {id: @quentin_request.id, form: "flag"}, session_for(@howard)
     verify_wrong_login_page
   end
 
-  # Update flag
+  # Flag
 
-  test "update flag" do
+  test "flag" do
     assert_difference "@quentin_request.events.count" do
-      post :update_flag, {id: @quentin_request.id, message: "Fix this"}, session_for(@hugh)
+      post :flag, {id: @quentin_request.id, message: "Fix this"}, session_for(@hugh)
     end
 
     assert_redirected_to @quentin_request
@@ -201,9 +201,9 @@ class RequestsControllerTest < ActionController::TestCase
     verify_event @quentin_request, "flag", message: "Fix this", notified: true
   end
 
-  test "update flag requires message" do
+  test "flag requires message" do
     assert_no_difference "@quentin_request.events.count" do
-      post :update_flag, {id: @quentin_request.id, message: ""}, session_for(@hugh)
+      post :flag, {id: @quentin_request.id, message: ""}, session_for(@hugh)
     end
 
     assert_response :success
@@ -213,13 +213,13 @@ class RequestsControllerTest < ActionController::TestCase
     assert !@quentin_request.flagged?
   end
 
-  test "update flag requires login" do
-    post :update_flag, {id: @quentin_request.id, message: "Fix this"}
+  test "flag requires login" do
+    post :flag, {id: @quentin_request.id, message: "Fix this"}
     verify_login_page
   end
 
-  test "update flag requires donor" do
-    post :update_flag, {id: @quentin_request.id, message: "Fix this"}, session_for(@howard)
+  test "flag requires donor" do
+    post :flag, {id: @quentin_request.id, message: "Fix this"}, session_for(@howard)
     verify_wrong_login_page
   end
 
