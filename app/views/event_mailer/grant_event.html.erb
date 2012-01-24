@@ -3,6 +3,10 @@
 <p>Good news: We found a donor to send you <%= @event.request.book %>! <%= @event.donor.name %> in <%= @event.donor.location %>.</p>
 
 <% if @event.request.address.present? %>
+<% if !@event.request.thanked? %>
+<p><%= link_to "Send thanks to #{@event.donor.name}", edit_request_url(@event.request, type: "thank") %></p>
+<% end %>
+
 <p>Your book will arrive shortly. The address you gave was:</p>
 
 <p>
