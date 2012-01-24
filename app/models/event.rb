@@ -15,6 +15,7 @@ class Event < ActiveRecord::Base
 
   after_initialize :populate
 
+  after_create :log
   after_create :notify
 
   def populate
@@ -26,7 +27,6 @@ class Event < ActiveRecord::Base
     attributes = {request: request, user: user, donor: request.donor, type: type, happened_at: Time.now}
     attributes.merge! options
     event = create! attributes
-    Rails.logger.info "Event: #{event.inspect}"
     event
   end
 
@@ -104,5 +104,9 @@ class Event < ActiveRecord::Base
     mail = EventMailer.mail_for_event self
     mail.deliver
     self.notified!
+  end
+
+  def log
+    Rails.logger.info "Event: #{inspect}"
   end
 end
