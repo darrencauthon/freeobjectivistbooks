@@ -51,7 +51,7 @@
             <% end %>
         </p>
         <% else %>
-        <p><%= link_to 'Flag problem with shipping info', edit_request_path(@request, form: "flag") %></p>
+        <p><%= link_to 'Flag problem with shipping info', edit_request_path(@request, type: "flag") %></p>
         <% end %>
     <% end %>
 

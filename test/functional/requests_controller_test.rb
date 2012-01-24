@@ -167,7 +167,7 @@ class RequestsControllerTest < ActionController::TestCase
   # Flag form
 
   test "flag form" do
-    get :edit, {id: @quentin_request.id, form: "flag"}, session_for(@hugh)
+    get :edit, {id: @quentin_request.id, type: "flag"}, session_for(@hugh)
     assert_response :success
     assert_select 'h1', /flag/i
     assert_select '.address', /123 Main St/
@@ -176,12 +176,12 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "flag form requires login" do
-    get :edit, id: @quentin_request.id, form: "flag"
+    get :edit, id: @quentin_request.id, type: "flag"
     verify_login_page
   end
 
   test "flag form requires donor" do
-    get :edit, {id: @quentin_request.id, form: "flag"}, session_for(@howard)
+    get :edit, {id: @quentin_request.id, type: "flag"}, session_for(@howard)
     verify_wrong_login_page
   end
 

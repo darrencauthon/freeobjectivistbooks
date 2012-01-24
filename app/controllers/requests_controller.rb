@@ -18,7 +18,7 @@ class RequestsController < ApplicationController
   def allowed_users
     case params[:action]
     when "show" then [@request.user, @request.donor]
-    when "edit" then allowed_users_for_action(params[:form] || "update")
+    when "edit" then allowed_users_for_action(params[:type] || "update")
     else allowed_users_for_action(params[:action])
     end
   end
