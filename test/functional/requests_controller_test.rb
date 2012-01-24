@@ -341,4 +341,88 @@ class RequestsControllerTest < ActionController::TestCase
     update @howard_request, options
     verify_wrong_login_page
   end
+
+  # Thank form
+
+  test "thank form" do
+    get :edit, {id: @hank_request.id, type: "thank"}, session_for(@hank)
+    assert_response :success
+    assert_select 'h1', /Thank/
+    assert_select 'p', /Hugh Akston in Boston, MA agreed to send you\s+Atlas Shrugged/
+    assert_select 'textarea#request_event_message'
+    assert_select 'input[type="radio"]'
+    assert_select 'input[type="submit"]'
+  end
+
+  test "thank form requires login" do
+    get :edit, id: @hank_request.id, type: "thank"
+    verify_login_page
+  end
+
+  test "thank form requires student" do
+    get :edit, {id: @hank_request.id, type: "thank"}, session_for(@howard)
+    verify_wrong_login_page
+  end
+
+  # Thank
+
+  def thank_request_params
+    {event: {message: "Thanks so much!", public: true}}
+  end
+
+  test "thank" do
+    assert_difference "@hank_request.events.count" do
+      put :thank, {id: @hank_request.id, request: thank_request_params}, session_for(@hank)
+    end
+
+    assert_redirected_to @hank_request
+    assert_match /sent your thanks/i, flash[:notice]
+
+    @hank_request.reload
+    assert @hank_request.thanked?
+
+    verify_event @hank_request, "thank", message: "Thanks so much!", notified: true
+  end
+
+  test "thank requires message" do
+    request_params = thank_request_params
+    request_params[:event][:message] = ""
+
+    assert_no_difference "@hank_request.events.count" do
+      put :thank, {id: @hank_request.id, request: request_params}, session_for(@hank)
+    end
+
+    assert_response :success
+    assert_select 'h1', /thank/i
+    assert_select '.field_with_errors', /enter a message/
+
+    @hank_request.reload
+    assert !@hank_request.thanked?
+  end
+
+  test "thank requires explicit public bit" do
+    request_params = thank_request_params
+    request_params[:event].delete :public
+
+    assert_no_difference "@hank_request.events.count" do
+      put :thank, {id: @hank_request.id, request: request_params}, session_for(@hank)
+    end
+
+    assert_response :success
+    assert_select 'h1', /thank/i
+    assert_select '.field_with_errors', /choose/
+
+    @hank_request.reload
+    assert !@hank_request.thanked?
+  end
+
+  test "thank requires login" do
+    put :thank, {id: @hank_request.id, request: thank_request_params}
+    verify_login_page
+  end
+
+  test "thank requires student" do
+    put :thank, {id: @hank_request.id, request: thank_request_params}, session_for(@hugh)
+    verify_wrong_login_page
+  end
 end

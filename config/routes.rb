@@ -22,6 +22,7 @@ FreeBooks::Application.routes.draw do
     member do
       post "grant"
       put "flag"
+      put "thank"
     end
   end
 
