@@ -36,13 +36,14 @@
         <% if request.flagged? %>
         <p class="flagged">We need your address to send you your book.</p>
         <% end %>
-        <p><%= link_to 'Add your address', edit_request_path(request) %></p>
-    <% else %>
-        <% if request.flagged? %>
-        <p class="flagged">There seems to be a problem with your shipping info.</p>
-        <p><%= link_to 'Update your shipping info', edit_request_path(request) %></p>
-        <% else %>
-        <p>They will send your book soon.</p>
+    <p><%= link_to 'Add your address', edit_request_path(request) %></p>
+    <% elsif request.flagged? %>
+    <p class="flagged">There seems to be a problem with your shipping info.</p>
+    <p><%= link_to 'Update your shipping info', edit_request_path(request) %></p>
+    <% elsif request.granted? %>
+    <p>They will send your book soon.</p>
+        <% unless request.thanked? %>
+        <p><%= link_to 'Thank your donor', edit_request_path(request, type: "thank") %></p>
         <% end %>
     <% end %>
     <p><%= link_to 'See full request details', request_path(request) %></p>

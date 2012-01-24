@@ -71,6 +71,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'a', /update/i
     assert_select 'a', text: /flag/i, count: 0
     assert_select 'h2', /status: donor found/i
+    assert_select 'a', /thank/i
   end
 
   test "show to donor" do
@@ -82,6 +83,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'a', /flag/i
     assert_select 'a', text: /update/i, count: 0
     assert_select 'h2', /status: donor found/i
+    assert_select 'a', text: /thank/i, count: 0
   end
 
   test "show to student with missing address" do
@@ -108,6 +110,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.address', /no address/i
     assert_select '.flagged', /Student has been contacted/i
     assert_select 'a', text: /update/i, count: 0
+    assert_select 'a', text: /thank/i, count: 0
   end
 
   test "show to donor with flagged address" do
@@ -118,6 +121,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.address', /987 Steel Way/i
     assert_select '.flagged', /Shipping info flagged/i
     assert_select 'a', text: /update/i, count: 0
+    assert_select 'a', text: /thank/i, count: 0
   end
 
   test "show requires login" do

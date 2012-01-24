@@ -33,6 +33,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_select 'h1', "Howard Roark"
     assert_select '.request .headline', /Atlas Shrugged/
     assert_select '.request .status', /We are looking for a donor for you/
+    assert_select '.request a', text: /thank/i, count: 0
     assert_select '.request a', /see full/i
   end
 
@@ -42,6 +43,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_select 'h1', "Quentin Daniels"
     assert_select '.request .headline', /Virtue of Selfishness/
     assert_select '.request .status', /We have found you a donor! Hugh Akston in Boston, MA/
+    assert_select '.request a', /thank/i
     assert_select '.request a', /see full/i
   end
 
@@ -53,6 +55,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_select '.request .status', /We have found you a donor!/
     assert_select '.request .flagged', /We need your address/
     assert_select '.request a', /add your address/i
+    assert_select '.request a', text: /thank/i, count: 0
     assert_select '.request a', /see full/i
   end
 
@@ -64,6 +67,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_select '.request .status', /We have found you a donor!/
     assert_select '.request .flagged', /problem with your shipping info/
     assert_select '.request a', /update/i
+    assert_select '.request a', text: /thank/i, count: 0
     assert_select '.request a', /see full/i
   end
 
