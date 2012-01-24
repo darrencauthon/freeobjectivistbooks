@@ -75,3 +75,12 @@ howard_updates_info:
   user: howard
   detail: updated shipping info
   happened_at: 2012-01-20 00:15:25
+
+quentin_thanks_hugh:
+  type: thank
+  request: quentin_wants_atlas
+  user: quentin
+  donor: hugh
+  message: Thanks! I am looking forward to reading this
+  happened_at: 2012-01-21 00:15:25
+  notified_at: 2012-01-21 00:15:25

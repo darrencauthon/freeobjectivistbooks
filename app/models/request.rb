@@ -27,6 +27,12 @@ class Request < ActiveRecord::Base
   scope :granted, where('donor_id is not null')
   scope :flagged, where(flagged: true)
 
+  Event::TYPES.each do |type|
+    define_method "#{type}_events" do
+      events.scoped_by_type type
+    end
+  end
+
   after_initialize do |request|
     request.book = "Atlas Shrugged" if request.book.blank?
   end
@@ -95,5 +101,11 @@ class Request < ActiveRecord::Base
     save!
     Event.create_flag! self, message
     true
+  end
+
+  def thank(params)
+    self.thanked = true
+    event_attributes = params[:event].merge(user: user)
+    thank_events.build event_attributes
   end
 end

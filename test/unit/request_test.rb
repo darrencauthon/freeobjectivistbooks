@@ -197,4 +197,19 @@ class RequestTest < ActiveSupport::TestCase
     @dagny_request.reload
     assert @dagny_request.flagged?
   end
+
+  # Thank
+
+  test "thank" do
+    event = @dagny_request.thank event: {message: "Thanks a lot!", public: true}
+    assert @dagny_request.thanked?
+
+    assert_equal @dagny_request, event.request
+    assert_equal @dagny, event.user
+    assert_equal @hugh, event.donor
+    assert_equal "thank", event.type
+    assert_equal "Thanks a lot!", event.message
+    assert_not_nil event.happened_at
+    assert event.public?
+  end
 end

@@ -10,6 +10,10 @@ class EventTest < ActiveSupport::TestCase
     @howard_request = requests :howard_wants_atlas
     @quentin_request = requests :quentin_wants_vos
     @dagny_request = requests :dagny_wants_cui
+
+    @new_flag = @dagny_request.events.build type: "flag", user: @hugh, message: "Problem here"
+    @new_message = @howard_request.events.build type: "message", user: @hugh, message: "Info is correct"
+    @new_thank = @quentin_request.events.build type: "thank", user: @quentin, message: "Thanks!", public: false
   end
 
   # Associations
@@ -29,8 +33,45 @@ class EventTest < ActiveSupport::TestCase
 
   # Validations
 
+  test "valid flag" do
+    assert @new_flag.valid?
+  end
+
+  test "flag requires message" do
+    @new_flag.message = ""
+    assert @new_flag.invalid?
+    assert @new_flag.errors[:message].any?
+  end
+
+  test "valid message" do
+    assert @new_message.valid?
+  end
+
+  test "message requires message" do
+    @new_message.message = ""
+    assert @new_message.invalid?
+    assert @new_message.errors[:message].any?
+  end
+
+  test "valid thank" do
+    assert @new_thank.valid?
+  end
+
+  test "thank requires message" do
+    @new_thank.message = ""
+    assert @new_thank.invalid?
+    assert @new_thank.errors[:message].any?
+  end
+
+  test "thank requires explicit public bit" do
+    @new_thank.public = nil
+    assert @new_thank.invalid?
+    assert @new_thank.errors[:public].any?
+  end
+
   test "validates type" do
-    assert Event.new(type: "random").invalid?
+    @new_flag.type = "random"
+    assert @new_flag.invalid?
   end
 
   # Constructors
