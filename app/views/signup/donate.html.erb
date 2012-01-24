@@ -93,6 +93,7 @@
 
     <p class="field_with_errors"><%= @pledge.errors[:reason].join(", ") %></p>
     <%= p.text_area :reason, rows: 6, cols: 60 %><div class="clear"></div>
+    <p>(We may use this as a public testimonial.)</p>
     <% end %>
 
     <%= hidden_field_tag :from_action, "donate" %>
