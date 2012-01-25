@@ -1,6 +1,6 @@
 Hi <%= @event.to.name %>,
 
-<%= @event.user.name %> sent a personal thank-you note for sponsoring <%= @event.request.book %>:
+<%= @event.user.name %> sent a personal thank-you note for <%= @event.request.book %>:
 
 "<%= @event.message %>"
 <% if !@event.request.flagged? %>

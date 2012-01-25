@@ -1,11 +1,11 @@
 <p>Hi <%= @event.to.name %>,</p>
 
-<p><%= @event.user.name %> sent a personal thank-you note for sponsoring <%= @event.request.book %>:</p>
+<p><%= @event.user.name %> sent a personal thank-you note for <i><%= @event.request.book %>:</i></p>
 
 <p>"<%= @event.message %>"</p>
 
 <% if !@event.request.flagged? %>
-<p>If you haven't already done it, please send <%= @event.request.book %> to:</p>
+<p>If you haven't already done it, please send <i><%= @event.request.book %></i> to:</p>
 
 <p>
 <%= @event.request.user.name %><br>
@@ -15,10 +15,10 @@
 <p>See this and all the latest books you have pledged to donate at: <%= profile_url %></p>
 <% elsif @event.request.address.blank? %>
 <p><%= @event.request.user.name %> hasn't added an address yet. We'll let you know when they do so you
-can send <%= @event.request.book %>.</p>
+can send <i><%= @event.request.book %>.</i></p>
 <% else %>
 <p>You flagged <%= @event.request.user.name %>'s shipping info. We'll let you know when they respond
-so you can send <%= @event.request.book %>.</p>
+so you can send <i><%= @event.request.book %>.</i></p>
 <% end %>
 
 <p>
