@@ -18,6 +18,38 @@ class ActiveSupport::TestCase
   def session_for(user)
     user ? {user_id: user.id} : {}
   end
+
+  def setup
+    @hugh = users :hugh
+    @howard = users :howard
+    @quentin = users :quentin
+    @dagny = users :dagny
+    @hank = users :hank
+
+    @howard_request = requests :howard_wants_atlas
+    @quentin_request = requests :quentin_wants_vos
+    @dagny_request = requests :dagny_wants_cui
+    @hank_request = requests :hank_wants_atlas
+  end
+
+  def verify_login_page
+    assert_response :unauthorized
+    assert_select 'h1', 'Log in'
+  end
+
+  def verify_wrong_login_page
+    assert_response :forbidden
+    assert_select 'h1', 'Wrong login?'
+  end
+
+  def verify_event(request, type, options = {})
+    request.reload
+    event = request.events.last
+    assert_equal type, event.type
+    options.keys.each do |key|
+      assert_equal options[key], event.send(key), "verify_event: #{key} didn't match"
+    end
+  end
 end
 
 # from https://gist.github.com/1282275

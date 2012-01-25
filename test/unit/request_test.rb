@@ -1,17 +1,6 @@
 require 'test_helper'
 
 class RequestTest < ActiveSupport::TestCase
-  def setup
-    @howard = users :howard
-    @hugh = users :hugh
-    @dagny = users :dagny
-    @quentin = users :quentin
-
-    @howard_request = requests :howard_wants_atlas
-    @quentin_request = requests :quentin_wants_vos
-    @dagny_request = requests :dagny_wants_cui
-  end
-
   def reason
     "I've heard so much about this... can't wait to find out who is John Galt!"
   end

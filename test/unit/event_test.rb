@@ -2,15 +2,7 @@ require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
   def setup
-    @howard = users :howard
-    @quentin = users :quentin
-    @hugh = users :hugh
-    @dagny = users :dagny
-
-    @howard_request = requests :howard_wants_atlas
-    @quentin_request = requests :quentin_wants_vos
-    @dagny_request = requests :dagny_wants_cui
-
+    super
     @new_flag = @dagny_request.events.build type: "flag", user: @hugh, message: "Problem here"
     @new_message = @howard_request.events.build type: "message", user: @hugh, message: "Info is correct"
     @new_thank = @quentin_request.events.build type: "thank", user: @quentin, message: "Thanks!", public: false

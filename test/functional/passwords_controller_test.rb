@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class PasswordsControllerTest < ActionController::TestCase
-  def setup
-    @user = users :hugh
-  end
-
   def validate_reset_form
     assert_response :success
     assert_select 'h1', "Reset password"
@@ -37,7 +33,7 @@ class PasswordsControllerTest < ActionController::TestCase
 
   test "request reset" do
     assert_difference "ActionMailer::Base.deliveries.size", 1 do
-      post :request_reset, email: @user.email
+      post :request_reset, email: @hugh.email
     end
     assert_response :success
     assert_select 'h1', "Reset sent"
@@ -54,37 +50,37 @@ class PasswordsControllerTest < ActionController::TestCase
   end
 
   test "edit" do
-    get :edit, @user.letmein_params
+    get :edit, @hugh.letmein_params
     validate_reset_form
     assert_nil session[:user_id]
   end
 
   test "edit with invalid letmein" do
-    get :edit, @user.invalid_letmein_params
+    get :edit, @hugh.invalid_letmein_params
     validate_invalid_page
   end
 
   test "edit with expired letmein" do
-    get :edit, @user.expired_letmein_params
+    get :edit, @hugh.expired_letmein_params
     validate_expired_page
   end
 
   def post_password_update(password, options = {})
     confirmation = options[:confirmation] || password
     user_params = {password: password, password_confirmation: confirmation}
-    params = @user.letmein_params.merge user: user_params
+    params = @hugh.letmein_params.merge user: user_params
     post :update, params
-    @user.reload
+    @hugh.reload
 
     if options[:expect_error]
       validate_reset_form
       assert_nil session[:user_id]
       assert_select '.field_with_errors', options[:expect_error]
-      assert !@user.authenticate(password)
+      assert !@hugh.authenticate(password)
     else
       assert_redirected_to root_url
-      assert_equal @user.id, session[:user_id]
-      assert @user.authenticate(password)
+      assert_equal @hugh.id, session[:user_id]
+      assert @hugh.authenticate(password)
     end
   end
 
@@ -101,12 +97,12 @@ class PasswordsControllerTest < ActionController::TestCase
   end
 
   test "update with invalid letmein" do
-    post :update, @user.invalid_letmein_params
+    post :update, @hugh.invalid_letmein_params
     validate_invalid_page
   end
 
   test "update with expired letmein" do
-    post :update, @user.expired_letmein_params
+    post :update, @hugh.expired_letmein_params
     validate_expired_page
   end
 end

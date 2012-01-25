@@ -1,37 +1,6 @@
 require 'test_helper'
 
 class RequestsControllerTest < ActionController::TestCase
-  def setup
-    @hugh = users :hugh
-    @howard = users :howard
-    @quentin = users :quentin
-    @dagny = users :dagny
-    @hank = users :hank
-
-    @howard_request = requests :howard_wants_atlas
-    @quentin_request = requests :quentin_wants_vos
-    @dagny_request = requests :dagny_wants_cui
-    @hank_request = requests :hank_wants_atlas
-  end
-
-  def verify_login_page
-    assert_response :unauthorized
-    assert_select 'h1', 'Log in'
-  end
-
-  def verify_wrong_login_page
-    assert_response :forbidden
-    assert_select 'h1', 'Wrong login?'
-  end
-
-  def verify_event(request, type, options = {})
-    event = request.events.last
-    assert_equal type, event.type
-    assert_equal options[:detail], event.detail if options[:detail]
-    assert_equal options[:message], event.message if options[:message]
-    assert_equal options[:notified], event.notified? if options[:notified].present?
-  end
-
   # Index
 
   test "index" do
@@ -147,7 +116,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_equal @hugh, request.donor
     assert !request.flagged?
 
-    verify_event request, "grant", notified: true
+    verify_event request, "grant", notified?: true
   end
 
   test "grant no address" do
@@ -160,7 +129,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_equal @hugh, @howard_request.donor
     assert @howard_request.flagged?
 
-    verify_event @howard_request, "grant", notified: true
+    verify_event @howard_request, "grant", notified?: true
   end
 
   test "grant requires login" do
@@ -202,7 +171,7 @@ class RequestsControllerTest < ActionController::TestCase
     @quentin_request.reload
     assert @quentin_request.flagged?
 
-    verify_event @quentin_request, "flag", message: "Fix this", notified: true
+    verify_event @quentin_request, "flag", message: "Fix this", notified?: true
   end
 
   test "flag requires message" do
@@ -300,7 +269,7 @@ class RequestsControllerTest < ActionController::TestCase
     options = {name: "Howard Roark", address: "123 Independence St"}
     update @howard_request, options
     verify_update @howard_request, options, /updated/i
-    verify_event @howard_request, "update", detail: "added a shipping address", notified: false
+    verify_event @howard_request, "update", detail: "added a shipping address", notified?: false
   end
 
   test "update add name" do
@@ -310,21 +279,21 @@ class RequestsControllerTest < ActionController::TestCase
     options = {name: "Dagny Taggart", address: "123 Somewhere Road", message: "Added my full name"}
     update @dagny_request, options
     verify_update @dagny_request, options, /notified/i
-    verify_event @dagny_request, "update", detail: "added their full name", notified: true
+    verify_event @dagny_request, "update", detail: "added their full name", notified?: true
   end
 
   test "update shipping info" do
     options = {name: "Quentin Daniels", address: "123 Quantum Ln"}
     update @quentin_request, options
     verify_update @quentin_request, options, /has been notified/i
-    verify_event @quentin_request, "update", detail: "updated shipping info", notified: true
+    verify_event @quentin_request, "update", detail: "updated shipping info", notified?: true
   end
 
   test "update only message" do
     options = {name: "Quentin Daniels", address: @quentin.address, message: "No changes here"}
     update @quentin_request, options
     verify_update @quentin_request, options, /message has been sent/i
-    verify_event @quentin_request, "message", message: "No changes here", notified: true
+    verify_event @quentin_request, "message", message: "No changes here", notified?: true
   end
 
   test "update requires address if granted" do
@@ -385,7 +354,7 @@ class RequestsControllerTest < ActionController::TestCase
     @hank_request.reload
     assert @hank_request.thanked?
 
-    verify_event @hank_request, "thank", message: "Thanks so much!", notified: true
+    verify_event @hank_request, "thank", message: "Thanks so much!", notified?: true
   end
 
   test "thank requires message" do

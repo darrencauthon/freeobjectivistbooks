@@ -2,8 +2,8 @@ require 'test_helper'
 
 class PledgeTest < ActiveSupport::TestCase
   def setup
+    super
     @pledge = pledges :hugh_5
-    @hugh = users :hugh
   end
 
   def reason

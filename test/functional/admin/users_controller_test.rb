@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class Admin::UsersControllerTest < ActionController::TestCase
-  def setup
-    @howard = users :howard
-    @hugh = users :hugh
-  end
-
   def auth
     authenticate_with_http_digest "admin", "password", "Admin"
   end

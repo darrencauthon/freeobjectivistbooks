@@ -2,9 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @howard = users :howard
-    @hugh = users :hugh
-    @quentin = users :quentin
+    super
     @john = User.new name: "John Galt", email: "galt@gulch.com", location: "Atlantis, CO", password: "dagny",
       password_confirmation: "dagny"
   end

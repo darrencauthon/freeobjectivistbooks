@@ -2,6 +2,7 @@ require 'test_helper'
 
 class CampaignMailerTest < ActionMailer::TestCase
   def setup
+    super
     @cmuoc = campaign_targets :cmuoc
   end
 

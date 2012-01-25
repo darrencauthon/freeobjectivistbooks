@@ -2,6 +2,7 @@ require 'test_helper'
 
 class Admin::CampaignTargetsControllerTest < ActionController::TestCase
   def setup
+    super
     authenticate_with_http_digest "admin", "password", "Admin"
   end
 

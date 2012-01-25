@@ -1,14 +1,6 @@
 require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
-  def setup
-    @howard = users :howard
-    @hugh = users :hugh
-    @quentin = users :quentin
-    @dagny = users :dagny
-    @hank = users :hank
-  end
-
   test "index is home if not logged in" do
     get :index
     assert_response :success
