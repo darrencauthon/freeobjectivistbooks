@@ -3,20 +3,11 @@ Hi <%= @event.to.name %>,
 <%= @event.user.name %> sent you a thank-you note for <%= @event.request.book %>:
 
 "<%= @event.message %>"
-<% if !@event.request.flagged? %>
-If you haven't already done it, please send <%= @event.request.book %> to:
 
-<%= @event.request.user.name %>
-<%= @event.request.address %>
+Reply to <%= @event.from.name %>: <%= new_request_message_url @event.request %>
 
 See this and all the latest books you have pledged to donate at: <%= profile_url %>
-<% elsif @event.request.address.blank? %>
-<%= @event.request.user.name %> hasn't added an address yet. We'll let you know when they do so you
-can send <%= @event.request.book %>.
-<% else %>
-You flagged <%= @event.request.user.name %>'s shipping info. We'll let you know when they respond
-so you can send <%= @event.request.book %>.
-<% end %>
+
 Thanks,
 Free Objectivist Books
 http://freeobjectivistbooks.org

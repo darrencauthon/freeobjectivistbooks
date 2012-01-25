@@ -2,15 +2,16 @@ Hi <%= @event.to.name %>,
 
 <%= @event.user.name %> <%= @event.detail %> on Free Objectivist Books.
 <% if @event.message.present? %>
-They said: "<%= @event.message %>"<% end %>
+They said: "<%= @event.message %>"
+<% end %>
 <% if @event.to_donor? %>
 Please send <%= @event.request.book %> to:
 
 <%= @event.request.user.name %>
 <%= @event.request.address %>
 
-See this and all the latest books you have pledged to donate at: <%= profile_url %><% end %>
-
+See this and all the latest books you have pledged to donate at: <%= profile_url %>
+<% end %>
 Thanks,
 Free Objectivist Books
 http://freeobjectivistbooks.org

@@ -4,19 +4,12 @@
 
 <p>"<%= @event.message %>"</p>
 
+<p><%= link_to "Reply to #{@event.from.name}", new_request_message_url(@event.request) %></p>
+
 <% if @event.to_donor? %>
-<p>Please send <i><%= @event.request.book %></i> to:</p>
-
-<p>
-<%= @event.request.user.name %><br>
-<%= format_address @event.request.address %>
-</p>
-
 <p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>
-<% end %>
-
-<% if @event.to_student? %>
-<%= link_to 'See the status of your request', request_url(@event.request) %>
+<% elsif @event.to_student? %>
+<p><%= link_to 'See the status of your request', request_url(@event.request) %></p>
 <% end %>
 
 <p>Thanks,<br>
