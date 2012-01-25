@@ -25,7 +25,7 @@
  </style>
 <% end %>
 
-<h1 class="grid_16">Thank your donor</h1>
+<h1 class="grid_16">Thank <%= @request.donor.name %></h1>
 
 <div class="request grid_12">
     <p><%= @request.donor.name %> in <%= @request.donor.location %> agreed to send you
