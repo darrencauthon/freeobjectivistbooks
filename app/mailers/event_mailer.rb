@@ -25,6 +25,6 @@ class EventMailer < ApplicationMailer
 
   def thank_event(event)
     @event = event
-    mail_to_user @event.to, subject: "#{@event.user.name} sent a personal thank-you note for #{@event.request.book}"
+    mail_to_user @event.to, subject: "#{@event.user.name} sent you a thank-you note for #{@event.request.book}"
   end
 end
