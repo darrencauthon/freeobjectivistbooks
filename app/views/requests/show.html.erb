@@ -9,6 +9,10 @@
 .back {
     margin-top: 24px;
 }
+
+.sidebar {
+    margin-top: 24px;
+}
 </style>
 <% end %>
 
@@ -27,47 +31,64 @@
 <% end %>
 
 <h1 class="grid_16"><%= @request.user.name %> wants <span class="title"><%= @request.book %></span></h1>
+
 <div class="request grid_12">
     <p class="tagline"><%= user_tagline @request.user %></p>
     <p class="reason"><%= @request.reason %></p>
+</div>
+<div class="clear"></div>
 
+<div class="request grid_10">
     <h2>Ship to</h2>
     <p class="name"><%= @request.user.name %></p>
     <p class="address"><%= format_address @request.address %></p>
 
-    <% if @current_user == @request.user %>
+    <% if current_is_donor? && @request.flagged? %>
+    <p class="flagged">
         <% if @request.address.present? %>
-        <p><%= link_to 'Update shipping info', edit_request_path(@request) %></p>
+        Shipping info flagged
         <% else %>
-        <p><%= link_to 'Add your address', edit_request_path(@request) %></p>
+        Student has been contacted to add address
         <% end %>
-    <% elsif @current_user == @request.donor %>
-        <% if @request.flagged? %>
-        <p class="flagged">
-            <% if @request.address.present? %>
-            Shipping info flagged
-            <% else %>
-            Student has been contacted to add address
-            <% end %>
-        </p>
-        <% else %>
-        <p><%= link_to 'Flag problem with shipping info', edit_request_path(@request, type: "flag") %></p>
-        <% end %>
+    </p>
     <% end %>
 
-    <% if @request.donor %>
+    <% if @request.granted? %>
     <h2>Status: Donor found</h2>
     <p class="status"><%= @request.donor.name %> in <%= @request.donor.location %> will donate this book.</p>
-    <% if @current_user == @request.user && !@request.thanked? %>
-    <p><%= link_to 'Thank your donor', edit_request_path(@request, type: "thank") %></p>
-    <% end %>
     <% else %>
     <h2>Status: Looking for donor</h2>
     <p class="status">We are looking for a donor for this book.</p>
     <% end %>
 
-    <% if @current_user == @request.donor %>
+    <% if current_is_donor? %>
     <p class="back"><%= link_to 'Back to all donations', profile_path %></p>
     <% end %>
 </div>
+
+<div class="grid_5 sidebar">
+    <div class="top_5">&nbsp;</div>
+    <div class="content_5">
+        <% if current_is_student? %>
+            <% if @request.needs_thanks? %>
+            <p><%= link_to "Thank #{@request.donor.name}", edit_request_path(@request, type: "thank") %></p>
+            <% end %>
+            <% if @request.address.present? %>
+            <p><%= link_to 'Update shipping info', edit_request_path(@request) %></p>
+            <% else %>
+            <p><%= link_to 'Add your address', edit_request_path(@request) %></p>
+            <% end %>
+        <% end %>
+        <% if current_is_donor? %>
+            <% unless @request.flagged? %>
+            <p><%= link_to 'Flag problem with shipping info', edit_request_path(@request, type: "flag") %></p>
+            <% end %>
+        <% end %>
+        <% if other_user %>
+            <p><%= link_to "Send a message to #{other_user.name}", new_request_message_path(@request) %></p>
+        <% end %>
+    </div>
+    <div class="bottom_5">&nbsp;</div>
+</div>
+
 <div class="clear"></div>

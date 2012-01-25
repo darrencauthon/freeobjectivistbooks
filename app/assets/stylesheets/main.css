@@ -172,6 +172,19 @@ a:active {
     background-image: url(/assets/content-bg-220-middle.png);
 }
 
+.sidebar .top_5 {
+    background-image: url(/assets/content-bg-280-top.png);
+}
+
+.sidebar .bottom_5 {
+    background-image: url(/assets/content-bg-280-bottom.png);
+}
+
+.sidebar .content_5 {
+    padding: 0 24px;
+    background-image: url(/assets/content-bg-280-middle.png);
+}
+
 .sidebar h2 {
     margin-top: 0;
 }
