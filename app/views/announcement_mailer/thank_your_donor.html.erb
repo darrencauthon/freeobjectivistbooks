@@ -1,0 +1,19 @@
+<p>Hi <%= @request.user.name %>,</p>
+
+<p><%= @request.donor.name %> agreed to send you <i><%= @request.book %></i> through Free Objectivist Books
+    (you may have received it already).
+</p>
+
+<p>You can now send your donor a personal thank-you note:<br>
+<b><%= link_to "Thank #{@request.donor.name}", edit_request_url(@request, type: "thank") %></b>
+</p>
+
+<p>This is a great way to let your donor know know how much you're looking forward to reading
+    <i><%= @request.book %>,</i> or if you've already started reading it, how it has affected you.
+</p>
+
+<p>
+Thanks,<br>
+Free Objectivist Books<br>
+http://freeobjectivistbooks.org
+</p>
