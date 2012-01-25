@@ -78,7 +78,7 @@ howard_updates_info:
 
 quentin_thanks_hugh:
   type: thank
-  request: quentin_wants_atlas
+  request: quentin_wants_vos
   user: quentin
   donor: hugh
   message: Thanks! I am looking forward to reading this
