@@ -51,6 +51,10 @@ class Request < ActiveRecord::Base
     donor.present?
   end
 
+  def needs_thanks?
+    granted? && !thanked?
+  end
+
   def open?
     !granted?
   end

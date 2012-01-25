@@ -17,6 +17,7 @@ dagny_wants_cui:
   reason: I need this to morally defend my business!
   donor: hugh
   flagged: true
+  thanked: true
 
 quentin_wants_opar:
   user: quentin

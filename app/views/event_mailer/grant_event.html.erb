@@ -5,7 +5,7 @@
 </p>
 
 <% if @event.request.address.present? %>
-<% if !@event.request.thanked? %>
+<% if @event.request.needs_thanks? %>
 <p><%= link_to "Send thanks to #{@event.donor.name}", edit_request_url(@event.request, type: "thank") %></p>
 <% end %>
 

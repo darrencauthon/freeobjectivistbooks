@@ -65,6 +65,23 @@ class RequestTest < ActiveSupport::TestCase
     flagged.each {|request| assert request.flagged?}
   end
 
+  # Derived attributes
+
+  test "address" do
+    assert_equal @quentin.address, @quentin_request.address
+  end
+
+  test "granted?" do
+    assert !@howard_request.granted?
+    assert @quentin_request.granted?
+  end
+
+  test "needs thanks?" do
+    assert !@howard_request.needs_thanks?
+    assert @quentin_request.needs_thanks?
+    assert !@dagny_request.needs_thanks?
+  end
+
   # Grant
 
   test "grant" do

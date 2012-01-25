@@ -42,7 +42,7 @@
     <p><%= link_to 'Update your shipping info', edit_request_path(request) %></p>
     <% elsif request.granted? %>
     <p>They will send your book soon.</p>
-        <% unless request.thanked? %>
+        <% if request.needs_thanks? %>
         <p><%= link_to "Thank #{request.donor.name}", edit_request_path(request, type: "thank") %></p>
         <% end %>
     <% end %>
