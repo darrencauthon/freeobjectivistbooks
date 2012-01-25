@@ -11,7 +11,7 @@
  </style>
 <% end %>
 
-<% if @request.flagged? && @current_user == @request.user %>
+<% if @request.flagged? && current_is_student? %>
 <div class="grid_12 message error">
     <% if @request.address.blank? %>
     <p class="headline">Add your address to get your book.</p>

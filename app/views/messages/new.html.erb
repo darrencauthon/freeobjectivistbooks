@@ -20,7 +20,7 @@
 
 <div class="grid_12">
     <p class="overview">
-        <% if @current_user == @request.user %>
+        <% if current_is_student? %>
         <%= @request.donor.name %> agreed to send you
         <% else %>
         <%= @request.user.name %> wants to read

@@ -12,7 +12,7 @@
 </style>
 <% end %>
 
-<% if @request.flagged? && @current_user == @request.user %>
+<% if @request.flagged? && current_is_student? %>
 <div class="grid_12 message error">
     <p class="headline">
         <% if @request.address.blank? %>
