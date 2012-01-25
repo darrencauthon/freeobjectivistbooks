@@ -24,6 +24,7 @@ FreeBooks::Application.routes.draw do
       put "flag"
       put "thank"
     end
+    resources :messages, only: [:new, :create]
   end
 
   get "signup/read"
