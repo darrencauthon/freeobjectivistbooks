@@ -144,6 +144,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', /flag/i
     assert_select '.address', /123 Main St/
+    assert_select 'p', /We'll send your message to Quentin/
     assert_select 'textarea#message'
     assert_select 'input[type="submit"]'
   end
