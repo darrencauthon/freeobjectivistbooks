@@ -9,8 +9,13 @@ class AnnouncementMailer < ApplicationMailer
     mail.deliver
   end
 
+  def announcement(subject)
+    mail_to_user @user, subject: subject
+  end
+
   def thank_your_donor(request)
     @request = request
-    mail_to_user @request.user, subject: "Thank your donor for #{@request.book}"
+    @user = @request.user
+    announcement "Thank your donor for #{@request.book}"
   end
 end
