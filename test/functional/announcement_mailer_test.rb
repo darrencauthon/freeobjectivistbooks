@@ -26,4 +26,20 @@ class AnnouncementMailerTest < ActionMailer::TestCase
       assert_select 'p', /looking forward to reading\s+Atlas Shrugged/
     end
   end
+
+  test "reply to thanks" do
+    mail = AnnouncementMailer.reply_to_thanks events(:quentin_thanks_hugh)
+    assert_equal "Now you can reply to Quentin Daniels's thank-you note on Free Objectivist Books", mail.subject
+    assert_equal ["akston@patrickhenry.edu"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hugh/
+      assert_select 'p', /got a thank-you message from Quentin Daniels for The Virtue of Selfishness/
+      assert_select 'p', /Now you can reply to Quentin/
+      assert_select 'a', /Reply to Quentin/
+      assert_select 'p', '"Thanks! I am looking forward to reading this"'
+      assert_select 'p', /Thanks,\nFree Objectivist Books/
+    end
+  end
 end

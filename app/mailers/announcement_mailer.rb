@@ -18,4 +18,10 @@ class AnnouncementMailer < ApplicationMailer
     @user = @request.user
     announcement "Thank your donor for #{@request.book}"
   end
+
+  def reply_to_thanks(event)
+    @event = event
+    @user = @event.request.donor
+    announcement "Now you can reply to #{@event.from.name}'s thank-you note on Free Objectivist Books"
+  end
 end

@@ -1,0 +1,10 @@
+Recently you got a thank-you message from <%= @event.from.name %> for <%= @event.request.book %>, but you couldn't reply to it. (If you hit "reply" on the email, it went to me, Jason, instead.)
+
+Now you can reply to <%= @event.from.name %> if you want:
+<%= new_request_message_url @event.request %>
+
+As a reminder, the thank-you message was:
+
+"<%= @event.message %>"
+
+Also, you can now send a message to any student you've donated to at any time through the Free Objectivist Books site. Just go to the request detail page for that student and you'll see "Send a message".
