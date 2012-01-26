@@ -1,5 +1,3 @@
-Hi <%= @event.to.name %>,
-
 <%= @event.user.name %> <%= @event.detail %> on Free Objectivist Books.
 <% if @event.message.present? %>
 They said: "<%= @event.message %>"
@@ -12,6 +10,3 @@ Please send <%= @event.request.book %> to:
 
 See this and all the latest books you have pledged to donate at: <%= profile_url %>
 <% end %>
-Thanks,
-Free Objectivist Books
-http://freeobjectivistbooks.org

@@ -1,5 +1,3 @@
-<p>Hi <%= @event.to.name %>,</p>
-
 <p><%= @event.user.name %> sent you a thank-you note for <i><%= @event.request.book %>:</i></p>
 
 <p>"<%= @event.message %>"</p>
@@ -7,9 +5,3 @@
 <p><%= link_to "Reply to #{@event.from.name}", new_request_message_url(@event.request) %></p>
 
 <p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>
-
-<p>
-Thanks,<br>
-Free Objectivist Books<br>
-http://freeobjectivistbooks.org
-</p>

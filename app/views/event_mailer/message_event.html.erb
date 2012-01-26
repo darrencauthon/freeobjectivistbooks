@@ -1,5 +1,3 @@
-<p>Hi <%= @event.to.name %>,</p>
-
 <p><%= @event.user.name %> sent you a message on Free Objectivist Books:</p>
 
 <p>"<%= @event.message %>"</p>
@@ -11,8 +9,3 @@
 <% elsif @event.to_student? %>
 <p><%= link_to 'See the status of your request', request_url(@event.request) %></p>
 <% end %>
-
-<p>Thanks,<br>
-Free Objectivist Books<br>
-<%= link_to "http://freeobjectivistbooks.org", root_url %>
-</p>

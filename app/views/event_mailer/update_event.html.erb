@@ -1,5 +1,3 @@
-<p>Hi <%= @event.to.name %>,</p>
-
 <p><%= @event.user.name %> <%= @event.detail %> on Free Objectivist Books.</p>
 
 <% if @event.message.present? %>
@@ -16,8 +14,3 @@
 
 <p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>
 <% end %>
-
-<p>Thanks,<br>
-Free Objectivist Books<br>
-<%= link_to "http://freeobjectivistbooks.org", root_url %>
-</p>

@@ -1,5 +1,3 @@
-Hi <%= @event.to.name %>,
-
 <%= @event.user.name %> sent you a thank-you note for <%= @event.request.book %>:
 
 "<%= @event.message %>"
@@ -7,7 +5,3 @@ Hi <%= @event.to.name %>,
 Reply to <%= @event.from.name %>: <%= new_request_message_url @event.request %>
 
 See this and all the latest books you have pledged to donate at: <%= profile_url %>
-
-Thanks,
-Free Objectivist Books
-http://freeobjectivistbooks.org

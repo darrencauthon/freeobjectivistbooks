@@ -1,5 +1,3 @@
-Hi <%= @event.to.name %>,
-
 Good news: We found a donor to send you <%= @event.request.book %>! <%= @event.donor.name %> in <%= @event.donor.location %>.
 <% if @event.request.address.present? %>
 <% if @event.request.needs_thanks? %>
@@ -15,6 +13,3 @@ You can update this info if needed: <%= request_url @event.request %>
 However, you haven't given us your address! Add your address to get your book:
 <%= edit_request_url @event.request %>
 <% end %>
-Happy reading,
-Free Objectivist Books
-http://freeobjectivistbooks.org
