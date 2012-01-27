@@ -9,7 +9,14 @@ class Admin::RequestsControllerTest < ActionController::TestCase
     assert_select '.request', Request.count
   end
 
-  test "show requires login" do
+  test "show" do
+    authenticate_with_http_digest "admin", "password", "Admin"
+    get :show, id: @howard_request.id
+    assert_response :success
+    assert_select 'h1', "Howard Roark wants Atlas Shrugged"
+  end
+
+  test "index requires login" do
     get :index
     assert_response :unauthorized
     assert_select '.request', 0
