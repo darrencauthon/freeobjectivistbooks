@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
   after_create :notify
 
   def populate
-    self.donor ||= request.donor
+    self.donor ||= request.donor if request
     self.happened_at ||= Time.now
   end
 
