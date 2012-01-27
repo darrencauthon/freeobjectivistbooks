@@ -4,7 +4,7 @@
         <span class="title"><%= request.book %></span>
     </div>
     <div class="tagline"><%= user_tagline request.user %></div>
-    <div class="reason"><%= request.reason %></div>
+    <div class="reason"><%= format_block request.reason %></div>
     <p class="donor">
         <% if request.donor %>
         Donor: <%= link_to request.donor.name, admin_user_path(request.donor) %> in <%= request.donor.location %>
@@ -17,7 +17,7 @@
         <% if request.address.blank? %>
         Missing address flagged
         <% else %>
-        Shipping info flagged: "<%= request.flag_message %>"
+        Shipping info flagged: "<%= format_block request.flag_message %>"
         <% end %>
     </p>
     <% end %>

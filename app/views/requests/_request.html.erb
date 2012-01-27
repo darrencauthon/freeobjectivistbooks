@@ -1,7 +1,7 @@
 <div class="request grid_9 alpha">
     <div class="headline"><%= request.user.name %> wants <span class="title"><%= request.book %></span></div>
     <div class="tagline"><%= user_tagline request.user %></div>
-    <div class="reason"><%= request.reason %></div>
+    <div class="reason"><%= format_block request.reason %></div>
     <div class="timestamp"><%= l request.created_at.to_date %></div>
 </div>
 <%= link_to grant_request_path(request), method: :post, class: "grid_3 omega" do %>

@@ -1,6 +1,6 @@
 <p><%= @event.user.name %> sent you a thank-you note for <i><%= @event.request.book %>:</i></p>
 
-<p>"<%= @event.message %>"</p>
+<p>"<%= format_block @event.message %>"</p>
 
 <p><%= link_to "Reply to #{@event.from.name}", new_request_message_url(@event.request) %></p>
 

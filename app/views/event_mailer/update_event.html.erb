@@ -1,7 +1,7 @@
 <p><%= @event.user.name %> <%= @event.detail %> on Free Objectivist Books.</p>
 
 <% if @event.message.present? %>
-<p>They said: "<%= @event.message %>"</p>
+<p>They said: "<%= format_block @event.message %>"</p>
 <% end %>
 
 <% if @event.to_donor? %>

@@ -3,7 +3,7 @@
         pledged <%= pledge.quantity %> books
     </div>
     <div class="tagline"><%= user_tagline pledge.user %></div>
-    <% if pledge.reason.present? %><div class="reason"><%= pledge.reason %></div><% end %>
+    <% if pledge.reason.present? %><div class="reason"><%= format_block pledge.reason %></div><% end %>
     <div class="donations"><%= pluralize pledge.user.donations.count, 'donation' %> so far</div>
     <div class="timestamp"><%= l pledge.created_at %></div>
 </div>

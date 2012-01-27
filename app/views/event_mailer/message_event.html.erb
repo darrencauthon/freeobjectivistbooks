@@ -1,6 +1,6 @@
 <p><%= @event.user.name %> sent you a message on Free Objectivist Books:</p>
 
-<p>"<%= @event.message %>"</p>
+<p>"<%= format_block @event.message %>"</p>
 
 <p><%= link_to "Reply to #{@event.from.name}", new_request_message_url(@event.request) %></p>
 

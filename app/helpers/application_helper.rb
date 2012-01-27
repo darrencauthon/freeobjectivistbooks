@@ -1,10 +1,10 @@
 module ApplicationHelper
+  def format_block(text)
+    raw (h text).gsub("\n", "<br>")
+  end
+
   def format_address(address)
-    if address.present?
-      raw (h address).gsub("\n", "<br>")
-    else
-      "No address given"
-    end
+    address.present? ? format_block(address) : "No address given"
   end
 
   def format_number(number, precision = 2)
