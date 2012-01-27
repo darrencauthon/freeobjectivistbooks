@@ -8,6 +8,7 @@
     <p class="donor">
         <% if request.donor %>
         Donor: <%= link_to request.donor.name, admin_user_path(request.donor) %> in <%= request.donor.location %>
+            <% if request.thanked? %>&ndash; thanked<% end %>
         <% else %>
         No donor yet
         <% end %>

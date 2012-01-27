@@ -43,6 +43,7 @@
     <p class="status"><%= link_to @request.donor.name, admin_user_path(@request.donor) %> in <%= @request.donor.location %>
         will donate this book.
     </p>
+    <p class="thanked"><% if @request.thanked? %>Thank-you sent<% else %>Not thanked yet<% end %></p>
     <% else %>
     <h2>Status: Looking for donor</h2>
     <p class="status">We are looking for a donor for this book.</p>
