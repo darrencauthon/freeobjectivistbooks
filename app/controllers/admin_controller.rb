@@ -17,6 +17,8 @@ class AdminController < ApplicationController
     @pledge_quantity = Pledge.sum :quantity
     @average_pledge_quantity = Pledge.average :quantity
 
+    @event_count = Event.count
+
     @book_counts = Request.group(:book).count
     @books = @book_counts.keys.sort {|a,b| @book_counts[b] <=> @book_counts[a]}
   end

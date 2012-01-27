@@ -4,6 +4,7 @@ class Admin::RequestsController < AdminController
     @open_request_count = Request.open.count
     @granted_request_count = Request.granted.count
     @flagged_request_count = Request.flagged.count
+    @thanked_request_count = Request.thanked.count
     @requests = Request.order('created_at desc')
   end
 end

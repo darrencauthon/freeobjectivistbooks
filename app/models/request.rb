@@ -26,6 +26,7 @@ class Request < ActiveRecord::Base
   scope :open, where(donor_id: nil)
   scope :granted, where('donor_id is not null')
   scope :flagged, where(flagged: true)
+  scope :thanked, where(thanked: true)
 
   Event::TYPES.each do |type|
     define_method "#{type}_events" do

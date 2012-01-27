@@ -13,6 +13,9 @@
 
 <h1 class="grid_16"><%= pluralize @requests.count, 'request' %></h1>
 <div class="grid_12">
-    <h2><%= @granted_request_count %> granted (<%= @flagged_request_count %> flagged), <%= @open_request_count %> open</h2>
+    <ul class="overview">
+        <li><%= @granted_request_count %> granted (<%= @flagged_request_count %> flagged, <%= @thanked_request_count %> thanked)</li>
+        <li><%= @open_request_count %> open</li>
+    </ul>
     <%= render partial: "request", collection: @requests, spacer_template: "requests/spacer" %>
 </div>

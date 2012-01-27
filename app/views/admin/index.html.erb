@@ -37,6 +37,7 @@ td {
     <p><%= link_to pluralize(@pledge_quantity, 'book') + " pledged", admin_pledges_path %>
         from <%= pluralize @pledge_count, 'donor' %> (average pledge size: <%= format_number @average_pledge_quantity %>)
     </p>
+    <p><%= link_to pluralize(@event_count, 'event'), admin_events_path %></p>
 </div>
 
 <h2 class="grid_16">Books</h2>

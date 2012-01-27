@@ -1,0 +1,17 @@
+<% content_for :title do %>Events – Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+/*.event {
+    margin-top: 12px;
+}
+.event p {
+    margin-bottom: 0;
+}*/
+</style>
+<% end %>
+
+<h1 class="grid_16"><%= pluralize @events.count, 'event' %></h1>
+<div class="grid_12">
+    <%= render partial: "event", collection: @events, spacer_template: "requests/spacer" %>
+</div>

@@ -65,6 +65,12 @@ class RequestTest < ActiveSupport::TestCase
     flagged.each {|request| assert request.flagged?}
   end
 
+  test "thanked" do
+    thanked = Request.thanked
+    assert thanked.any?
+    thanked.each {|request| assert request.thanked?}
+  end
+
   # Derived attributes
 
   test "address" do
