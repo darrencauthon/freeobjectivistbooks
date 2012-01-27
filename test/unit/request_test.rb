@@ -88,6 +88,12 @@ class RequestTest < ActiveSupport::TestCase
     assert !@dagny_request.needs_thanks?
   end
 
+  test "sent?" do
+    assert !@howard_request.sent?
+    assert !@dagny_request.sent?
+    assert @quentin_request.sent?
+  end
+
   # Grant
 
   test "grant" do
@@ -98,6 +104,7 @@ class RequestTest < ActiveSupport::TestCase
 
     assert request.granted?
     assert !request.flagged?
+    assert !request.sent?
     assert_equal @hugh, request.donor
 
     event = request.events.last
@@ -111,6 +118,7 @@ class RequestTest < ActiveSupport::TestCase
 
     assert @howard_request.granted?
     assert @howard_request.flagged?
+    assert !@howard_request.sent?
     assert_equal @hugh, @howard_request.donor
 
     event = @howard_request.events.last

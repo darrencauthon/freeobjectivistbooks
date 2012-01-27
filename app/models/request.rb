@@ -60,6 +60,14 @@ class Request < ActiveRecord::Base
     !granted?
   end
 
+  def status
+    ActiveSupport::StringInquirer.new(self[:status] || "")
+  end
+
+  def sent?
+    status.sent?
+  end
+
   def flag_message
     event = events.where(type: "flag").order('created_at desc').first
     event.message if event
@@ -70,6 +78,7 @@ class Request < ActiveRecord::Base
   def grant(donor, options = {})
     Rails.logger.info "#{donor.name} (#{donor.id}) granting request #{id} from #{user.name} (#{user.id}) for #{book}"
     self.donor = donor
+    self.status = "not_sent"
     self.flagged = true if user.address.blank?
     save!
     Event.create_grant! self, options

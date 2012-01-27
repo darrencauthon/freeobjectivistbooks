@@ -10,6 +10,7 @@ quentin_wants_vos:
   book: The Virtue of Selfishness
   reason: Someone told me I need to read this before I figure out the secret of the motor.
   donor: hugh
+  status: sent
 
 dagny_wants_cui:
   user: dagny
@@ -18,6 +19,7 @@ dagny_wants_cui:
   donor: hugh
   flagged: true
   thanked: true
+  status: not_sent
 
 quentin_wants_opar:
   user: quentin
@@ -30,3 +32,4 @@ hank_wants_atlas:
   reason: I want to learn about this strike
   donor: hugh
   flagged: true
+  status: not_sent

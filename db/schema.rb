@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120124032908) do
+ActiveRecord::Schema.define(:version => 20120127222929) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20120124032908) do
     t.integer  "donor_id"
     t.boolean  "flagged"
     t.boolean  "thanked"
+    t.string   "status"
   end
 
   add_index "requests", ["user_id"], :name => "index_requests_on_user_id"
