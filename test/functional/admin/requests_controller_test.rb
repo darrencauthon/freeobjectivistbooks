@@ -13,7 +13,7 @@ class Admin::RequestsControllerTest < ActionController::TestCase
     authenticate_with_http_digest "admin", "password", "Admin"
     get :show, id: @howard_request.id
     assert_response :success
-    assert_select 'h1', "Howard Roark wants Atlas Shrugged"
+    assert_select 'h1', /Howard Roark wants\s+Atlas Shrugged/
   end
 
   test "index requires login" do
