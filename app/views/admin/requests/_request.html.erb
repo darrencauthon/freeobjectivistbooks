@@ -21,6 +21,6 @@
         <% end %>
     </p>
     <% end %>
-    <div class="timestamp"><%= l request.created_at %></div>
+    <div><%= link_to (l request.created_at), admin_request_path(request), class: "timestamp" %></div>
 </div>
 <div class="clear"></div>

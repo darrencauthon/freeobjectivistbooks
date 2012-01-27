@@ -40,7 +40,7 @@
     <h2><% if @user.requests.count == 1 %>Request<% else %>Requests<% end %></h2>
     <% @user.requests.each do |request| %>
     <div class="request">
-        <p class="headline"><span class="title"><%= request.book %></span></p>
+        <p class="headline"><span class="title"><%= link_to request.book, admin_request_path(request) %></span></p>
         <p class="reason"><%= format_block request.reason %></p>
         <p class="donor">
             <% if request.donor %>
@@ -75,8 +75,10 @@
     <% if @user.donations.any? %>
     <h2>Donations</h2>
     <% @user.donations.each do |donation| %>
-    <p class="donation"><span class="title"><%= donation.book %></span> to <%= link_to donation.user.name, admin_user_path(donation.user) %>
-        in <%= donation.user.location %>
+    <p class="donation">
+        <%= link_to admin_request_path(donation) do %>
+            <span class="title"><%= donation.book %></span> to <%= donation.user.name %> in <%= donation.user.location %>
+        <% end %>
     </p>
     <% end %>
     <% end %>
