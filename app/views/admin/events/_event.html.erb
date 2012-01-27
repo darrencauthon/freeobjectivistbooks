@@ -1,19 +1,23 @@
 <div class="event">
     <p class="headline">
-        <%= link_to event.user.name, admin_user_path(event.user) %>
-        <% case event.type %>
-        <% when "grant" %>
-            granted <%= link_to event.request.user.name, admin_user_path(event.request.user) %>'s request for
-        <% when "flag" %>
-            flagged <%= link_to event.request.user.name, admin_user_path(event.request.user) %>'s request for
-        <% when "update" %>
-            <%= event.detail %> for
-        <% when "message" %>
-            sent a message to <%= link_to event.to.name, admin_user_path(event.to) %> about
-        <% when "thank" %>
-            thanked <%= link_to event.request.donor.name, admin_user_path(event.request.donor) %> for
+        <% if event.user %><%= link_to event.user.name, admin_user_path(event.user) %><% else %>Someone<% end %>
+        <% if event.request %>
+            <% case event.type %>
+            <% when "grant" %>
+                granted <%= link_to event.request.user.name, admin_user_path(event.request.user) %>'s request for
+            <% when "flag" %>
+                flagged <%= link_to event.request.user.name, admin_user_path(event.request.user) %>'s request for
+            <% when "update" %>
+                <%= event.detail %> for
+            <% when "message" %>
+                sent a message to <%= link_to event.to.name, admin_user_path(event.to) %> about
+            <% when "thank" %>
+                thanked <%= link_to event.request.donor.name, admin_user_path(event.request.donor) %> for
+            <% end %>
+            <span class="title"><%= event.request.book %></span>
+        <% else %>
+            did a "<%= event.type %>" event on deleted request <%= event.request_id %>
         <% end %>
-        <span class="title"><%= event.request.book %></span>
     </p>
     <% if event.message.present? %><p class="reason"><%= format_block event.message %></p><% end %>
     <p class="timestamp"><%= l event.created_at %></p>
