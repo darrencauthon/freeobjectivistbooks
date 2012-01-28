@@ -70,7 +70,8 @@ class RequestsController < ApplicationController
   end
 
   def flag
-    if @request.flag params[:message]
+    @event = @request.flag params[:request]
+    if save_request_and_event
       flash[:notice] = "The request has been flagged, and your message has been sent to #{@request.user.name}."
       redirect_to @request
     else
@@ -80,13 +81,15 @@ class RequestsController < ApplicationController
 
   def thank
     @event = @request.thank params[:request]
-    if @request.valid? && @event.valid?
-      @request.save!
-      @event.save!
+    if save_request_and_event
       flash[:notice] = "We sent your thanks to your donor (#{@request.donor.name})."
       redirect_to @request
     else
       render :thank
     end
+  end
+
+  def save_request_and_event
+    @request.save && @event.save if @request.valid? && @event.valid?
   end
 end

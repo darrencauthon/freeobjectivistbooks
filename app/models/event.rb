@@ -19,8 +19,18 @@ class Event < ActiveRecord::Base
   after_create :notify
 
   def populate
-    self.donor ||= request.donor if request
-    self.happened_at ||= Time.now
+    unless id
+      self.donor = request.donor
+      self.user ||= default_user
+      self.happened_at ||= Time.now
+    end
+  end
+
+  def default_user
+    case type
+    when "grant", "flag" then request.donor
+    when "update", "thank" then request.user
+    end
   end
 
   def self.create_event!(request, user, type, options = {})
@@ -28,10 +38,6 @@ class Event < ActiveRecord::Base
     attributes.merge! options
     event = create! attributes
     event
-  end
-
-  def self.create_grant!(request, options = {})
-    create_event! request, request.donor, "grant", options
   end
 
   def self.create_update!(request, message = nil)
@@ -47,10 +53,6 @@ class Event < ActiveRecord::Base
     end
 
     create_event! request, user, "update", detail: detail, message: message
-  end
-
-  def self.create_flag!(request, message)
-    create_event! request, request.donor, "flag", message: message
   end
 
   def self.create_message!(request, user, message)

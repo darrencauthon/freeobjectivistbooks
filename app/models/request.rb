@@ -76,12 +76,12 @@ class Request < ActiveRecord::Base
   # Actions
 
   def grant(donor, options = {})
-    Rails.logger.info "#{donor.name} (#{donor.id}) granting request #{id} from #{user.name} (#{user.id}) for #{book}"
     self.donor = donor
     self.status = "not_sent"
     self.flagged = true if user.address.blank?
+    self.thanked = false
     save!
-    Event.create_grant! self, options
+    grant_events.create options
   end
 
   def update_user(attributes, message = nil)
@@ -103,23 +103,13 @@ class Request < ActiveRecord::Base
     event.type.to_sym if event
   end
 
-  def flag(message)
-    Rails.logger.info "#{donor.name} flagging request #{id}: '#{message}'"
-
-    if message.blank?
-      self.errors.add(:message, "This is required.")
-      return false
-    end
-
+  def flag(params)
     self.flagged = true
-    save!
-    Event.create_flag! self, message
-    true
+    flag_events.build params[:event]
   end
 
   def thank(params)
     self.thanked = true
-    event_attributes = params[:event].merge(user: user)
-    thank_events.build event_attributes
+    thank_events.build params[:event]
   end
 end

@@ -145,7 +145,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', /flag/i
     assert_select '.address', /123 Main St/
     assert_select 'p', /We'll send your message to Quentin/
-    assert_select 'textarea#message'
+    assert_select 'textarea#request_event_message'
     assert_select 'input[type="submit"]'
   end
 
@@ -163,7 +163,7 @@ class RequestsControllerTest < ActionController::TestCase
 
   test "flag" do
     assert_difference "@quentin_request.events.count" do
-      post :flag, {id: @quentin_request.id, message: "Fix this"}, session_for(@hugh)
+      post :flag, {id: @quentin_request.id, request: {event: {message: "Fix this"}}}, session_for(@hugh)
     end
 
     assert_redirected_to @quentin_request
@@ -177,7 +177,7 @@ class RequestsControllerTest < ActionController::TestCase
 
   test "flag requires message" do
     assert_no_difference "@quentin_request.events.count" do
-      post :flag, {id: @quentin_request.id, message: ""}, session_for(@hugh)
+      post :flag, {id: @quentin_request.id, request: {event: {message: ""}}}, session_for(@hugh)
     end
 
     assert_response :success
@@ -188,12 +188,12 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "flag requires login" do
-    post :flag, {id: @quentin_request.id, message: "Fix this"}
+    post :flag, {id: @quentin_request.id, request: {event: {message: "Fix this"}}}
     verify_login_page
   end
 
   test "flag requires donor" do
-    post :flag, {id: @quentin_request.id, message: "Fix this"}, session_for(@howard)
+    post :flag, {id: @quentin_request.id, request: {event: {message: "Fix this"}}}, session_for(@howard)
     verify_wrong_login_page
   end
 

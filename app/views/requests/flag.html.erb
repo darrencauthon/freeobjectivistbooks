@@ -30,12 +30,14 @@
 
 <div class="grid_10">
 <%= form_for @request, url: flag_request_path(@request) do |f| %>
-    <h2>What is the problem?</h2>
+    <%= f.fields_for @event do |e| %>
+        <h2>What is the problem?</h2>
 
-    <p>We'll send your message to <%= @request.user.name %> and ask them to fix it:</p>
-    <p class="field_with_errors"><%= @request.errors[:message].join(", ") %></p>
-    <%= text_area_tag :message, "", rows: 6, cols: 60 %>
-    <div class="clear"></div>
+        <p>We'll send your message to <%= @event.to.name %> and ask them to fix it:</p>
+        <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
+        <%= e.text_area :message, rows: 6, cols: 60 %>
+        <div class="clear"></div>
+    <% end %>
 
     <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
 <% end %>

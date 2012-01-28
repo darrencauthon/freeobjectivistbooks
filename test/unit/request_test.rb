@@ -128,19 +128,10 @@ class RequestTest < ActiveSupport::TestCase
   # Flagging
 
   test "flag" do
-    assert_difference "@quentin_request.events.count" do
-      assert @quentin_request.flag("Is this address correct?")
-    end
-
-    event = @quentin_request.events.last
+    event = @quentin_request.flag(event: {message: "Is this address correct?"})
+    assert @quentin_request.flagged?
     assert_equal "flag", event.type
     assert_equal "Is this address correct?", event.message
-  end
-
-  test "flag requires message" do
-    assert_no_difference "@quentin_request.events.count" do
-      assert !@quentin_request.flag("")
-    end
   end
 
   test "flag message" do
