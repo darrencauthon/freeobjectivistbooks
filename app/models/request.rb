@@ -52,12 +52,16 @@ class Request < ActiveRecord::Base
     donor.present?
   end
 
+  def open?
+    !granted?
+  end
+
   def needs_thanks?
     granted? && !thanked?
   end
 
-  def open?
-    !granted?
+  def can_flag?
+    !sent? && !flagged?
   end
 
   def status
@@ -111,6 +115,11 @@ class Request < ActiveRecord::Base
   def flag(params)
     self.flagged = true
     flag_events.build params[:event]
+  end
+
+  def update_status(params)
+    self.update_attribute :status, params[:status]
+    update_status_events.create params[:event]
   end
 
   def thank(params)

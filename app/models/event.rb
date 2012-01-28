@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   self.inheritance_column = 'class'  # anything other than "type", to let us use "type" for something else
 
-  TYPES = %w{grant flag update message thank}
+  TYPES = %w{grant flag update message thank update_status}
 
   belongs_to :request
   belongs_to :user
@@ -22,13 +22,14 @@ class Event < ActiveRecord::Base
     unless id
       self.donor = request.donor
       self.user ||= default_user
+      self.detail ||= request.status if type == "update_status"
       self.happened_at ||= Time.now
     end
   end
 
   def default_user
     case type
-    when "grant", "flag" then request.donor
+    when "grant", "flag", "update_status" then request.donor
     when "update", "thank" then request.user
     end
   end

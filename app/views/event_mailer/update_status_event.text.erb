@@ -1,0 +1,4 @@
+<%= @event.donor.name %> has sent you <%= @event.request.book %>! It should arrive soon.
+<% if @event.request.needs_thanks? %>
+Thank <%= @event.donor.name %>: <%= edit_request_url(@event.request, type: "thank")%>
+<% end %>

@@ -28,6 +28,12 @@ class EventMailer < ApplicationMailer
     notification "#{@event.user.name} sent you a message on Free Objectivist Books"
   end
 
+  def update_status_event(event)
+    @event = event
+    @closer = "Happy reading"
+    notification "#{@event.user.name} has #{@event.detail} #{@event.request.book}"
+  end
+
   def thank_event(event)
     @event = event
     notification "#{@event.user.name} sent you a thank-you note for #{@event.request.book}"

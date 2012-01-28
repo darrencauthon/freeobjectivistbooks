@@ -105,6 +105,21 @@ class EventMailerTest < ActionMailer::TestCase
     end
   end
 
+  test "update status" do
+    mail = EventMailer.mail_for_event events(:hugh_updates_quentin)
+    assert_equal "Hugh Akston has sent The Virtue of Selfishness", mail.subject
+    assert_equal ["quentin@mit.edu"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Quentin/
+      assert_select 'p', /Hugh Akston has sent you The Virtue of Selfishness!/
+      assert_select 'a', /Thank Hugh Akston/
+      assert_select 'p', /Happy reading,/
+    end
+  end
+
   test "thank" do
     mail = EventMailer.mail_for_event events(:quentin_thanks_hugh)
     assert_equal "Quentin Daniels sent you a thank-you note for The Virtue of Selfishness", mail.subject

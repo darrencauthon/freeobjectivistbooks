@@ -76,6 +76,14 @@ howard_updates_info:
   detail: updated shipping info
   happened_at: 2012-01-20 00:15:25
 
+hugh_updates_quentin:
+  type: update_status
+  request: quentin_wants_vos
+  user: hugh
+  donor: hugh
+  detail: sent
+  happened_at: 2012-01-20 00:15:25
+
 quentin_thanks_hugh:
   type: thank
   request: quentin_wants_vos

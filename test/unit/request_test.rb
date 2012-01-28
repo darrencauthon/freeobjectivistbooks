@@ -185,6 +185,25 @@ class RequestTest < ActiveSupport::TestCase
     assert !@dagny_request.user_valid?
   end
 
+  # Update status
+
+  test "update status" do
+    assert_difference "@dagny_request.events.count" do
+      @dagny_request.update_status status: "sent", event: {user: @hugh}
+    end
+
+    assert @dagny_request.sent?
+
+    event = @dagny_request.events.last
+    assert_equal @dagny_request, event.request
+    assert_equal @hugh, event.user
+    assert_equal @hugh, event.donor
+    assert_equal "update_status", event.type
+    assert_equal "sent", event.detail
+    assert_nil event.message
+    assert_not_nil event.happened_at
+  end
+
   # Thank
 
   test "thank" do
