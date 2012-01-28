@@ -12,7 +12,7 @@
             <% when "message" %>
                 sent a message to <%= link_to event.to.name, admin_user_path(event.to) %> about
             <% when "thank" %>
-                thanked <%= link_to event.request.donor.name, admin_user_path(event.request.donor) %> for
+                thanked <%= link_to event.donor.name, admin_user_path(event.donor) %> for
             <% end %>
             <span class="title"><%= event.request.book %></span>
         <% else %>

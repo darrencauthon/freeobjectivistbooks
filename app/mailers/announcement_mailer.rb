@@ -21,7 +21,7 @@ class AnnouncementMailer < ApplicationMailer
 
   def reply_to_thanks(event)
     @event = event
-    @user = @event.request.donor
+    @user = @event.donor
     announcement "Now you can reply to #{@event.from.name}'s thank-you note on Free Objectivist Books"
   end
 end
