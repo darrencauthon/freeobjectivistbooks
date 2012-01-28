@@ -33,32 +33,6 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def self.create_event!(request, user, type, options = {})
-    attributes = {request: request, user: user, donor: request.donor, type: type, happened_at: Time.now}
-    attributes.merge! options
-    event = create! attributes
-    event
-  end
-
-  def self.create_update!(request, message = nil)
-    user = request.user
-    detail = if user.address_was.blank? && user.address.present?
-      "added a shipping address"
-    elsif user.name_was.words.size < 2 && user.name.words.size >= 2
-      "added their full name"
-    elsif user.name_changed? || user.address_changed?
-      "updated shipping info"
-    else
-      raise "Tried to make update event for request with no name/address change; user.changes: #{user.changes.inspect}"
-    end
-
-    create_event! request, user, "update", detail: detail, message: message
-  end
-
-  def self.create_message!(request, user, message)
-    create_event! request, user, "message", message: message
-  end
-
   # Derived attributes
 
   def from

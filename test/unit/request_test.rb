@@ -141,31 +141,21 @@ class RequestTest < ActiveSupport::TestCase
   # Update user
 
   test "update user: added address" do
-    assert_difference "@howard_request.events.count" do
-      assert_equal :update, @howard_request.update_user({name: "Howard Roark", address: "123 Independence St"}, "")
-    end
-
-    @howard_request.reload
+    event = @howard_request.update_user(user: {name: "Howard Roark", address: "123 Independence St"}, event: {message: ""})
     assert !@howard_request.flagged?
 
-    event = @howard_request.events.last
     assert_equal "update", event.type
     assert_equal "added a shipping address", event.detail
-    assert event.message.blank?, event.message
+    assert event.message.blank?, event.message.inspect
   end
 
   test "update user: added name" do
     @dagny.address = "123 Somewhere Rd"
     @dagny.save!
 
-    assert_difference "@dagny_request.events.count" do
-      assert_equal :update, @dagny_request.update_user({name: "Dagny Taggart", address: "123 Somewhere Rd"}, "Here you go")
-    end
-
-    @dagny_request.reload
+    event = @dagny_request.update_user(user: {name: "Dagny Taggart", address: "123 Somewhere Rd"}, event: {message: "Here you go"})
     assert !@dagny_request.flagged?
 
-    event = @dagny_request.events.last
     assert_equal "update", event.type
     assert_equal "added their full name", event.detail
     assert_equal "Here you go", event.message
@@ -173,40 +163,26 @@ class RequestTest < ActiveSupport::TestCase
 
   test "new update: updated info" do
     attributes = {name: "Quentin Daniels", address: "123 Quantum Ln\nGalt's Gulch, CO"}
-    assert_difference "@quentin_request.events.count" do
-      assert_equal :update, @quentin_request.update_user(attributes, "I have a new address")
-    end
-
-    @quentin_request.reload
+    event = @quentin_request.update_user(user: attributes, event: {message: "I have a new address"})
     assert !@quentin_request.flagged?
 
-    event = @quentin_request.events.last
     assert_equal "update", event.type
     assert_equal "updated shipping info", event.detail
     assert_equal "I have a new address", event.message
   end
 
   test "new update: message only" do
-    assert_difference "@quentin_request.events.count" do
-      assert_equal :message, @quentin_request.update_user({name: @quentin.name, address: @quentin.address}, "just a message")
-    end
-
-    @quentin_request.reload
+    event = @quentin_request.update_user(user: {name: @quentin.name, address: @quentin.address}, event: {message: "just a message"})
     assert !@quentin_request.flagged?
 
-    event = @quentin_request.events.last
     assert_equal @quentin, event.user
     assert_equal "message", event.type
     assert_equal "just a message", event.message
   end
 
   test "update user requires address if granted" do
-    assert_no_difference "@dagny_request.events.count" do
-      assert_equal :error, @dagny_request.update_user({name: "Dagny Taggart", address: ""}, "Here you go")
-    end
-
-    @dagny_request.reload
-    assert @dagny_request.flagged?
+    event = @dagny_request.update_user(user: {name: "Dagny Taggart", address: ""}, event: {message: "Here you go"})
+    assert !@dagny_request.user_valid?
   end
 
   # Thank

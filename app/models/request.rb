@@ -73,6 +73,10 @@ class Request < ActiveRecord::Base
     event.message if event
   end
 
+  def user_valid?
+    open? || user.valid?(:granted)
+  end
+
   # Actions
 
   def grant(donor, options = {})
@@ -84,23 +88,24 @@ class Request < ActiveRecord::Base
     grant_events.create options
   end
 
-  def update_user(attributes, message = nil)
-    Rails.logger.info "#{user.name} updating request #{id} for #{user.name}: #{attributes.inspect}, message: '#{message}'"
-    user.attributes = attributes
-    context = :granted if granted?
-    return :error if user.invalid?(context)
-
+  def update_user(params)
+    user.attributes = params[:user]
     self.flagged = false
 
-    event = if user.changed?
-      Event.create_update! self, message
-    elsif message.present?
-      Event.create_message! self, user, message
+    event_attributes = params[:event]
+    if user.changed?
+      event_attributes[:detail] = if user.address_was.blank? && user.address.present?
+        "added a shipping address"
+      elsif user.name_was.words.size < 2 && user.name.words.size >= 2
+        "added their full name"
+      elsif user.name_changed? || user.address_changed?
+        "updated shipping info"
+      end
+      update_events.build event_attributes
+    elsif granted?
+      event_attributes[:user] = user
+      message_events.build event_attributes
     end
-
-    save!
-    user.save!
-    event.type.to_sym if event
   end
 
   def flag(params)

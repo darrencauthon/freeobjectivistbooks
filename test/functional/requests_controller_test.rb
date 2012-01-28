@@ -202,20 +202,20 @@ class RequestsControllerTest < ActionController::TestCase
   test "edit no donor" do
     get :edit, {id: @howard_request.id}, session_for(@howard)
     assert_response :success
-    assert_select 'input[type="text"][value="Howard Roark"]#user_name'
-    assert_select 'textarea#user_address', ""
+    assert_select 'input[type="text"][value="Howard Roark"]#request_user_name'
+    assert_select 'textarea#request_user_address', ""
     assert_select 'p', /you can enter this later/i
-    assert_select 'textarea#message', false
+    assert_select 'textarea#event_message', false
     assert_select 'input[type="submit"]'
   end
 
   test "edit with donor" do
     get :edit, {id: @quentin_request.id}, session_for(@quentin)
     assert_response :success
-    assert_select 'input[type="text"][value="Quentin Daniels"]#user_name'
-    assert_select 'textarea#user_address', @quentin.address
+    assert_select 'input[type="text"][value="Quentin Daniels"]#request_user_name'
+    assert_select 'textarea#request_user_address', @quentin.address
     assert_select 'p', text: /you can enter this later/i, count: 0
-    assert_select 'textarea#message', ""
+    assert_select 'textarea#request_event_message', ""
     assert_select 'input[type="submit"]'
     assert_select '.message.error', false
   end
@@ -252,7 +252,7 @@ class RequestsControllerTest < ActionController::TestCase
     current_user = options.has_key?(:current_user) ? options[:current_user] : user
 
     assert_difference "request.events.count", (options[:expect_events] || 1) do
-      post :update, {id: request.id, user: user_params, message: message}, session_for(current_user)
+      post :update, {id: request.id, request: {user: user_params, event: {message: message}}}, session_for(current_user)
     end
   end
 

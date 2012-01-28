@@ -66,51 +66,6 @@ class EventTest < ActiveSupport::TestCase
     assert @new_flag.invalid?
   end
 
-  # Constructors
-
-  test "create update: added address" do
-    @howard_request.user.address = "123 Independence St"
-    event = Event.create_update! @howard_request
-    assert_equal @howard_request, event.request
-    assert_equal @howard, event.user
-    assert_nil event.donor
-    assert_equal "update", event.type
-    assert_equal "added a shipping address", event.detail
-    assert_nil event.message
-  end
-
-  test "create update: added name" do
-    @dagny_request.user.name = "Dagny Taggart"
-    event = Event.create_update! @dagny_request, "Here you go"
-    assert_equal @dagny_request, event.request
-    assert_equal @dagny, event.user
-    assert_equal @hugh, event.donor
-    assert_equal "update", event.type
-    assert_equal "added their full name", event.detail
-    assert_equal "Here you go", event.message
-  end
-
-  test "create update: updated info" do
-    @quentin_request.user.address = "123 Quantum Ln\nGalt's Gulch, CO"
-    event = Event.create_update! @quentin_request, "I have a new address"
-    assert_equal @quentin_request, event.request
-    assert_equal @quentin, event.user
-    assert_equal @hugh, event.donor
-    assert_equal "update", event.type
-    assert_equal "updated shipping info", event.detail
-    assert_equal "I have a new address", event.message
-  end
-
-  test "create message" do
-    event = Event.create_message! @dagny_request, @hugh, "Thanks, I will send your book"
-    assert_equal @dagny_request, event.request
-    assert_equal @hugh, event.user
-    assert_equal @hugh, event.donor
-    assert_equal "message", event.type
-    assert_nil event.detail
-    assert_equal "Thanks, I will send your book", event.message
-  end
-
   # Derived attributes
 
   test "from" do

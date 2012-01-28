@@ -60,9 +60,9 @@ class RequestsController < ApplicationController
 
   def update
     # The edit field only actually lets you update user fields for now
-    result = @request.update_user params[:user], params[:message]
-    unless result == :error
-      flash[:notice] = notice_for_update(result)
+    @event = @request.update_user params[:request]
+    if @request.user_valid? && save(@request, @request.user, @event)
+      flash[:notice] = notice_for_update(@event.type.to_sym) if @event
       redirect_to @request
     else
       render :edit
@@ -71,7 +71,7 @@ class RequestsController < ApplicationController
 
   def flag
     @event = @request.flag params[:request]
-    if save_request_and_event
+    if save @request, @event
       flash[:notice] = "The request has been flagged, and your message has been sent to #{@request.user.name}."
       redirect_to @request
     else
@@ -81,7 +81,7 @@ class RequestsController < ApplicationController
 
   def thank
     @event = @request.thank params[:request]
-    if save_request_and_event
+    if save @request, @event
       flash[:notice] = "We sent your thanks to your donor (#{@request.donor.name})."
       redirect_to @request
     else
@@ -89,7 +89,8 @@ class RequestsController < ApplicationController
     end
   end
 
-  def save_request_and_event
-    @request.save && @event.save if @request.valid? && @event.valid?
+  def save(*models)
+    models = models.compact
+    models.each {|m| m.save} if models.all? {|m| m.valid?}
   end
 end

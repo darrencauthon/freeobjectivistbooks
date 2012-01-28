@@ -33,7 +33,7 @@
     </div>
     <% end %>
 
-    <%= fields_for @request.user do |u| %>
+    <%= f.fields_for @request.user do |u| %>
     <%= u.label :name, "Your name", class: "grid_5 alpha" %><div class="clear"></div>
     <%= u.text_field :name, class: "grid_5 alpha" %>
     <span class="grid_4 field_with_errors"><%= @request.user.errors[:name].join(", ") %></span>
@@ -50,11 +50,13 @@
     <% end %>
 
     <% if @request.donor %>
-    <h2>Add a message for your donor (optional)</h2>
+        <%= f.fields_for @event do |e| %>
+        <h2>Add a message for your donor (optional)</h2>
 
-    <p>Your donor will get a notification about this update, and we'll include your message:</p>
-    <%= text_area_tag :message, "", rows: 6, cols: 60 %>
-    <div class="clear"></div>
+        <p>Your donor will get a notification about this update, and we'll include your message:</p>
+        <%= e.text_area :message, rows: 6, cols: 60 %>
+        <div class="clear"></div>
+        <% end %>
     <% end %>
 
     <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
