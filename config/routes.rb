@@ -6,16 +6,6 @@ FreeBooks::Application.routes.draw do
   get "profile" => "home#profile"
   get "about" => "home#about"
 
-  get "login" => "sessions#new"
-  post "login" => "sessions#create"
-  match "logout" => "sessions#destroy"
-
-  resource :password, only: [:edit, :update], path_names: {edit: "reset"} do
-    member do
-      get "forgot"
-      post "request_reset"
-    end
-  end
 
   get "donate" => "requests#index"
   resources :requests, only: [:show, :edit, :update] do
@@ -28,9 +18,20 @@ FreeBooks::Application.routes.draw do
     resources :messages, only: [:new, :create]
   end
 
+  get "login" => "sessions#new"
+  post "login" => "sessions#create"
+  match "logout" => "sessions#destroy"
+
   get "signup/read"
   get "signup/donate"
   post "signup/submit"
+
+  resource :password, only: [:edit, :update], path_names: {edit: "reset"} do
+    member do
+      get "forgot"
+      post "request_reset"
+    end
+  end
 
   # Admin
   get "admin" => "admin#index"
