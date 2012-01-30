@@ -34,7 +34,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Quentin Daniels"
     assert_select '.request .headline', /Virtue of Selfishness/
-    assert_select '.request .status', /We have found you a donor! Hugh Akston in Boston, MA/
+    assert_select '.request .status', /Hugh Akston in Boston, MA has sent/
     assert_select '.request a', /thank/i
     assert_select '.request a', /see full/i
   end

@@ -22,16 +22,21 @@
 <h1 class="grid_16"><%= @current_user.name %></h1>
 
 <% if @current_user.requests.any? %>
+<h2 class="grid_12">Your request</h2>
 <% @current_user.requests.each do |request| %>
-<div class="grid_8 request">
-    <p class="headline">You want to read <span class="title"><%= request.book %></span></p>
+<div class="grid_12 request">
+    <p class="headline"><%= request.user.name %> wants to read <span class="title"><%= request.book %></span></p>
+
     <p class="status">
-        <% if request.donor %>
+        <% if request.sent? %>
+        <%= request.donor.name %> in <%= request.donor.location %> has sent this book.
+        <% elsif request.granted? %>
         We have found you a donor! <%= request.donor.name %> in <%= request.donor.location %>.
         <% else %>
         We are looking for a donor for you. We'll let you know when we find someone.
         <% end %>
     </p>
+
     <% if request.address.blank? %>
         <% if request.flagged? %>
         <p class="flagged">We need your address to send you your book.</p>
@@ -46,6 +51,7 @@
         <p><%= link_to "Thank #{request.donor.name}", edit_request_path(request, type: "thank") %></p>
         <% end %>
     <% end %>
+
     <p><%= link_to 'See full request details', request_path(request) %></p>
 </div>
 <div class="clear"></div>
