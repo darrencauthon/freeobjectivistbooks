@@ -23,6 +23,7 @@ FreeBooks::Application.routes.draw do
       post "grant"
       put "flag"
       put "thank"
+      put "update_status"
     end
     resources :messages, only: [:new, :create]
   end

@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
   def allowed_users_for_action(action)
     case action
     when "update", "thank" then @request.user
-    when "flag" then @request.donor
+    when "flag", "update_status" then @request.donor
     end
   end
 
@@ -77,6 +77,12 @@ class RequestsController < ApplicationController
     else
       render :flag
     end
+  end
+
+  def update_status
+    @request.update_status params[:request]
+    flash[:notice] = "Thanks! We've let #{@request.user.name} know the book is on its way."
+    redirect_to @request
   end
 
   def thank

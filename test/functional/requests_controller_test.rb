@@ -21,14 +21,72 @@ class RequestsControllerTest < ActionController::TestCase
 
   # Show
 
+  def verify_link(text, present = true)
+    if present
+      assert_select 'a', /#{text}/i, "expected link containing '#{text}'"
+    else
+      assert_select 'a', {text: /#{text}/i, count: 0}, "found link containing '#{text}'"
+    end
+  end
+
+  def verify_thank_link(present = true)
+    verify_link 'thank', present
+  end
+
+  def verify_add_address_link(present = true)
+    verify_link 'add your address', present
+  end
+
+  def verify_update_shipping_link(present = true)
+    verify_link 'update shipping', present
+  end
+
+  def verify_flag_link(present = true)
+    verify_link 'flag', present
+  end
+
+  def verify_back_link(present = true)
+    verify_link 'back', present
+  end
+
+  def verify_sent_button(present = true)
+    assert_select '.sidebar form', present
+  end
+
+  def verify_status(status)
+    assert_select 'h2', /status: #{status}/i
+  end
+
+  def verify_address_link(which)
+    verify_add_address_link (which == :add)
+    verify_update_shipping_link (which == :update)
+  end
+
+  def verify_donor_links(status, options = {})
+    verify_back_link
+    verify_flag_link (status == :not_sent && !options[:flagged])
+    verify_sent_button (status == :not_sent)
+    verify_thank_link false
+    verify_add_address_link false
+    verify_update_shipping_link false
+  end
+
+  def verify_no_donor_links
+    verify_back_link false
+    verify_flag_link false
+    verify_sent_button false
+  end
+
   test "show no donor" do
     get :show, {id: @howard_request.id}, session_for(@howard)
     assert_response :success
     assert_select 'h1', "Howard Roark wants Atlas Shrugged"
     assert_select '.tagline', "Studying architecture at Stanton Institute of Technology in New York, NY"
     assert_select '.address', /no address/i
-    assert_select 'a', /add your address/i
-    assert_select 'h2', /status: looking/i
+    verify_status 'looking'
+    verify_thank_link false
+    verify_address_link :add
+    verify_no_donor_links
   end
 
   test "show with donor" do
@@ -37,10 +95,10 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Quentin Daniels wants The Virtue of Selfishness"
     assert_select '.tagline', "Studying physics at MIT in Boston, MA"
     assert_select '.address', /123 Main St/
-    assert_select 'a', /update/i
-    assert_select 'a', text: /flag/i, count: 0
-    assert_select 'h2', /status: donor found/i
-    assert_select 'a', /thank/i
+    verify_status 'book sent'
+    verify_thank_link
+    verify_address_link :none
+    verify_no_donor_links
   end
 
   test "show to donor" do
@@ -49,10 +107,8 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Quentin Daniels wants The Virtue of Selfishness"
     assert_select '.tagline', "Studying physics at MIT in Boston, MA"
     assert_select '.address', /123 Main St/
-    assert_select 'a', /flag/i
-    assert_select 'a', text: /update/i, count: 0
-    assert_select 'h2', /status: donor found/i
-    assert_select 'a', text: /thank/i, count: 0
+    verify_status 'book sent'
+    verify_donor_links :sent
   end
 
   test "show to student with missing address" do
@@ -61,6 +117,10 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.message.error .headline', /We need your address/
     assert_select '.message.error .headline a', /Add/
     assert_select 'h1', "Dagny wants Capitalism: The Unknown Ideal"
+    verify_status 'donor found'
+    verify_thank_link false
+    verify_address_link :add
+    verify_no_donor_links
   end
 
   test "show to student with flagged address" do
@@ -69,6 +129,9 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.message.error .headline', /problem with your shipping info/
     assert_select '.message.error .headline a', /Update/
     assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
+    verify_thank_link true
+    verify_address_link :update
+    verify_no_donor_links
   end
 
   test "show to donor with missing address" do
@@ -78,8 +141,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Dagny wants Capitalism: The Unknown Ideal"
     assert_select '.address', /no address/i
     assert_select '.flagged', /Student has been contacted/i
-    assert_select 'a', text: /update/i, count: 0
-    assert_select 'a', text: /thank/i, count: 0
+    verify_donor_links :not_sent, flagged: true
   end
 
   test "show to donor with flagged address" do
@@ -89,8 +151,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
     assert_select '.address', /987 Steel Way/i
     assert_select '.flagged', /Shipping info flagged/i
-    assert_select 'a', text: /update/i, count: 0
-    assert_select 'a', text: /thank/i, count: 0
+    verify_donor_links :not_sent, flagged: true
   end
 
   test "show requires login" do
@@ -313,6 +374,31 @@ class RequestsControllerTest < ActionController::TestCase
   test "update requires request owner" do
     options = {name: "Howard Roark", address: "123 Independence St", current_user: @quentin, expect_events: 0}
     update @howard_request, options
+    verify_wrong_login_page
+  end
+
+  # Update status
+
+  test "update status" do
+    assert_difference "@dagny_request.events.count" do
+      put :update_status, {id: @dagny_request.id, request: {status: "sent"}}, session_for(@hugh)
+    end
+    assert_redirected_to @dagny_request
+    assert_match /We've let Dagny know/, flash[:notice]
+
+    @dagny_request.reload
+    assert @dagny_request.status.sent?, @dagny_request.status.to_s
+
+    verify_event @dagny_request, "update_status", detail: "sent"
+  end
+
+  test "update status requires login" do
+    put :update_status, {id: @dagny_request.id, request: {status: "sent"}}
+    verify_login_page
+  end
+
+  test "update status requires donor" do
+    put :update_status, {id: @dagny_request.id, request: {status: "sent"}}, session_for(@dagny)
     verify_wrong_login_page
   end
 
