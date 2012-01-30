@@ -3,9 +3,9 @@ FreeBooks::Application.routes.draw do
 
   root to: "home#index"
   get "home" => "home#home"
-  get "profile" => "home#profile"
   get "about" => "home#about"
 
+  get "profile" => "profile#show"
 
   get "donate" => "requests#index"
   resources :requests, only: [:show, :edit, :update] do
