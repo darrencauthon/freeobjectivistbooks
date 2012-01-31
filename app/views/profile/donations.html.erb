@@ -12,6 +12,16 @@
 .notes {
     margin-top: 12px;
 }
+
+.button, .loading {
+    height: 46px;
+    margin: 6px 0;
+    background-position-x: left;
+}
+
+.sent {
+    background-image: url(/assets/sent-button.png);
+}
 </style>
 <% end %>
 
@@ -19,11 +29,21 @@
 
 <div class="grid_12">
     <% if @donations.any? %>
-    <%= render partial: "donation", collection: @donations, spacer_template: "requests/spacer" %>
-    <%= render partial: "requests/spacer" %>
+    <%= render partial: "donation", collection: @donations %>
     <%= render "donation_notes" %>
     <% else %>
     <p>None yet. <%= link_to 'Find students to donate books to', donate_path %></p>
     <% end %>
 </div>
 <div class="clear"></div>
+
+<% content_for :javascript do %>
+<script>
+$(document).ready(function () {
+    $('div.donation').handleAjax(function () {
+        $(this).find('form').animate({height: 'toggle', opacity: 'toggle'}, {duration: 600});
+        $(this).find('.flag-link').animate({height: 'toggle', opacity: 'toggle'}, {duration: 600});
+    });
+});
+</script>
+<% end %>

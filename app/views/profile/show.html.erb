@@ -12,6 +12,24 @@
 .notes {
     margin-top: 12px;
 }
+
+.button, .loading {
+    height: 46px;
+    margin: 6px 0;
+    background-position-x: left;
+}
+
+.sent {
+    background-image: url(/assets/sent-button.png);
+}
+
+.any-donations {
+    display: <%= @donations.any? ? "block" : "none" %>;
+}
+
+.no-donations {
+    display: <%= @donations.any? ? "none" : "block" %>;
+}
 </style>
 <% end %>
 
@@ -56,21 +74,20 @@
 
     <% if @current_user.pledges.any? %>
     <% @current_user.pledges.each do |pledge| %>
-    <p class="headline">You pledged to donate <%= pledge.quantity %> books</p>
+    <div class="pledge">
+        <p class="headline">You pledged to donate <%= pledge.quantity %> books</p>
+    </div>
     <% end %>
     <% end %>
 
     <% if @show_donations %>
     <h2>Outstanding donations</h2>
-        <% if @donations.any? %>
-        <p>Please send the following books:</p>
-        <%= render partial: "requests/spacer" %>
-        <%= render partial: "donation", collection: @donations, spacer_template: "requests/spacer" %>
-        <%= render partial: "requests/spacer" %>
-        <%= render "donation_notes" %>
-        <% else %>
-        <p>None right now.</p>
-        <% end %>
+        <div class="any-donations">
+            <p>Please send the following books:</p>
+            <%= render partial: "donation", collection: @donations %>
+            <%= render "donation_notes" %>
+        </div>
+        <p class="no-donations">None right now.</p>
         <% if @flag_count > 0 %>
         <p class="flagged"><%= pluralize @flag_count, 'donation' %> flagged and waiting on student response.</p>
         <% end %>
@@ -79,3 +96,18 @@
     <% end %>
 </div>
 <div class="clear"></div>
+
+<% content_for :javascript do %>
+<script>
+$(document).ready(function () {
+    $('div.donation').handleAjax(function () {
+        if ($('div.donation:visible').size() === 1) {
+            $('.any-donations').animate({height: 'toggle', opacity: 'toggle'}, {duration: 600});
+            $('.no-donations').animate({height: 'toggle', opacity: 'toggle'}, {duration: 600});
+        } else {
+            $(this).animate({height: 'toggle', opacity: 'toggle'}, {duration: 600});
+        }
+    });
+});
+</script>
+<% end %>

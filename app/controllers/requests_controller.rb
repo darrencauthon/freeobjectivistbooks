@@ -81,8 +81,13 @@ class RequestsController < ApplicationController
 
   def update_status
     @request.update_status params[:request]
-    flash[:notice] = "Thanks! We've let #{@request.user.name} know the book is on its way."
-    redirect_to @request
+    respond_to do |format|
+      format.html do
+        flash[:notice] = "Thanks! We've let #{@request.user.name} know the book is on its way."
+        redirect_to @request
+      end
+      format.js { render nothing: true }
+    end
   end
 
   def thank
