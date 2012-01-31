@@ -42,4 +42,18 @@ class AnnouncementMailerTest < ActionMailer::TestCase
       assert_select 'p', /Thanks,\nFree Objectivist Books/
     end
   end
+
+  test "mark sent books" do
+    mail = AnnouncementMailer.mark_sent_books users(:hugh)
+    assert_equal "Have you sent your Objectivist books? Let me and the students know", mail.subject
+    assert_equal ["akston@patrickhenry.edu"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hugh/
+      assert_select 'p', /Have you sent your 4 books yet/
+      assert_select 'a', /See your donations/
+      assert_select 'p', /If you've already sent your books/
+    end
+  end
 end

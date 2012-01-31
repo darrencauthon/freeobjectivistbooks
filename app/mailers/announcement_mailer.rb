@@ -24,4 +24,10 @@ class AnnouncementMailer < ApplicationMailer
     @user = @event.donor
     announcement "Now you can reply to #{@event.from.name}'s thank-you note on Free Objectivist Books"
   end
+
+  def mark_sent_books(user)
+    @user = user
+    @count = user.donations.count
+    announcement "Have you sent your Objectivist books? Let me and the students know"
+  end
 end

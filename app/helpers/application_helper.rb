@@ -11,6 +11,14 @@ module ApplicationHelper
     number_with_precision number, precision: precision, significant: true, strip_insignificant_zeros: true
   end
 
+  def pluralize_omit_number(count, noun)
+    count == 1 ? noun : noun.pluralize
+  end
+
+  def pluralize_omit_1(count, noun)
+    count == 1 ? noun : "#{count} #{noun.pluralize}"
+  end
+
   def user_tagline(user)
     parts = []
     parts << "studying #{user.studying}" unless user.studying.blank?

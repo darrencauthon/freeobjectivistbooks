@@ -1,0 +1,9 @@
+<p>Thank you for being a donor on Free Objectivist Books! Have you sent your <%= pluralize_omit_1 @count, 'book' %> yet?
+
+<p>Now you can confirm when each book is sent: just hit the big green "Book Sent" button. That will let us know for our records, and also notify the student:
+
+<p><strong><%= link_to 'See your donations and mark them sent', profile_url %></strong></p>
+
+<p>If you've already sent your <%= pluralize_omit_number @count, 'book' %>, great! Use the "sent" buttons to confirm.</p>
+
+<p>If you haven't, please do so now! And then let us know when you're done.</p>
