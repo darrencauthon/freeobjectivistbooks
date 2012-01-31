@@ -33,3 +33,10 @@ hank_wants_atlas:
   donor: hugh
   flagged: true
   status: not_sent
+
+quentin_wants_fountainhead:
+  user: quentin
+  book: The Fountainhead
+  reason: Heard this was a great story of independence
+  donor: hugh
+  status: not_sent

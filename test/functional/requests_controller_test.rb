@@ -6,11 +6,13 @@ class RequestsControllerTest < ActionController::TestCase
   test "index" do
     get :index, params, session_for(@hugh)
     assert_response :success
+    count = @hugh.donations.not_sent.count
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
-    assert_select '.sidebar h2', "Your donations (3)"
-    assert_select '.sidebar li', /The Virtue of Selfishness to Quentin Daniels/
+    assert_select '.sidebar h2', "Your donations (#{count})"
+    assert_select '.sidebar li', count
     assert_select '.sidebar li', /Capitalism: The Unknown Ideal to Dagny/
     assert_select '.sidebar li', /Atlas Shrugged to Hank Rearden/
+    assert_select '.sidebar li', /The Fountainhead to Quentin Daniels/
     assert_select '.sidebar p', "You have pledged 5 books."
   end
 

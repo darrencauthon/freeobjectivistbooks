@@ -18,8 +18,8 @@
 <h1 class="grid_16">Your donations</h1>
 
 <div class="grid_12">
-    <% if @current_user.donations.any? %>
-    <%= render partial: "donation", collection: @current_user.donations, spacer_template: "requests/spacer" %>
+    <% if @donations.any? %>
+    <%= render partial: "donation", collection: @donations, spacer_template: "requests/spacer" %>
     <%= render partial: "requests/spacer" %>
     <%= render "donation_notes" %>
     <% else %>

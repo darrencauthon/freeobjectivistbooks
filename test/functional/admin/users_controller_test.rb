@@ -34,7 +34,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_select '.tagline', "In Boston, MA"
     assert_select '.request', false
     assert_select '.pledge', /5 books/
-    assert_select '.donation', 3
+    assert_select '.donation', @hugh.donations.count
     assert_select 'a .edit'
     assert_select 'a .delete'
   end

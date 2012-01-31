@@ -63,19 +63,24 @@
 <% end %>
 <% end %>
 
-<% if @current_user.donations.any? || @current_user.pledges.any? %>
-<h2 class="grid_16">Your donations</h2>
-<% if @current_user.donations.any? %>
-<p class="grid_16">Please send the following books:</p>
-<div class="grid_12">
-    <%= render partial: "requests/spacer" %>
-    <%= render partial: "donation", collection: @current_user.donations, spacer_template: "requests/spacer" %>
-    <%= render partial: "requests/spacer" %>
-    <%= render "donation_notes" %>
-    <p><%= link_to 'See all your donations', donations_path %></p>
-</div>
-<div class="clear"></div>
-<% else %>
-<p class="grid_8">None yet. <%= link_to 'Find students to donate books to', donate_path %></p><div class="clear"></div>
-<% end %>
+<% if @show_donations %>
+<h2 class="grid_16">Outstanding donations</h2>
+    <% if @donations.any? %>
+    <p class="grid_16">Please send the following books:</p>
+    <div class="grid_12">
+        <%= render partial: "requests/spacer" %>
+        <%= render partial: "donation", collection: @donations, spacer_template: "requests/spacer" %>
+        <%= render partial: "requests/spacer" %>
+        <%= render "donation_notes" %>
+    </div>
+    <div class="clear"></div>
+    <% else %>
+    <p class="grid_8">None right now.</p><div class="clear"></div>
+    <% end %>
+    <% if @flag_count > 0 %>
+    <p class="grid_12 flagged"><%= pluralize @flag_count, 'donation' %> flagged and waiting on student response.</p>
+    <div class="clear"></div>
+    <% end %>
+<p class="grid_12"><%= link_to 'Find students to donate books to', donate_path %></p><div class="clear"></div>
+<p class="grid_12"><%= link_to 'See all your donations', donations_path %></p><div class="clear"></div>
 <% end %>

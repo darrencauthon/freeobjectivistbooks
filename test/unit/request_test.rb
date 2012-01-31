@@ -65,10 +65,22 @@ class RequestTest < ActiveSupport::TestCase
     flagged.each {|request| assert request.flagged?}
   end
 
+  test "not flagged" do
+    not_flagged = Request.not_flagged
+    assert not_flagged.any?
+    not_flagged.each {|request| assert !request.flagged?}
+  end
+
   test "thanked" do
     thanked = Request.thanked
     assert thanked.any?
     thanked.each {|request| assert request.thanked?}
+  end
+
+  test "not sent" do
+    requests = Request.not_sent
+    assert requests.any?
+    requests.each {|request| assert !request.sent?}
   end
 
   # Derived attributes

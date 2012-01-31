@@ -56,30 +56,18 @@ class ProfileControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Hugh Akston"
     assert_select '.pledge .headline', /You pledged to donate 5 books/
-    assert_select 'h2', 'Your donations'
+    assert_select 'h2', 'Outstanding donations'
 
-    assert_select '.donation', /Quentin/ do
-      assert_select '.request .headline', /Virtue of Selfishness to/
+    assert_select '.donation', text: /The Virtue of Selfishness/, count: 0      # sent
+    assert_select '.donation', text: /Capitalism: The Unknown Ideal/, count: 0  # flagged
+    assert_select '.donation', text: /Atlas Shrugged/, count: 0                 # also flagged
+
+    assert_select '.donation', /The Fountainhead to/ do
       assert_select '.request .name', /Quentin Daniels/
       assert_select '.request .address', /123 Main St/
       assert_select '.actions a', /see full/i
-      # assert_select '.actions a', /flag/i
-    end
-
-    assert_select '.donation', /Dagny/ do
-      assert_select '.request .headline', /Capitalism: The Unknown Ideal to/
-      assert_select '.request .name', /Dagny/
-      assert_select '.request .address', /No address/
-      assert_select '.actions a', /see full/i
-      assert_select '.actions .flagged', /Student has been contacted/i
-    end
-
-    assert_select '.donation', /Hank/ do
-      assert_select '.request .headline', /Atlas Shrugged to/
-      assert_select '.request .name', /Hank Rearden/
-      assert_select '.request .address', /987 Steel Way/
-      assert_select '.actions a', /see full/i
-      assert_select '.actions .flagged', /Shipping info flagged/i
+      assert_select '.actions a', /flag/i
+      assert_select '.actions .flagged', false
     end
 
     assert_select 'a', 'See all your donations'
@@ -98,28 +86,34 @@ class ProfileControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Your donations"
 
-    assert_select '.donation', /Quentin/ do
-      assert_select '.request .headline', /Virtue of Selfishness to/
+    assert_select '.donation', /Virtue of Selfishness to/ do
       assert_select '.request .name', /Quentin Daniels/
       assert_select '.request .address', /123 Main St/
       assert_select '.actions a', /see full/i
-      # assert_select '.actions a', /flag/i
+      assert_select '.actions a', /flag/i
+      assert_select '.actions .flagged', false
     end
 
-    assert_select '.donation', /Dagny/ do
-      assert_select '.request .headline', /Capitalism: The Unknown Ideal to/
+    assert_select '.donation', /Capitalism: The Unknown Ideal to/ do
       assert_select '.request .name', /Dagny/
       assert_select '.request .address', /No address/
       assert_select '.actions a', /see full/i
       assert_select '.actions .flagged', /Student has been contacted/i
     end
 
-    assert_select '.donation', /Hank/ do
-      assert_select '.request .headline', /Atlas Shrugged to/
+    assert_select '.donation', /Atlas Shrugged to/ do
       assert_select '.request .name', /Hank Rearden/
       assert_select '.request .address', /987 Steel Way/
       assert_select '.actions a', /see full/i
       assert_select '.actions .flagged', /Shipping info flagged/i
+    end
+
+    assert_select '.donation', /The Fountainhead to/ do
+      assert_select '.request .name', /Quentin Daniels/
+      assert_select '.request .address', /123 Main St/
+      assert_select '.actions a', /see full/i
+      assert_select '.actions a', /flag/i
+      assert_select '.actions .flagged', false
     end
   end
 
