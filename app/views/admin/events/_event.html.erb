@@ -13,6 +13,8 @@
                 sent a message to <%= link_to event.to.name, admin_user_path(event.to) %> about
             <% when "thank" %>
                 thanked <%= link_to event.donor.name, admin_user_path(event.donor) %> for
+            <% when "update_status" %>
+                <%= event.detail %>
             <% end %>
             <span class="title"><%= event.request.book %></span>
         <% else %>
