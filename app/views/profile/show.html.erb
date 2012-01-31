@@ -1,6 +1,6 @@
 <% content_for :stylesheet do %>
 <style>
-.profile, .request, .pledge, .actions {
+.request, .pledge, .actions {
     margin-top: 8px;
     margin-bottom: 8px;
 }
@@ -11,10 +11,6 @@
 
 .notes {
     margin-top: 12px;
-}
-
-.missing {
-    color: #d80000;
 }
 </style>
 <% end %>
@@ -75,14 +71,8 @@
     <%= render partial: "requests/spacer" %>
     <%= render partial: "donation", collection: @current_user.donations, spacer_template: "requests/spacer" %>
     <%= render partial: "requests/spacer" %>
-    <div class="notes">
-        <p>If ordering online to ship directly to the student, you may need to put in a phone number. We don't collect
-            student's phone numbers right now; it's best to enter your own number.
-        </p>
-        <p>Problems with any of these addresses?
-            <%= mail_to "jason@rationalegoist.com", "Contact Jason for help.", subject: "Problem with student addresses" %>
-        </p>
-    </div>
+    <%= render "donation_notes" %>
+    <p><%= link_to 'See all your donations', donations_path %></p>
 </div>
 <div class="clear"></div>
 <% else %>

@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ProfileControllerTest < ActionController::TestCase
+  # Show
+
   test "show for requester with no donor" do
     get :show, params, session_for(@howard)
     assert_response :success
@@ -9,6 +11,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_select '.request .status', /We are looking for a donor for you/
     assert_select '.request a', text: /thank/i, count: 0
     assert_select '.request a', /see full/i
+    assert_select 'h2', text: /donation/i, count: 0
   end
 
   test "show for requester with donor" do
@@ -19,6 +22,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_select '.request .status', /Hugh Akston in Boston, MA has sent/
     assert_select '.request a', /thank/i
     assert_select '.request a', /see full/i
+    assert_select 'h2', text: /donation/i, count: 0
   end
 
   test "show for requester with donor but no address" do
@@ -31,6 +35,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_select '.request a', /add your address/i
     assert_select '.request a', text: /thank/i, count: 0
     assert_select '.request a', /see full/i
+    assert_select 'h2', text: /donation/i, count: 0
   end
 
   test "show for requester with flagged address" do
@@ -43,6 +48,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_select '.request a', /update/i
     assert_select '.request a', text: /thank/i, count: 0
     assert_select '.request a', /see full/i
+    assert_select 'h2', text: /donation/i, count: 0
   end
 
   test "show for donor" do
@@ -50,6 +56,47 @@ class ProfileControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Hugh Akston"
     assert_select '.pledge .headline', /You pledged to donate 5 books/
+    assert_select 'h2', 'Your donations'
+
+    assert_select '.donation', /Quentin/ do
+      assert_select '.request .headline', /Virtue of Selfishness to/
+      assert_select '.request .name', /Quentin Daniels/
+      assert_select '.request .address', /123 Main St/
+      assert_select '.actions a', /see full/i
+      # assert_select '.actions a', /flag/i
+    end
+
+    assert_select '.donation', /Dagny/ do
+      assert_select '.request .headline', /Capitalism: The Unknown Ideal to/
+      assert_select '.request .name', /Dagny/
+      assert_select '.request .address', /No address/
+      assert_select '.actions a', /see full/i
+      assert_select '.actions .flagged', /Student has been contacted/i
+    end
+
+    assert_select '.donation', /Hank/ do
+      assert_select '.request .headline', /Atlas Shrugged to/
+      assert_select '.request .name', /Hank Rearden/
+      assert_select '.request .address', /987 Steel Way/
+      assert_select '.actions a', /see full/i
+      assert_select '.actions .flagged', /Shipping info flagged/i
+    end
+
+    assert_select 'a', 'See all your donations'
+  end
+
+  test "show requires login" do
+    get :show
+    assert_response :unauthorized
+    assert_select 'h1', 'Log in'
+  end
+
+  # Donations
+
+  test "donations" do
+    get :donations, params, session_for(@hugh)
+    assert_response :success
+    assert_select 'h1', "Your donations"
 
     assert_select '.donation', /Quentin/ do
       assert_select '.request .headline', /Virtue of Selfishness to/
@@ -76,8 +123,8 @@ class ProfileControllerTest < ActionController::TestCase
     end
   end
 
-  test "show requires login" do
-    get :show
+  test "donations requires login" do
+    get :donations
     assert_response :unauthorized
     assert_select 'h1', 'Log in'
   end

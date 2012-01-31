@@ -6,6 +6,7 @@ FreeBooks::Application.routes.draw do
   get "about" => "home#about"
 
   get "profile" => "profile#show"
+  get "donations" => "profile#donations"
 
   get "donate" => "requests#index"
   resources :requests, only: [:show, :edit, :update] do
