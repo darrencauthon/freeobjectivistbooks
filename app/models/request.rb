@@ -120,7 +120,9 @@ class Request < ActiveRecord::Base
   end
 
   def update_status(params)
-    self.update_attribute :status, params[:status]
+    self.status = params[:status]
+    return unless changed?
+    save!
     update_status_events.create params[:event]
   end
 

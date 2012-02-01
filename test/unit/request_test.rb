@@ -216,6 +216,12 @@ class RequestTest < ActiveSupport::TestCase
     assert_not_nil event.happened_at
   end
 
+  test "update status is idempotent" do
+    assert_no_difference "@quentin_request.events.count" do
+      @quentin_request.update_status status: "sent", event: {user: @hugh}
+    end
+  end
+
   # Thank
 
   test "thank" do
