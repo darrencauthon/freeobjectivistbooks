@@ -1,5 +1,5 @@
 <div class="pledge">
-    <div class="headline"><%= link_to pledge.user.name, admin_user_path(pledge.user) %> (<%= pledge.user.email %>)
+    <div class="headline"><%= admin_user_link pledge.user %> (<%= pledge.user.email %>)
         pledged <%= pledge.quantity %> books
     </div>
     <div class="tagline"><%= user_tagline pledge.user %></div>

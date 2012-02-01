@@ -16,7 +16,7 @@
 </style>
 <% end %>
 
-<h1 class="grid_16"><%= link_to @request.user.name, admin_user_path(@request.user) %> wants
+<h1 class="grid_16"><%= admin_user_link @request.user %> wants
     <span class="title"><%= @request.book %></span>
 </h1>
 
@@ -43,7 +43,7 @@
     <p class="status"><%= @request.donor.name %> in <%= @request.donor.location %> has sent this book.</p>
     <% elsif @request.granted? %>
     <h2>Status: Donor found</h2>
-    <p class="status"><%= link_to @request.donor.name, admin_user_path(@request.donor) %> in <%= @request.donor.location %>
+    <p class="status"><%= admin_user_link @request.donor %> in <%= @request.donor.location %>
         will donate this book.
     </p>
     <p class="thanked"><% if @request.thanked? %>Thank-you sent<% else %>Not thanked yet<% end %></p>

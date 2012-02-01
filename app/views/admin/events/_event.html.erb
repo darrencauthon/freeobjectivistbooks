@@ -1,18 +1,18 @@
 <div class="event">
     <p class="headline">
-        <% if event.user %><%= link_to event.user.name, admin_user_path(event.user) %><% else %>Someone<% end %>
+        <% if event.user %><%= admin_user_link event.user %><% else %>Someone<% end %>
         <% if event.request %>
             <% case event.type %>
             <% when "grant" %>
-                granted <%= link_to event.request.user.name, admin_user_path(event.request.user) %>'s request for
+                granted <%= admin_user_link event.request.user %>'s request for
             <% when "flag" %>
-                flagged <%= link_to event.request.user.name, admin_user_path(event.request.user) %>'s request for
+                flagged <%= admin_user_link event.request.user %>'s request for
             <% when "update" %>
                 <%= event.detail %> for
             <% when "message" %>
-                sent a message to <%= link_to event.to.name, admin_user_path(event.to) %> about
+                sent a message to <%= admin_user_link event.to %> about
             <% when "thank" %>
-                thanked <%= link_to event.donor.name, admin_user_path(event.donor) %> for
+                thanked <%= admin_user_link event.donor %> for
             <% when "update_status" %>
                 <%= event.detail %>
             <% end %>

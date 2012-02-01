@@ -1,13 +1,13 @@
 <div class="request">
     <div class="headline">
-        <%= link_to request.user.name, admin_user_path(request.user) %> (<%= request.user.email %>) wants
+        <%= admin_user_link request.user %> (<%= request.user.email %>) wants
         <span class="title"><%= request.book %></span>
     </div>
     <div class="tagline"><%= user_tagline request.user %></div>
     <div class="reason"><%= format_block request.reason %></div>
     <p class="donor">
         <% if request.donor %>
-        Donor: <%= link_to request.donor.name, admin_user_path(request.donor) %> in <%= request.donor.location %>
+        Donor: <%= admin_user_link request.donor %> in <%= request.donor.location %>
             <% if request.thanked? %>&ndash; thanked<% end %>
         <% else %>
         No donor yet

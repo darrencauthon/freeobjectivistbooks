@@ -44,7 +44,7 @@
         <p class="reason"><%= format_block request.reason %></p>
         <p class="donor">
             <% if request.donor %>
-            Donor: <%= link_to request.donor.name, admin_user_path(request.donor) %> in <%= request.donor.location %>
+            Donor: <%= admin_user_link request.donor %> in <%= request.donor.location %>
             <% else %>
             No donor yet
             <% end %>
