@@ -5,6 +5,7 @@ en:
   date:
     formats:
       default: "%a %d %b %Y"
+      short: "%b %d"
   time:
     formats:
       default: "%a %d %b %Y %l:%M:%S %P"

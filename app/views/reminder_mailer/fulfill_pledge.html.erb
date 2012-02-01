@@ -1,0 +1,14 @@
+<p>Thank you for
+    <% if @user.donations.any? %>
+    donating <%= pluralize @user.donations.count, 'book' %> so far
+    <% else %>
+    signing up to donate books
+    <% end %>
+    through Free Objectivist Books!
+</p>
+
+<p>On <%= l @pledge.created_at.to_date, format: :short %>, you pledged to donate <%= @pledge.quantity %> books.
+    Right now there are <%= format_number @request_count %> students waiting for books.
+</p>
+
+<p><strong><%= link_to 'Read their appeals and choose students to donate to', donate_url %></strong></p>

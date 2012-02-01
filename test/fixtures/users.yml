@@ -47,3 +47,9 @@ cameron:
   email: henry@cameron.com
   password_digest: <%= BCrypt::Password.create "cameron" %>
   location: "New York, NY"
+
+stadler:
+  name: Robert Stadler
+  email: stadler@scienceinstitute.gov
+  password_digest: <%= BCrypt::Password.create "stadler" %>
+  location: "Ithaca, NY"
