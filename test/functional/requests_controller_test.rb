@@ -8,12 +8,10 @@ class RequestsControllerTest < ActionController::TestCase
     assert_response :success
     count = @hugh.donations.not_sent.count
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
-    assert_select '.sidebar h2', "Your donations (#{count})"
-    assert_select '.sidebar li', count
-    assert_select '.sidebar li', /Capitalism: The Unknown Ideal to Dagny/
-    assert_select '.sidebar li', /Atlas Shrugged to Hank Rearden/
-    assert_select '.sidebar li', /The Fountainhead to Quentin Daniels/
-    assert_select '.sidebar p', "You have pledged 5 books."
+    assert_select '.sidebar h2', "Your donations"
+    assert_select '.sidebar p', "You have pledged to donate 5 books."
+    assert_select '.sidebar p', "You previously donated 4 books."
+    assert_select '.sidebar ul'
   end
 
   test "index requires login" do
@@ -171,9 +169,13 @@ class RequestsControllerTest < ActionController::TestCase
   test "grant" do
     request = requests :quentin_wants_opar
     assert_difference "request.events.count" do
-      post :grant, {id: request.id}, session_for(@hugh)
+      put :grant, {id: request.id, format: "json"}, session_for(@hugh)
     end
-    assert_redirected_to donate_url
+    assert_response :success
+
+    hash = decode_json_response
+    assert_equal "Objectivism: The Philosophy of Ayn Rand", hash['book']
+    assert_equal "Quentin Daniels", hash['user']['name']
 
     request.reload
     assert_equal @hugh, request.donor
@@ -184,9 +186,13 @@ class RequestsControllerTest < ActionController::TestCase
 
   test "grant no address" do
     assert_difference "@howard_request.events.count" do
-      post :grant, {id: @howard_request.id}, session_for(@hugh)
+      put :grant, {id: @howard_request.id, format: "json"}, session_for(@hugh)
     end
-    assert_redirected_to donate_url
+    assert_response :success
+
+    hash = decode_json_response
+    assert_equal "Atlas Shrugged", hash['book']
+    assert_equal "Howard Roark", hash['user']['name']
 
     @howard_request.reload
     assert_equal @hugh, @howard_request.donor
@@ -196,7 +202,7 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "grant requires login" do
-    post :grant, id: @howard_request.id
+    put :grant, id: @howard_request.id, format: "json"
     verify_login_page
   end
 

@@ -32,7 +32,7 @@ class RequestsController < ApplicationController
 
   def index
     @requests = Request.open.order('created_at desc')
-    @donations = @current_user.donations.not_sent if @current_user
+    @donations = @current_user.donations if @current_user
     @pledge = @current_user.pledges.last if @current_user
   end
 
@@ -43,7 +43,10 @@ class RequestsController < ApplicationController
 
   def grant
     @request.grant @current_user
-    redirect_to donate_url
+    respond_to do |format|
+      format.html { redirect_to @request }
+      format.json { render json: @request.as_json(include: :user) }
+    end
   end
 
   def notice_for_update(result)

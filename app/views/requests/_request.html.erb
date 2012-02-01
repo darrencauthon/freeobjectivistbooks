@@ -1,9 +1,14 @@
-<div class="request grid_9 alpha">
-    <div class="headline"><%= request.user.name %> wants <span class="title"><%= request.book %></span></div>
-    <div class="tagline"><%= user_tagline request.user %></div>
-    <div class="reason"><%= format_block request.reason %></div>
-    <div class="timestamp"><%= l request.created_at.to_date %></div>
+<div class="request">
+    <div class="grid_7 alpha">
+        <div class="headline"><%= request.user.name %> wants <span class="title"><%= request.book %></span></div>
+        <div class="tagline"><%= user_tagline request.user %></div>
+        <div class="reason"><%= format_block request.reason %></div>
+        <div class="timestamp"><%= l request.created_at.to_date %></div>
+    </div>
+    <%= form_for request, url: grant_request_path(request), remote: true, html: {"data-type" => :json} do |f| %>
+        <div class="grid_1 loading">&nbsp;</div>
+        <%= f.submit "", class: "grid_3 omega donate button" %>
+    <% end %>
+    <div class="clear"></div>
+    <img class="grid_11 alpha omega hr" src="/assets/hr.png">
 </div>
-<%= link_to grant_request_path(request), method: :post, class: "grid_3 omega" do %>
-    <div class="donate button"></div>
-<% end %>

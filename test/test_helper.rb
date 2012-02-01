@@ -36,6 +36,10 @@ class ActiveSupport::TestCase
     authenticate_with_http_digest "admin", "password", "Admin"
   end
 
+  def decode_json_response
+    ActiveSupport::JSON.decode @response.body
+  end
+
   def verify_login_page
     assert_response :unauthorized
     assert_select 'h1', 'Log in'
