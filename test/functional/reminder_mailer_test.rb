@@ -1,6 +1,15 @@
 require 'test_helper'
 
 class ReminderMailerTest < ActionMailer::TestCase
+  test "send reminder" do
+    pledges = Pledge.unfulfilled
+    assert pledges.any?
+
+    assert_difference "ActionMailer::Base.deliveries.size", pledges.count do
+      ReminderMailer.send_reminder :fulfill_pledge
+    end
+  end
+
   test "fulfill pledge" do
     mail = ReminderMailer.fulfill_pledge(pledges :hugh_pledge)
     assert_equal "Fulfill your pledge of 5 books on Free Objectivist Books", mail.subject
