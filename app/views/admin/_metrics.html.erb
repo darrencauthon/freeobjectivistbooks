@@ -1,10 +1,10 @@
 <table>
     <% metrics.each do |metric| %>
     <tr class="metric">
-        <td class="name"><%= metric[:name].titleize %></td>
+        <td class="name"><%= metric[:name] %></td>
         <td class="value"><%= format_number metric[:value] %></td>
         <% if metric[:percent] %>
-        <td class="percent">(<%= format_number (metric[:percent]*100) %>% of <%= metric[:denominator] %>)</td>
+        <td class="percent">(<%= format_number (metric[:percent]*100) %>% of <%= metric[:denominator].downcase %>)</td>
         <% end %>
     </tr>
     <% end %>

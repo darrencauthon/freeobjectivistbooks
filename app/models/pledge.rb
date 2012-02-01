@@ -5,9 +5,9 @@ class Pledge < ActiveRecord::Base
 
   def self.metrics
     metrics = [
-      {name: 'donors pledging',     value: count},
-      {name: 'books pledged',       value: sum(:quantity)},
-      {name: 'average pledge size', value: average(:quantity)},
+      {name: 'Donors pledging',     value: count},
+      {name: 'Books pledged',       value: sum(:quantity)},
+      {name: 'Average pledge size', value: average(:quantity)},
     ]
   end
 end

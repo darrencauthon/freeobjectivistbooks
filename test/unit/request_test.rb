@@ -245,10 +245,10 @@ class RequestTest < ActiveSupport::TestCase
     metrics = Request.metrics
     values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
 
-    assert_equal values['total'], values['granted'] + Request.open.count, metrics.inspect
-    assert_equal values['total'], values['flagged'] + Request.not_flagged.count, metrics.inspect
-    assert_equal values['granted'], values['sent'] + Request.not_sent.count, metrics.inspect
-    assert_equal values['total'], values['thanked'] + Request.not_thanked.count, metrics.inspect
+    assert_equal values['Total'], values['Granted'] + Request.open.count, metrics.inspect
+    assert_equal values['Total'], values['Flagged'] + Request.not_flagged.count, metrics.inspect
+    assert_equal values['Granted'], values['Sent'] + Request.not_sent.count, metrics.inspect
+    assert_equal values['Total'], values['Thanked'] + Request.not_thanked.count, metrics.inspect
   end
 
   test "book metrics" do

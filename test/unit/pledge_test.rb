@@ -37,6 +37,6 @@ class PledgeTest < ActiveSupport::TestCase
   test "metrics" do
     metrics = Pledge.metrics
     values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
-    assert_equal values['average pledge size'], values['books pledged'].to_f / values['donors pledging'], metrics.inspect
+    assert_equal values['Average pledge size'], values['Books pledged'].to_f / values['Donors pledging'], metrics.inspect
   end
 end
