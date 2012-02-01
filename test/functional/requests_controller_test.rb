@@ -10,7 +10,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
     assert_select '.sidebar h2', "Your donations"
     assert_select '.sidebar p', "You have pledged to donate 5 books."
-    assert_select '.sidebar p', "You previously donated 4 books."
+    assert_select '.sidebar p', "You previously donated 3 books."
     assert_select '.sidebar ul'
   end
 
@@ -155,7 +155,7 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "show to donor with flagged address" do
-    get :show, {id: @hank_request.id}, session_for(@hugh)
+    get :show, {id: @hank_request.id}, session_for(@cameron)
     assert_response :success
     assert_select '.message.error', false
     assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
@@ -428,7 +428,7 @@ class RequestsControllerTest < ActionController::TestCase
     get :edit, {id: @hank_request.id, type: "thank"}, session_for(@hank)
     assert_response :success
     assert_select 'h1', /Thank/
-    assert_select 'p', /Hugh Akston in Boston, MA agreed to send you\s+Atlas Shrugged/
+    assert_select 'p', /Henry Cameron in New York, NY agreed to send you\s+Atlas Shrugged/
     assert_select 'textarea#request_event_message'
     assert_select 'input[type="radio"]'
     assert_select 'input[type="submit"]'
@@ -502,7 +502,7 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "thank requires student" do
-    put :thank, {id: @hank_request.id, request: thank_request_params}, session_for(@hugh)
+    put :thank, {id: @hank_request.id, request: thank_request_params}, session_for(@cameron)
     verify_wrong_login_page
   end
 end

@@ -16,19 +16,19 @@ hugh_grants_dagny:
   happened_at: 2012-01-16 00:15:25
   notified_at: 2012-01-16 00:15:25
 
-hugh_grants_hank:
+cameron_grants_hank:
   type: grant
   request: hank_wants_atlas
-  user: hugh
-  donor: hugh
+  user: cameron
+  donor: cameron
   happened_at: 2012-01-16 00:16:25
   notified_at: 2012-01-16 00:16:25
 
-hugh_flags_hank:
+cameron_flags_hank:
   type: flag
   request: hank_wants_atlas
-  user: hugh
-  donor: hugh
+  user: cameron
+  donor: cameron
   message: Is your address correct?
   happened_at: 2012-01-17 00:14:25
   notified_at: 2012-01-17 00:14:25

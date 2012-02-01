@@ -20,11 +20,13 @@ class ActiveSupport::TestCase
   end
 
   def setup
-    @hugh = users :hugh
     @howard = users :howard
     @quentin = users :quentin
     @dagny = users :dagny
     @hank = users :hank
+
+    @hugh = users :hugh
+    @cameron = users :cameron
 
     @howard_request = requests :howard_wants_atlas
     @quentin_request = requests :quentin_wants_vos

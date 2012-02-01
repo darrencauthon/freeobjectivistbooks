@@ -1,3 +1,5 @@
+# Students
+
 howard:
   name: Howard Roark
   email: roark@stanton.edu
@@ -15,12 +17,6 @@ quentin:
   studying: physics
   address: "123 Main St Apt 456\nBoston, MA 12345"
 
-hugh:
-  name: Hugh Akston
-  email: akston@patrickhenry.edu
-  password_digest: <%= BCrypt::Password.create "akston" %>
-  location: "Boston, MA"
-
 dagny:
   name: Dagny
   email: dagny@taggart.com
@@ -37,3 +33,17 @@ hank:
   school: University of Pittsburgh
   studying: manufacturing
   address: "987 Steel Way\nPhiladelphia, PA 12345"
+
+# Donors
+
+hugh:
+  name: Hugh Akston
+  email: akston@patrickhenry.edu
+  password_digest: <%= BCrypt::Password.create "akston" %>
+  location: "Boston, MA"
+
+cameron:
+  name: Henry Cameron
+  email: henry@cameron.com
+  password_digest: <%= BCrypt::Password.create "cameron" %>
+  location: "New York, NY"

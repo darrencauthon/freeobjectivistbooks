@@ -21,8 +21,8 @@ class AnnouncementMailerTest < ActionMailer::TestCase
     mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hank/
-      assert_select 'p', /Hugh Akston agreed to send you Atlas Shrugged/
-      assert_select 'a', /Thank Hugh Akston/
+      assert_select 'p', /Henry Cameron agreed to send you Atlas Shrugged/
+      assert_select 'a', /Thank Henry Cameron/
       assert_select 'p', /looking forward to reading\s+Atlas Shrugged/
     end
   end
@@ -51,7 +51,7 @@ class AnnouncementMailerTest < ActionMailer::TestCase
     mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hugh/
-      assert_select 'p', /Have you sent your 4 books yet/
+      assert_select 'p', /Have you sent your 3 books yet/
       assert_select 'a', /See your donations/
       assert_select 'p', /If you've already sent your books/
     end

@@ -30,7 +30,7 @@ hank_wants_atlas:
   user: hank
   book: Atlas Shrugged
   reason: I want to learn about this strike
-  donor: hugh
+  donor: cameron
   flagged: true
   status: not_sent
 

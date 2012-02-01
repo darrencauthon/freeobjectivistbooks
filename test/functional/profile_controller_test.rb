@@ -101,14 +101,6 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.actions .flagged', /Student has been contacted/i
     end
 
-    assert_select '.donation', /Atlas Shrugged to/ do
-      assert_select '.request .name', /Hank Rearden/
-      assert_select '.request .address', /987 Steel Way/
-      assert_select '.actions a', /see full/i
-      assert_select '.actions a', text: /flag/i, count: 0
-      assert_select '.actions .flagged', /Shipping info flagged/i
-    end
-
     assert_select '.donation', /The Fountainhead to/ do
       assert_select '.request .name', /Quentin Daniels/
       assert_select '.request .address', /123 Main St/
@@ -116,6 +108,20 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.actions a', /see full/i
       assert_select '.actions a', /flag/i
       assert_select '.actions .flagged', false
+    end
+  end
+
+  test "donations with flagged shipping info" do
+    get :donations, params, session_for(@cameron)
+    assert_response :success
+    assert_select 'h1', "Your donations"
+
+    assert_select '.donation', /Atlas Shrugged to/ do
+      assert_select '.request .name', /Hank Rearden/
+      assert_select '.request .address', /987 Steel Way/
+      assert_select '.actions a', /see full/i
+      assert_select '.actions a', text: /flag/i, count: 0
+      assert_select '.actions .flagged', /Shipping info flagged/i
     end
   end
 
