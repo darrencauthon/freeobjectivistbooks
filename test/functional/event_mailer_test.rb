@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class EventMailerTest < ActionMailer::TestCase
-  include ActionDispatch::Assertions::SelectorAssertions
-
   test "grant" do
     mail = EventMailer.mail_for_event events(:hugh_grants_quentin)
     assert_equal "We found a donor to send you The Virtue of Selfishness!", mail.subject

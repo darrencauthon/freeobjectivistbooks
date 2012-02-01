@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class AnnouncementMailerTest < ActionMailer::TestCase
-  include ActionDispatch::Assertions::SelectorAssertions
-
   test "send announcements" do
     requests = Request.granted.where(thanked: [nil, false])
     assert requests.any?

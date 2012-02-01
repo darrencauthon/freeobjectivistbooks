@@ -95,6 +95,10 @@ class ActionController::TestCase
   end
 end
 
+class ActionMailer::TestCase
+  include ActionDispatch::Assertions::SelectorAssertions
+end
+
 class User
   def invalid_letmein_params
     letmein_params.merge auth: "wrong"

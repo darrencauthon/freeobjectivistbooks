@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
-  include ActionDispatch::Assertions::SelectorAssertions
-
   test "reset_password" do
     mail = UserMailer.reset_password @hugh
     assert_match /password reset/i, mail.subject

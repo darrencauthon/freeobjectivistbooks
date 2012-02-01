@@ -1,3 +1,3 @@
-module AnnouncementMailerHelper
+module ApplicationMailerHelper
   include ApplicationHelper
 end
