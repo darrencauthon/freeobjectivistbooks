@@ -1,12 +1,10 @@
 class AnnouncementMailer < ApplicationMailer
-  def self.send_announcements(announcement, targets)
-    targets.each {|target| send_announcement announcement, target}
-  end
-
-  def self.send_announcement(announcement, target)
-    mail = self.send announcement, target
-    Rails.logger.info "Sending #{announcement} to #{mail.to}"
-    mail.deliver
+  def self.send_announcement(announcement, targets)
+    targets.each do |target|
+      mail = self.send announcement, target
+      Rails.logger.info "Sending #{announcement} to #{mail.to}"
+      mail.deliver
+    end
   end
 
   def announcement(subject)
