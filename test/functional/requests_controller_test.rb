@@ -327,11 +327,13 @@ class RequestsControllerTest < ActionController::TestCase
   def update(request, options)
     user = request.user
     user_params = options.subhash :name, :address
+    request_params = {user: user_params}
     message = options[:message]
+    request_params[:event] = {message: message} if message
     current_user = options.has_key?(:current_user) ? options[:current_user] : user
 
     assert_difference "request.events.count", (options[:expect_events] || 1) do
-      post :update, {id: request.id, request: {user: user_params, event: {message: message}}}, session_for(current_user)
+      post :update, {id: request.id, request: request_params}, session_for(current_user)
     end
   end
 
@@ -363,7 +365,7 @@ class RequestsControllerTest < ActionController::TestCase
   end
 
   test "update shipping info" do
-    options = {name: "Quentin Daniels", address: "123 Quantum Ln"}
+    options = {name: "Quentin Daniels", address: "123 Quantum Ln", message: ""}
     update @quentin_request, options
     verify_update @quentin_request, options, /has been notified/i
     verify_event @quentin_request, "update", detail: "updated shipping info", notified?: true

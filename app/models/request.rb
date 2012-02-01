@@ -104,7 +104,7 @@ class Request < ActiveRecord::Base
     user.attributes = params[:user]
     self.flagged = false
 
-    event_attributes = params[:event]
+    event_attributes = params[:event] || {}
     if user.changed?
       event_attributes[:detail] = if user.address_was.blank? && user.address.present?
         "added a shipping address"
