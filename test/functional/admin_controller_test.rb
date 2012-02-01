@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
   test "index" do
-    authenticate_with_http_digest "admin", "password", "Admin"
+    admin_auth
     get :index
     assert_response :success
     assert_select 'a', /user/

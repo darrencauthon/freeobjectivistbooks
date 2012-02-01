@@ -1,12 +1,8 @@
 require 'test_helper'
 
 class Admin::UsersControllerTest < ActionController::TestCase
-  def auth
-    authenticate_with_http_digest "admin", "password", "Admin"
-  end
-
   test "index" do
-    auth
+    admin_auth
     get :index
     assert_response :success
     assert_select 'h1', "#{User.count} users"
@@ -14,7 +10,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "show student" do
-    auth
+    admin_auth
     get :show, id: @howard.id
     assert_response :success
     assert_select 'h1', "Howard Roark"
@@ -26,7 +22,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "show donor" do
-    auth
+    admin_auth
     get :show, id: @hugh.id
     assert_response :success
     assert_select 'h1', "Hugh Akston"
@@ -40,7 +36,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "edit" do
-    auth
+    admin_auth
     get :edit, id: @howard.id
     assert_response :success
     assert_select 'h1', 'Edit user'
@@ -49,7 +45,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "update" do
-    auth
+    admin_auth
     put :update, id: @howard.id, user: {name: "Howard Q. Roark", address: "123 Independence St"}
     assert_redirected_to [:admin, @howard]
 
@@ -59,7 +55,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   end
 
   test "destroy" do
-    auth
+    admin_auth
     delete :destroy, id: @howard.id
     assert_redirected_to action: :index
     assert !User.exists?(@howard)

@@ -32,6 +32,10 @@ class ActiveSupport::TestCase
     @hank_request = requests :hank_wants_atlas
   end
 
+  def admin_auth
+    authenticate_with_http_digest "admin", "password", "Admin"
+  end
+
   def verify_login_page
     assert_response :unauthorized
     assert_select 'h1', 'Log in'
