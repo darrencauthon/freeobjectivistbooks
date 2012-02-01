@@ -38,7 +38,10 @@
     </p>
     <% end %>
 
-    <% if @request.granted? %>
+    <% if @request.sent? %>
+    <h2>Status: Book sent</h2>
+    <p class="status"><%= @request.donor.name %> in <%= @request.donor.location %> has sent this book.</p>
+    <% elsif @request.granted? %>
     <h2>Status: Donor found</h2>
     <p class="status"><%= link_to @request.donor.name, admin_user_path(@request.donor) %> in <%= @request.donor.location %>
         will donate this book.
