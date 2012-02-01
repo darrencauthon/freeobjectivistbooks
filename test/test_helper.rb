@@ -61,6 +61,12 @@ class ActiveSupport::TestCase
       assert_equal options[key], event.send(key), "verify_event: #{key} didn't match"
     end
   end
+
+  def verify_scope(model_class, scope)
+    models = model_class.send scope
+    assert models.any?, "no #{model_class.name.pluralize} matched scope #{scope}"
+    models.each {|model| assert (yield model), "#{model_class.name} #{model.id} doesn't match scope #{scope}"}
+  end
 end
 
 # from https://gist.github.com/1282275

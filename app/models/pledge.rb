@@ -10,4 +10,12 @@ class Pledge < ActiveRecord::Base
       {name: 'Average pledge size', value: average(:quantity)},
     ]
   end
+
+  def self.unfulfilled
+    all.select {|pledge| !pledge.fulfilled? }
+  end
+
+  def fulfilled?
+    user.donations.count >= quantity
+  end
 end

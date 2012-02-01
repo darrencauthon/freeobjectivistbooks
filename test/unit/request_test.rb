@@ -48,9 +48,7 @@ class RequestTest < ActiveSupport::TestCase
   # Scopes
 
   def verify_scope(scope)
-    requests = Request.send scope
-    assert requests.any?
-    requests.each {|request| assert (yield request), "request #{request.id} doesn't match scope #{scope}"}
+    super Request, scope
   end
 
   test "open" do

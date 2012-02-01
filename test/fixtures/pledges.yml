@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-hugh_5:
+hugh_pledge:
   user: hugh
   quantity: 5
 
-cameron_1:
+cameron_pledge:
   user: cameron
   quantity: 1

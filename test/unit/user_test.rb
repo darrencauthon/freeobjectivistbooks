@@ -126,7 +126,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "pledges" do
-    assert_equal [pledges(:hugh_5)], @hugh.pledges
+    assert_equal [pledges(:hugh_pledge)], @hugh.pledges
   end
 
   test "donations" do
