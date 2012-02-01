@@ -16,7 +16,7 @@
             <% when "update_status" %>
                 <%= event.detail %>
             <% end %>
-            <span class="title"><%= event.request.book %></span>
+            <span class="title"><%= link_to event.request.book, admin_request_path(event.request) %></span>
         <% else %>
             did a "<%= event.type %>" event on deleted request <%= event.request_id %>
         <% end %>
