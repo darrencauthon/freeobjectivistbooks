@@ -62,9 +62,9 @@ class RequestsControllerTest < ActionController::TestCase
     verify_update_shipping_link (which == :update)
   end
 
-  def verify_donor_links(status, options = {})
+  def verify_donor_links(status)
     verify_back_link
-    verify_flag_link (status == :not_sent && !options[:flagged])
+    verify_flag_link (status == :not_sent)
     verify_sent_button (status == :not_sent)
     verify_thank_link false
     verify_add_address_link false
@@ -111,6 +111,16 @@ class RequestsControllerTest < ActionController::TestCase
     verify_donor_links :sent
   end
 
+  test "show to donor unsent" do
+    get :show, {id: @quentin_request_unsent.id}, session_for(@hugh)
+    assert_response :success
+    assert_select 'h1', "Quentin Daniels wants The Fountainhead"
+    assert_select '.tagline', "Studying physics at MIT in Boston, MA"
+    assert_select '.address', /123 Main St/
+    verify_status 'donor found'
+    verify_donor_links :not_sent
+  end
+
   test "show to student with missing address" do
     get :show, {id: @dagny_request.id}, session_for(@dagny)
     assert_response :success
@@ -141,7 +151,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Dagny wants Capitalism: The Unknown Ideal"
     assert_select '.address', /no address/i
     assert_select '.flagged', /Student has been contacted/i
-    verify_donor_links :not_sent, flagged: true
+    verify_donor_links :flagged
   end
 
   test "show to donor with flagged address" do
@@ -151,7 +161,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
     assert_select '.address', /987 Steel Way/i
     assert_select '.flagged', /Shipping info flagged/i
-    verify_donor_links :not_sent, flagged: true
+    verify_donor_links :flagged
   end
 
   test "show requires login" do

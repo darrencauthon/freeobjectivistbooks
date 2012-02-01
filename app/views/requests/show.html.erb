@@ -83,7 +83,7 @@
     <div class="top_5">&nbsp;</div>
     <div class="content_5">
         <% if current_is_donor? %>
-            <% unless @request.sent? %>
+            <% if @request.can_send? %>
             <h2>Update status</h2>
             <p>Let <%= @request.user.name %> know when you have sent <span class="title"><%= @request.book %>:</span></p>
             <%= form_for @request, url: update_status_request_path(@request) do |f| %>

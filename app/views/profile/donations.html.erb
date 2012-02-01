@@ -45,8 +45,9 @@
 <script>
 $(document).ready(function () {
     $('div.donation').handleAjax(function () {
-        $(this).find('form').animate({height: 'toggle', opacity: 'toggle'}, {duration: 600});
-        $(this).find('.flag-link').animate({height: 'toggle', opacity: 'toggle'}, {duration: 600});
+        $(this).find('form').before('<p class="status">Book sent</p>');
+        $(this).find('form').fadeAndSlide();
+        $(this).find('.flag-link').fadeAndSlide();
     });
 });
 </script>

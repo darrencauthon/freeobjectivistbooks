@@ -64,6 +64,10 @@ class Request < ActiveRecord::Base
     granted? && !thanked?
   end
 
+  def can_send?
+    !sent? && !flagged?
+  end
+
   def can_flag?
     !sent? && !flagged?
   end
