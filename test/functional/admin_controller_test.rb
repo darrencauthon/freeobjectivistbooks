@@ -6,8 +6,9 @@ class AdminControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_select 'a', /user/
-    assert_select 'a', /requested/
-    assert_select 'a', /pledged/
+    assert_select 'a', /request/
+    assert_select 'a', /pledge/
+    assert_select 'a', /event/
   end
 
   test "admin password is required" do

@@ -7,7 +7,7 @@ h2 {
     margin-bottom: 12px;
 }
 
-td {
+td, th {
     padding-right: 12px;
 }
 
@@ -30,19 +30,19 @@ td {
 <h1 class="grid_16">Admin</h1>
 
 <div class="grid_12 overview">
-    <p><%= link_to pluralize(@user_count, 'user'), admin_users_path %></p>
-    <p><%= link_to pluralize(@request_count, 'book') + " requested", admin_requests_path %>:
-        <%= @granted_request_count %> granted (<%= @flagged_request_count %> flagged), <%= @open_request_count %> open
+    <p>
+        <%= link_to pluralize(@user_count, 'user'), admin_users_path %> &ndash;
+        <%= link_to pluralize(@request_count, 'request'), admin_requests_path %> &ndash;
+        <%= link_to pluralize(@pledge_count, 'pledge'), admin_pledges_path %> &ndash;
+        <%= link_to pluralize(@event_count, 'event'), admin_events_path %>
     </p>
-    <p><%= link_to pluralize(@pledge_quantity, 'book') + " pledged", admin_pledges_path %>
-        from <%= pluralize @pledge_count, 'donor' %> (average pledge size: <%= format_number @average_pledge_quantity %>)
-    </p>
-    <p><%= link_to pluralize(@event_count, 'event'), admin_events_path %></p>
-</div>
 
-<h2 class="grid_16">Books</h2>
-<table class="grid_16 overview">
-    <% @books.each do |book| %>
-    <tr><td><%= book %></td><td><%= @book_counts[book] %></td></tr>
-    <% end %>
-</table>
+    <h2>Request pipeline</h2>
+    <%= render partial: "admin/metrics", object: @request_metrics %>
+
+    <h2>Pledges</h2>
+    <%= render partial: "admin/metrics", object: @pledge_metrics %>
+
+    <h2>Books leaderboard</h2>
+    <%= render partial: "admin/metrics", object: @book_metrics %>
+</div>

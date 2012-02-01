@@ -33,4 +33,10 @@ class PledgeTest < ActiveSupport::TestCase
     pledge = @hugh.pledges.build quantity: "0", reason: reason
     assert pledge.invalid?
   end
+
+  test "metrics" do
+    metrics = Pledge.metrics
+    values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
+    assert_equal values['average pledge size'], values['books pledged'].to_f / values['donors pledging'], metrics.inspect
+  end
 end

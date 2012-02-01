@@ -2,17 +2,24 @@
 
 <% content_for :stylesheet do %>
 <style>
+td, th {
+    padding-right: 12px;
+}
+
 .pledge {
     margin-top: 12px;
 }
+
 .pledge p {
     margin-bottom: 0;
 }
 </style>
 <% end %>
 
-<h1 class="grid_16"><%= pluralize @pledges.count, 'pledge' %></h1>
+<h1 class="grid_16">Pledges</h1>
 <div class="grid_12">
-    <h2>Totaling <%= pluralize @pledge_quantity, 'books' %> (average pledge size: <%= format_number@average_pledge_quantity %>)</h2>
+    <div class="overview">
+        <%= render partial: "admin/metrics", object: @metrics %>
+    </div>
     <%= render partial: "pledge", collection: @pledges, spacer_template: "requests/spacer" %>
 </div>

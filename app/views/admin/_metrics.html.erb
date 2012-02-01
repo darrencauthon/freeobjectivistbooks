@@ -1,0 +1,11 @@
+<table>
+    <% metrics.each do |metric| %>
+    <tr class="metric">
+        <th class="name"><%= metric[:name].titleize %></th>
+        <td class="value"><%= format_number metric[:value] %></td>
+        <% if metric[:percent] %>
+        <td class="percent">(<%= format_number (metric[:percent]*100) %>% of <%= metric[:denominator] %>)</td>
+        <% end %>
+    </tr>
+    <% end %>
+</table>

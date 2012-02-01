@@ -47,40 +47,42 @@ class RequestTest < ActiveSupport::TestCase
 
   # Scopes
 
+  def verify_scope(scope)
+    requests = Request.send scope
+    assert requests.any?
+    requests.each {|request| assert (yield request), "request #{request.id} doesn't match scope #{scope}"}
+  end
+
   test "open" do
-    open = Request.open
-    assert open.any?
-    open.each {|request| assert request.open?}
+    verify_scope(:open) {|request| request.open?}
   end
 
   test "granted" do
-    granted = Request.granted
-    assert granted.any?
-    granted.each {|request| assert request.granted?}
+    verify_scope(:granted) {|request| request.granted?}
   end
 
   test "flagged" do
-    flagged = Request.flagged
-    assert flagged.any?
-    flagged.each {|request| assert request.flagged?}
+    verify_scope(:flagged) {|request| request.flagged?}
   end
 
   test "not flagged" do
-    not_flagged = Request.not_flagged
-    assert not_flagged.any?
-    not_flagged.each {|request| assert !request.flagged?}
+    verify_scope(:not_flagged) {|request| !request.flagged?}
   end
 
   test "thanked" do
-    thanked = Request.thanked
-    assert thanked.any?
-    thanked.each {|request| assert request.thanked?}
+    verify_scope(:thanked) {|request| request.thanked?}
+  end
+
+  test "not thanked" do
+    verify_scope(:not_thanked) {|request| !request.thanked?}
+  end
+
+  test "sent" do
+    verify_scope(:sent) {|request| request.sent?}
   end
 
   test "not sent" do
-    requests = Request.not_sent
-    assert requests.any?
-    requests.each {|request| assert !request.sent?}
+    verify_scope(:not_sent) {|request| !request.sent?}
   end
 
   # Derived attributes
@@ -235,5 +237,23 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal "Thanks a lot!", event.message
     assert_not_nil event.happened_at
     assert event.public?
+  end
+
+  # Metrics
+
+  test "metrics" do
+    metrics = Request.metrics
+    values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
+
+    assert_equal values['total'], values['granted'] + Request.open.count, metrics.inspect
+    assert_equal values['total'], values['flagged'] + Request.not_flagged.count, metrics.inspect
+    assert_equal values['granted'], values['sent'] + Request.not_sent.count, metrics.inspect
+    assert_equal values['total'], values['thanked'] + Request.not_thanked.count, metrics.inspect
+  end
+
+  test "book metrics" do
+    metrics = Request.book_metrics
+    sum = metrics.inject(0) {|sum,metric| sum += metric[:value]}
+    assert_equal Request.count, sum
   end
 end

@@ -7,7 +7,8 @@ class Admin::RequestsControllerTest < ActionController::TestCase
     admin_auth
     get :index
     assert_response :success
-    assert_select 'h1', "#{Request.count} requests"
+    assert_select 'h1', "Requests"
+    assert_select '.overview table'
     assert_select '.request', Request.count
   end
 

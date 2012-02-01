@@ -2,20 +2,24 @@
 
 <% content_for :stylesheet do %>
 <style>
+td, th {
+    padding-right: 12px;
+}
+
 .request {
     margin-top: 12px;
 }
+
 .request p {
     margin-bottom: 0;
 }
 </style>
 <% end %>
 
-<h1 class="grid_16"><%= pluralize @requests.count, 'request' %></h1>
+<h1 class="grid_16">Requests</h1>
 <div class="grid_12">
-    <ul class="overview">
-        <li><%= @granted_request_count %> granted (<%= @flagged_request_count %> flagged, <%= @thanked_request_count %> thanked)</li>
-        <li><%= @open_request_count %> open</li>
-    </ul>
+    <div class="overview">
+        <%= render partial: "metrics", object: @metrics %>
+    </div>
     <%= render partial: "request", collection: @requests, spacer_template: "requests/spacer" %>
 </div>

@@ -5,7 +5,8 @@ class Admin::PledgesControllerTest < ActionController::TestCase
     admin_auth
     get :index
     assert_response :success
-    assert_select 'h1', /#{Pledge.count} pledge/
+    assert_select 'h1', 'Pledges'
+    assert_select '.overview table'
     assert_select '.pledge', Pledge.count
   end
 

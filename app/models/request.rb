@@ -28,6 +28,8 @@ class Request < ActiveRecord::Base
   scope :flagged, where(flagged: true)
   scope :not_flagged, where(flagged: [false, nil])
   scope :thanked, where(thanked: true)
+  scope :not_thanked, where(thanked: [false, nil])
+  scope :sent, scoped_by_status("sent")
   scope :not_sent, scoped_by_status("not_sent")
 
   Event::TYPES.each do |type|
@@ -129,5 +131,29 @@ class Request < ActiveRecord::Base
   def thank(params)
     self.thanked = true
     thank_events.build params[:event]
+  end
+
+  # Metrics
+
+  def self.metrics
+    metrics = [
+      {name: 'total',   value: count},
+      {name: 'granted', value: granted.count, denominator: 'total'},
+      {name: 'sent',    value: sent.count,    denominator: 'granted'},
+      {name: 'flagged', value: flagged.count, denominator: 'granted'},
+      {name: 'thanked', value: thanked.count, denominator: 'granted'},
+    ]
+
+    values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
+
+    metrics.each do |metric|
+      denominator = metric[:denominator]
+      metric[:percent] = metric[:value].to_f / values[denominator] if denominator && metric[:value] > 0
+    end
+  end
+
+  def self.book_metrics
+    counts = group(:book).count.map {|book,count| {name: book, value: count}}
+    counts.sort {|a,b| b[:value] <=> a[:value]}
   end
 end
