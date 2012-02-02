@@ -1,30 +1,5 @@
 <div class="event">
-    <p class="headline">
-        <% if event.user %><%= admin_user_link event.user %><% else %>Someone<% end %>
-        <% if event.request %>
-            <% case event.type %>
-            <% when "grant" %>
-                granted <%= admin_user_link event.request.user %>'s request for
-            <% when "flag" %>
-                flagged <%= admin_user_link event.request.user %>'s request for
-            <% when "update" %>
-                <%= event.detail %> for
-            <% when "message" %>
-                sent a message to <%= admin_user_link event.to %> about
-            <% when "thank" %>
-                thanked <%= admin_user_link event.donor %> for
-            <% when "update_status" %>
-                <%= event.detail %>
-            <% end %>
-            <span class="title"><%= link_to event.request.book, admin_request_path(event.request) %></span>
-            <% case event.type %>
-            <% when "update_status" %>
-                to <%= admin_user_link event.request.user %>
-            <% end %>
-        <% else %>
-            did a "<%= event.type %>" event on deleted request <%= event.request_id %>
-        <% end %>
-    </p>
+    <p class="headline"><%= render partial: "admin/events/event_headline", locals: {event: event} %></p>
     <% if event.message.present? %><p class="reason"><%= format_block event.message %></p><% end %>
     <p class="timestamp"><%= l event.created_at %></p>
 </div>

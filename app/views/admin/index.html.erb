@@ -16,13 +16,8 @@ td, th {
     margin-bottom: 0;
 }
 
-.event .headline {
+.event {
     font-size: 11pt;
-    font-weight: normal;
-}
-
-.event .timestamp {
-    display: none;
 }
 
 .dupe {
@@ -53,7 +48,9 @@ td, th {
     <%= render partial: "admin/metrics", object: @pledge_metrics %>
 
     <h2>Latest events</h2>
-    <%= render partial: "admin/events/event", collection: @latest_events %>
+    <% @latest_events.each do |event| %>
+    <p class="event"><%= render partial: "admin/events/event_headline", locals: {event: event} %></p>
+    <% end %>
 
     <h2>Books leaderboard</h2>
     <%= render partial: "admin/metrics", object: @book_metrics %>
