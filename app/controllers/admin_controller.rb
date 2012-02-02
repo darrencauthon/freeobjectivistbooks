@@ -11,6 +11,8 @@ class AdminController < ApplicationController
     @pledge_count = Pledge.count
     @event_count = Event.count
 
+    @latest_events = Event.order('created_at desc').limit(10)
+
     @request_metrics = Request.metrics
     @pledge_metrics = Pledge.metrics
     @book_metrics = Request.book_metrics
