@@ -5,6 +5,10 @@
     margin-bottom: 8px;
 }
 
+.multiple-books {
+    margin-top: 20px;
+}
+
 .name {
     margin-bottom: 0;
 }
@@ -74,6 +78,7 @@
         <p><%= link_to 'See full request details', request_path(request) %></p>
     </div>
     <% end %>
+    <p class="multiple-books">Want another book? <%= mail_to 'jason@rationalegoist.com', 'Contact Jason' %>
     <% end %>
 
     <% if @current_user.pledges.any? %>
