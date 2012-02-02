@@ -1,6 +1,6 @@
 class Admin::UsersController < AdminController
   def load_models
-    @user = User.find_by_id params[:id]
+    @user = User.find params[:id] if params[:id]
   end
 
   def index
