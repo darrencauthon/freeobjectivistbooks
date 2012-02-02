@@ -1,0 +1,9 @@
+<p>Hi <%= @user.name %>,</p>
+
+<%= yield %>
+
+<p>
+<%= @closer || "Thanks" %>,<br>
+Free Objectivist Books<br>
+<%= link_to root_url, root_url %>
+</p>
