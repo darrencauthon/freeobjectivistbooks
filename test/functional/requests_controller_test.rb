@@ -428,7 +428,17 @@ class RequestsControllerTest < ActionController::TestCase
     get :edit, {id: @hank_request.id, type: "thank"}, session_for(@hank)
     assert_response :success
     assert_select 'h1', /Thank/
-    assert_select 'p', /Henry Cameron in New York, NY agreed to send you\s+Atlas Shrugged/
+    assert_select 'p', /Henry Cameron in New York, NY\s+agreed to send you\s+Atlas Shrugged/
+    assert_select 'textarea#request_event_message'
+    assert_select 'input[type="radio"]'
+    assert_select 'input[type="submit"]'
+  end
+
+  test "thank form for already-sent book" do
+    get :edit, {id: @quentin_request.id, type: "thank"}, session_for(@quentin)
+    assert_response :success
+    assert_select 'h1', /Thank/
+    assert_select 'p', /Hugh Akston in Boston, MA\s+sent you\s+The Virtue of Selfishness/
     assert_select 'textarea#request_event_message'
     assert_select 'input[type="radio"]'
     assert_select 'input[type="submit"]'

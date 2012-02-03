@@ -37,6 +37,12 @@ class RequestsController < ApplicationController
   end
 
   def edit
+    if params[:type] == "thank" && !@request.granted?
+      flash[:error] = "We're very sorry, but your donor has canceled. We're looking for a new donor for you."
+      redirect_to @request
+      return
+    end
+
     @event = @request.events.build type: (params[:type] || "update")
     render params[:type] || :edit
   end

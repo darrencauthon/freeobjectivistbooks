@@ -28,7 +28,8 @@
 <h1 class="grid_16">Thank <%= @request.donor.name %></h1>
 
 <div class="request grid_12">
-    <p><%= @request.donor.name %> in <%= @request.donor.location %> agreed to send you
+    <p><%= @request.donor.name %> in <%= @request.donor.location %>
+        <% if @request.sent? %>sent<% else %>agreed to send<% end %> you
         <span class="title"><%= @request.book %></span>.
     </p>
 </div>
