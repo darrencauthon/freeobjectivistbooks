@@ -139,6 +139,12 @@ class RequestTest < ActiveSupport::TestCase
 
   # Flagging
 
+  test "can flag?" do
+    assert requests(:quentin_wants_fountainhead).can_flag?
+    assert !@quentin_request.can_flag?  # already sent
+    assert !@dagny_request.can_flag?    # already flagged
+  end
+
   test "flag" do
     event = @quentin_request.flag(event: {message: "Is this address correct?"})
     assert @quentin_request.flagged?
@@ -198,6 +204,12 @@ class RequestTest < ActiveSupport::TestCase
   end
 
   # Update status
+
+  test "can send?" do
+    assert requests(:quentin_wants_fountainhead).can_send?
+    assert !@quentin_request.can_send?  # already sent
+    assert !@dagny_request.can_send?    # flagged
+  end
 
   test "update status" do
     assert_difference "@dagny_request.events.count" do
