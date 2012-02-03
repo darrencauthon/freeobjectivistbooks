@@ -78,7 +78,9 @@
         <p><%= link_to 'See full request details', request_path(request) %></p>
     </div>
     <% end %>
-    <p class="multiple-books">Want another book? <%= mail_to 'jason@rationalegoist.com', 'Contact Jason' %>
+    <p class="multiple-books">Want another book? You can request a second after you've read the first.
+        <%= mail_to 'jason@rationalegoist.com', 'Contact Jason' %> if you want to do this.
+    </p>
     <% end %>
 
     <% if @current_user.pledges.any? %>
