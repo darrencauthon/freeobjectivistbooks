@@ -15,8 +15,8 @@ class ReminderMailer < ApplicationMailer
     end
   end
 
-  def reminder(subject)
-    mail_to_user @user, subject: subject
+  def reminder(subject, options = {})
+    mail_to_user @user, options.merge(subject: subject)
   end
 
   def fulfill_pledge(pledge)
@@ -36,6 +36,6 @@ class ReminderMailer < ApplicationMailer
     else
       "Have you sent your #{@donations.size} books to students from Free Objectivist Books yet?"
     end
-    reminder subject
+    mail = reminder subject, 'X-Mailgun-Campaign-ID' => 'send_books_2012_02_03'
   end
 end
