@@ -59,7 +59,7 @@
     <h2>I want to help, but do I have to send books? Can I just give money?</h2>
     <p>The best way to contribute is to send books directly to students. If you aren't willing to do that,
         but still want to help, we may be able to use a cash contribution: contact me at
-        <a href="mailto:jason@rationalegoist.com">jason@rationalegoist.com</a>. (We have not yet been recognized as a
+        <%= mail_to 'jason@rationalegoist.com', 'jason@rationalegoist.com' %>. (We have not yet been recognized as a
         501(c)(3) public charity and cannot guarantee that contributions are tax-deductible.)
     </p>
 
@@ -75,7 +75,7 @@
         <a href="http://facebook.com/rationalegoist">Facebook</a>
     </p>
     <div class="clear"></div>
-    <p>Email me: <a href="mailto:jason@rationalegoist.com">jason@rationalegoist.com</a></p>
+    <p>Email me: <%= mail_to "jason@rationalegoist.com", "jason@rationalegoist.com" %></p>
 </div>
 
 <% if !@current_user %>
