@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   self.inheritance_column = 'class'  # anything other than "type", to let us use "type" for something else
 
-  TYPES = %w{grant flag update message thank update_status}
+  TYPES = %w{grant flag update message thank update_status cancel}
 
   belongs_to :request
   belongs_to :user
@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :request, :user, :type
   validates_inclusion_of :type, in: TYPES
 
-  validates_presence_of :message, if: lambda {|e| e.type.in? %w{flag message thank}}, message: "Please enter a message."
+  validates_presence_of :message, if: lambda {|e| e.type.in? %w{flag message thank cancel}}, message: "Please enter a message."
   validates_inclusion_of :public, in: [true, false], if: lambda {|e| e.type == "thank"}, message: 'Please choose "Yes" or "No".'
 
   after_initialize :populate
@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
 
   def default_user
     case type
-    when "grant", "flag", "update_status" then request.donor
+    when "grant", "flag", "update_status", "cancel" then request.donor
     when "update", "thank" then request.user
     end
   end

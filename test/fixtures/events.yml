@@ -92,3 +92,12 @@ quentin_thanks_hugh:
   message: Thanks! I am looking forward to reading this
   happened_at: 2012-01-21 00:15:25
   notified_at: 2012-01-21 00:15:25
+
+stadler_cancels_quentin:
+  type: cancel
+  request: quentin_wants_opar
+  user: stadler
+  donor: stadler
+  message: Sorry! I can't give you this after all
+  happened_at: 2012-01-22 00:15:25
+  notified_at: 2012-01-22 00:15:25

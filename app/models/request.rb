@@ -72,6 +72,10 @@ class Request < ActiveRecord::Base
     !sent? && !flagged?
   end
 
+  def can_cancel?
+    !sent?
+  end
+
   def status
     ActiveSupport::StringInquirer.new(self[:status] || "")
   end
@@ -135,6 +139,15 @@ class Request < ActiveRecord::Base
   def thank(params)
     self.thanked = true
     thank_events.build params[:event]
+  end
+
+  def cancel(params)
+    event = cancel_events.build params[:event]
+    self.donor = nil
+    self.status = nil
+    self.flagged = nil
+    self.thanked = nil
+    event
   end
 
   # Metrics

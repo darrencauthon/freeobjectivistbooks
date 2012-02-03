@@ -1,0 +1,5 @@
+<p>We're very sorry, but <%= @event.donor.name %> has canceled their donation of <i><%= @event.request.book %>.</i></p>
+
+<p><%= @event.donor.name %> said: "<%= format_block @event.message %>"</p>
+
+<p>We've put you back at the top of the list and will keep looking for a donor for you.</p>

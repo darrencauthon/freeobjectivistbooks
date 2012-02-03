@@ -6,6 +6,7 @@ class EventTest < ActiveSupport::TestCase
     @new_flag = @dagny_request.events.build type: "flag", user: @hugh, message: "Problem here"
     @new_message = @howard_request.events.build type: "message", user: @hugh, message: "Info is correct"
     @new_thank = @quentin_request.events.build type: "thank", user: @quentin, message: "Thanks!", public: false
+    @new_cancel = @hank_request.events.build type: "cancel", user: @hugh, message: "Sorry!"
   end
 
   # Associations
@@ -59,6 +60,16 @@ class EventTest < ActiveSupport::TestCase
     @new_thank.public = nil
     assert @new_thank.invalid?
     assert @new_thank.errors[:public].any?
+  end
+
+  test "valid cancel" do
+    assert @new_cancel.valid?
+  end
+
+  test "cancel requires message" do
+    @new_cancel.message = ""
+    assert @new_cancel.invalid?
+    assert @new_cancel.errors[:message].any?
   end
 
   test "validates type" do

@@ -140,7 +140,7 @@ class RequestTest < ActiveSupport::TestCase
   # Flagging
 
   test "can flag?" do
-    assert requests(:quentin_wants_fountainhead).can_flag?
+    assert @quentin_request_unsent.can_flag?
     assert !@quentin_request.can_flag?  # already sent
     assert !@dagny_request.can_flag?    # already flagged
   end
@@ -206,7 +206,7 @@ class RequestTest < ActiveSupport::TestCase
   # Update status
 
   test "can send?" do
-    assert requests(:quentin_wants_fountainhead).can_send?
+    assert @quentin_request_unsent.can_send?
     assert !@quentin_request.can_send?  # already sent
     assert !@dagny_request.can_send?    # flagged
   end
@@ -247,6 +247,23 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal "Thanks a lot!", event.message
     assert_not_nil event.happened_at
     assert event.public?
+  end
+
+  # Cancel
+
+  test "can cancel?" do
+    assert @hank_request.can_cancel?
+    assert !@quentin_request.can_cancel?  # already sent
+  end
+
+  test "cancel" do
+    event = @hank_request.cancel(event: {message: "Sorry"})
+    assert @hank_request.open?
+    assert_equal "cancel", event.type
+    assert_equal @cameron, event.user
+    assert_equal @cameron, event.donor
+    assert_equal "Sorry", event.message
+    assert_not_nil event.happened_at
   end
 
   # Metrics
