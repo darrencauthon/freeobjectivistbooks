@@ -505,4 +505,64 @@ class RequestsControllerTest < ActionController::TestCase
     put :thank, {id: @hank_request.id, request: thank_request_params}, session_for(@cameron)
     verify_wrong_login_page
   end
+
+  # Cancel form
+
+  test "cancel form" do
+    get :edit, {id: @quentin_request_unsent.id, type: "cancel"}, session_for(@hugh)
+    assert_response :success
+    assert_select 'h1', /cancel/i
+    assert_select '.headline', /Quentin Daniels wants to read The Fountainhead/
+    assert_select 'h2', /Explain to Quentin Daniels/
+    assert_select 'textarea#request_event_message'
+    assert_select 'input[type="submit"]'
+  end
+
+  test "cancel form requires login" do
+    get :edit, id: @quentin_request_unsent.id, type: "cancel"
+    verify_login_page
+  end
+
+  test "cancel form requires donor" do
+    get :edit, {id: @quentin_request_unsent.id, type: "cancel"}, session_for(@howard)
+    verify_wrong_login_page
+  end
+
+  # Cancel
+
+  test "cancel" do
+    assert_difference "@quentin_request_unsent.events.count" do
+      post :cancel, {id: @quentin_request_unsent.id, request: {event: {message: "Sorry!"}}}, session_for(@hugh)
+    end
+
+    assert_redirected_to donations_url
+    assert_match /We let Quentin Daniels know/i, flash[:notice][:headline]
+
+    @quentin_request_unsent.reload
+    assert @quentin_request_unsent.open?
+
+    verify_event @quentin_request_unsent, "cancel", message: "Sorry!", notified?: true
+  end
+
+  test "cancel requires message" do
+    assert_no_difference "@quentin_request_unsent.events.count" do
+      post :cancel, {id: @quentin_request_unsent.id, request: {event: {message: ""}}}, session_for(@hugh)
+    end
+
+    assert_response :success
+    assert_select 'h1', /cancel/i
+
+    @quentin_request_unsent.reload
+    assert !@quentin_request_unsent.open?
+  end
+
+  test "cancel requires login" do
+    post :cancel, {id: @quentin_request_unsent.id, request: {event: {message: "Sorry!"}}}
+    verify_login_page
+  end
+
+  test "cancel requires donor" do
+    post :cancel, {id: @quentin_request_unsent.id, request: {event: {message: "Sorry!"}}}, session_for(@howard)
+    verify_wrong_login_page
+  end
 end

@@ -67,6 +67,7 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.request .address', /123 Main St/
       assert_select '.actions a', /see full/i
       assert_select '.actions a', /flag/i
+      assert_select '.actions a', /cancel/i
       assert_select '.actions .flagged', false
     end
 
@@ -90,6 +91,7 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.request .name', /Quentin Daniels/
       assert_select '.request .address', /123 Main St/
       assert_select '.actions a', /see full/i
+      assert_select '.actions a', text: /cancel/i, count: 0
       assert_select '.actions a', text: /flag/i, count: 0
     end
 
@@ -98,6 +100,7 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.request .address', /No address/
       assert_select '.actions a', /see full/i
       assert_select '.actions a', text: /flag/i, count: 0
+      assert_select '.actions a', /cancel/i
       assert_select '.actions .flagged', /Student has been contacted/i
     end
 
@@ -107,6 +110,7 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.actions form'
       assert_select '.actions a', /see full/i
       assert_select '.actions a', /flag/i
+      assert_select '.actions a', /cancel/i
       assert_select '.actions .flagged', false
     end
   end
@@ -122,6 +126,7 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.actions a', /see full/i
       assert_select '.actions a', text: /flag/i, count: 0
       assert_select '.actions .flagged', /Shipping info flagged/i
+      assert_select '.actions a', /cancel/i
     end
   end
 

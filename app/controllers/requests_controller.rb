@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
   def allowed_users_for_action(action)
     case action
     when "update", "thank" then @request.user
-    when "flag", "update_status" then @request.donor
+    when "flag", "update_status", "cancel" then @request.donor
     end
   end
 
@@ -100,6 +100,19 @@ class RequestsController < ApplicationController
       redirect_to @request
     else
       render :thank
+    end
+  end
+
+  def cancel
+    @event = @request.cancel params[:request]
+    if save @request, @event
+      flash[:notice] = {
+        headline: "We let #{@request.user.name} know that you canceled this donation.",
+        detail: "We will try to find another donor for them."
+      }
+      redirect_to donations_url
+    else
+      render :cancel
     end
   end
 

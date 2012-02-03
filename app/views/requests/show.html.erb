@@ -110,6 +110,12 @@
         <% if other_user %>
             <p><%= link_to "Send a message to #{other_user.name}", new_request_message_path(@request) %></p>
         <% end %>
+
+        <% if current_is_donor? %>
+            <% if @request.can_cancel? %>
+            <p><%= link_to 'Cancel this donation', edit_request_path(@request, type: "cancel") %></p>
+            <% end %>
+        <% end %>
     </div>
     <div class="bottom_5">&nbsp;</div>
 </div>

@@ -1,0 +1,45 @@
+<% content_for :title do %>Flag Request<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.request {
+    margin-top: 24px;
+}
+
+.headline, .tagline {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.submit {
+    height: 46px;
+    margin-top: 24px;
+    background-image: url(/assets/cancel-button.png);
+    background-position-x: left;
+}
+ </style>
+<% end %>
+
+<h1 class="grid_16">Cancel donation</h1>
+
+<div class="request grid_12">
+    <p class="headline"><%= @request.user.name %> wants to read <span class="title"><%= @request.book %></span></p>
+    <p class="tagline"><%= user_tagline @request.user %></p>
+    <p class="reason"><%= format_block @request.reason %></p>
+</div>
+
+<div class="grid_10">
+<%= form_for @request, url: cancel_request_path(@request) do |f| %>
+    <%= f.fields_for @event do |e| %>
+        <h2>Explain to <%= @request.user.name %> why you are canceling:</h2>
+
+        <p>We'll send your message to the student and try to find a new donor for them.</p>
+        <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
+        <%= e.text_area :message, rows: 6, cols: 60 %>
+        <div class="clear"></div>
+    <% end %>
+
+    <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
+<% end %>
+</div>

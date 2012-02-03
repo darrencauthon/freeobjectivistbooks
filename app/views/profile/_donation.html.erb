@@ -26,7 +26,11 @@
             <% end %>
         </p>
         <% elsif donation.can_flag? %>
-        <p class="flag-link"><%= link_to 'Flag problem with shipping info', edit_request_path(donation, type: "flag") %></p>
+        <p class="not-sent"><%= link_to 'Flag problem with shipping info', edit_request_path(donation, type: "flag") %></p>
+        <% end %>
+
+        <% if donation.can_cancel? %>
+        <p class="not-sent"><%= link_to 'Cancel this donation', edit_request_path(donation, type: "cancel") %></p>
         <% end %>
 
         <p><%= link_to 'See full request details', request_path(donation) %></p>
