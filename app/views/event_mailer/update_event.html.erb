@@ -2,8 +2,8 @@
 
 <% if @event.message.present? %>
 <p>They said: "<%= format_block @event.message %>"</p>
-<% end %>
 
+<% end %>
 <% if @event.to_donor? %>
 <p>Please send <i><%= @event.request.book %></i> to:</p>
 
