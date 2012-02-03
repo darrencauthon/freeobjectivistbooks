@@ -1,0 +1,23 @@
+<p>Thanks for being a donor on Free Objectivist Books!</p>
+
+<% if @single %>
+<p>You said you would donate <%= @donation.book %> to <%= @donation.user.name %> in <%= @donation.user.location %>. Have you sent this book yet?</p>
+<% else %>
+<p>You said you would donate these books:</p>
+
+<ul>
+<% @donations.each do |donation| %>
+<li><%= donation.book %> to <%= donation.user.name %> in <%= donation.user.location %></li>
+<% end %>
+</ul>
+
+<p>Have you sent these books yet?</p>
+<% end %>
+
+<p>If so, please go to your donations list to confirm. That will let us know for our records, and notify the <%= @single ? "student" : "students" %> that the <% if @single %>book is on its<% else %>books are on their<% end %> way:</p>
+
+<p><strong><%= link_to 'See your donations and mark them sent', profile_url %></strong></p>
+
+<p>If not, please send <%= @single ? "it" : "them" %> soon! And then go to your donations list to confirm.</p>
+
+<p>If you need to cancel any donation, you can do that from your donations list as well.</p>

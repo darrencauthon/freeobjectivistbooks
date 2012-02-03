@@ -83,6 +83,10 @@ class RequestTest < ActiveSupport::TestCase
     verify_scope(:not_sent) {|request| !request.sent?}
   end
 
+  test "needs sending" do
+    verify_scope(:needs_sending) {|request| request.granted? && request.can_send?}
+  end
+
   # Derived attributes
 
   test "address" do

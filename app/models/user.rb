@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
     return user if user && user.authenticate(password)
   end
 
+  def self.donors_with_unsent_books
+    Request.needs_sending.map {|r| r.donor}.uniq
+  end
+
   def name_must_have_proper_format
     has_upper = name =~ /[A-Z]/
     has_lower = name =~ /[a-z]/

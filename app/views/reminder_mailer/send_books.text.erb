@@ -1,0 +1,21 @@
+Thanks for being a donor on Free Objectivist Books!
+
+<% if @single %>
+You said you would donate <%= @donation.book %> to <%= @donation.user.name %> in <%= @donation.user.location %>. Have you sent this book yet?
+<% else %>
+You said you would donate these books:
+
+<% @donations.each do |donation| %>
+* <%= donation.book %> to <%= donation.user.name %> in <%= donation.user.location %>
+<% end %>
+
+Have you sent these books yet?
+<% end %>
+
+If so, please go to your donations list to confirm. That will let us know for our records, and notify the <%= @single ? "student" : "students" %> that the <% if @single %>book is on its<% else %>books are on their<% end %> way:
+
+<%= profile_url %>
+
+If not, please send <%= @single ? "it" : "them" %> soon! And then go to your donations list to confirm.
+
+If you need to cancel any donation, you can do that from your donations list as well.

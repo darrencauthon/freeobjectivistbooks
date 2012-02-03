@@ -31,6 +31,7 @@ class Request < ActiveRecord::Base
   scope :not_thanked, where(thanked: [false, nil])
   scope :sent, scoped_by_status("sent")
   scope :not_sent, scoped_by_status("not_sent")
+  scope :needs_sending, granted.not_flagged.not_sent
 
   Event::TYPES.each do |type|
     define_method "#{type}_events" do

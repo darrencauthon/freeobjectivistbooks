@@ -63,6 +63,12 @@ class UserTest < ActiveSupport::TestCase
     assert_nil User.find_by_email("nobody@nowhere.com")
   end
 
+  test "donors with unsent books" do
+    verify_scope User, :donors_with_unsent_books do |user|
+      user.donations.any? {|d| d.can_send?}
+    end
+  end
+
   # Signup
 
   test "create" do

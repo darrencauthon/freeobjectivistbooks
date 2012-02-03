@@ -41,4 +41,42 @@ class ReminderMailerTest < ActionMailer::TestCase
       assert_select 'p', /Thanks,\nFree Objectivist Books/
     end
   end
+
+  test "send books for donor with one outstanding donation" do
+    mail = ReminderMailer.send_books(@hugh)
+    assert_equal "Have you sent The Fountainhead to Quentin Daniels yet?", mail.subject
+    assert_equal ["akston@patrickhenry.edu"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hugh/
+      assert_select 'p', /said you would donate The Fountainhead to Quentin Daniels in Boston, MA/
+      assert_select 'p', /notify the student that the book is on its way/
+      assert_select 'a', /donations/
+      assert_select 'p', /please send it soon/
+      assert_select 'p', /Thanks,\nFree Objectivist Books/
+    end
+  end
+
+  test "send books for donor with multiple outstanding donations" do
+    @dagny_request.flagged = false
+    @dagny_request.save!
+
+    mail = ReminderMailer.send_books(@hugh)
+    assert_equal "Have you sent your 2 books to students from Free Objectivist Books yet?", mail.subject
+    assert_equal ["akston@patrickhenry.edu"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hugh/
+      assert_select 'p', /said you would donate these books/
+      assert_select 'li', minimum: 2
+      assert_select 'li', /Capitalism: The Unknown Ideal to Dagny in Chicago, IL/
+      assert_select 'li', /The Fountainhead to Quentin Daniels in Boston, MA/
+      assert_select 'p', /notify the students that the books are on their way/
+      assert_select 'a', /donations/
+      assert_select 'p', /please send them soon/
+      assert_select 'p', /Thanks,\nFree Objectivist Books/
+    end
+  end
 end
