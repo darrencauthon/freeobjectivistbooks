@@ -1,0 +1,39 @@
+<% content_for :stylesheet do %>
+<style>
+p {
+    font-size: 2em;
+}
+
+.button, .loading {
+    height: 46px;
+}
+
+.button {
+    background-image: url(/assets/update-button.png);
+}
+</style>
+<% end %>
+
+<div class="grid_12">
+    <p>Click some buttons:</p>
+    <% %w{alpha bravo charlie}.each do |item| %>
+    <div class="item">
+        <img class="hr grid_12 alpha omega" src="/assets/hr.png">
+        <div class="grid_8 alpha"><p class="headline"><%= item.titleize %></p></div>
+        <%= form_tag test_noop_path, remote: true do %>
+            <div class="grid_1 loading">&nbsp;</div>
+            <%= submit_tag "", class: "grid_3 omega button" %>
+        <% end %>
+    </div>
+    <% end %>
+</div>
+
+<% content_for :javascript do %>
+<script>
+$(document).ready(function () {
+    $('div.item').handleAjax(function (event, response, status, xhr) {
+        $(this).fadeAndSlide();
+    });
+});
+</script>
+<% end %>

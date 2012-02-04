@@ -45,8 +45,10 @@ FreeBooks::Application.routes.draw do
     resources :campaign_targets, only: [:index, :new, :create, :destroy]
   end
 
-  # For testing exceptions
-  get "barf" => "home#barf"
+  # Test
+  match "test/noop"
+  match "test/exception"
+  get "test/buttons"
 
   # Catchall to send unknown routes to 404
   match "*path" => "errors#not_found"

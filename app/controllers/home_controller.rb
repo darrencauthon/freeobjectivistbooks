@@ -12,8 +12,4 @@ class HomeController < ApplicationController
   def home
     render layout: "homepage"
   end
-
-  def barf
-    raise "Barf!"
-  end
 end

@@ -10,7 +10,7 @@ class ErrorsTest < ActionDispatch::IntegrationTest
   end
 
   test "server error" do
-    get "/barf"
+    get "/test/exception"
     assert_response :internal_server_error
     assert_select 'h1', /error/i
   end
