@@ -3,6 +3,9 @@
 <head>
   <title><%= content_for?(:title) ? "#{yield :title} – " : "" %>Free Ayn Rand and Objectivist Books for Students</title>
   <%= stylesheet_link_tag "application" %>
+  <% unless touch_device? %>
+  <%= stylesheet_link_tag "hover" %>
+  <% end %>
   <%= yield :stylesheet %>
   <%= csrf_meta_tags %>
   <%= javascript_include_tag "google_analytics" %>

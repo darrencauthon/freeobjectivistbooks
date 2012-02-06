@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def touch_device?
+    request.user_agent =~ /iPad|iPod|iPhone|Android/
+  end
+
   def format_block(text)
     raw (h text).gsub("\n", "<br>")
   end

@@ -34,11 +34,6 @@ label {
 
 a {
     color: #0A1E89;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 a:active {
@@ -223,8 +218,10 @@ a:active {
     background-position-y: top;
     background-color: transparent;
 }
-.button:hover { background-position-y: center; }
-.button:active { background-position-y: bottom; }
+
+.button:active {
+    background-position-y: bottom;
+}
 
 /****************************************************************************************************/
 /* Thank-you */
