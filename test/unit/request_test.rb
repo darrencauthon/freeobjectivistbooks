@@ -83,6 +83,10 @@ class RequestTest < ActiveSupport::TestCase
     verify_scope(:not_sent) {|request| !request.sent?}
   end
 
+  test "received" do
+    verify_scope(:received) {|request| request.received?}
+  end
+
   test "needs sending" do
     verify_scope(:needs_sending) {|request| request.granted? && request.can_send?}
   end
@@ -108,6 +112,14 @@ class RequestTest < ActiveSupport::TestCase
     assert !@howard_request.sent?
     assert !@dagny_request.sent?
     assert @quentin_request.sent?
+    assert @hank_request_received.sent?
+  end
+
+  test "received?" do
+    assert !@howard_request.received?
+    assert !@dagny_request.received?
+    assert !@quentin_request.received?
+    assert @hank_request_received.received?
   end
 
   # Grant
@@ -215,9 +227,9 @@ class RequestTest < ActiveSupport::TestCase
     assert !@dagny_request.can_send?    # flagged
   end
 
-  test "update status" do
+  test "update status sent" do
     assert_difference "@dagny_request.events.count" do
-      @dagny_request.update_status status: "sent", event: {user: @hugh}
+      @dagny_request.update_status status: "sent"
     end
 
     assert @dagny_request.sent?
@@ -232,9 +244,26 @@ class RequestTest < ActiveSupport::TestCase
     assert_not_nil event.happened_at
   end
 
+  test "update status received" do
+    assert_difference "@quentin_request.events.count" do
+      @quentin_request.update_status status: "received"
+    end
+
+    assert @quentin_request.received?
+
+    event = @quentin_request.events.last
+    assert_equal @quentin_request, event.request
+    assert_equal @quentin, event.user
+    assert_equal @hugh, event.donor
+    assert_equal "update_status", event.type
+    assert_equal "received", event.detail
+    assert_nil event.message
+    assert_not_nil event.happened_at
+  end
+
   test "update status is idempotent" do
     assert_no_difference "@quentin_request.events.count" do
-      @quentin_request.update_status status: "sent", event: {user: @hugh}
+      @quentin_request.update_status status: "sent"
     end
   end
 

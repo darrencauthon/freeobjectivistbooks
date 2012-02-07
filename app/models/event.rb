@@ -29,8 +29,13 @@ class Event < ActiveRecord::Base
 
   def default_user
     case type
-    when "grant", "flag", "update_status", "cancel" then request.donor
+    when "grant", "flag", "cancel" then request.donor
     when "update", "thank" then request.user
+    when "update_status"
+      case request.status
+      when "sent" then request.donor
+      when "received" then request.user
+      end
     end
   end
 

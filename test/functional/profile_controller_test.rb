@@ -42,12 +42,14 @@ class ProfileControllerTest < ActionController::TestCase
     get :show, params, session_for(@hank)
     assert_response :success
     assert_select 'h1', "Hank Rearden"
-    assert_select '.request .headline', /Atlas Shrugged/
-    assert_select '.request .status', /We have found you a donor!/
-    assert_select '.request .flagged', /problem with your shipping info/
-    assert_select '.request a', /update/i
-    assert_select '.request a', text: /thank/i, count: 0
-    assert_select '.request a', /see full/i
+    assert_select '.request', /Atlas Shrugged/ do
+      assert_select '.headline', /Atlas Shrugged/
+      assert_select '.status', /We have found you a donor!/
+      assert_select '.flagged', /problem with your shipping info/
+      assert_select 'a', /update/i
+      assert_select 'a', text: /thank/i, count: 0
+      assert_select 'a', /see full/i
+    end
     assert_select 'h2', text: /donation/i, count: 0
   end
 

@@ -3,8 +3,8 @@ class EventMailer < ApplicationMailer
     self.send "#{event.type}_event", event
   end
 
-  def notification(subject)
-    mail_to_user @event.to, subject: subject
+  def notification(subject, options = {})
+    mail_to_user @event.to, options.merge(subject: subject)
   end
 
   def grant_event(event)
@@ -30,8 +30,8 @@ class EventMailer < ApplicationMailer
 
   def update_status_event(event)
     @event = event
-    @closer = "Happy reading"
-    notification "#{@event.user.name} has #{@event.detail} #{@event.request.book}"
+    @closer = "Happy reading" if event.request.status.sent?
+    notification "#{@event.user.name} has #{@event.detail} #{@event.request.book}", template_name: "#{@event.detail}_event"
   end
 
   def thank_event(event)

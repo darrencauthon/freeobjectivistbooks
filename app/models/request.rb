@@ -22,15 +22,21 @@ class Request < ActiveRecord::Base
   validates_presence_of :book, message: "Please choose a book."
   validates_presence_of :reason, message: "This is required."
   validates_acceptance_of :pledge, message: "You must pledge to read this book.", allow_nil: false, on: :create
+  validates_inclusion_of :status, in: %w{not_sent sent received}, if: :granted?
 
   scope :open, where(donor_id: nil)
   scope :granted, where('donor_id is not null')
+
   scope :flagged, where(flagged: true)
   scope :not_flagged, where(flagged: [false, nil])
+
   scope :thanked, where(thanked: true)
   scope :not_thanked, where(thanked: [false, nil])
-  scope :sent, scoped_by_status("sent")
+
   scope :not_sent, scoped_by_status("not_sent")
+  scope :sent, scoped_by_status(%w{sent received})
+  scope :received, scoped_by_status("received")
+
   scope :needs_sending, granted.not_flagged.not_sent
 
   Event::TYPES.each do |type|
@@ -82,7 +88,11 @@ class Request < ActiveRecord::Base
   end
 
   def sent?
-    status.sent?
+    status.sent? || status.received?
+  end
+
+  def received?
+    status.received?
   end
 
   def flag_message
@@ -134,7 +144,7 @@ class Request < ActiveRecord::Base
     self.status = params[:status]
     return unless changed?
     save!
-    update_status_events.create params[:event]
+    update_status_events.create (params[:event] || {})
   end
 
   def thank(params)

@@ -33,6 +33,7 @@ class ActiveSupport::TestCase
     @dagny_request = requests :dagny_wants_cui
     @hank_request = requests :hank_wants_atlas
     @quentin_request_unsent = requests :quentin_wants_fountainhead
+    @hank_request_received = requests :hank_wants_fountainhead
   end
 
   def admin_auth

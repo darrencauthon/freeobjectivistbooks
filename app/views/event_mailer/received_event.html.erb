@@ -1,0 +1,7 @@
+<p><%= @event.request.user.name %> has received <i><%= @event.request.book %>!</i></p>
+
+<% if @event.message.present? %>
+<p>They said: "<%= @event.message %>"</p>
+<% end %>
+
+<p><strong><%= link_to 'Find more students to donate to', donate_url %></strong></p>

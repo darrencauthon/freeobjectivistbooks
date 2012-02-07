@@ -1,0 +1,7 @@
+<%= @event.request.user.name %> has received <%= @event.request.book %>!
+<% if @event.message.present? %>
+
+They said: "<%= @event.message %>"
+<% end %>
+
+Find more students to donate to: <%= donate_url %>

@@ -1,16 +1,25 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# Open
 
 howard_wants_atlas:
   user: howard
   book: Atlas Shrugged
   reason: I've heard so much about this... can't wait to find out who is John Galt!
 
-quentin_wants_vos:
+quentin_wants_opar:
   user: quentin
-  book: The Virtue of Selfishness
-  reason: Someone told me I need to read this before I figure out the secret of the motor.
+  book: "Objectivism: The Philosophy of Ayn Rand"
+  reason: The Virtue of Selfishness was great! I want to learn more about this philosophy.
+
+# Granted, not sent
+
+quentin_wants_fountainhead:
+  user: quentin
+  book: The Fountainhead
+  reason: Heard this was a great story of independence
   donor: hugh
-  status: sent
+  status: not_sent
+
+# Flagged
 
 dagny_wants_cui:
   user: dagny
@@ -21,11 +30,6 @@ dagny_wants_cui:
   thanked: true
   status: not_sent
 
-quentin_wants_opar:
-  user: quentin
-  book: "Objectivism: The Philosophy of Ayn Rand"
-  reason: The Virtue of Selfishness was great! I want to learn more about this philosophy.
-
 hank_wants_atlas:
   user: hank
   book: Atlas Shrugged
@@ -34,9 +38,20 @@ hank_wants_atlas:
   flagged: true
   status: not_sent
 
-quentin_wants_fountainhead:
+# Sent
+
+quentin_wants_vos:
   user: quentin
-  book: The Fountainhead
-  reason: Heard this was a great story of independence
+  book: The Virtue of Selfishness
+  reason: Someone told me I need to read this before I figure out the secret of the motor.
   donor: hugh
-  status: not_sent
+  status: sent
+
+# Received
+
+hank_wants_fountainhead:
+  user: hank
+  book: The Fountainhead
+  reason: Want to read more by this author; heard this was one of her best books
+  donor: cameron
+  status: received
