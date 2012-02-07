@@ -149,7 +149,8 @@ class Request < ActiveRecord::Base
 
   def thank(params)
     self.thanked = true
-    thank_events.build params[:event]
+    event = params[:event].merge(is_thanks: true)
+    message_events.build event
   end
 
   def cancel(params)

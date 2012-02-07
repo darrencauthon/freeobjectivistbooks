@@ -95,7 +95,7 @@ class EventMailerTest < ActionMailer::TestCase
     mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Quentin/
-      assert_select 'p', /Hugh Akston sent you a message/
+      assert_select 'p', /Hugh Akston sent you a\s+message/
       assert_select 'p', /"Thanks! I will send you the book"/
       assert_select 'p', text: /Please send/, count: 0
       assert_select 'a', /Reply to Hugh/
@@ -143,7 +143,7 @@ class EventMailerTest < ActionMailer::TestCase
     mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hugh/
-      assert_select 'p', /Quentin Daniels sent you a thank-you note for The Virtue of Selfishness/
+      assert_select 'p', /Quentin Daniels sent you a\s+thank-you note for The Virtue of Selfishness/
       assert_select 'p', /"Thanks! I am looking forward to reading this"/
       assert_select 'a', /Reply to Quentin/
     end

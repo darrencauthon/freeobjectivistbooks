@@ -446,7 +446,7 @@ class RequestsControllerTest < ActionController::TestCase
     @hank_request.reload
     assert @hank_request.thanked?
 
-    verify_event @hank_request, "thank", message: "Thanks so much!", notified?: true
+    verify_event @hank_request, "message", is_thanks?: true, message: "Thanks so much!", notified?: true
   end
 
   test "thank requires message" do

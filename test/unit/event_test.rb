@@ -5,7 +5,7 @@ class EventTest < ActiveSupport::TestCase
     super
     @new_flag = @dagny_request.events.build type: "flag", user: @hugh, message: "Problem here"
     @new_message = @howard_request.events.build type: "message", user: @hugh, message: "Info is correct"
-    @new_thank = @quentin_request.events.build type: "thank", user: @quentin, message: "Thanks!", public: false
+    @new_thank = @quentin_request.events.build type: "message", is_thanks: true, user: @quentin, message: "Thanks!", public: false
     @new_cancel = @hank_request.events.build type: "cancel", user: @hugh, message: "Sorry!"
   end
 
@@ -48,12 +48,6 @@ class EventTest < ActiveSupport::TestCase
 
   test "valid thank" do
     assert @new_thank.valid?
-  end
-
-  test "thank requires message" do
-    @new_thank.message = ""
-    assert @new_thank.invalid?
-    assert @new_thank.errors[:message].any?
   end
 
   test "thank requires explicit public bit" do

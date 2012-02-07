@@ -211,6 +211,7 @@ class RequestTest < ActiveSupport::TestCase
 
     assert_equal @quentin, event.user
     assert_equal "message", event.type
+    assert !event.is_thanks?
     assert_equal "just a message", event.message
   end
 
@@ -276,7 +277,8 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal @dagny_request, event.request
     assert_equal @dagny, event.user
     assert_equal @hugh, event.donor
-    assert_equal "thank", event.type
+    assert_equal "message", event.type
+    assert event.is_thanks?
     assert_equal "Thanks a lot!", event.message
     assert_not_nil event.happened_at
     assert event.public?

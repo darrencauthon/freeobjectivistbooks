@@ -1,4 +1,10 @@
-<p><%= @event.user.name %> sent you a message on Free Objectivist Books:</p>
+<p><%= @event.user.name %> sent you a
+    <% if @event.is_thanks? %>
+    thank-you note for <i><%= @event.request.book %>:</i>
+    <% else %>
+    message on Free Objectivist Books:
+    <% end %>
+</p>
 
 <p>"<%= format_block @event.message %>"</p>
 

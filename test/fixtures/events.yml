@@ -94,7 +94,8 @@ hank_updates_hugh:
   happened_at: 2012-01-20 00:15:25
 
 quentin_thanks_hugh:
-  type: thank
+  type: message
+  is_thanks: true
   request: quentin_wants_vos
   user: quentin
   donor: hugh

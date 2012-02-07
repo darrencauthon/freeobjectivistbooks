@@ -43,6 +43,8 @@
         <%= e.text_area :message, rows: 6, cols: 60 %>
         <div class="clear"></div>
 
+        <%= e.hidden_field :is_thanks, value: true %>
+
         <div class="public">
             May we use this as a public testimonial?
             <label><%= e.radio_button :public, true  %> Yes</label>

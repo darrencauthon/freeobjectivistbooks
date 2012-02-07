@@ -1,7 +1,0 @@
-<p><%= @event.user.name %> sent you a thank-you note for <i><%= @event.request.book %>:</i></p>
-
-<p>"<%= format_block @event.message %>"</p>
-
-<p><%= link_to "Reply to #{@event.from.name}", new_request_message_url(@event.request) %></p>
-
-<p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>

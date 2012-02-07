@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120127222929) do
+ActiveRecord::Schema.define(:version => 20120207203830) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20120127222929) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "public"
+    t.boolean  "is_thanks"
   end
 
   add_index "events", ["donor_id"], :name => "index_events_on_donor_id"
