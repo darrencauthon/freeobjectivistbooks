@@ -9,7 +9,7 @@
         <% if donation.sent? %>
         <p class="status">Book sent</p>
         <% elsif donation.can_send? %>
-        <%= form_for donation, url: update_status_request_path(donation), remote: true do |f| %>
+        <%= form_for donation, url: request_status_path(donation), remote: true do |f| %>
             <%= f.hidden_field :status, value: "sent" %>
             <%= f.submit "", class: "grid_3 alpha button sent" %>
             <div class="grid_1 omega loading"></div>

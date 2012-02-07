@@ -14,9 +14,9 @@ FreeBooks::Application.routes.draw do
       put "grant"
       put "flag"
       put "thank"
-      put "update_status"
       put "cancel"
     end
+    resource :status, only: :update
     resources :messages, only: [:new, :create]
   end
 
