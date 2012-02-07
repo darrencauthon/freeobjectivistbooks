@@ -144,7 +144,14 @@ class Request < ActiveRecord::Base
     self.status = params[:status]
     return unless changed?
     save!
-    update_status_events.create (params[:event] || {})
+
+    event = update_status_events.build (params[:event] || {})
+    if event.message.blank?
+      event.is_thanks = nil
+      event.public = nil
+    end
+    event.save!
+    event
   end
 
   def thank(params)

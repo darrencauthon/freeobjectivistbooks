@@ -247,7 +247,7 @@ class RequestTest < ActiveSupport::TestCase
 
   test "update status received" do
     assert_difference "@quentin_request.events.count" do
-      @quentin_request.update_status status: "received"
+      @quentin_request.update_status status: "received", event: {message: "I got it"}
     end
 
     assert @quentin_request.received?
@@ -258,7 +258,45 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal @hugh, event.donor
     assert_equal "update_status", event.type
     assert_equal "received", event.detail
-    assert_nil event.message
+    assert_equal "I got it", event.message
+    assert !event.is_thanks?
+    assert_not_nil event.happened_at
+  end
+
+  test "update status received with thank-you" do
+    assert_difference "@quentin_request.events.count" do
+      @quentin_request.update_status status: "received", event: {message: "Thanks!", is_thanks: true, public: false}
+    end
+
+    assert @quentin_request.received?
+
+    event = @quentin_request.events.last
+    assert_equal @quentin_request, event.request
+    assert_equal @quentin, event.user
+    assert_equal @hugh, event.donor
+    assert_equal "update_status", event.type
+    assert_equal "received", event.detail
+    assert_equal "Thanks!", event.message
+    assert event.is_thanks?
+    assert !event.public?
+    assert_not_nil event.happened_at
+  end
+
+  test "update status received with empty thank-you" do
+    assert_difference "@quentin_request.events.count" do
+      @quentin_request.update_status status: "received", event: {message: "", is_thanks: true, public: false}
+    end
+
+    assert @quentin_request.received?
+
+    event = @quentin_request.events.last
+    assert_equal @quentin_request, event.request
+    assert_equal @quentin, event.user
+    assert_equal @hugh, event.donor
+    assert_equal "update_status", event.type
+    assert_equal "received", event.detail
+    assert !event.is_thanks?
+    assert_nil event.public
     assert_not_nil event.happened_at
   end
 

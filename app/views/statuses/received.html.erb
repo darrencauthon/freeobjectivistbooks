@@ -1,0 +1,65 @@
+<% content_for :title do %>Thank Your Donor<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.request {
+    margin-top: 24px;
+}
+
+.request p {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.button {
+    height: 46px;
+    margin-top: 24px;
+    background-position-x: left;
+    background-image: url(/assets/update-button.png);
+}
+
+.public label, .public span {
+    padding-left: 12px;
+}
+ </style>
+<% end %>
+
+<h1 class="grid_16">Yes, I have received <span class="title"><%= @request.book %></span></h1>
+
+<div class="request grid_12">
+    <p><%= @request.donor.name %> in <%= @request.donor.location %>
+        <% if @request.sent? %>sent<% else %>agreed to send<% end %> you this book.
+        Use this form to let us know when you've received it.
+    </p>
+</div>
+
+<div class="grid_10">
+<%= form_for @request, url: request_status_path(@request) do |f| %>
+    <%= f.hidden_field :status, value: "received" %>
+
+    <%= f.fields_for @event do |e| %>
+        <% if @request.thanked? %>
+        <h2>Add a message for <%= @request.donor.name %> (optional)</h2>
+        <% else %>
+        <h2>Add a thank-you message for <%= @request.donor.name %></h2>
+        <% end %>
+
+        <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
+        <%= e.text_area :message, rows: 6, cols: 60 %>
+        <div class="clear"></div>
+
+        <% if !@request.thanked? %>
+        <%= e.hidden_field :is_thanks, value: true %>
+        <div class="public">
+            May we use this as a public testimonial?
+            <label><%= e.radio_button :public, true  %> Yes</label>
+            <label><%= e.radio_button :public, false  %> No</label>
+            <span class="field_with_errors"><%= @event.errors[:public].join(", ") %></span>
+        </div>
+        <% end %>
+    <% end %>
+
+    <%= f.submit "", class: "grid_3 alpha button" %><div class="clear"></div>
+<% end %>
+</div>
