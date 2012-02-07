@@ -8,7 +8,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Howard Roark"
     assert_select '.request .headline', /Atlas Shrugged/
-    assert_select '.request .status', /We are looking for a donor for you/
+    assert_select '.request .status', /We are looking for a donor/
     assert_select '.request a', text: /thank/i, count: 0
     assert_select '.request a', /see full/i
     assert_select 'h2', text: /donation/i, count: 0
@@ -30,7 +30,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'h1', "Dagny"
     assert_select '.request .headline', /Capitalism/
-    assert_select '.request .status', /We have found you a donor!/
+    assert_select '.request .status', /Hugh Akston in Boston, MA will donate/
     assert_select '.request .flagged', /We need your address/
     assert_select '.request a', /add your address/i
     assert_select '.request a', text: /thank/i, count: 0
@@ -44,7 +44,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_select 'h1', "Hank Rearden"
     assert_select '.request', /Atlas Shrugged/ do
       assert_select '.headline', /Atlas Shrugged/
-      assert_select '.status', /We have found you a donor!/
+      assert_select '.status', /Henry Cameron in New York, NY will donate/
       assert_select '.flagged', /problem with your shipping info/
       assert_select 'a', /update/i
       assert_select 'a', text: /thank/i, count: 0

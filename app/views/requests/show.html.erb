@@ -63,16 +63,8 @@
     </p>
     <% end %>
 
-    <% if @request.sent? %>
-    <h2>Status: Book sent</h2>
-    <p class="status"><%= @request.donor.name %> in <%= @request.donor.location %> has sent this book.</p>
-    <% elsif @request.granted? %>
-    <h2>Status: Donor found</h2>
-    <p class="status"><%= @request.donor.name %> in <%= @request.donor.location %> will donate this book.</p>
-    <% else %>
-    <h2>Status: Looking for donor</h2>
-    <p class="status">We are looking for a donor for this book.</p>
-    <% end %>
+    <h2>Status: <%= status_headline @request %></h2>
+    <p class="status"><%= status_detail @request %></p>
 
     <% if current_is_donor? %>
     <p class="back"><%= link_to 'Back to all donations', profile_path %></p>

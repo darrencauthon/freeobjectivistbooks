@@ -44,4 +44,28 @@ module ApplicationHelper
     tagline[0] = tagline[0].upcase
     tagline
   end
+
+  def status_headline(request)
+    if request.received?
+      "Book received"
+    elsif request.sent?
+      "Book sent"
+    elsif request.granted?
+      "Donor found"
+    else
+      "Looking for donor"
+    end
+  end
+
+  def status_detail(request)
+    if request.received?
+      "#{request.user.name} has received this book."
+    elsif request.sent?
+      "#{request.donor.name} in #{request.donor.location} has sent this book."
+    elsif request.granted?
+      "#{request.donor.name} in #{request.donor.location} will donate this book."
+    else
+      "We are looking for a donor for this book."
+    end
+  end
 end

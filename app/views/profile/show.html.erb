@@ -49,16 +49,7 @@
     <% @current_user.requests.each do |request| %>
     <div class="request">
         <p class="headline"><%= request.user.name %> wants to read <span class="title"><%= request.book %></span></p>
-
-        <p class="status">
-            <% if request.sent? %>
-            <%= request.donor.name %> in <%= request.donor.location %> has sent this book.
-            <% elsif request.granted? %>
-            We have found you a donor! <%= request.donor.name %> in <%= request.donor.location %>.
-            <% else %>
-            We are looking for a donor for you. We'll let you know when we find someone.
-            <% end %>
-        </p>
+        <p class="status"><%= status_detail request %></p>
 
         <% if request.address.blank? %>
             <% if request.flagged? %>
@@ -68,11 +59,8 @@
         <% elsif request.flagged? %>
         <p class="flagged">There seems to be a problem with your shipping info.</p>
         <p><%= link_to 'Update your shipping info', edit_request_path(request) %></p>
-        <% elsif request.granted? %>
-        <p>They will send your book soon.</p>
-            <% if request.needs_thanks? %>
-            <p><%= link_to "Thank #{request.donor.name}", edit_request_path(request, type: "thank") %></p>
-            <% end %>
+        <% elsif request.needs_thanks? %>
+        <p><%= link_to "Thank #{request.donor.name}", edit_request_path(request, type: "thank") %></p>
         <% end %>
 
         <p><%= link_to 'See full request details', request_path(request) %></p>
