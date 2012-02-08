@@ -9,3 +9,8 @@ a:hover {
 .button:hover {
     background-position-y: center;
 }
+
+/* For some reason I haven't figured out, this needs to be repeated here even though it's already in main.css */
+.button:active {
+    background-position-y: bottom;
+}
