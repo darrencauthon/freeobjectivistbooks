@@ -1,7 +1,11 @@
 <p><%= @event.request.user.name %> has received <i><%= @event.request.book %>!</i></p>
 
-<% if @event.message.present? %>
-<p>They said: "<%= @event.message %>"</p>
-<% end %>
+<p>
+    <% if @event.message.present? %>
+    They said: "<%= format_block @event.message %>"
+    <% else %>
+    Thank you for being a donor on Free Objectivist Books.
+    <% end %>
+</p>
 
 <p><strong><%= link_to 'Find more students to donate to', donate_url %></strong></p>

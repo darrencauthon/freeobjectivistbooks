@@ -134,6 +134,26 @@ class EventMailerTest < ActionMailer::TestCase
     end
   end
 
+  test "received with no message" do
+    event = events(:hank_updates_hugh)
+    event.update_attributes message: ""
+
+    mail = EventMailer.mail_for_event event
+    assert_equal "Hank Rearden has received The Fountainhead", mail.subject
+    assert_equal ["akston@patrickhenry.edu"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hugh/
+      assert_select 'p', /Hank Rearden has received The Fountainhead/
+      assert_select 'p', text: /They said/, count: 0
+      assert_select 'p', /Thank you for being a donor/
+      assert_select 'a', /Find more students/
+      assert_select 'p', /Thanks,/
+    end
+  end
+
   test "thank" do
     mail = EventMailer.mail_for_event events(:quentin_thanks_hugh)
     assert_equal "Quentin Daniels sent you a thank-you note for The Virtue of Selfishness", mail.subject
