@@ -2,16 +2,6 @@
 
 <% content_for :stylesheet do %>
 <style>
-.request {
-    margin-top: 24px;
-}
-
-.request p {
-    font-size: 1.2em;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .submit {
     height: 46px;
     margin-top: 24px;
@@ -27,32 +17,27 @@
 
 <h1 class="grid_16">Thank <%= @request.donor.name %></h1>
 
-<div class="request grid_12">
-    <p><%= @request.donor.name %> in <%= @request.donor.location %>
-        <% if @request.sent? %>sent<% else %>agreed to send<% end %> you
-        <span class="title"><%= @request.book %></span>.
-    </p>
-</div>
+<div class="grid_12">
+    <p class="overview"><%= donation_summary @request %></p>
 
-<div class="grid_10">
-<%= form_for @request, url: thank_request_path(@request) do |f| %>
-    <%= f.fields_for @event do |e| %>
-        <h2>Your thank-you message:</h2>
+    <%= form_for @request, url: thank_request_path(@request) do |f| %>
+        <%= f.fields_for @event do |e| %>
+            <h2>Your thank-you message:</h2>
 
-        <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
-        <%= e.text_area :message, rows: 6, cols: 60 %>
-        <div class="clear"></div>
+            <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
+            <%= e.text_area :message, rows: 6, cols: 60 %>
+            <div class="clear"></div>
 
-        <%= e.hidden_field :is_thanks, value: true %>
+            <%= e.hidden_field :is_thanks, value: true %>
 
-        <div class="public">
-            May we use this as a public testimonial?
-            <label><%= e.radio_button :public, true  %> Yes</label>
-            <label><%= e.radio_button :public, false  %> No</label>
-            <span class="field_with_errors"><%= @event.errors[:public].join(", ") %></span>
-        </div>
+            <div class="public">
+                May we use this as a public testimonial?
+                <label><%= e.radio_button :public, true  %> Yes</label>
+                <label><%= e.radio_button :public, false  %> No</label>
+                <span class="field_with_errors"><%= @event.errors[:public].join(", ") %></span>
+            </div>
+        <% end %>
+
+        <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
     <% end %>
-
-    <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
-<% end %>
 </div>

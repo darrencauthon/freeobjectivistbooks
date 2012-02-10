@@ -48,7 +48,7 @@
     <h2>Your request</h2>
     <% @current_user.requests.each do |request| %>
     <div class="request">
-        <p class="headline"><%= request.user.name %> wants to read <span class="title"><%= request.book %></span></p>
+        <p class="headline"><%= request_summary request %></p>
         <p class="status"><%= status_detail request %></p>
 
         <% if request.address.blank? %>

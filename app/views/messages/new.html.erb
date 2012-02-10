@@ -19,15 +19,7 @@
 <h1 class="grid_16">Send a message to <%= @event.to.name %></h1>
 
 <div class="grid_12">
-    <p class="overview">
-        <% if current_is_student? %>
-        <%= @request.donor.name %> in <%= @request.donor.location %>
-        <% if @request.sent? %>sent<% else %>agreed to send<% end %> you
-        <% else %>
-        <%= @request.user.name %> in <%= @request.user.location %> wants to read
-        <% end %>
-        <span class="title"><%= @request.book %></span>
-    </p>
+    <p class="overview"><%= current_is_student? ? donation_summary(@request) : request_summary(@request) %></p>
 
     <%= form_for @event, url: request_messages_path(@request) do |f| %>
         <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>

@@ -68,4 +68,19 @@ module ApplicationHelper
       "We are looking for a donor for this book."
     end
   end
+
+  def request_summary(request)
+    name = h request.user.name
+    location = h request.user.location
+    book = h request.book
+    raw "#{name} in #{location} wants to read <span class=\"title\">#{book}</span>"
+  end
+
+  def donation_summary(request)
+    name = h request.donor.name
+    location = h request.donor.location
+    action = request.sent? ? "sent" : "agreed to send"
+    book = h request.book
+    raw "#{name} in #{location} #{action} you <span class=\"title\">#{book}</span>"
+  end
 end

@@ -24,7 +24,7 @@
 <h1 class="grid_16">Cancel donation</h1>
 
 <div class="request grid_12">
-    <p class="headline"><%= @request.user.name %> wants to read <span class="title"><%= @request.book %></span></p>
+    <p class="headline"><%= request_summary @request %></p>
     <p class="tagline"><%= user_tagline @request.user %></p>
     <p class="reason"><%= format_block @request.reason %></p>
 </div>

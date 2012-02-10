@@ -510,7 +510,7 @@ class RequestsControllerTest < ActionController::TestCase
     get :edit, {id: @quentin_request_unsent.id, type: "cancel"}, session_for(@hugh)
     assert_response :success
     assert_select 'h1', /cancel/i
-    assert_select '.headline', /Quentin Daniels wants to read The Fountainhead/
+    assert_select '.headline', /Quentin Daniels in Boston, MA wants to read The Fountainhead/
     assert_select 'h2', /Explain to Quentin Daniels/
     assert_select 'textarea#request_event_message'
     assert_select 'input[type="submit"]'

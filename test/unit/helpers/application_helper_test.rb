@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
+  include ERB::Util
+
   test "student tagline" do
     tagline = "Studying architecture at Stanton Institute of Technology in New York, NY"
     assert_equal tagline, user_tagline(users :howard)
@@ -8,6 +10,18 @@ class ApplicationHelperTest < ActionView::TestCase
 
   test "donor tagline" do
     assert_equal "In Boston, MA", user_tagline(users :hugh)
+  end
+
+  test "request summary" do
+    assert_equal 'Howard Roark in New York, NY wants to read <span class="title">Atlas Shrugged</span>',
+      request_summary(@howard_request)
+  end
+
+  test "donation summary" do
+    assert_equal 'Henry Cameron in New York, NY agreed to send you <span class="title">Atlas Shrugged</span>',
+      donation_summary(@hank_request)
+    assert_equal 'Hugh Akston in Boston, MA sent you <span class="title">The Virtue of Selfishness</span>',
+      donation_summary(@quentin_request)
   end
 
   test "pluralize omit number" do

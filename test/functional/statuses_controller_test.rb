@@ -31,8 +31,7 @@ class StatusesControllerTest < ActionController::TestCase
   test "received form" do
     get :edit, {request_id: @quentin_request.id, status: "received"}, session_for(@quentin)
     assert_response :success
-    assert_select 'h1', /I have received The Virtue of Selfishness/
-    assert_select 'p', /Hugh Akston in Boston, MA\s+sent you this book/
+    assert_select 'p', /Hugh Akston in Boston, MA\s+sent you The Virtue of Selfishness/
     assert_select 'h2', /Add a thank-you message for Hugh Akston/
     assert_select 'input#request_event_is_thanks[type="hidden"][value=true]'
     assert_select 'textarea#request_event_message'
@@ -43,8 +42,7 @@ class StatusesControllerTest < ActionController::TestCase
   test "received form for an already-thanked request" do
     get :edit, {request_id: @dagny_request.id, status: "received"}, session_for(@dagny)
     assert_response :success
-    assert_select 'h1', /I have received Capitalism: The Unknown Ideal/
-    assert_select 'p', /Hugh Akston in Boston, MA\s+agreed to send you this book/
+    assert_select 'p', /Hugh Akston in Boston, MA\s+agreed to send you Capitalism: The Unknown Ideal/
     assert_select 'h2', /Add a message for Hugh Akston/
     assert_select 'input#request_event_is_thanks', false
     assert_select 'textarea#request_event_message'
