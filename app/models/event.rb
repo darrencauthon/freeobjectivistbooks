@@ -15,6 +15,7 @@ class Event < ActiveRecord::Base
 
   after_initialize :populate
 
+  after_create :update_thanked
   after_create :log
   after_create :notify
 
@@ -88,6 +89,10 @@ class Event < ActiveRecord::Base
     mail = EventMailer.mail_for_event self
     mail.deliver
     self.notified!
+  end
+
+  def update_thanked
+    request.update_attributes! thanked: true if is_thanks?
   end
 
   def log

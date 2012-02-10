@@ -74,6 +74,7 @@ class StatusesControllerTest < ActionController::TestCase
 
     @quentin_request.reload
     assert @quentin_request.received?, @quentin_request.status.to_s
+    assert !@quentin_request.thanked?
 
     verify_event @quentin_request, "update_status", detail: "received", is_thanks?: false, public: nil
   end
@@ -88,6 +89,7 @@ class StatusesControllerTest < ActionController::TestCase
 
     @quentin_request.reload
     assert @quentin_request.received?, @quentin_request.status.to_s
+    assert @quentin_request.thanked?
 
     verify_event @quentin_request, "update_status", detail: "received", is_thanks?: true, message: "Thank you", public: true
   end
