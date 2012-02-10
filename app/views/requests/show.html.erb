@@ -23,6 +23,10 @@
 .sent {
     background-image: url(/assets/sent-button.png);
 }
+
+.update {
+    background-image: url(/assets/update-button.png);
+}
 </style>
 <% end %>
 
@@ -89,9 +93,17 @@
         <% end %>
 
         <% if current_is_student? %>
-            <% if @request.needs_thanks? %>
+            <% if @request.status.sent? %>
+            <h2>Update status</h2>
+            <p>Let <%= @request.donor.name %> know when you have received <span class="title"><%= @request.book %>:</span></p>
+            <%= link_to edit_request_status_path(@request, status: "received"), class: "grid_3 alpha" do %>
+                <div class="button update"></div>
+            <% end %>
+            <div class="clear"></div>
+            <% elsif @request.needs_thanks? %>
             <p><%= link_to "Thank #{@request.donor.name}", edit_request_path(@request, type: "thank") %></p>
             <% end %>
+
             <% if @request.address.blank? %>
             <p><%= link_to 'Add your address', edit_request_path(@request) %></p>
             <% elsif !@request.sent? %>

@@ -96,7 +96,8 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.tagline', "Studying physics at MIT in Boston, MA"
     assert_select '.address', /123 Main St/
     verify_status 'book sent'
-    verify_thank_link
+    assert_select '.sidebar h2', /Update/
+    verify_thank_link false
     verify_address_link :none
     verify_no_donor_links
   end
@@ -119,6 +120,18 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.address', /123 Main St/
     verify_status 'donor found'
     verify_donor_links :not_sent
+  end
+
+  test "show received" do
+    get :show, {id: @hank_request_received.id}, session_for(@hank)
+    assert_response :success
+    assert_select 'h1', "Hank Rearden wants The Fountainhead"
+    assert_select '.tagline', "Studying manufacturing at University of Pittsburgh in Philadelphia, PA"
+    assert_select '.address', /987 Steel Way/
+    verify_status 'book received'
+    verify_thank_link
+    verify_address_link :none
+    verify_no_donor_links
   end
 
   test "show to student with missing address" do
