@@ -7,7 +7,7 @@ class MessagesControllerTest < ActionController::TestCase
     get :new, {request_id: @quentin_request.id}, session_for(@hugh)
     assert_response :success
     assert_select 'h1', /Send a message to Quentin Daniels/
-    assert_select '.overview', /Quentin Daniels wants to read\s+The Virtue of Selfishness/
+    assert_select '.overview', /Quentin Daniels in Boston, MA wants to read\s+The Virtue of Selfishness/
     assert_select 'textarea#event_message'
     assert_select 'input[type="submit"]'
     assert_select 'a', 'Cancel'
@@ -17,7 +17,17 @@ class MessagesControllerTest < ActionController::TestCase
     get :new, {request_id: @quentin_request.id}, session_for(@quentin)
     assert_response :success
     assert_select 'h1', /Send a message to Hugh Akston/
-    assert_select '.overview', /Hugh Akston agreed to send you\s+The Virtue of Selfishness/
+    assert_select '.overview', /Hugh Akston in Boston, MA\s+sent you\s+The Virtue of Selfishness/
+    assert_select 'textarea#event_message'
+    assert_select 'input[type="submit"]'
+    assert_select 'a', 'Cancel'
+  end
+
+  test "new for student book not sent" do
+    get :new, {request_id: @dagny_request.id}, session_for(@dagny)
+    assert_response :success
+    assert_select 'h1', /Send a message to Hugh Akston/
+    assert_select '.overview', /Hugh Akston in Boston, MA\s+agreed to send you\s+Capitalism: The Unknown Ideal/
     assert_select 'textarea#event_message'
     assert_select 'input[type="submit"]'
     assert_select 'a', 'Cancel'
@@ -33,7 +43,7 @@ class MessagesControllerTest < ActionController::TestCase
     verify_wrong_login_page
   end
 
-  # Flag
+  # Create
 
   test "create from student" do
     assert_difference "@quentin_request.events.count" do

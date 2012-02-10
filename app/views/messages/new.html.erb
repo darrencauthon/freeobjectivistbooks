@@ -21,9 +21,10 @@
 <div class="grid_12">
     <p class="overview">
         <% if current_is_student? %>
-        <%= @request.donor.name %> agreed to send you
+        <%= @request.donor.name %> in <%= @request.donor.location %>
+        <% if @request.sent? %>sent<% else %>agreed to send<% end %> you
         <% else %>
-        <%= @request.user.name %> wants to read
+        <%= @request.user.name %> in <%= @request.user.location %> wants to read
         <% end %>
         <span class="title"><%= @request.book %></span>
     </p>
