@@ -113,7 +113,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_select_email do
       assert_select 'p', /Hi Quentin/
       assert_select 'p', /Hugh Akston has sent you The Virtue of Selfishness!/
-      assert_select 'a', /Thank Hugh Akston/
+      assert_select 'a', /Let Hugh Akston know/
       assert_select 'p', /Happy reading,/
     end
   end

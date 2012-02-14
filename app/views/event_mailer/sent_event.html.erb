@@ -1,5 +1,5 @@
-<p><%= @event.donor.name %> has sent you <%= @event.request.book %>! It should arrive soon (you may have received it already).</p>
+<p><%= @event.donor.name %> has sent you <%= @event.request.book %>!</p>
 
-<% if @event.request.needs_thanks? %>
-<p><%= link_to "Thank #{@event.donor.name}", edit_request_url(@event.request, type: "thank") %></p>
-<% end %>
+<p><strong><%= link_to "Let #{@event.donor.name} know when you have received this book",
+    edit_request_status_url(@event.request, status: "received") %></strong>
+</p>
