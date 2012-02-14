@@ -18,10 +18,22 @@ class ProfileControllerTest < ActionController::TestCase
     get :show, params, session_for(@quentin)
     assert_response :success
     assert_select 'h1', "Quentin Daniels"
-    assert_select '.request .headline', /Virtue of Selfishness/
-    assert_select '.request .status', /Hugh Akston in Boston, MA has sent/
-    assert_select '.request a', /thank/i
-    assert_select '.request a', /see full/i
+
+    assert_select '.request', /Virtue of Selfishness/ do
+      assert_select '.headline', /Quentin Daniels in Boston, MA wants to read The Virtue of Selfishness/
+      assert_select '.status', /Hugh Akston in Boston, MA has sent/
+      assert_select 'a', /Let Hugh Akston know/i
+      assert_select 'a', text: /thank/i, count: 0
+      assert_select 'a', /see full/i
+    end
+
+    assert_select '.request', /Fountainhead/ do
+      assert_select '.headline', /Quentin Daniels in Boston, MA wants to read The Fountainhead/
+      assert_select '.status', /Hugh Akston in Boston, MA will donate/
+      assert_select 'a', /thank/i
+      assert_select 'a', /see full/i
+    end
+
     assert_select 'h2', text: /donation/i, count: 0
   end
 

@@ -51,7 +51,10 @@
         <p class="headline"><%= request_summary request %></p>
         <p class="status"><%= status_detail request %></p>
 
-        <% if request.address.blank? %>
+        <% if request.status.sent? %>
+        <p><%= link_to "Let #{request.donor.name} know when you have received this book",
+            edit_request_status_path(request, status: "received") %></p>
+        <% elsif request.address.blank? %>
             <% if request.flagged? %>
             <p class="flagged">We need your address to send you your book.</p>
             <% end %>
