@@ -28,4 +28,11 @@ class AnnouncementMailer < ApplicationMailer
     @count = user.donations.count
     announcement "Have you sent your Objectivist books? Let me and the students know"
   end
+
+  def mark_received_books(request)
+    @request = request
+    @user = request.user
+    @sent_event = request.update_status_events.where(detail: "sent").last
+    announcement "Have you received #{request.book}? Let us and your donor know"
+  end
 end

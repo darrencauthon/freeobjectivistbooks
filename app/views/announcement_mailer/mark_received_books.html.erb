@@ -1,0 +1,11 @@
+<p>Have you received <%= @request.book %> yet?</p>
+
+<p><%= @request.donor.name %> has sent you this book (confirmed on <%= l @sent_event.happened_at.to_date, format: :short %>).
+    If you have received it, please confirm on Free Objectivist Books:
+</p>
+
+<p><strong><%= link_to "Yes, I have received #{@request.book}", edit_request_status_url(@request, status: "received") %></strong></p>
+
+<p>That will let us know for our records, and also notify your donor.</p>
+
+<p>If you haven't received it yet, just use the link above when you do.</p>

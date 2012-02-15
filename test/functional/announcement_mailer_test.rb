@@ -54,4 +54,18 @@ class AnnouncementMailerTest < ActionMailer::TestCase
       assert_select 'p', /If you've already sent your books/
     end
   end
+
+  test "mark received books" do
+    mail = AnnouncementMailer.mark_received_books requests(:quentin_wants_vos)
+    assert_equal "Have you received The Virtue of Selfishness? Let us and your donor know", mail.subject
+    assert_equal ["quentin@mit.edu"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Quentin/
+      assert_select 'p', /Have you received The Virtue of Selfishness yet/
+      assert_select 'p', /Hugh Akston has sent you this book \(confirmed on Jan 19\)/
+      assert_select 'a', /Yes, I have received The Virtue of Selfishness/
+    end
+  end
 end
