@@ -173,11 +173,12 @@ class Request < ActiveRecord::Base
 
   def self.metrics
     metrics = [
-      {name: 'Total',   value: count},
-      {name: 'Granted', value: granted.count, denominator: 'Total'},
-      {name: 'Sent',    value: sent.count,    denominator: 'Granted'},
-      {name: 'Flagged', value: flagged.count, denominator: 'Granted'},
-      {name: 'Thanked', value: thanked.count, denominator: 'Granted'},
+      {name: 'Total',    value: count},
+      {name: 'Granted',  value: granted.count,  denominator: 'Total'},
+      {name: 'Sent',     value: sent.count,     denominator: 'Granted'},
+      {name: 'Received', value: received.count, denominator: 'Sent'},
+      {name: 'Flagged',  value: flagged.count,  denominator: 'Granted'},
+      {name: 'Thanked',  value: thanked.count,  denominator: 'Granted'},
     ]
 
     values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
