@@ -7,8 +7,8 @@ class AnnouncementMailer < ApplicationMailer
     end
   end
 
-  def announcement(subject)
-    mail_to_user @user, subject: subject
+  def announcement(subject, options = {})
+    mail_to_user @user, options.merge(subject: subject)
   end
 
   def thank_your_donor(request)
@@ -33,6 +33,7 @@ class AnnouncementMailer < ApplicationMailer
     @request = request
     @user = request.user
     @sent_event = request.update_status_events.where(detail: "sent").last
-    announcement "Have you received #{request.book}? Let us and your donor know"
+    announcement "Have you received #{request.book}? Let us and your donor know",
+      'X-Mailgun-Campaign-ID' => "announcement-mark_received_books"
   end
 end
