@@ -44,13 +44,11 @@
 </div>
 <% end %>
 
-<h1 class="grid_16"><%= @request.user.name %> wants <span class="title"><%= @request.book %></span></h1>
-
-<div class="request grid_12">
-    <p class="tagline"><%= user_tagline @request.user %></p>
+<div class="grid_16">
+    <h1><%= @request.user.name %> wants <span class="title"><%= @request.book %></span></h1>
+    <p class="overview tagline"><%= user_tagline @request.user %></p>
     <p class="reason"><%= format_block @request.reason %></p>
 </div>
-<div class="clear"></div>
 
 <div class="request grid_10">
     <h2>Ship to</h2>
