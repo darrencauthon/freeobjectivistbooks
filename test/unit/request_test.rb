@@ -45,6 +45,16 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal @hugh, @quentin_request.donor
   end
 
+  test "donation" do
+    assert_equal donations(:hugh_grants_quentin_wants_vos), @quentin_request.donation
+    assert_nil requests(:quentin_wants_opar).donation
+  end
+
+  test "donations" do
+    assert_equal [donations(:hugh_grants_quentin_wants_vos)], @quentin_request.donations
+    assert_equal [donations(:stadler_grants_quentin_wants_opar)], requests(:quentin_wants_opar).donations
+  end
+
   # Scopes
 
   def verify_scope(scope)

@@ -17,6 +17,8 @@ class Request < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :donor, class_name: "User"
+  belongs_to :donation
+  has_many :donations
   has_many :events
 
   validates_presence_of :book, message: "Please choose a book."

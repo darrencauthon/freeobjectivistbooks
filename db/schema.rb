@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120207203830) do
+ActiveRecord::Schema.define(:version => 20120216033739) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,20 @@ ActiveRecord::Schema.define(:version => 20120207203830) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "donations", :force => true do |t|
+    t.integer  "request_id"
+    t.integer  "user_id"
+    t.string   "status"
+    t.boolean  "flagged",    :default => false, :null => false
+    t.boolean  "thanked",    :default => false, :null => false
+    t.boolean  "canceled",   :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "donations", ["request_id"], :name => "index_donations_on_request_id"
+  add_index "donations", ["user_id"], :name => "index_donations_on_user_id"
 
   create_table "events", :force => true do |t|
     t.integer  "request_id"
@@ -36,8 +50,10 @@ ActiveRecord::Schema.define(:version => 20120207203830) do
     t.datetime "updated_at"
     t.boolean  "public"
     t.boolean  "is_thanks"
+    t.integer  "donation_id"
   end
 
+  add_index "events", ["donation_id"], :name => "index_events_on_donation_id"
   add_index "events", ["donor_id"], :name => "index_events_on_donor_id"
   add_index "events", ["request_id"], :name => "index_events_on_request_id"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
@@ -62,8 +78,10 @@ ActiveRecord::Schema.define(:version => 20120207203830) do
     t.boolean  "flagged"
     t.boolean  "thanked"
     t.string   "status"
+    t.integer  "donation_id"
   end
 
+  add_index "requests", ["donation_id"], :name => "index_requests_on_donation_id"
   add_index "requests", ["user_id"], :name => "index_requests_on_user_id"
 
   create_table "users", :force => true do |t|

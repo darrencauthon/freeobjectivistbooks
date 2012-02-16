@@ -5,6 +5,7 @@ hugh_grants_quentin:
   request: quentin_wants_vos
   user: hugh
   donor: hugh
+  donation: hugh_grants_quentin_wants_vos
   happened_at: 2012-01-16 00:14:25
   notified_at: 2012-01-16 00:14:25
 
@@ -13,6 +14,7 @@ hugh_grants_dagny:
   request: dagny_wants_cui
   user: hugh
   donor: hugh
+  donation: hugh_grants_dagny_wants_cui
   happened_at: 2012-01-16 00:15:25
   notified_at: 2012-01-16 00:15:25
 
@@ -21,6 +23,7 @@ cameron_grants_hank:
   request: hank_wants_atlas
   user: cameron
   donor: cameron
+  donation: cameron_grants_hank_wants_atlas
   happened_at: 2012-01-16 00:16:25
   notified_at: 2012-01-16 00:16:25
 
@@ -29,6 +32,7 @@ cameron_flags_hank:
   request: hank_wants_atlas
   user: cameron
   donor: cameron
+  donation: cameron_grants_hank_wants_atlas
   message: Is your address correct?
   happened_at: 2012-01-17 00:14:25
   notified_at: 2012-01-17 00:14:25
@@ -38,6 +42,7 @@ hugh_flags_dagny:
   request: dagny_wants_cui
   user: hugh
   donor: hugh
+  donation: hugh_grants_dagny_wants_cui
   message: Please add your full name and address
   happened_at: 2012-01-17 00:15:25
   notified_at: 2012-01-17 00:15:25
@@ -47,6 +52,7 @@ quentin_adds_name:
   request: quentin_wants_vos
   user: quentin
   donor: hugh
+  donation: hugh_grants_quentin_wants_vos
   detail: added their full name
   happened_at: 2012-01-18 00:14:25
   notified_at: 2012-01-18 00:14:25
@@ -56,6 +62,7 @@ quentin_adds_address:
   request: quentin_wants_vos
   user: quentin
   donor: hugh
+  donation: hugh_grants_quentin_wants_vos
   detail: added a shipping address
   message: There you go
   happened_at: 2012-01-18 00:15:25
@@ -66,6 +73,7 @@ hugh_messages_quentin:
   request: quentin_wants_vos
   user: hugh
   donor: hugh
+  donation: hugh_grants_quentin_wants_vos
   message: Thanks! I will send you the book
   happened_at: 2012-01-19 00:15:25
 
@@ -81,6 +89,7 @@ hugh_updates_quentin:
   request: quentin_wants_vos
   user: hugh
   donor: hugh
+  donation: hugh_grants_quentin_wants_vos
   detail: sent
   happened_at: 2012-01-20 00:15:25
 
@@ -89,6 +98,7 @@ hank_updates_hugh:
   request: hank_wants_fountainhead
   user: hank
   donor: hugh
+  donation: hugh_grants_hank_wants_fountainhead
   detail: received
   message: I got the book. Thank you!
   happened_at: 2012-01-20 00:15:25
@@ -99,6 +109,7 @@ quentin_thanks_hugh:
   request: quentin_wants_vos
   user: quentin
   donor: hugh
+  donation: hugh_grants_quentin_wants_vos
   message: Thanks! I am looking forward to reading this
   happened_at: 2012-01-21 00:15:25
   notified_at: 2012-01-21 00:15:25
@@ -108,6 +119,7 @@ stadler_cancels_quentin:
   request: quentin_wants_opar
   user: stadler
   donor: stadler
+  donation: stadler_grants_quentin_wants_opar
   message: Sorry! I can't give you this after all
   happened_at: 2012-01-22 00:15:25
   notified_at: 2012-01-22 00:15:25

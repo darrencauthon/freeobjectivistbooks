@@ -24,6 +24,10 @@ class EventTest < ActiveSupport::TestCase
     assert_equal @hugh, events(:hugh_grants_quentin).donor
   end
 
+  test "donation" do
+    assert_equal donations(:hugh_grants_quentin_wants_vos), events(:hugh_grants_quentin).donation
+  end
+
   # Validations
 
   test "valid flag" do

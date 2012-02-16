@@ -1,0 +1,43 @@
+# Not sent
+
+hugh_grants_quentin_wants_fountainhead:
+  request: quentin_wants_fountainhead
+  user: hugh
+  status: not_sent
+
+# Flagged
+
+hugh_grants_dagny_wants_cui:
+  request: dagny_wants_cui
+  user: hugh
+  flagged: true
+  thanked: true
+  status: not_sent
+
+cameron_grants_hank_wants_atlas:
+  request: hank_wants_atlas
+  user: cameron
+  flagged: true
+  status: not_sent
+
+# Sent
+
+hugh_grants_quentin_wants_vos:
+  request: quentin_wants_vos
+  user: hugh
+  status: sent
+
+# Received
+
+cameron_grants_hank_wants_fountainhead:
+  request: hank_wants_fountainhead
+  user: cameron
+  status: received
+
+# Canceled
+
+stadler_grants_quentin_wants_opar:
+  request: quentin_wants_opar
+  user: stadler
+  status: not_sent
+  canceled: true

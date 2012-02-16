@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   belongs_to :request
   belongs_to :user
   belongs_to :donor, class_name: "User"
+  belongs_to :donation
 
   validates_presence_of :request, :user, :type
   validates_inclusion_of :type, in: TYPES
