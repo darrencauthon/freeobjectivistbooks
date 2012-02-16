@@ -2,16 +2,11 @@
     <div class="headline"><%= request_summary request %></div>
     <div class="tagline"><%= user_tagline request.user %></div>
     <div class="reason"><%= format_block request.reason %></div>
-    <p class="status"><%= donation_summary request %></p>
+    <p class="status"><%= status_detail request %></p>
     <p class="student">Student: <%= admin_user_link request.user %></p>
-    <p class="donor">
-        <% if request.donor %>
-        Donor: <%= admin_user_link request.donor %>
-            <% if request.thanked? %>&ndash; thanked<% end %>
-        <% else %>
-        No donor yet
-        <% end %>
-    </p>
+    <% if request.donor %>
+    <p class="donor">Donor: <%= admin_user_link request.donor %> <% if request.thanked? %>&ndash; thanked<% end %></p>
+    <% end %>
     <% if request.flagged %>
     <p class="flagged">
         <% if request.address.blank? %>
