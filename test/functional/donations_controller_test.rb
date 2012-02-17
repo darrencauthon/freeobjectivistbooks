@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class DonationsControllerTest < ActionController::TestCase
+  # Index
+
   test "index" do
     get :index, params, session_for(@hugh)
     assert_response :success
@@ -51,6 +53,49 @@ class DonationsControllerTest < ActionController::TestCase
 
   test "index requires login" do
     get :index
+    verify_login_page
+  end
+
+  # Create
+
+  test "create" do
+    request = @quentin_request_open
+    post :create, {request_id: request.id, format: "json"}, session_for(@hugh)
+    assert_response :success
+
+    hash = decode_json_response
+    assert_equal "Objectivism: The Philosophy of Ayn Rand", hash['book']
+    assert_equal "Quentin Daniels", hash['user']['name']
+
+    request.reload
+    assert request.granted?
+    donation = request.donation
+    assert_equal @hugh, donation.user
+    assert !donation.flagged?
+
+    verify_event donation, "grant", notified?: true
+  end
+
+  test "create no address" do
+    request = @howard_request
+    post :create, {request_id: request.id, format: "json"}, session_for(@hugh)
+    assert_response :success
+
+    hash = decode_json_response
+    assert_equal "Atlas Shrugged", hash['book']
+    assert_equal "Howard Roark", hash['user']['name']
+
+    request.reload
+    assert request.granted?
+    donation = request.donation
+    assert_equal @hugh, donation.user
+    assert donation.flagged?
+
+    verify_event donation, "grant", notified?: true
+  end
+
+  test "create requires login" do
+    post :create, request_id: @howard_request.id, format: "json"
     verify_login_page
   end
 end

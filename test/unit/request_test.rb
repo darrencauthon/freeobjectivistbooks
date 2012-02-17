@@ -135,32 +135,30 @@ class RequestTest < ActiveSupport::TestCase
   # Grant
 
   test "grant" do
-    request = requests :quentin_wants_opar
-    assert_difference "request.events.count" do
-      request.grant @hugh
-    end
+    request = @quentin_request_open
+    donation = request.grant @hugh
 
     assert request.granted?
-    assert !request.flagged?
-    assert !request.sent?
-    assert_equal @hugh, request.donor
+    assert_equal donation, request.donation
 
-    event = request.events.last
-    assert_equal "grant", event.type
+    assert_equal @hugh, donation.user
+    assert !donation.flagged?
+    assert !donation.sent?
+
+    verify_event donation, "grant", user: @hugh
   end
 
   test "grant no address" do
-    assert_difference "@howard_request.events.count" do
-      @howard_request.grant @hugh
-    end
+    donation = @howard_request.grant @hugh
 
     assert @howard_request.granted?
-    assert @howard_request.flagged?
-    assert !@howard_request.sent?
-    assert_equal @hugh, @howard_request.donor
+    assert_equal donation, @howard_request.donation
 
-    event = @howard_request.events.last
-    assert_equal "grant", event.type
+    assert_equal @hugh, donation.user
+    assert donation.flagged?
+    assert !donation.sent?
+
+    verify_event donation, "grant", user: @hugh
   end
 
   # Flagging

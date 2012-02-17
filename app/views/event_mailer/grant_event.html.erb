@@ -1,17 +1,17 @@
-<p>Good news: We found a donor to send you <i><%= @event.request.book %>!</i>
+<p>Good news: We found a donor to send you <i><%= @event.donation.book %>!</i>
     <%= @event.donor.name %> in <%= @event.donor.location %>.
 </p>
 
-<% if @event.request.address.present? %>
-<% if @event.request.needs_thanks? %>
+<% if @event.donation.address.present? %>
+<% if !@event.donation.thanked? %>
 <p><%= link_to "Send thanks to #{@event.donor.name}", edit_request_url(@event.request, type: "thank") %></p>
 <% end %>
 
 <p>Your book will arrive shortly. The address you gave was:</p>
 
 <p>
-<%= @event.request.user.name %><br>
-<%= format_address @event.request.address %>
+<%= @event.donation.student.name %><br>
+<%= format_address @event.donation.address %>
 </p>
 
 <p>You can <%= link_to 'update this info', request_url(@event.request) %> if needed.</p>

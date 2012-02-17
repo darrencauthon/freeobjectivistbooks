@@ -34,6 +34,7 @@ class ActiveSupport::TestCase
     @hank_request = requests :hank_wants_atlas
     @quentin_request_unsent = requests :quentin_wants_fountainhead
     @hank_request_received = requests :hank_wants_fountainhead
+    @quentin_request_open = requests :quentin_wants_opar
 
     @quentin_donation = donations :hugh_grants_quentin_wants_vos
     @dagny_donation = donations :hugh_grants_dagny_wants_cui
@@ -60,9 +61,10 @@ class ActiveSupport::TestCase
     assert_select 'h1', 'Wrong login?'
   end
 
-  def verify_event(request, type, options = {})
-    request.reload
-    event = request.events.last
+  def verify_event(entity, type, options = {})
+    entity.reload
+    event = entity.events.last
+    assert_not_nil event, "no events for #{entity.inspect}"
     assert_equal type, event.type
     options.keys.each do |key|
       assert_equal options[key], event.send(key), "verify_event: #{key} didn't match"

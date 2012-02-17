@@ -47,14 +47,6 @@ class RequestsController < ApplicationController
     render params[:type] || :edit
   end
 
-  def grant
-    @request.grant @current_user
-    respond_to do |format|
-      format.html { redirect_to @request }
-      format.json { render json: @request.as_json(include: :user) }
-    end
-  end
-
   def notice_for_update(result)
     case result
     when :update

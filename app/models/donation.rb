@@ -1,9 +1,23 @@
 class Donation < ActiveRecord::Base
+  # Associations
+
   belongs_to :request
   belongs_to :user
   has_many :events
 
-  delegate :book, :address, to: :request
+  Event::TYPES.each do |type|
+    define_method "#{type}_events" do
+      events.scoped_by_type type
+    end
+  end
+
+  # Validations
+
+  validates_presence_of :request
+  validates_presence_of :user
+  validates_inclusion_of :status, in: %w{not_sent sent received}
+
+  # Scopes
 
   scope :active, where(canceled: false)
   scope :canceled, where(canceled: true)
@@ -17,7 +31,15 @@ class Donation < ActiveRecord::Base
 
   scope :needs_sending, active.not_flagged.not_sent
 
+  # Callbacks
+
+  before_validation do |donation|
+    donation.status = "not_sent" if donation.status.blank?
+  end
+
   # Derived attributes
+
+  delegate :book, :address, to: :request
 
   def active?
     !canceled?

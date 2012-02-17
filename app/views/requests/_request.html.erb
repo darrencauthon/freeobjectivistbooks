@@ -5,7 +5,7 @@
         <div class="reason"><%= format_block request.reason %></div>
         <div class="timestamp"><%= l request.created_at.to_date %></div>
     </div>
-    <%= form_for request, url: grant_request_path(request), remote: true, html: {"data-type" => :json} do |f| %>
+    <%= form_for request.build_donation, url: request_donation_path(request), remote: true, html: {"data-type" => :json} do |f| %>
         <div class="grid_1 loading">&nbsp;</div>
         <%= f.submit "", class: "grid_3 omega donate button" %>
     <% end %>

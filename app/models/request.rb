@@ -15,18 +15,27 @@ class Request < ActiveRecord::Base
 
   attr_accessor :other_book
 
+  # Associations
+
   belongs_to :user
   belongs_to :donor, class_name: "User"
   belongs_to :donation
   has_many :donations
   has_many :events
 
-  delegate :address, to: :user
+  Event::TYPES.each do |type|
+    define_method "#{type}_events" do
+      events.scoped_by_type type
+    end
+  end
+
+  # Validations
 
   validates_presence_of :book, message: "Please choose a book."
   validates_presence_of :reason, message: "This is required."
   validates_acceptance_of :pledge, message: "You must pledge to read this book.", allow_nil: false, on: :create
-  validates_inclusion_of :status, in: %w{not_sent sent received}, if: :granted?
+
+  # Scopes
 
   scope :open, where(donor_id: nil)
   scope :granted, where('donor_id is not null')
@@ -43,11 +52,7 @@ class Request < ActiveRecord::Base
 
   scope :needs_sending, granted.not_flagged.not_sent
 
-  Event::TYPES.each do |type|
-    define_method "#{type}_events" do
-      events.scoped_by_type type
-    end
-  end
+  # Callbacks
 
   after_initialize do |request|
     request.book = "Atlas Shrugged" if request.book.blank?
@@ -59,8 +64,10 @@ class Request < ActiveRecord::Base
 
   # Derived attributes
 
+  delegate :address, to: :user
+
   def granted?
-    donor.present?
+    donation.present?
   end
 
   def open?
@@ -106,13 +113,16 @@ class Request < ActiveRecord::Base
 
   # Actions
 
-  def grant(donor, options = {})
-    self.donor = donor
-    self.status = "not_sent"
-    self.flagged = true if user.address.blank?
-    self.thanked = false
-    save!
-    grant_events.create options
+  def grant(user)
+    donation = donations.build user: user, flagged: address.blank?
+    donation.save!
+
+    update_attributes! donor: user, donation: donation
+
+    event = donation.grant_events.build
+    event.save!
+
+    donation
   end
 
   def update_user(params)
@@ -162,6 +172,7 @@ class Request < ActiveRecord::Base
 
   def cancel(params)
     event = cancel_events.build params[:event]
+    self.donation = nil
     self.donor = nil
     self.status = nil
     self.flagged = nil

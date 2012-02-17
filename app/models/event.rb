@@ -22,7 +22,9 @@ class Event < ActiveRecord::Base
 
   def populate
     unless id
-      self.donor = request.donor
+      self.request ||= donation.request if donation
+      self.donor = donation.user if donation
+      self.donor ||= request.donor
       self.user ||= default_user
       self.detail ||= request.status if type == "update_status"
       self.happened_at ||= Time.now
@@ -31,26 +33,30 @@ class Event < ActiveRecord::Base
 
   def default_user
     case type
-    when "grant", "flag", "cancel" then request.donor
-    when "update" then request.user
+    when "grant", "flag", "cancel" then donor
+    when "update" then student
     when "update_status"
       case request.status
-      when "sent" then request.donor
-      when "received" then request.user
+      when "sent" then donor
+      when "received" then student
       end
     else
-      request.user if is_thanks?
+      student if is_thanks?
     end
   end
 
   # Derived attributes
+
+  def student
+    request.user
+  end
 
   def from
     user
   end
 
   def from_student?
-    from == request.user
+    from == student
   end
 
   def from_donor?
@@ -66,7 +72,7 @@ class Event < ActiveRecord::Base
   end
 
   def to
-    to_donor? ? donor : request.user
+    to_donor? ? donor : student
   end
 
   def notified?

@@ -55,6 +55,13 @@ class DonationTest < ActiveSupport::TestCase
     verify_scope(:needs_sending) {|request| request.active? && request.can_send?}
   end
 
+  # Callbacks
+
+  test "default status is not_sent" do
+    donation = @howard_request.donations.create user: @hugh
+    assert_equal "not_sent", donation.status
+  end
+
   # Derived attributes
 
   test "student" do

@@ -10,13 +10,13 @@ FreeBooks::Application.routes.draw do
   get "donate" => "requests#index"
   resources :requests, only: [:show, :edit, :update] do
     member do
-      put "grant"
       put "flag"
       put "thank"
       put "cancel"
     end
     resource :status, only: [:edit, :update]
     resources :messages, only: [:new, :create]
+    resource :donation, only: [:create]
   end
 
   resources :donations, only: [:index]

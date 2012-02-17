@@ -187,48 +187,6 @@ class RequestsControllerTest < ActionController::TestCase
     verify_wrong_login_page
   end
 
-  # Grant
-
-  test "grant" do
-    request = requests :quentin_wants_opar
-    assert_difference "request.events.count" do
-      put :grant, {id: request.id, format: "json"}, session_for(@hugh)
-    end
-    assert_response :success
-
-    hash = decode_json_response
-    assert_equal "Objectivism: The Philosophy of Ayn Rand", hash['book']
-    assert_equal "Quentin Daniels", hash['user']['name']
-
-    request.reload
-    assert_equal @hugh, request.donor
-    assert !request.flagged?
-
-    verify_event request, "grant", notified?: true
-  end
-
-  test "grant no address" do
-    assert_difference "@howard_request.events.count" do
-      put :grant, {id: @howard_request.id, format: "json"}, session_for(@hugh)
-    end
-    assert_response :success
-
-    hash = decode_json_response
-    assert_equal "Atlas Shrugged", hash['book']
-    assert_equal "Howard Roark", hash['user']['name']
-
-    @howard_request.reload
-    assert_equal @hugh, @howard_request.donor
-    assert @howard_request.flagged?
-
-    verify_event @howard_request, "grant", notified?: true
-  end
-
-  test "grant requires login" do
-    put :grant, id: @howard_request.id, format: "json"
-    verify_login_page
-  end
-
   # Flag form
 
   test "flag form" do
