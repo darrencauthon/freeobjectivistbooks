@@ -2,9 +2,9 @@
 <% if event.request %>
     <% case event.type %>
     <% when "grant" %>
-        granted <%= admin_user_link event.request.user %>'s request for
+        granted <%= admin_user_link event.student %>'s request for
     <% when "flag" %>
-        flagged <%= admin_user_link event.request.user %>'s request for
+        flagged <%= admin_user_link event.student %>'s request for
     <% when "update" %>
         <%= event.detail %> for
     <% when "message" %>
@@ -16,11 +16,11 @@
     <% when "update_status" %>
         <%= event.detail %>
     <% when "cancel" %>
-        canceled <%= admin_user_link event.request.user %>'s request for
+        canceled <%= admin_user_link event.student %>'s request for
     <% end %>
     <span class="title"><%= link_to event.request.book, admin_request_path(event.request) %></span>
     <% if event.type == "update_status" && event.detail == "sent" %>
-        to <%= admin_user_link event.request.user %>
+        to <%= admin_user_link event.student %>
     <% end %>
 <% else %>
     did a "<%= event.type %>" event on deleted request <%= event.request_id %>

@@ -7,7 +7,7 @@ They said: "<%= @event.message %>"
 <% if @event.to_donor? %>
 Please send <%= @event.request.book %> to:
 
-<%= @event.request.user.name %>
+<%= @event.student.name %>
 <%= @event.request.address %>
 
 See this and all the latest books you have pledged to donate at: <%= profile_url %>
