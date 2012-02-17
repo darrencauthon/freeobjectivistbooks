@@ -32,7 +32,7 @@ class ReminderMailer < ApplicationMailer
     @donation = @donations.first
     @single = @donations.size == 1
     subject = if @single
-      "Have you sent #{@donation.book} to #{@donation.user.name} yet?"
+      "Have you sent #{@donation.book} to #{@donation.student.name} yet?"
     else
       "Have you sent your #{@donations.size} books to students from Free Objectivist Books yet?"
     end

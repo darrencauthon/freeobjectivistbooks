@@ -1,6 +1,6 @@
 <p>Thank you for
-    <% if @user.donations.any? %>
-    donating <%= pluralize @user.donations.count, 'book' %> so far
+    <% if @user.donations.active.any? %>
+    donating <%= pluralize @user.donations.active.count, 'book' %> so far
     <% else %>
     signing up to donate books
     <% end %>

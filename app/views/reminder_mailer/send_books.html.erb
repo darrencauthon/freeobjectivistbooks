@@ -1,13 +1,13 @@
 <p>Thanks for being a donor on Free Objectivist Books!</p>
 
 <% if @single %>
-<p>You said you would donate <%= @donation.book %> to <%= @donation.user.name %> in <%= @donation.user.location %>. Have you sent this book yet?</p>
+<p>You said you would donate <%= @donation.book %> to <%= @donation.student.name %> in <%= @donation.student.location %>. Have you sent this book yet?</p>
 <% else %>
 <p>You said you would donate these books:</p>
 
 <ul>
 <% @donations.each do |donation| %>
-<li><%= donation.book %> to <%= donation.user.name %> in <%= donation.user.location %></li>
+<li><%= donation.book %> to <%= donation.student.name %> in <%= donation.student.location %></li>
 <% end %>
 </ul>
 

@@ -59,8 +59,8 @@ class ReminderMailerTest < ActionMailer::TestCase
   end
 
   test "send books for donor with multiple outstanding donations" do
-    @dagny_request.flagged = false
-    @dagny_request.save!
+    @dagny_donation.flagged = false
+    @dagny_donation.save!
 
     mail = ReminderMailer.send_books(@hugh)
     assert_equal "Have you sent your 2 books to students from Free Objectivist Books yet?", mail.subject

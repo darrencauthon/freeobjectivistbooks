@@ -1,12 +1,12 @@
 Thanks for being a donor on Free Objectivist Books!
 
 <% if @single %>
-You said you would donate <%= @donation.book %> to <%= @donation.user.name %> in <%= @donation.user.location %>. Have you sent this book yet?
+You said you would donate <%= @donation.book %> to <%= @donation.student.name %> in <%= @donation.student.location %>. Have you sent this book yet?
 <% else %>
 You said you would donate these books:
 
 <% @donations.each do |donation| %>
-* <%= donation.book %> to <%= donation.user.name %> in <%= donation.user.location %>
+* <%= donation.book %> to <%= donation.student.name %> in <%= donation.student.location %>
 <% end %>
 
 Have you sent these books yet?

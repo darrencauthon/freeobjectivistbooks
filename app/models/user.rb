@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def self.donors_with_unsent_books
-    Request.needs_sending.map {|r| r.donor}.uniq
+    Donation.needs_sending.map {|donation| donation.user}.uniq
   end
 
   def name_must_have_proper_format
