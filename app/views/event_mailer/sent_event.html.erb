@@ -1,4 +1,4 @@
-<p><%= @event.donor.name %> has sent you <%= @event.request.book %>!</p>
+<p><%= @event.donor.name %> has sent you <%= @event.book %>!</p>
 
 <p><strong><%= link_to "Let #{@event.donor.name} know when you have received this book",
     edit_request_status_url(@event.request, status: "received") %></strong>

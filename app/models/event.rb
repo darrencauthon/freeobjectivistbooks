@@ -47,6 +47,8 @@ class Event < ActiveRecord::Base
 
   # Derived attributes
 
+  delegate :book, to: :request
+
   def student
     request.user
   end

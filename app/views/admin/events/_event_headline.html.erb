@@ -18,7 +18,7 @@
     <% when "cancel" %>
         canceled <%= admin_user_link event.student %>'s request for
     <% end %>
-    <span class="title"><%= link_to event.request.book, admin_request_path(event.request) %></span>
+    <span class="title"><%= link_to event.book, admin_request_path(event.request) %></span>
     <% if event.type == "update_status" && event.detail == "sent" %>
         to <%= admin_user_link event.student %>
     <% end %>

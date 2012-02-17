@@ -2,4 +2,4 @@
 
 <p>Your donor (<%= @event.user.name %>) says: "<%= format_block @event.message %>"</p>
 
-<p><%= link_to 'Update your shipping info', edit_request_url(@event.request) %> to get your copy of <i><%= @event.request.book %></i>.
+<p><%= link_to 'Update your shipping info', edit_request_url(@event.request) %> to get your copy of <i><%= @event.book %></i>.

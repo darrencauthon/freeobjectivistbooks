@@ -10,7 +10,7 @@ class EventMailer < ApplicationMailer
   def grant_event(event)
     @event = event
     @closer = "Happy reading"
-    notification "We found a donor to send you #{@event.request.book}!"
+    notification "We found a donor to send you #{@event.book}!"
   end
 
   def flag_event(event)
@@ -25,19 +25,19 @@ class EventMailer < ApplicationMailer
 
   def message_event(event)
     @event = event
-    message_type = event.is_thanks? ? "thank-you note for #{@event.request.book}" : "message on Free Objectivist Books"
+    message_type = event.is_thanks? ? "thank-you note for #{@event.book}" : "message on Free Objectivist Books"
     notification "#{@event.user.name} sent you a #{message_type}"
   end
 
   def update_status_event(event)
     @event = event
     @closer = "Happy reading" if event.to_student? && event.request.sent?
-    notification "#{@event.user.name} has #{@event.detail} #{@event.request.book}", template_name: "#{@event.detail}_event"
+    notification "#{@event.user.name} has #{@event.detail} #{@event.book}", template_name: "#{@event.detail}_event"
   end
 
   def cancel_event(event)
     @event = event
     @closer = "Yours"
-    notification "We need to find you a new donor for #{@event.request.book}"
+    notification "We need to find you a new donor for #{@event.book}"
   end
 end

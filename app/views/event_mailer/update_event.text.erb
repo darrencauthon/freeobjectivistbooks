@@ -5,7 +5,7 @@ They said: "<%= @event.message %>"
 
 <% end %>
 <% if @event.to_donor? %>
-Please send <%= @event.request.book %> to:
+Please send <%= @event.book %> to:
 
 <%= @event.student.name %>
 <%= @event.request.address %>

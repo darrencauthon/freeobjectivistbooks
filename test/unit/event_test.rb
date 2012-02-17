@@ -77,6 +77,15 @@ class EventTest < ActiveSupport::TestCase
 
   # Derived attributes
 
+  test "book" do
+    assert_equal "Atlas Shrugged", events(:cameron_grants_hank).book
+  end
+
+  test "student" do
+    assert_equal @quentin, events(:hugh_grants_quentin).student
+    assert_equal @quentin, events(:quentin_adds_name).student
+  end
+
   test "from" do
     assert_equal @hugh, events(:hugh_grants_quentin).from
     assert_equal @quentin, events(:quentin_adds_name).from

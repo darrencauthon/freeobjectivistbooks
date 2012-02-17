@@ -1,4 +1,4 @@
-<%= @event.user.name %> sent you a <% if @event.is_thanks? %>thank-you note for <%= @event.request.book %>:<% else %>message on Free Objectivist Books:<% end %>
+<%= @event.user.name %> sent you a <% if @event.is_thanks? %>thank-you note for <%= @event.book %>:<% else %>message on Free Objectivist Books:<% end %>
 
 "<%= @event.message %>"
 

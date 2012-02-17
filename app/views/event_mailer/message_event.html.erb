@@ -1,6 +1,6 @@
 <p><%= @event.user.name %> sent you a
     <% if @event.is_thanks? %>
-    thank-you note for <i><%= @event.request.book %>:</i>
+    thank-you note for <i><%= @event.book %>:</i>
     <% else %>
     message on Free Objectivist Books:
     <% end %>
