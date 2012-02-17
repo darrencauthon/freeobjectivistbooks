@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :requests, order: :created_at, dependent: :destroy
   has_many :pledges, order: :created_at, dependent: :destroy
-  has_many :donations, class_name: "Request", foreign_key: "donor_id", order: 'created_at desc', dependent: :nullify
+  has_many :donations
 
   validates_presence_of :name, :location, :email
   validates_uniqueness_of :email, message: "There is already an account with this email."

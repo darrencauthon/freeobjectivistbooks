@@ -2,19 +2,19 @@
     <%= render "requests/spacer" %>
     <div class="grid_6 alpha request">
         <p class="headline"><span class="title"><%= donation.book %></span> to:</p>
-        <p class="name"><%= donation.user.name %></p>
+        <p class="name"><%= donation.student.name %></p>
         <p class="address"><%= format_address donation.address %></p>
     </div>
     <div class="grid_6 omega actions">
-        <% if donation.can_send? %>
-        <%= form_for donation, url: request_status_path(donation), remote: true do |f| %>
+        <% if donation.request.can_send? %>
+        <%= form_for donation.request, url: request_status_path(donation.request), remote: true do |f| %>
             <%= f.hidden_field :status, value: "sent" %>
             <%= f.submit "", class: "grid_3 alpha button sent" %>
             <div class="grid_1 omega loading"></div>
             <div class="clear"></div>
         <% end %>
         <% else %>
-        <p class="status"><%= status_headline donation %></p>
+        <p class="status"><%= status_headline donation.request %></p>
         <% end %>
 
         <% if donation.flagged? %>
@@ -25,15 +25,15 @@
             Student has been contacted to add address
             <% end %>
         </p>
-        <% elsif donation.can_flag? %>
-        <p class="not-sent"><%= link_to 'Flag problem with shipping info', edit_request_path(donation, type: "flag") %></p>
+        <% elsif donation.request.can_flag? %>
+        <p class="not-sent"><%= link_to 'Flag problem with shipping info', edit_request_path(donation.request, type: "flag") %></p>
         <% end %>
 
-        <% if donation.can_cancel? %>
-        <p class="not-sent"><%= link_to 'Cancel this donation', edit_request_path(donation, type: "cancel") %></p>
+        <% if donation.request.can_cancel? %>
+        <p class="not-sent"><%= link_to 'Cancel this donation', edit_request_path(donation.request, type: "cancel") %></p>
         <% end %>
 
-        <p><%= link_to 'See full request details', request_path(donation) %></p>
+        <p><%= link_to 'See full request details', request_path(donation.request) %></p>
     </div>
     <div class="clear"></div>
 </div>

@@ -86,8 +86,8 @@
     <h2>Outstanding donations</h2>
         <div class="any-donations">
             <p>Please send the following books:</p>
-            <%= render partial: "donation", collection: @donations %>
-            <%= render "donation_notes" %>
+            <%= render @donations %>
+            <%= render "donations/donation_notes" %>
         </div>
         <p class="no-donations">None right now.</p>
         <% if @flag_count > 0 %>

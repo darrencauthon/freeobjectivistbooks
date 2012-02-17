@@ -65,7 +65,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "donors with unsent books" do
     verify_scope User, :donors_with_unsent_books do |user|
-      user.donations.any? {|d| d.can_send?}
+      user.donations.any? {|d| d.request.can_send?}
     end
   end
 
@@ -137,7 +137,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "donations" do
     assert @hugh.donations.any?
-    @hugh.donations.each {|request| assert_equal @hugh, request.donor}
+    @hugh.donations.each {|donation| assert_equal @hugh, donation.user}
   end
 
   # Association dependencies
@@ -152,14 +152,6 @@ class UserTest < ActiveSupport::TestCase
     pledge = @hugh.pledges.first
     @hugh.destroy
     assert !Pledge.exists?(pledge)
-  end
-
-  test "dependent donations are nullified" do
-    request = @hugh.donations.first
-    @hugh.destroy
-    assert Request.exists?(request)
-    request.reload
-    assert_nil request.donor
   end
 
   # Letmein

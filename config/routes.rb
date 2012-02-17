@@ -6,7 +6,6 @@ FreeBooks::Application.routes.draw do
   get "about" => "home#about"
 
   get "profile" => "profile#show"
-  get "donations" => "profile#donations"
 
   get "donate" => "requests#index"
   resources :requests, only: [:show, :edit, :update] do
@@ -19,6 +18,8 @@ FreeBooks::Application.routes.draw do
     resource :status, only: [:edit, :update]
     resources :messages, only: [:new, :create]
   end
+
+  resources :donations, only: [:index]
 
   get "login" => "sessions#new"
   post "login" => "sessions#create"

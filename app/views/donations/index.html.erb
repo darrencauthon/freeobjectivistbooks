@@ -1,6 +1,6 @@
 <% content_for :stylesheet do %>
 <style>
-.request, .pledge, .actions {
+.request, .actions {
     margin-top: 8px;
     margin-bottom: 8px;
 }
@@ -33,7 +33,7 @@
 
 <div class="grid_12">
     <% if @donations.any? %>
-    <%= render partial: "donation", collection: @donations %>
+    <%= render @donations %>
     <%= render "donation_notes" %>
     <% else %>
     <p>None yet. <%= link_to 'Find students to donate books to', donate_path %></p>

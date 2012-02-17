@@ -7,8 +7,4 @@ class ProfileController < ApplicationController
     @donations = unsent_donations.not_flagged
     @flag_count = unsent_donations.flagged.count
   end
-
-  def donations
-    @donations = @current_user.donations
-  end
 end
