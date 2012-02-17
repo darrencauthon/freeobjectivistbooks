@@ -1,10 +1,6 @@
 class MessagesController < ApplicationController
   before_filter :require_student_or_donor
 
-  def load_models
-    @donation = Donation.find params[:donation_id]
-  end
-
   def require_student_or_donor
     require_user [@donation.student, @donation.donor]
   end

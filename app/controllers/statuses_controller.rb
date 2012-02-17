@@ -4,10 +4,6 @@ class StatusesController < ApplicationController
 
   # Filters
 
-  def load_models
-    @request = Request.find params[:request_id]
-  end
-
   def allowed_users
     status = params[:status] || params[:request][:status]
     case status

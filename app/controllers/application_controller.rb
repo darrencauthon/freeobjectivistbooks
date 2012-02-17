@@ -6,6 +6,13 @@ class ApplicationController < ActionController::Base
 
   before_filter :find_current_user, :load_models
 
+  def initialize
+    super
+    @model_class_name = self.class.name.split("::").last.sub(/Controller$/,"").singularize
+    @model_class = @model_class_name.constantize if Kernel.const_defined?(@model_class_name)
+    @model_ivar_name = "@#{@model_class_name.underscore}"
+  end
+
   def find_current_user
     if session[:user_id]
       @current_user = User.find_by_id session[:user_id]
@@ -25,6 +32,9 @@ class ApplicationController < ActionController::Base
   end
 
   def load_models
+    instance_variable_set @model_ivar_name, @model_class.find(params[:id]) if @model_class && params[:id]
+    @request = Request.find params[:request_id] if params[:request_id]
+    @donation = Donation.find params[:donation_id] if params[:donation_id]
   end
 
   def require_login

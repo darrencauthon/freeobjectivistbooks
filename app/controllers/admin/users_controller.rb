@@ -1,8 +1,4 @@
 class Admin::UsersController < AdminController
-  def load_models
-    @user = User.find params[:id] if params[:id]
-  end
-
   def index
     @users = User.order('created_at desc')
   end

@@ -4,10 +4,6 @@ class RequestsController < ApplicationController
 
   # Filters
 
-  def load_models
-    @request = Request.find params[:id] if params[:id]
-  end
-
   def allowed_users_for_action(action)
     case action
     when "update", "thank" then @request.user

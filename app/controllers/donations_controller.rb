@@ -4,11 +4,6 @@ class DonationsController < ApplicationController
 
   # Filters
 
-  def load_models
-    @donation = Donation.find params[:id] if params[:id]
-    @request = Request.find params[:request_id] if params[:request_id]
-  end
-
   def require_donor
     require_user @donation.user
   end
