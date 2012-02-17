@@ -47,6 +47,10 @@ class Donation < ActiveRecord::Base
     !canceled?
   end
 
+  def donor
+    user
+  end
+
   def student
     request.user
   end

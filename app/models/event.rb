@@ -22,6 +22,7 @@ class Event < ActiveRecord::Base
 
   def populate
     unless id
+      self.donation ||= request.donation if request
       self.request ||= donation.request if donation
       self.donor = donation.user if donation
       self.donor ||= request.donor

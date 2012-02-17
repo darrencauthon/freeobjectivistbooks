@@ -70,17 +70,19 @@ module ApplicationHelper
   end
 
   def request_summary(request)
-    name = h request.user.name
-    location = h request.user.location
+    student = request.student
+    name = h student.name
+    location = h student.location
     book = h request.book
     raw "#{name} in #{location} wants to read <span class=\"title\">#{book}</span>"
   end
 
-  def donation_summary(request)
-    name = h request.donor.name
-    location = h request.donor.location
-    action = request.sent? ? "sent" : "agreed to send"
-    book = h request.book
+  def donation_summary(donation)
+    donor = donation.donor
+    name = h donor.name
+    location = h donor.location
+    action = donation.sent? ? "sent" : "agreed to send"
+    book = h donation.book
     raw "#{name} in #{location} #{action} you <span class=\"title\">#{book}</span>"
   end
 end

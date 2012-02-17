@@ -66,6 +66,10 @@ class Request < ActiveRecord::Base
 
   delegate :address, to: :user
 
+  def student
+    user
+  end
+
   def granted?
     donation.present?
   end

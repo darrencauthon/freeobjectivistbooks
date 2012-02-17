@@ -8,7 +8,7 @@
 
 <p>"<%= format_block @event.message %>"</p>
 
-<p><%= link_to "Reply to #{@event.from.name}", new_request_message_url(@event.request) %></p>
+<p><%= link_to "Reply to #{@event.from.name}", new_donation_message_url(@event.donation) %></p>
 
 <% if @event.to_donor? %>
 <p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>

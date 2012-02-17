@@ -19,15 +19,15 @@
 <h1 class="grid_16">Send a message to <%= @event.to.name %></h1>
 
 <div class="grid_12">
-    <p class="overview"><%= current_is_student? ? donation_summary(@request) : request_summary(@request) %></p>
+    <p class="overview"><%= current_is_student? ? donation_summary(@donation) : request_summary(@donation.request) %></p>
 
-    <%= form_for @event, url: request_messages_path(@request) do |f| %>
+    <%= form_for @event, url: donation_messages_path(@donation) do |f| %>
         <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
         <%= f.text_area :message, rows: 6, cols: 60 %>
         <div class="clear"></div>
 
         <%= f.submit "", class: "grid_3 alpha submit button" %>
-        <%= link_to 'Cancel', @request, class: "grid_2 omega cancel" %>
+        <%= link_to 'Cancel', @donation.request, class: "grid_2 omega cancel" %>
         <div class="clear"></div>
     <% end %>
 </div>

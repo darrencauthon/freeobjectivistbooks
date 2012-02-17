@@ -4,8 +4,8 @@ class EventTest < ActiveSupport::TestCase
   def setup
     super
     @new_flag = @dagny_request.events.build type: "flag", user: @hugh, message: "Problem here"
-    @new_message = @howard_request.events.build type: "message", user: @hugh, message: "Info is correct"
-    @new_thank = @quentin_request.events.build type: "message", is_thanks: true, user: @quentin, message: "Thanks!", public: false
+    @new_message = @hank_donation.events.build type: "message", user: @hank, message: "Info is correct"
+    @new_thank = @quentin_donation.events.build type: "message", is_thanks: true, user: @quentin, message: "Thanks!", public: false
     @new_cancel = @hank_donation.events.build type: "cancel", user: @hugh, message: "Sorry!"
   end
 
