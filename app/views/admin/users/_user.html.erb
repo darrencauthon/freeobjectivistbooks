@@ -7,7 +7,7 @@
     <% user.pledges.each do |pledge| %>
     <p>Pledged <%= pluralize pledge.quantity, 'book' %></p>
     <% end %>
-    <% if user.donations.any? %>
-    <p>Sponsored <%= pluralize user.donations.count, 'book' %></p>
+    <% if user.donations.active.any? %>
+    <p>Sponsored <%= pluralize user.donations.active.count, 'book' %></p>
     <% end %>
 </div>

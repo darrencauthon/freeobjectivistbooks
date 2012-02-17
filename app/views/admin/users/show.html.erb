@@ -72,9 +72,9 @@
     <% end %>
     <% end %>
 
-    <% if @user.donations.any? %>
+    <% if @user.donations.active.any? %>
     <h2>Donations</h2>
-    <% @user.donations.each do |donation| %>
+    <% @user.donations.active.each do |donation| %>
     <p class="donation">
         <%= link_to admin_request_path(donation.request) do %>
             <span class="title"><%= donation.book %></span> to <%= donation.student.name %> in <%= donation.student.location %>

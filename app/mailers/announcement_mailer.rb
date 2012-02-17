@@ -25,7 +25,7 @@ class AnnouncementMailer < ApplicationMailer
 
   def mark_sent_books(user)
     @user = user
-    @count = user.donations.count
+    @count = user.donations.active.count
     announcement "Have you sent your Objectivist books? Let me and the students know"
   end
 

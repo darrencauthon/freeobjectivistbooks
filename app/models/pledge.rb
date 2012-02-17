@@ -16,6 +16,6 @@ class Pledge < ActiveRecord::Base
   end
 
   def fulfilled?
-    user.donations.count >= quantity
+    user.donations.active.count >= quantity
   end
 end
