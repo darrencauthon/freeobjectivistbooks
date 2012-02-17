@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
       self.donor = donation.user if donation
       self.donor ||= request.donor
       self.user ||= default_user
-      self.detail ||= request.status if type == "update_status"
+      self.detail ||= donation.status if type == "update_status"
       self.happened_at ||= Time.now
     end
   end
@@ -37,7 +37,7 @@ class Event < ActiveRecord::Base
     when "grant", "flag", "cancel" then donor
     when "update" then student
     when "update_status"
-      case request.status
+      case donation.status
       when "sent" then donor
       when "received" then student
       end
@@ -102,7 +102,10 @@ class Event < ActiveRecord::Base
   end
 
   def update_thanked
-    request.update_attributes! thanked: true if is_thanks?
+    if is_thanks?
+      request.update_attributes! thanked: true
+      donation.update_attributes! thanked: true if donation
+    end
   end
 
   def log

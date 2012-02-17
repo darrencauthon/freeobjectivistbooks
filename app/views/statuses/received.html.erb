@@ -1,4 +1,4 @@
-<% content_for :title do %>Thank Your Donor<% end %>
+<% content_for :title do %>Book Received<% end %>
 
 <% content_for :stylesheet do %>
 <style>
@@ -18,23 +18,23 @@
 <h1 class="grid_16">Yes, I have received my book</h1>
 
 <div class="grid_12">
-    <p class="overview"><%= donation_summary @request %>. Use this form to let us know when you've received it.</p>
+    <p class="overview"><%= donation_summary @donation %>. Use this form to let us know when you've received it.</p>
 
-    <%= form_for @request, url: request_status_path(@request) do |f| %>
+    <%= form_for @donation, url: donation_status_path(@donation) do |f| %>
         <%= f.hidden_field :status, value: "received" %>
 
         <%= f.fields_for @event do |e| %>
-            <% if @request.thanked? %>
-            <h2>Add a message for <%= @request.donor.name %> (optional)</h2>
+            <% if @donation.thanked? %>
+            <h2>Add a message for <%= @donation.user.name %> (optional)</h2>
             <% else %>
-            <h2>Add a thank-you message for <%= @request.donor.name %></h2>
+            <h2>Add a thank-you message for <%= @donation.user.name %></h2>
             <% end %>
 
             <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
             <%= e.text_area :message, rows: 6, cols: 60 %>
             <div class="clear"></div>
 
-            <% if !@request.thanked? %>
+            <% if !@donation.thanked? %>
             <%= e.hidden_field :is_thanks, value: true %>
             <div class="public">
                 May we use this as a public testimonial?

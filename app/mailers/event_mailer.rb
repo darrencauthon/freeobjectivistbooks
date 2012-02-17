@@ -31,7 +31,7 @@ class EventMailer < ApplicationMailer
 
   def update_status_event(event)
     @event = event
-    @closer = "Happy reading" if event.to_student? && event.request.sent?
+    @closer = "Happy reading" if event.to_student? && event.donation.sent?
     notification "#{@event.user.name} has #{@event.detail} #{@event.book}", template_name: "#{@event.detail}_event"
   end
 

@@ -1,4 +1,4 @@
 <%= @event.donor.name %> has sent you <%= @event.book %>!
 
 Let <%= @event.donor.name %> know when you have received this book:
-<%= edit_request_status_url(@event.request, status: "received") %>
+<%= edit_donation_status_url(@event.donation, status: "received") %>

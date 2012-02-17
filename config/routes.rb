@@ -13,12 +13,12 @@ FreeBooks::Application.routes.draw do
       put "flag"
       put "thank"
     end
-    resource :status, only: [:edit, :update]
     resource :donation, only: [:create]
   end
 
   resources :donations, only: [:index, :destroy] do
     get "cancel", on: :member
+    resource :status, only: [:edit, :update]
     resources :messages, only: [:new, :create]
   end
 

@@ -2,7 +2,7 @@ Have you received <%= @request.book %> yet?
 
 <%= @request.donor.name %> has sent you this book (confirmed on <%= l @sent_event.happened_at.to_date, format: :short %>). If you have received it, please confirm on Free Objectivist Books:
 
-<%= edit_request_status_url(@request, status: "received") %>
+<%= edit_donation_status_url(@request.donation, status: "received") %>
 
 That will let us know for our records, and also notify your donor.
 

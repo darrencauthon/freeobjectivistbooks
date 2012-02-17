@@ -5,10 +5,10 @@ class StatusesController < ApplicationController
   # Filters
 
   def allowed_users
-    status = params[:status] || params[:request][:status]
+    status = params[:status] || params[:donation][:status]
     case status
-    when "sent" then @request.donor
-    when "received" then @request.user
+    when "sent" then @donation.user
+    when "received" then @donation.student
     end
   end
 
@@ -19,23 +19,23 @@ class StatusesController < ApplicationController
   # Actions
 
   def edit
-    @event = @request.events.build type: "update_status", detail: params[:status]
+    @event = @donation.update_status_events.build detail: params[:status]
     render params[:status]
   end
 
   def notice_for_status(status)
     case status
-    when "sent" then "Thanks! We've let #{@request.user.name} know the book is on its way."
-    when "received" then "Great! We've let your donor (#{@request.donor.name}) know that you received this book."
+    when "sent" then "Thanks! We've let #{@donation.student.name} know the book is on its way."
+    when "received" then "Great! We've let your donor (#{@donation.user.name}) know that you received this book."
     end
   end
 
   def update
-    @request.update_status params[:request]
+    @donation.update_status params[:donation]
     respond_to do |format|
       format.html do
-        flash[:notice] = notice_for_status @request.status
-        redirect_to @request
+        flash[:notice] = notice_for_status @donation.status
+        redirect_to @donation.request
       end
       format.js { render nothing: true }
     end

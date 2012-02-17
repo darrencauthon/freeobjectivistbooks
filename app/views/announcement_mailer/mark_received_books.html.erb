@@ -4,7 +4,7 @@
     If you have received it, please confirm on Free Objectivist Books:
 </p>
 
-<p><strong><%= link_to "Yes, I have received #{@request.book}", edit_request_status_url(@request, status: "received") %></strong></p>
+<p><strong><%= link_to "Yes, I have received #{@request.book}", edit_donation_status_url(@request.donation, status: "received") %></strong></p>
 
 <p>That will let us know for our records, and also notify your donor.</p>
 

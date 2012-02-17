@@ -53,7 +53,7 @@
 
         <% if request.status.sent? %>
         <p><%= link_to "Let #{request.donor.name} know when you have received this book",
-            edit_request_status_path(request, status: "received") %></p>
+            edit_donation_status_path(request.donation, status: "received") %></p>
         <% elsif request.address.blank? %>
             <% if request.flagged? %>
             <p class="flagged">We need your address to send you your book.</p>

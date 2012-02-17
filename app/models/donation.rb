@@ -81,6 +81,25 @@ class Donation < ActiveRecord::Base
 
   # Actions
 
+  def update_status(params)
+    self.status = params[:status]
+    return unless changed?
+    save!
+
+    if request.donation == self
+      request.status = status
+      request.save!
+    end
+
+    event = update_status_events.build (params[:event] || {})
+    if event.message.blank?
+      event.is_thanks = nil
+      event.public = nil
+    end
+    event.save!
+    event
+  end
+
   def cancel(params)
     return if canceled?
     self.canceled = true

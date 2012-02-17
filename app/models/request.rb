@@ -50,8 +50,6 @@ class Request < ActiveRecord::Base
   scope :sent, scoped_by_status(%w{sent received})
   scope :received, scoped_by_status("received")
 
-  scope :needs_sending, granted.not_flagged.not_sent
-
   # Callbacks
 
   after_initialize do |request|
@@ -91,15 +89,15 @@ class Request < ActiveRecord::Base
   end
 
   def status
-    ActiveSupport::StringInquirer.new(self[:status] || "")
+    donation ? donation.status : ActiveSupport::StringInquirer.new("")
   end
 
   def sent?
-    status.sent? || status.received?
+    donation && donation.sent?
   end
 
   def received?
-    status.received?
+    donation && donation.received?
   end
 
   def flag_message
@@ -148,20 +146,6 @@ class Request < ActiveRecord::Base
   def flag(params)
     self.flagged = true
     flag_events.build params[:event]
-  end
-
-  def update_status(params)
-    self.status = params[:status]
-    return unless changed?
-    save!
-
-    event = update_status_events.build (params[:event] || {})
-    if event.message.blank?
-      event.is_thanks = nil
-      event.public = nil
-    end
-    event.save!
-    event
   end
 
   def thank(params)
