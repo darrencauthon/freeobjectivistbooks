@@ -40,8 +40,9 @@ class CreateDonations < ActiveRecord::Migration
     add_index :events, :donation_id
 
     say_with_time "Creating donations" do
-      donation = nil
       Request.find_each do |request|
+        donation = nil
+
         request.events.order(:happened_at).each do |event|
           donor = event.donor
 
@@ -51,7 +52,7 @@ class CreateDonations < ActiveRecord::Migration
           end
 
           if donation.nil? || event.type == "grant" || request != donation.request
-            donation = Donation.create request: request, user: donor, status: "not_sent", created_at: event.happened_at
+            donation = request.donations.create user: donor, created_at: event.happened_at
             say "Created new donation #{donation.id} from event #{event.id}: #{donor.name} grants #{request.book} to #{request.user.name}", true
           end
 
@@ -70,11 +71,11 @@ class CreateDonations < ActiveRecord::Migration
 
           event.donation = donation
           event.save!
-
-          request.donation = donation
-          say "    request #{request.id} donation is now #{donation.id}", true if request.changed?
-          request.save!
         end
+
+        request.donation = donation unless donation.canceled?
+        say "Request #{request.id} donation is now #{donation.id}", true if request.changed?
+        request.save!
       end
     end
 
@@ -132,7 +133,7 @@ class CreateDonations < ActiveRecord::Migration
       Donation.find_each do |donation|
         canceled = donation != donation.request.donation
         if donation.canceled? != canceled
-          warn "Donation #{donation.id}: expected canceled #{canceled}, got donation.canceled?"
+          warn "Donation #{donation.id}: expected canceled #{canceled}, got #{donation.canceled?}"
           donation.canceled = canceled
           donation.save!
         end
