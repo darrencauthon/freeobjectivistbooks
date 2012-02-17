@@ -34,6 +34,12 @@ class ActiveSupport::TestCase
     @hank_request = requests :hank_wants_atlas
     @quentin_request_unsent = requests :quentin_wants_fountainhead
     @hank_request_received = requests :hank_wants_fountainhead
+
+    @quentin_donation = donations :hugh_grants_quentin_wants_vos
+    @dagny_donation = donations :hugh_grants_dagny_wants_cui
+    @hank_donation = donations :cameron_grants_hank_wants_atlas
+    @quentin_donation_unsent = donations :hugh_grants_quentin_wants_fountainhead
+    @hank_donation_received = donations :cameron_grants_hank_wants_fountainhead
   end
 
   def admin_auth

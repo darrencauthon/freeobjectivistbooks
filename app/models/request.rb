@@ -21,6 +21,8 @@ class Request < ActiveRecord::Base
   has_many :donations
   has_many :events
 
+  delegate :address, to: :user
+
   validates_presence_of :book, message: "Please choose a book."
   validates_presence_of :reason, message: "This is required."
   validates_acceptance_of :pledge, message: "You must pledge to read this book.", allow_nil: false, on: :create
@@ -56,10 +58,6 @@ class Request < ActiveRecord::Base
   end
 
   # Derived attributes
-
-  def address
-    user.address
-  end
 
   def granted?
     donor.present?
