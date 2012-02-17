@@ -114,8 +114,8 @@
         <% end %>
 
         <% if current_is_donor? %>
-            <% if @request.can_cancel? %>
-            <p><%= link_to 'Cancel this donation', edit_request_path(@request, type: "cancel") %></p>
+            <% if @request.donation.can_cancel? %>
+            <p><%= link_to 'Cancel this donation', cancel_donation_path(@request.donation) %></p>
             <% end %>
         <% end %>
     </div>

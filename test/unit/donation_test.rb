@@ -62,6 +62,14 @@ class DonationTest < ActiveSupport::TestCase
     assert_equal "not_sent", donation.status
   end
 
+  test "canceling donation clears donation from request" do
+    @dagny_donation.canceled = true
+    @dagny_donation.save!
+
+    @dagny_request.reload
+    assert @dagny_request.open?, "request is not open"
+  end
+
   # Derived attributes
 
   test "student" do
@@ -103,5 +111,19 @@ class DonationTest < ActiveSupport::TestCase
   test "can cancel?" do
     assert @hank_donation.can_cancel?
     assert !@quentin_donation.can_cancel?  # already sent
+  end
+
+  # Actions
+
+  test "cancel" do
+    event = @hank_donation.cancel(event: {message: "Sorry"})
+    assert @hank_donation.canceled?, "donation not canceled"
+
+    assert_equal "cancel", event.type
+    assert_equal @hank_request, event.request
+    assert_equal @cameron, event.user
+    assert_equal @cameron, event.donor
+    assert_equal "Sorry", event.message
+    assert_not_nil event.happened_at
   end
 end

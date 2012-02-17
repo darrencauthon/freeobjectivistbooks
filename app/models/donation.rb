@@ -37,6 +37,8 @@ class Donation < ActiveRecord::Base
     donation.status = "not_sent" if donation.status.blank?
   end
 
+  after_save :update_request_for_cancel_if_needed
+
   # Derived attributes
 
   delegate :book, :address, to: :request
@@ -71,5 +73,24 @@ class Donation < ActiveRecord::Base
 
   def can_cancel?
     !sent?
+  end
+
+  # Actions
+
+  def cancel(params)
+    return if canceled?
+    self.canceled = true
+    cancel_events.build params[:event]
+  end
+
+  def update_request_for_cancel_if_needed
+    if canceled? && request.donation == self
+      request.donation = nil
+      request.donor = nil
+      request.status = nil
+      request.thanked = false
+      request.flagged = false
+      request.save!
+    end
   end
 end

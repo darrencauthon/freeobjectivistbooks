@@ -98,4 +98,70 @@ class DonationsControllerTest < ActionController::TestCase
     post :create, request_id: @howard_request.id, format: "json"
     verify_login_page
   end
+
+  # Cancel
+
+  test "cancel" do
+    get :cancel, {id: @quentin_donation_unsent.id}, session_for(@hugh)
+    assert_response :success
+    assert_select 'h1', /cancel/i
+    assert_select '.headline', /Quentin Daniels in Boston, MA wants to read The Fountainhead/
+    assert_select 'h2', /Explain to Quentin Daniels/
+    assert_select 'textarea#donation_event_message'
+    assert_select 'input[type="submit"]'
+  end
+
+  test "cancel requires login" do
+    get :cancel, id: @quentin_donation_unsent.id
+    verify_login_page
+  end
+
+  test "cancel requires donor" do
+    get :cancel, {id: @quentin_donation_unsent.id}, session_for(@howard)
+    verify_wrong_login_page
+  end
+
+  # Destroy
+
+  test "destroy" do
+    assert_difference "@quentin_donation_unsent.events.count" do
+      delete :destroy, {id: @quentin_donation_unsent.id, donation: {event: {message: "Sorry!"}}}, session_for(@hugh)
+    end
+
+    assert_redirected_to donations_url
+    assert_match /We let Quentin Daniels know/i, flash[:notice][:headline]
+
+    @quentin_donation_unsent.reload
+    assert @quentin_donation_unsent.canceled?
+
+    @quentin_request_unsent.reload
+    assert @quentin_request_unsent.open?
+
+    verify_event @quentin_donation_unsent, "cancel", message: "Sorry!", notified?: true
+  end
+
+  test "destroy requires message" do
+    assert_no_difference "@quentin_donation_unsent.events.count" do
+      delete :destroy, {id: @quentin_donation_unsent.id, donation: {event: {message: ""}}}, session_for(@hugh)
+    end
+
+    assert_response :success
+    assert_select 'h1', /cancel/i
+
+    @quentin_donation_unsent.reload
+    assert @quentin_donation_unsent.active?
+
+    @quentin_request_unsent.reload
+    assert @quentin_request_unsent.granted?
+  end
+
+  test "destroy requires login" do
+    delete :destroy, {id: @quentin_donation_unsent.id, donation: {event: {message: "Sorry!"}}}
+    verify_login_page
+  end
+
+  test "destroy requires donor" do
+    delete :destroy, {id: @quentin_donation_unsent.id, donation: {event: {message: "Sorry!"}}}, session_for(@howard)
+    verify_wrong_login_page
+  end
 end

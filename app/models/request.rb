@@ -86,10 +86,6 @@ class Request < ActiveRecord::Base
     !sent? && !flagged?
   end
 
-  def can_cancel?
-    !sent?
-  end
-
   def status
     ActiveSupport::StringInquirer.new(self[:status] || "")
   end
@@ -117,7 +113,7 @@ class Request < ActiveRecord::Base
     donation = donations.build user: user, flagged: address.blank?
     donation.save!
 
-    update_attributes! donor: user, donation: donation
+    update_attributes! donation: donation
 
     event = donation.grant_events.build
     event.save!
@@ -168,16 +164,6 @@ class Request < ActiveRecord::Base
     self.thanked = true
     event = params[:event].merge(is_thanks: true)
     message_events.build event
-  end
-
-  def cancel(params)
-    event = cancel_events.build params[:event]
-    self.donation = nil
-    self.donor = nil
-    self.status = nil
-    self.flagged = nil
-    self.thanked = nil
-    event
   end
 
   # Metrics

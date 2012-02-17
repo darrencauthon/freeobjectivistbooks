@@ -24,15 +24,15 @@
 <h1 class="grid_16">Cancel donation</h1>
 
 <div class="request grid_12">
-    <p class="headline"><%= request_summary @request %></p>
-    <p class="tagline"><%= user_tagline @request.user %></p>
-    <p class="reason"><%= format_block @request.reason %></p>
+    <p class="headline"><%= request_summary @donation.request %></p>
+    <p class="tagline"><%= user_tagline @donation.student %></p>
+    <p class="reason"><%= format_block @donation.request.reason %></p>
 </div>
 
 <div class="grid_10">
-<%= form_for @request, url: cancel_request_path(@request) do |f| %>
+<%= form_for @donation, method: :delete do |f| %>
     <%= f.fields_for @event do |e| %>
-        <h2>Explain to <%= @request.user.name %> why you are canceling:</h2>
+        <h2>Explain to <%= @donation.student.name %> why you are canceling:</h2>
 
         <p>We'll send your message to the student and try to find a new donor for them.</p>
         <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>

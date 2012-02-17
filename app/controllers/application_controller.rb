@@ -37,6 +37,11 @@ class ApplicationController < ActionController::Base
     raise ForbiddenException if !@current_user.in?(users)
   end
 
+  def save(*models)
+    models = models.compact
+    models.each {|m| m.save} if models.all? {|m| m.valid?}
+  end
+
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     rescue_from ActionController::RoutingError, with: :render_not_found

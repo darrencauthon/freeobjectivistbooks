@@ -12,14 +12,15 @@ FreeBooks::Application.routes.draw do
     member do
       put "flag"
       put "thank"
-      put "cancel"
     end
     resource :status, only: [:edit, :update]
     resources :messages, only: [:new, :create]
     resource :donation, only: [:create]
   end
 
-  resources :donations, only: [:index]
+  resources :donations, only: [:index, :destroy] do
+    get "cancel", on: :member
+  end
 
   get "login" => "sessions#new"
   post "login" => "sessions#create"
