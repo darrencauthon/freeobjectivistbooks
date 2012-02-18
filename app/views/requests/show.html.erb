@@ -99,7 +99,7 @@
             <% end %>
             <div class="clear"></div>
             <% elsif @request.needs_thanks? %>
-            <p><%= link_to "Thank #{@request.donor.name}", edit_request_path(@request, type: "thank") %></p>
+            <p><%= link_to "Thank #{@request.donor.name}", new_donation_thank_url(@request.donation) %></p>
             <% end %>
 
             <% if @request.address.blank? %>

@@ -2,7 +2,7 @@ Good news: We found a donor to send you <%= @event.book %>! <%= @event.donor.nam
 
 <% if @event.donation.address.present? %>
 <% if !@event.donation.thanked? %>
-Send thanks to <%= @event.donor.name %>: <%= edit_request_url(@event.request, type: "thank") %>
+Send thanks to <%= @event.donor.name %>: <%= new_donation_thank_url(@event.donation) %>
 
 <% end %>
 Your book will arrive shortly. The address you gave was:

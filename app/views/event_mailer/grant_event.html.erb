@@ -4,7 +4,7 @@
 
 <% if @event.donation.address.present? %>
 <% if !@event.donation.thanked? %>
-<p><%= link_to "Send thanks to #{@event.donor.name}", edit_request_url(@event.request, type: "thank") %></p>
+<p><%= link_to "Send thanks to #{@event.donor.name}", new_donation_thank_url(@event.donation) %></p>
 <% end %>
 
 <p>Your book will arrive shortly. The address you gave was:</p>

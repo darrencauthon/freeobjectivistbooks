@@ -11,7 +11,6 @@ FreeBooks::Application.routes.draw do
   resources :requests, only: [:show, :edit, :update] do
     member do
       put "flag"
-      put "thank"
     end
     resource :donation, only: [:create]
   end
@@ -20,6 +19,7 @@ FreeBooks::Application.routes.draw do
     get "cancel", on: :member
     resource :status, only: [:edit, :update]
     resources :messages, only: [:new, :create]
+    resources :thanks, only: [:new, :create], controller: :messages, defaults: {is_thanks: true}
   end
 
   get "login" => "sessions#new"

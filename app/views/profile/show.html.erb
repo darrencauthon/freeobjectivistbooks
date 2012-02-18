@@ -63,7 +63,7 @@
         <p class="flagged">There seems to be a problem with your shipping info.</p>
         <p><%= link_to 'Update your shipping info', edit_request_path(request) %></p>
         <% elsif request.needs_thanks? %>
-        <p><%= link_to "Thank #{request.donor.name}", edit_request_path(request, type: "thank") %></p>
+        <p><%= link_to "Thank #{request.donor.name}", new_donation_thank_url(request.donation) %></p>
         <% end %>
 
         <p><%= link_to 'See full request details', request_path(request) %></p>

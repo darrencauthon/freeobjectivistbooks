@@ -5,7 +5,7 @@ class RequestsController < ApplicationController
 
   def allowed_users_for_action(action)
     case action
-    when "update", "thank" then @request.user
+    when "update" then @request.user
     when "flag" then @request.donor
     end
   end
@@ -27,12 +27,6 @@ class RequestsController < ApplicationController
   end
 
   def edit
-    if params[:type] == "thank" && !@request.granted?
-      flash[:error] = "We're very sorry, but your donor has canceled. We're looking for a new donor for you."
-      redirect_to @request
-      return
-    end
-
     @event = @request.events.build type: (params[:type] || "update")
     render params[:type] || :edit
   end
@@ -67,16 +61,6 @@ class RequestsController < ApplicationController
       redirect_to @request
     else
       render :flag
-    end
-  end
-
-  def thank
-    @event = @request.thank params[:request]
-    if save @request, @event
-      flash[:notice] = "We sent your thanks to your donor (#{@request.donor.name})."
-      redirect_to @request
-    else
-      render :thank
     end
   end
 end

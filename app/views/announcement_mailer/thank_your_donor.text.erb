@@ -1,6 +1,6 @@
 <%= @request.donor.name %> agreed to send you <%= @request.book %> through Free Objectivist Books (you may have received it already).
 
 You can now send your donor a personal thank-you note:
-<%= edit_request_url(@request, type: "thank") %>
+<%= new_donation_thank_url(@request.donation) %>
 
 This is a great way to let <%= @request.donor.name %> know how much you're looking forward to reading <%= @request.book %>, or if you've already started reading it, how it has affected you.

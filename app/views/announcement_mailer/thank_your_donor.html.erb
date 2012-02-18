@@ -3,7 +3,7 @@
 </p>
 
 <p>You can now send your donor a personal thank-you note:<br>
-<b><%= link_to "Thank #{@request.donor.name}", edit_request_url(@request, type: "thank") %></b>
+<b><%= link_to "Thank #{@request.donor.name}", new_donation_thank_url(@request.donation) %></b>
 </p>
 
 <p>This is a great way to let your donor know know how much you're looking forward to reading

@@ -148,12 +148,6 @@ class Request < ActiveRecord::Base
     flag_events.build params[:event]
   end
 
-  def thank(params)
-    self.thanked = true
-    event = params[:event].merge(is_thanks: true)
-    message_events.build event
-  end
-
   # Metrics
 
   def self.metrics

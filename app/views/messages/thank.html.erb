@@ -1,0 +1,41 @@
+<% content_for :title do %>Thank Your Donor<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.submit {
+    height: 46px;
+    margin-top: 24px;
+    background-image: url(/assets/thank-button.png);
+    background-position-x: left;
+}
+
+.public label, .public span {
+    padding-left: 12px;
+}
+ </style>
+<% end %>
+
+<h1 class="grid_16">Thank <%= @donation.donor.name %></h1>
+
+<div class="grid_12">
+    <p class="overview"><%= donation_summary @donation %></p>
+
+    <%= form_for @event, url: donation_thanks_path(@donation) do |f| %>
+        <h2>Your thank-you message:</h2>
+
+        <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
+        <%= f.text_area :message, rows: 6, cols: 60 %>
+        <div class="clear"></div>
+
+        <%= f.hidden_field :is_thanks, value: true %>
+
+        <div class="public">
+            May we use this as a public testimonial?
+            <label><%= f.radio_button :public, true  %> Yes</label>
+            <label><%= f.radio_button :public, false  %> No</label>
+            <span class="field_with_errors"><%= @event.errors[:public].join(", ") %></span>
+        </div>
+
+        <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
+    <% end %>
+</div>

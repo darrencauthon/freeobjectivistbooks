@@ -224,22 +224,6 @@ class RequestTest < ActiveSupport::TestCase
     assert !@dagny_request.user_valid?
   end
 
-  # Thank
-
-  test "thank" do
-    event = @dagny_request.thank event: {message: "Thanks a lot!", public: true}
-    assert @dagny_request.thanked?
-
-    assert_equal @dagny_request, event.request
-    assert_equal @dagny, event.user
-    assert_equal @hugh, event.donor
-    assert_equal "message", event.type
-    assert event.is_thanks?
-    assert_equal "Thanks a lot!", event.message
-    assert_not_nil event.happened_at
-    assert event.public?
-  end
-
   # Metrics
 
   test "metrics" do
