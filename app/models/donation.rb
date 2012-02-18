@@ -121,13 +121,7 @@ class Donation < ActiveRecord::Base
     event = events.build event_attributes
     event.user = student
     event.type = student.changed? ? "update" : "message"
-    event.detail = if student.address_was.blank? && student.address.present?
-      "added a shipping address"
-    elsif student.name_was.words.size < 2 && student.name.words.size >= 2
-      "added their full name"
-    elsif student.name_changed? || student.address_changed?
-      "updated shipping info"
-    end
+    event.detail = student.update_detail
     event
   end
 

@@ -110,13 +110,7 @@ class Request < ActiveRecord::Base
 
     event_attributes = params[:event] || {}
     if user.changed?
-      event_attributes[:detail] = if user.address_was.blank? && user.address.present?
-        "added a shipping address"
-      elsif user.name_was.words.size < 2 && user.name.words.size >= 2
-        "added their full name"
-      elsif user.name_changed? || user.address_changed?
-        "updated shipping info"
-      end
+      event_attributes[:detail] = user.update_detail
       update_events.build event_attributes
     elsif granted?
       event_attributes[:user] = user

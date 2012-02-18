@@ -50,6 +50,16 @@ class User < ActiveRecord::Base
     errors.add(:name, "please include full first and last name") if (!has_upper && !has_lower) || name.words.size < 2
   end
 
+  def update_detail
+    if address_was.blank? && address.present?
+      "added a shipping address"
+    elsif name_was.words.size < 2 && name.words.size >= 2
+      "added their full name"
+    elsif name_changed? || address_changed?
+      "updated shipping info"
+    end
+  end
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create password
