@@ -1,6 +1,5 @@
 class StatusesController < ApplicationController
   before_filter :require_login
-  before_filter :check_user
 
   # Filters
 
@@ -10,10 +9,6 @@ class StatusesController < ApplicationController
     when "sent" then @donation.user
     when "received" then @donation.student
     end
-  end
-
-  def check_user
-    require_user allowed_users
   end
 
   # Actions

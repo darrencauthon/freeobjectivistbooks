@@ -4,7 +4,7 @@ class ForbiddenException < Exception; end
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :find_current_user, :load_models
+  before_filter :find_current_user, :load_models, :check_user
 
   def initialize
     super
@@ -45,6 +45,14 @@ class ApplicationController < ActionController::Base
     require_login
     users = users.flatten.compact
     raise ForbiddenException if !@current_user.in?(users)
+  end
+
+  def allowed_users
+  end
+
+  def check_user
+    users = Array(allowed_users)
+    require_user users unless users.empty?
   end
 
   def save(*models)

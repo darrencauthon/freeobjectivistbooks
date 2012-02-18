@@ -1,6 +1,5 @@
 class RequestsController < ApplicationController
   before_filter :require_login
-  before_filter :check_user
 
   # Filters
 
@@ -17,11 +16,6 @@ class RequestsController < ApplicationController
     when "edit" then allowed_users_for_action(params[:type] || "update")
     else allowed_users_for_action(params[:action])
     end
-  end
-
-  def check_user
-    users = Array(allowed_users)
-    require_user users unless users.empty?
   end
 
   # Actions
