@@ -3,17 +3,10 @@ class RequestsController < ApplicationController
 
   # Filters
 
-  def allowed_users_for_action(action)
-    case action
-    when "update" then @request.user
-    end
-  end
-
   def allowed_users
     case params[:action]
     when "show" then [@request.user, @request.donor]
-    when "edit" then allowed_users_for_action(params[:type] || "update")
-    else allowed_users_for_action(params[:action])
+    when "edit", "update" then @request.user
     end
   end
 
@@ -26,8 +19,7 @@ class RequestsController < ApplicationController
   end
 
   def edit
-    @event = @request.events.build type: (params[:type] || "update")
-    render params[:type] || :edit
+    @event = @request.events.build type: "update"
   end
 
   def notice_for_update(result)
