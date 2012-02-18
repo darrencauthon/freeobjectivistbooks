@@ -210,17 +210,9 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.message.error', false
   end
 
-  test "edit missing" do
-    get :edit, {id: @dagny_request.id}, session_for(@dagny)
-    assert_response :success
-    assert_select '.message.error .headline', /Add your address/
-  end
-
-  test "edit flagged" do
+  test "edit flagged redirects to fix" do
     get :edit, {id: @hank_request.id}, session_for(@hank)
-    assert_response :success
-    assert_select '.message.error .headline', /problem/
-    assert_select '.message.error .detail', 'Your donor says: "Is your address correct?"'
+    assert_redirected_to fix_donation_flag_url(@hank_donation)
   end
 
   test "edit requires login" do
@@ -265,33 +257,9 @@ class RequestsControllerTest < ActionController::TestCase
     verify_event @howard_request, "update", detail: "added a shipping address", notified?: false
   end
 
-  test "update add name" do
-    @dagny.address = "123 Somewhere Road"
-    @dagny.save!
-
-    options = {name: "Dagny Taggart", address: "123 Somewhere Road", message: "Added my full name"}
-    update @dagny_request, options
-    verify_update @dagny_request, options, /notified/i
-    verify_event @dagny_request, "update", detail: "added their full name", notified?: true
-  end
-
-  test "update shipping info" do
-    options = {name: "Quentin Daniels", address: "123 Quantum Ln", message: ""}
-    update @quentin_request, options
-    verify_update @quentin_request, options, /has been notified/i
-    verify_event @quentin_request, "update", detail: "updated shipping info", notified?: true
-  end
-
-  test "update only message" do
-    options = {name: "Quentin Daniels", address: @quentin.address, message: "No changes here"}
-    update @quentin_request, options
-    verify_update @quentin_request, options, /message has been sent/i
-    verify_event @quentin_request, "message", message: "No changes here", notified?: true
-  end
-
   test "update requires address if granted" do
-    options = {name: "Dagny Taggart", address: "", message: "Added my full name", expect_events: 0}
-    update @dagny_request, options
+    options = {name: "Quentin Daniels", address: "", message: "Removing my address", expect_events: 0}
+    update @quentin_request, options
     assert_response :success
     assert_select '.field_with_errors', /We need your address/
   end

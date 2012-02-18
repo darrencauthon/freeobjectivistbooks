@@ -19,7 +19,11 @@ class RequestsController < ApplicationController
   end
 
   def edit
-    @event = @request.events.build type: "update"
+    if @request.flagged?
+      redirect_to fix_donation_flag_url(@request.donation)
+    else
+      @event = @request.events.build type: "update"
+    end
   end
 
   def notice_for_update(result)

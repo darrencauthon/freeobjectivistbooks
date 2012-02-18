@@ -103,9 +103,9 @@
             <% end %>
 
             <% if @request.address.blank? %>
-            <p><%= link_to 'Add your address', fix_or_edit_path(@request) %></p>
+            <p><%= link_to 'Add your address', edit_request_path(@request) %></p>
             <% elsif !@request.sent? %>
-            <p><%= link_to 'Update shipping info', fix_or_edit_path(@request) %></p>
+            <p><%= link_to 'Update shipping info', edit_request_path(@request) %></p>
             <% end %>
         <% end %>
 

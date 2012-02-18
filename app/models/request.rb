@@ -105,8 +105,6 @@ class Request < ActiveRecord::Base
 
   def update_user(params)
     user.attributes = params[:user]
-    self.flagged = false
-    donation.flagged = false if donation
 
     event_attributes = params[:event] || {}
     if user.changed?

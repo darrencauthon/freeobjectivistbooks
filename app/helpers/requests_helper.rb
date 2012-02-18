@@ -28,8 +28,4 @@ module RequestsHelper
   def other_user
     current_is_student? ? current_donor : current_student
   end
-
-  def fix_or_edit_path(request)
-    request.flagged? ? fix_donation_flag_path(request.donation) : edit_request_path(request)
-  end
 end

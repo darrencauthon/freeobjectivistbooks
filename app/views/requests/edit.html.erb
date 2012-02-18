@@ -11,28 +11,10 @@
  </style>
 <% end %>
 
-<% if @request.flagged? && current_is_student? %>
-<div class="grid_12 message error">
-    <% if @request.address.blank? %>
-    <p class="headline">Add your address to get your book.</p>
-    <% else %>
-    <p class="headline">There seems to be a problem with your shipping info.</p>
-    <p class="detail">Your donor says: "<%= format_block @request.flag_message %>"</p>
-    <% end %>
-</div>
-<% end %>
-
 <h1 class="grid_16">Your shipping info</h1>
 
 <div class="grid_12">
 <%= form_for @request do |f| %>
-    <% unless @request.user.errors.empty? && @request.errors.empty? %>
-    <div class="errorExplanation">
-        <h2>There are problems with your info</h2>
-        <p>Please see below and make corrections.</p>
-    </div>
-    <% end %>
-
     <%= f.fields_for @request.user do |u| %>
     <%= u.label :name, "Your name", class: "grid_5 alpha" %><div class="clear"></div>
     <%= u.text_field :name, class: "grid_5 alpha" %>

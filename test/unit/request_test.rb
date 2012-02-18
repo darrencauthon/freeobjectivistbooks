@@ -165,8 +165,8 @@ class RequestTest < ActiveSupport::TestCase
 
   test "update user: added address" do
     event = @howard_request.update_user(user: {name: "Howard Roark", address: "123 Independence St"}, event: {message: ""})
-    assert !@howard_request.flagged?
 
+    assert_equal "123 Independence St", @howard_request.address
     assert_equal "update", event.type
     assert_equal "added a shipping address", event.detail
     assert event.message.blank?, event.message.inspect
@@ -177,8 +177,8 @@ class RequestTest < ActiveSupport::TestCase
     @dagny.save!
 
     event = @dagny_request.update_user(user: {name: "Dagny Taggart", address: "123 Somewhere Rd"}, event: {message: "Here you go"})
-    assert !@dagny_request.flagged?
 
+    assert_equal "Dagny Taggart", @dagny_request.user.name
     assert_equal "update", event.type
     assert_equal "added their full name", event.detail
     assert_equal "Here you go", event.message
@@ -187,8 +187,8 @@ class RequestTest < ActiveSupport::TestCase
   test "new update: updated info" do
     attributes = {name: "Quentin Daniels", address: "123 Quantum Ln\nGalt's Gulch, CO"}
     event = @quentin_request.update_user(user: attributes, event: {message: "I have a new address"})
-    assert !@quentin_request.flagged?
 
+    assert_equal "123 Quantum Ln\nGalt's Gulch, CO", @quentin_request.address
     assert_equal "update", event.type
     assert_equal "updated shipping info", event.detail
     assert_equal "I have a new address", event.message
@@ -196,7 +196,6 @@ class RequestTest < ActiveSupport::TestCase
 
   test "new update: message only" do
     event = @quentin_request.update_user(user: {name: @quentin.name, address: @quentin.address}, event: {message: "just a message"})
-    assert !@quentin_request.flagged?
 
     assert_equal @quentin, event.user
     assert_equal "message", event.type
