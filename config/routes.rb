@@ -17,7 +17,9 @@ FreeBooks::Application.routes.draw do
     resource :status, only: [:edit, :update]
     resources :messages, only: [:new, :create]
     resources :thanks, only: [:new, :create], controller: :messages, defaults: {is_thanks: true}
-    resources :flags, only: [:new, :create]
+    resource :flag, only: [:new, :create, :destroy] do
+      get "fix", on: :member
+    end
   end
 
   get "login" => "sessions#new"

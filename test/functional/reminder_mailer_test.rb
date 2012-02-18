@@ -59,6 +59,7 @@ class ReminderMailerTest < ActionMailer::TestCase
   end
 
   test "send books for donor with multiple outstanding donations" do
+    @dagny_donation.address = "123 Somewhere"
     @dagny_donation.flagged = false
     @dagny_donation.save!
 

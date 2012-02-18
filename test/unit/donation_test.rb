@@ -243,4 +243,55 @@ class DonationTest < ActiveSupport::TestCase
   test "flag message" do
     assert_equal "Please add your full name and address", @dagny_donation.flag_message
   end
+
+  # Fix
+
+  test "fix: added address" do
+    donation = @howard_request.grant @hugh
+    assert donation.flagged?
+
+    event = donation.fix({student_name: "Howard Roark", address: "123 Independence St"}, {message: ""})
+    assert !donation.flagged?
+
+    assert_equal "update", event.type
+    assert_equal "added a shipping address", event.detail
+    assert event.message.blank?, event.message.inspect
+  end
+
+  test "fix: added name" do
+    @dagny.address = "123 Somewhere Rd"
+    @dagny.save!
+
+    event = @dagny_donation.fix({student_name: "Dagny Taggart", address: "123 Somewhere Rd"}, {message: "Here you go"})
+    assert !@dagny_donation.flagged?
+
+    assert_equal "update", event.type
+    assert_equal "added their full name", event.detail
+    assert_equal "Here you go", event.message
+  end
+
+  test "fix: updated info" do
+    attributes = {student_name: "Quentin Daniels", address: "123 Quantum Ln\nGalt's Gulch, CO"}
+    event = @quentin_donation.fix(attributes, {message: "I have a new address"})
+    assert !@quentin_donation.flagged?
+
+    assert_equal "update", event.type
+    assert_equal "updated shipping info", event.detail
+    assert_equal "I have a new address", event.message
+  end
+
+  test "fix: message only" do
+    event = @quentin_donation.fix({student_name: @quentin.name, address: @quentin.address}, {message: "just a message"})
+    assert !@quentin_donation.flagged?
+
+    assert_equal @quentin, event.user
+    assert_equal "message", event.type
+    assert !event.is_thanks?
+    assert_equal "just a message", event.message
+  end
+
+  test "fix requires address" do
+    event = @dagny_donation.fix({student_name: "Dagny Taggart", address: ""}, {message: "Here you go"})
+    assert !@dagny_donation.valid?
+  end
 end

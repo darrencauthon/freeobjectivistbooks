@@ -27,7 +27,7 @@
     <p class="name"><%= @donation.student.name %></p>
     <p class="address"><%= format_address @donation.address %></p>
 
-    <%= form_for @event, url: donation_flags_path(@donation) do |f| %>
+    <%= form_for @event, url: donation_flag_path(@donation) do |f| %>
         <h2>What is the problem?</h2>
 
         <p>We'll send your message to <%= @donation.student.name %> and ask them to fix it:</p>

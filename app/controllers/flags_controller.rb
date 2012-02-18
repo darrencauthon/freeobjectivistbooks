@@ -1,6 +1,9 @@
 class FlagsController < ApplicationController
   def allowed_users
-    @donation.donor
+    case params[:action]
+    when "new", "create" then @donation.donor
+    when "fix", "destroy" then @donation.student
+    end
   end
 
   def new
@@ -14,6 +17,20 @@ class FlagsController < ApplicationController
       redirect_to @donation.request
     else
       render :new
+    end
+  end
+
+  def fix
+    @event = @donation.events.build
+  end
+
+  def destroy
+    @event = @donation.fix params[:donation], params[:event]
+    if save @donation, @event
+      flash[:notice] = "Thank you. We've notified your donor (#{@donation.user.name})."
+      redirect_to @donation.request
+    else
+      render :fix
     end
   end
 end

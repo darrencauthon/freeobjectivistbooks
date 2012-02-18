@@ -13,5 +13,5 @@ Your book will arrive shortly. The address you gave was:
 You can update this info if needed: <%= request_url @event.request %>
 <% else %>
 However, you haven't given us your address! Add your address to get your book:
-<%= edit_request_url @event.request %>
+<%= fix_donation_flag_url @event.donation %>
 <% end %>

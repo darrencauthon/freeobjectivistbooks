@@ -54,14 +54,16 @@
         <% if request.status.sent? %>
         <p><%= link_to "Let #{request.donor.name} know when you have received this book",
             edit_donation_status_path(request.donation, status: "received") %></p>
-        <% elsif request.address.blank? %>
-            <% if request.flagged? %>
-            <p class="flagged">We need your address to send you your book.</p>
-            <% end %>
-        <p><%= link_to 'Add your address', edit_request_path(request) %></p>
         <% elsif request.flagged? %>
-        <p class="flagged">There seems to be a problem with your shipping info.</p>
-        <p><%= link_to 'Update your shipping info', edit_request_path(request) %></p>
+            <% if request.address.blank? %>
+            <p class="flagged">We need your address to send you your book.</p>
+            <p><%= link_to 'Add your address', fix_donation_flag_path(request.donation) %></p>
+            <% else %>
+            <p class="flagged">There seems to be a problem with your shipping info.</p>
+            <p><%= link_to 'Update your shipping info', fix_donation_flag_path(request.donation) %></p>
+            <% end %>
+        <% elsif request.address.blank? %>
+        <p><%= link_to 'Add your address', edit_request_path(request) %></p>
         <% elsif request.needs_thanks? %>
         <p><%= link_to "Thank #{request.donor.name}", new_donation_thank_url(request.donation) %></p>
         <% end %>

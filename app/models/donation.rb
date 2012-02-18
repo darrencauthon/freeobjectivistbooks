@@ -1,7 +1,7 @@
 class Donation < ActiveRecord::Base
   # Associations
 
-  belongs_to :request
+  belongs_to :request, autosave: true
   belongs_to :user
   has_many :events
 
@@ -15,6 +15,7 @@ class Donation < ActiveRecord::Base
 
   validates_presence_of :request
   validates_presence_of :user
+  validates_presence_of :address, unless: :flagged?, message: "We need your address to send you your book."
   validates_inclusion_of :status, in: %w{not_sent sent received}
 
   # Scopes
@@ -41,7 +42,9 @@ class Donation < ActiveRecord::Base
 
   # Derived attributes
 
-  delegate :book, :address, to: :request
+  delegate :book, to: :request
+  delegate :address, :address=, to: :student
+  delegate :name, :name=, to: :student, prefix: true
 
   def active?
     !canceled?
@@ -108,6 +111,24 @@ class Donation < ActiveRecord::Base
   def flag(params)
     self.flagged = true
     flag_events.build params
+  end
+
+  def fix(attributes, event_attributes = {})
+    self.attributes = attributes
+    self.flagged = false
+    request.flagged = false
+
+    event = events.build event_attributes
+    event.user = student
+    event.type = student.changed? ? "update" : "message"
+    event.detail = if student.address_was.blank? && student.address.present?
+      "added a shipping address"
+    elsif student.name_was.words.size < 2 && student.name.words.size >= 2
+      "added their full name"
+    elsif student.name_changed? || student.address_changed?
+      "updated shipping info"
+    end
+    event
   end
 
   def cancel(params)

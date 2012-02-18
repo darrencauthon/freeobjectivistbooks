@@ -17,7 +17,7 @@ class Request < ActiveRecord::Base
 
   # Associations
 
-  belongs_to :user
+  belongs_to :user, autosave: true
   belongs_to :donor, class_name: "User"
   belongs_to :donation
   has_many :donations
@@ -81,10 +81,10 @@ class Request < ActiveRecord::Base
     granted? && !thanked?
   end
 
-
   def status
     donation ? donation.status : ActiveSupport::StringInquirer.new("")
   end
+
   def user_valid?
     open? || user.valid?(:granted)
   end
