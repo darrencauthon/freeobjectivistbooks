@@ -230,4 +230,17 @@ class DonationTest < ActiveSupport::TestCase
       @quentin_donation.update_status status: "sent"
     end
   end
+
+  # Flag
+
+  test "flag" do
+    event = @quentin_donation.flag(message: "Is this address correct?")
+    assert @quentin_donation.flagged?
+    assert_equal "flag", event.type
+    assert_equal "Is this address correct?", event.message
+  end
+
+  test "flag message" do
+    assert_equal "Please add your full name and address", @dagny_donation.flag_message
+  end
 end

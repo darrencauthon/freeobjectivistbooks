@@ -9,9 +9,6 @@ FreeBooks::Application.routes.draw do
 
   get "donate" => "requests#index"
   resources :requests, only: [:show, :edit, :update] do
-    member do
-      put "flag"
-    end
     resource :donation, only: [:create]
   end
 
@@ -20,6 +17,7 @@ FreeBooks::Application.routes.draw do
     resource :status, only: [:edit, :update]
     resources :messages, only: [:new, :create]
     resources :thanks, only: [:new, :create], controller: :messages, defaults: {is_thanks: true}
+    resources :flags, only: [:new, :create]
   end
 
   get "login" => "sessions#new"

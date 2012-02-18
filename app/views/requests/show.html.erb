@@ -86,7 +86,7 @@
             <% end %>
             <% end %>
             <% if @request.can_flag? %>
-            <p><%= link_to 'Flag problem with shipping info', edit_request_path(@request, type: "flag") %></p>
+            <p><%= link_to 'Flag problem with shipping info', new_donation_flag_path(@request.donation) %></p>
             <% end %>
         <% end %>
 

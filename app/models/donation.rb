@@ -79,6 +79,11 @@ class Donation < ActiveRecord::Base
     !sent?
   end
 
+  def flag_message
+    event = flag_events.order('created_at desc').first
+    event.message if event
+  end
+
   # Actions
 
   def update_status(params)
@@ -98,6 +103,11 @@ class Donation < ActiveRecord::Base
     end
     event.save!
     event
+  end
+
+  def flag(params)
+    self.flagged = true
+    flag_events.build params
   end
 
   def cancel(params)

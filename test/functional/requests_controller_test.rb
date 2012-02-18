@@ -187,66 +187,6 @@ class RequestsControllerTest < ActionController::TestCase
     verify_wrong_login_page
   end
 
-  # Flag form
-
-  test "flag form" do
-    get :edit, {id: @quentin_request.id, type: "flag"}, session_for(@hugh)
-    assert_response :success
-    assert_select 'h1', /flag/i
-    assert_select '.address', /123 Main St/
-    assert_select 'p', /We'll send your message to Quentin/
-    assert_select 'textarea#request_event_message'
-    assert_select 'input[type="submit"]'
-  end
-
-  test "flag form requires login" do
-    get :edit, id: @quentin_request.id, type: "flag"
-    verify_login_page
-  end
-
-  test "flag form requires donor" do
-    get :edit, {id: @quentin_request.id, type: "flag"}, session_for(@howard)
-    verify_wrong_login_page
-  end
-
-  # Flag
-
-  test "flag" do
-    assert_difference "@quentin_request.events.count" do
-      post :flag, {id: @quentin_request.id, request: {event: {message: "Fix this"}}}, session_for(@hugh)
-    end
-
-    assert_redirected_to @quentin_request
-    assert_match /has been flagged/i, flash[:notice]
-
-    @quentin_request.reload
-    assert @quentin_request.flagged?
-
-    verify_event @quentin_request, "flag", message: "Fix this", notified?: true
-  end
-
-  test "flag requires message" do
-    assert_no_difference "@quentin_request.events.count" do
-      post :flag, {id: @quentin_request.id, request: {event: {message: ""}}}, session_for(@hugh)
-    end
-
-    assert_response :success
-    assert_select 'h1', /flag/i
-
-    @quentin_request.reload
-    assert !@quentin_request.flagged?
-  end
-
-  test "flag requires login" do
-    post :flag, {id: @quentin_request.id, request: {event: {message: "Fix this"}}}
-    verify_login_page
-  end
-
-  test "flag requires donor" do
-    post :flag, {id: @quentin_request.id, request: {event: {message: "Fix this"}}}, session_for(@howard)
-    verify_wrong_login_page
-  end
-
   # Edit
 
   test "edit no donor" do

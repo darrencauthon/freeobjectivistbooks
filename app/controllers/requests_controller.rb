@@ -6,7 +6,6 @@ class RequestsController < ApplicationController
   def allowed_users_for_action(action)
     case action
     when "update" then @request.user
-    when "flag" then @request.donor
     end
   end
 
@@ -51,16 +50,6 @@ class RequestsController < ApplicationController
       redirect_to @request
     else
       render :edit
-    end
-  end
-
-  def flag
-    @event = @request.flag params[:request]
-    if save @request, @event
-      flash[:notice] = "The request has been flagged, and your message has been sent to #{@request.user.name}."
-      redirect_to @request
-    else
-      render :flag
     end
   end
 end

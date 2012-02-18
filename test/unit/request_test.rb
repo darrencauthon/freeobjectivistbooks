@@ -128,6 +128,10 @@ class RequestTest < ActiveSupport::TestCase
     assert @hank_request_received.received?
   end
 
+  test "flag message" do
+    assert_equal "Please add your full name and address", @dagny_request.flag_message
+  end
+
   # Grant
 
   test "grant" do
@@ -155,25 +159,6 @@ class RequestTest < ActiveSupport::TestCase
     assert !donation.sent?
 
     verify_event donation, "grant", user: @hugh
-  end
-
-  # Flagging
-
-  test "can flag?" do
-    assert @quentin_request_unsent.can_flag?
-    assert !@quentin_request.can_flag?  # already sent
-    assert !@dagny_request.can_flag?    # already flagged
-  end
-
-  test "flag" do
-    event = @quentin_request.flag(event: {message: "Is this address correct?"})
-    assert @quentin_request.flagged?
-    assert_equal "flag", event.type
-    assert_equal "Is this address correct?", event.message
-  end
-
-  test "flag message" do
-    assert_equal "Please add your full name and address", @dagny_request.flag_message
   end
 
   # Update user

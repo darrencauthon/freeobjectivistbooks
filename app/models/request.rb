@@ -63,6 +63,7 @@ class Request < ActiveRecord::Base
   # Derived attributes
 
   delegate :address, to: :user
+  delegate :thanked?, :sent?, :received?, :can_send?, :can_flag?, :flagged?, :flag_message, to: :donation, allow_nil: true
 
   def student
     user
@@ -80,31 +81,10 @@ class Request < ActiveRecord::Base
     granted? && !thanked?
   end
 
-  def can_send?
-    !sent? && !flagged?
-  end
-
-  def can_flag?
-    !sent? && !flagged?
-  end
 
   def status
     donation ? donation.status : ActiveSupport::StringInquirer.new("")
   end
-
-  def sent?
-    donation && donation.sent?
-  end
-
-  def received?
-    donation && donation.received?
-  end
-
-  def flag_message
-    event = events.where(type: "flag").order('created_at desc').first
-    event.message if event
-  end
-
   def user_valid?
     open? || user.valid?(:granted)
   end
@@ -126,6 +106,7 @@ class Request < ActiveRecord::Base
   def update_user(params)
     user.attributes = params[:user]
     self.flagged = false
+    donation.flagged = false if donation
 
     event_attributes = params[:event] || {}
     if user.changed?
@@ -141,11 +122,6 @@ class Request < ActiveRecord::Base
       event_attributes[:user] = user
       message_events.build event_attributes
     end
-  end
-
-  def flag(params)
-    self.flagged = true
-    flag_events.build params[:event]
   end
 
   # Metrics
