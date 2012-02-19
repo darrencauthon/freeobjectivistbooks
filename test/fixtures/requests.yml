@@ -16,8 +16,6 @@ quentin_wants_fountainhead:
   user: quentin
   book: The Fountainhead
   reason: Heard this was a great story of independence
-  donor: hugh
-  status: not_sent
   donation: hugh_grants_quentin_wants_fountainhead
 
 # Flagged
@@ -26,19 +24,12 @@ dagny_wants_cui:
   user: dagny
   book: "Capitalism: The Unknown Ideal"
   reason: I need this to morally defend my business!
-  donor: hugh
-  flagged: true
-  thanked: true
-  status: not_sent
   donation: hugh_grants_dagny_wants_cui
 
 hank_wants_atlas:
   user: hank
   book: Atlas Shrugged
   reason: I want to learn about this strike
-  donor: cameron
-  flagged: true
-  status: not_sent
   donation: cameron_grants_hank_wants_atlas
 
 # Sent
@@ -47,8 +38,6 @@ quentin_wants_vos:
   user: quentin
   book: The Virtue of Selfishness
   reason: Someone told me I need to read this before I figure out the secret of the motor.
-  donor: hugh
-  status: sent
   donation: hugh_grants_quentin_wants_vos
 
 # Received
@@ -57,6 +46,4 @@ hank_wants_fountainhead:
   user: hank
   book: The Fountainhead
   reason: Want to read more by this author; heard this was one of her best books
-  donor: cameron
-  status: received
   donation: cameron_grants_hank_wants_fountainhead

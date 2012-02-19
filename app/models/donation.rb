@@ -41,8 +41,6 @@ class Donation < ActiveRecord::Base
     donation.status = "not_sent" if donation.status.blank?
   end
 
-  after_save :update_request_for_cancel_if_needed
-
   # Derived attributes
 
   delegate :book, to: :request
@@ -97,11 +95,6 @@ class Donation < ActiveRecord::Base
     return unless changed?
     save!
 
-    if request.donation == self
-      request.status = status
-      request.save!
-    end
-
     event = update_status_events.build (params[:event] || {})
     if event.message.blank?
       event.is_thanks = nil
@@ -119,7 +112,6 @@ class Donation < ActiveRecord::Base
   def fix(attributes, event_attributes = {})
     self.attributes = attributes
     self.flagged = false
-    request.flagged = false
 
     event = events.build event_attributes
     event.user = student
@@ -131,19 +123,10 @@ class Donation < ActiveRecord::Base
   def cancel(params)
     return if canceled?
     self.canceled = true
+    request.donation = nil
     cancel_events.build params[:event]
   end
 
-  def update_request_for_cancel_if_needed
-    if canceled? && request.donation == self
-      request.donation = nil
-      request.donor = nil
-      request.status = nil
-      request.thanked = false
-      request.flagged = false
-      request.save!
-    end
-  end
   # Metrics
 
   def self.metrics

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AnnouncementMailerTest < ActionMailer::TestCase
   test "send announcement" do
-    requests = Request.granted.where(thanked: [nil, false])
+    requests = Donation.not_thanked.map {|donation| donation.request}
     assert requests.any?
 
     assert_difference "ActionMailer::Base.deliveries.count", requests.count do

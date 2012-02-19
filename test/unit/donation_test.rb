@@ -70,14 +70,6 @@ class DonationTest < ActiveSupport::TestCase
     assert_equal "not_sent", donation.status
   end
 
-  test "canceling donation clears donation from request" do
-    @dagny_donation.canceled = true
-    @dagny_donation.save!
-
-    @dagny_request.reload
-    assert @dagny_request.open?, "request is not open"
-  end
-
   # Derived attributes
 
   test "student" do

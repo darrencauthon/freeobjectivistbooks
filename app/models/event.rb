@@ -5,10 +5,10 @@ class Event < ActiveRecord::Base
 
   belongs_to :request
   belongs_to :user
-  belongs_to :donor, class_name: "User"
   belongs_to :donation
 
   validates_presence_of :request, :user, :type
+  validates_presence_of :donation, if: lambda {|e| e.type.in? %w{grant flag message update_status cancel}}
   validates_inclusion_of :type, in: TYPES
 
   validates_presence_of :message, if: lambda {|e| e.type.in? %w{flag message cancel}}, message: "Please enter a message."
@@ -24,8 +24,6 @@ class Event < ActiveRecord::Base
     unless id
       self.donation ||= request.donation if request
       self.request ||= donation.request if donation
-      self.donor = donation.user if donation
-      self.donor ||= request.donor
       self.user ||= default_user
       self.detail ||= donation.status if type == "update_status"
       self.happened_at ||= Time.now
@@ -52,6 +50,10 @@ class Event < ActiveRecord::Base
 
   def student
     request.user
+  end
+
+  def donor
+    donation && donation.user
   end
 
   def from
@@ -102,10 +104,7 @@ class Event < ActiveRecord::Base
   end
 
   def update_thanked
-    if is_thanks?
-      request.update_attributes! thanked: true
-      donation.update_attributes! thanked: true if donation
-    end
+    donation.update_attributes! thanked: true if is_thanks?
   end
 
   def log

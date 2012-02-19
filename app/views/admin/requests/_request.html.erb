@@ -7,7 +7,7 @@
     <% if request.donor %>
     <p class="donor">Donor: <%= admin_user_link request.donor %> <% if request.thanked? %>&ndash; thanked<% end %></p>
     <% end %>
-    <% if request.flagged %>
+    <% if request.flagged? %>
     <p class="flagged">
         <% if request.address.blank? %>
         Missing address flagged

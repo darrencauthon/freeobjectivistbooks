@@ -132,10 +132,10 @@ class DonationsControllerTest < ActionController::TestCase
     assert_match /We let Quentin Daniels know/i, flash[:notice][:headline]
 
     @quentin_donation_unsent.reload
-    assert @quentin_donation_unsent.canceled?
+    assert @quentin_donation_unsent.canceled?, "donation is not canceled"
 
     @quentin_request_unsent.reload
-    assert @quentin_request_unsent.open?
+    assert @quentin_request_unsent.open?, "request is not open"
 
     verify_event @quentin_donation_unsent, "cancel", message: "Sorry!", notified?: true
   end

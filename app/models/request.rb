@@ -18,7 +18,6 @@ class Request < ActiveRecord::Base
   # Associations
 
   belongs_to :user, autosave: true
-  belongs_to :donor, class_name: "User"
   belongs_to :donation
   has_many :donations
   has_many :events
@@ -61,16 +60,20 @@ class Request < ActiveRecord::Base
     user
   end
 
+  def donor
+    donation && donation.user
+  end
+
   def granted?
     donation.present?
   end
 
-  def address_required?
-    granted? && !flagged?
-  end
-
   def open?
     !granted?
+  end
+
+  def address_required?
+    granted? && !flagged?
   end
 
   def needs_thanks?
@@ -79,10 +82,6 @@ class Request < ActiveRecord::Base
 
   def status
     donation ? donation.status : ActiveSupport::StringInquirer.new("")
-  end
-
-  def user_valid?
-    open? || user.valid?(:granted)
   end
 
   # Actions
