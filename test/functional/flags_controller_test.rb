@@ -74,6 +74,10 @@ class FlagsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select '.message.error .headline', /problem/
     assert_select '.message.error .detail', 'Your donor says: "Is your address correct?"'
+    assert_select 'input#donation_student_name[value="Hank Rearden"]'
+    assert_select 'textarea#donation_address', @hank.address
+    assert_select 'textarea#event_message'
+    assert_select 'input[type="submit"]'
   end
 
   test "fix requires login" do
