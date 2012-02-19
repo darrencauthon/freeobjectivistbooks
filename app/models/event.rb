@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :request
   belongs_to :user
+  belongs_to :donor, class_name: "User" # TEMPORARY
   belongs_to :donation
 
   validates_presence_of :request, :user, :type
@@ -52,9 +53,9 @@ class Event < ActiveRecord::Base
     request.user
   end
 
-  def donor
-    donation && donation.user
-  end
+  # def donor
+  #   donation && donation.user
+  # end
 
   def from
     user

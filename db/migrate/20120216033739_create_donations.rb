@@ -73,9 +73,11 @@ class CreateDonations < ActiveRecord::Migration
           event.save!
         end
 
-        request.donation = donation unless donation.canceled?
-        say "Request #{request.id} donation is now #{donation.id}", true if request.changed?
-        request.save!
+        if donation
+          request.donation = donation unless donation.canceled?
+          say "Request #{request.id} donation is now #{donation.id}", true if request.changed?
+          request.save!
+        end
       end
     end
 
