@@ -38,7 +38,7 @@
     <div class="clear"></div>
 
     <%= fields_for @event do |e| %>
-    <h2>Add a message for your donor (optional)</h2>
+    <h2>Add a message for your donor</h2>
 
     <p>Your donor will get a notification about this update, and we'll include your message:</p>
     <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
