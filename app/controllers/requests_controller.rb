@@ -26,23 +26,11 @@ class RequestsController < ApplicationController
     end
   end
 
-  def notice_for_update(result)
-    case result
-    when :update
-      notice = "Your info has been updated"
-      notice += " and your donor (#{@request.donor.name}) has been notified" if @request.donor
-      notice += "."
-      notice
-    when :message
-      "Your message has been sent to your donor (#{@request.donor.name})."
-    end
-  end
-
   def update
-    # The edit field only actually lets you update user fields for now
-    @event = @request.update_user params[:request]
-    if @request.user_valid? && save(@request, @request.user, @event)
-      flash[:notice] = notice_for_update(@event.type.to_sym) if @event
+    @request.attributes = params[:request]
+    @event = @request.build_update_event
+    if save @request, @event
+      flash[:notice] = "Your info has been updated."
       redirect_to @request
     else
       render :edit

@@ -106,6 +106,23 @@ class UserTest < ActiveSupport::TestCase
     assert_nil User.login("nobody@nowhere.com", "whatever")
   end
 
+  # Update detail
+
+  test "update detail: added name" do
+    @dagny.name = "Dagny Taggart"
+    assert_equal "added their full name", @dagny.update_detail
+  end
+
+  test "update detail: added address" do
+    @dagny.address = "123 Somewhere"
+    assert_equal "added a shipping address", @dagny.update_detail
+  end
+
+  test "update detail: updated info" do
+    @quentin.address = "New Address"
+    assert_equal "updated shipping info", @quentin.update_detail
+  end
+
   # Reset password
 
   test "reset password" do

@@ -34,6 +34,7 @@ class Request < ActiveRecord::Base
   validates_presence_of :book, message: "Please choose a book."
   validates_presence_of :reason, message: "This is required."
   validates_acceptance_of :pledge, message: "You must pledge to read this book.", allow_nil: false, on: :create
+  validates_presence_of :address, if: :address_required?, message: "We need your address to send you your book."
 
   # Scopes
 
@@ -62,7 +63,8 @@ class Request < ActiveRecord::Base
 
   # Derived attributes
 
-  delegate :address, to: :user
+  delegate :address, :address=, to: :user
+  delegate :name, :name=, to: :user, prefix: true
   delegate :thanked?, :sent?, :received?, :can_send?, :can_flag?, :flagged?, :flag_message, to: :donation, allow_nil: true
 
   def student
@@ -71,6 +73,10 @@ class Request < ActiveRecord::Base
 
   def granted?
     donation.present?
+  end
+
+  def address_required?
+    granted? && !flagged?
   end
 
   def open?
@@ -103,17 +109,8 @@ class Request < ActiveRecord::Base
     donation
   end
 
-  def update_user(params)
-    user.attributes = params[:user]
-
-    event_attributes = params[:event] || {}
-    if user.changed?
-      event_attributes[:detail] = user.update_detail
-      update_events.build event_attributes
-    elsif granted?
-      event_attributes[:user] = user
-      message_events.build event_attributes
-    end
+  def build_update_event
+    update_events.build detail: user.update_detail if user.changed?
   end
 
   # Metrics

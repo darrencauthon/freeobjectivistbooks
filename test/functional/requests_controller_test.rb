@@ -193,7 +193,7 @@ class RequestsControllerTest < ActionController::TestCase
     get :edit, {id: @howard_request.id}, session_for(@howard)
     assert_response :success
     assert_select 'input[type="text"][value="Howard Roark"]#request_user_name'
-    assert_select 'textarea#request_user_address', ""
+    assert_select 'textarea#request_address', ""
     assert_select 'p', /you can enter this later/i
     assert_select 'textarea#event_message', false
     assert_select 'input[type="submit"]'
@@ -203,9 +203,8 @@ class RequestsControllerTest < ActionController::TestCase
     get :edit, {id: @quentin_request.id}, session_for(@quentin)
     assert_response :success
     assert_select 'input[type="text"][value="Quentin Daniels"]#request_user_name'
-    assert_select 'textarea#request_user_address', @quentin.address
+    assert_select 'textarea#request_address', @quentin.address
     assert_select 'p', text: /you can enter this later/i, count: 0
-    assert_select 'textarea#request_event_message', ""
     assert_select 'input[type="submit"]'
     assert_select '.message.error', false
   end
@@ -228,50 +227,45 @@ class RequestsControllerTest < ActionController::TestCase
   # Update
 
   def update(request, options)
-    user = request.user
-    user_params = options.subhash :name, :address
-    request_params = {user: user_params}
-    message = options[:message]
-    request_params[:event] = {message: message} if message
-    current_user = options.has_key?(:current_user) ? options[:current_user] : user
+    request_params = options.subhash :user_name, :address
+    current_user = options.has_key?(:current_user) ? options[:current_user] : request.user
 
     assert_difference "request.events.count", (options[:expect_events] || 1) do
       post :update, {id: request.id, request: request_params}, session_for(current_user)
     end
   end
 
-  def verify_update(request, params, notice)
+  def verify_update(request, params)
     assert_redirected_to request
-    assert_match notice, flash[:notice], flash.inspect
+    assert_not_nil flash[:notice], flash.inspect
 
-    user = request.user
-    user.reload
-    assert_equal params[:name], user.name
-    assert_equal params[:address], user.address
+    request.reload
+    assert_equal params[:user_name], request.user_name
+    assert_equal params[:address], request.address
   end
 
   test "update no donor" do
-    options = {name: "Howard Roark", address: "123 Independence St"}
+    options = {user_name: "Howard Roark", address: "123 Independence St"}
     update @howard_request, options
-    verify_update @howard_request, options, /updated/i
+    verify_update @howard_request, options
     verify_event @howard_request, "update", detail: "added a shipping address", notified?: false
   end
 
   test "update requires address if granted" do
-    options = {name: "Quentin Daniels", address: "", message: "Removing my address", expect_events: 0}
+    options = {user_name: "Quentin Daniels", address: "", expect_events: 0}
     update @quentin_request, options
     assert_response :success
     assert_select '.field_with_errors', /We need your address/
   end
 
   test "update requires login" do
-    options = {name: "Howard Roark", address: "123 Independence St", current_user: nil, expect_events: 0}
+    options = {user_name: "Howard Roark", address: "123 Independence St", current_user: nil, expect_events: 0}
     update @howard_request, options
     verify_login_page
   end
 
   test "update requires request owner" do
-    options = {name: "Howard Roark", address: "123 Independence St", current_user: @quentin, expect_events: 0}
+    options = {user_name: "Howard Roark", address: "123 Independence St", current_user: @quentin, expect_events: 0}
     update @howard_request, options
     verify_wrong_login_page
   end

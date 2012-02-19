@@ -258,18 +258,6 @@ class DonationTest < ActiveSupport::TestCase
     assert event.message.blank?, event.message.inspect
   end
 
-  test "fix: added name" do
-    @dagny.address = "123 Somewhere Rd"
-    @dagny.save!
-
-    event = @dagny_donation.fix({student_name: "Dagny Taggart", address: "123 Somewhere Rd"}, {message: "Here you go"})
-    assert !@dagny_donation.flagged?
-
-    assert_equal "update", event.type
-    assert_equal "added their full name", event.detail
-    assert_equal "Here you go", event.message
-  end
-
   test "fix: updated info" do
     attributes = {student_name: "Quentin Daniels", address: "123 Quantum Ln\nGalt's Gulch, CO"}
     event = @quentin_donation.fix(attributes, {message: "I have a new address"})

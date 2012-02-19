@@ -161,51 +161,21 @@ class RequestTest < ActiveSupport::TestCase
     verify_event donation, "grant", user: @hugh
   end
 
-  # Update user
+  # Build update event
 
-  test "update user: added address" do
-    event = @howard_request.update_user(user: {name: "Howard Roark", address: "123 Independence St"}, event: {message: ""})
-
-    assert_equal "123 Independence St", @howard_request.address
+  test "build update event" do
+    @howard_request.address = "123 Independence St"
+    event = @howard_request.build_update_event
     assert_equal "update", event.type
+    assert_equal @howard, event.user
     assert_equal "added a shipping address", event.detail
     assert event.message.blank?, event.message.inspect
   end
 
-  test "update user: added name" do
-    @dagny.address = "123 Somewhere Rd"
-    @dagny.save!
-
-    event = @dagny_request.update_user(user: {name: "Dagny Taggart", address: "123 Somewhere Rd"}, event: {message: "Here you go"})
-
-    assert_equal "Dagny Taggart", @dagny_request.user.name
-    assert_equal "update", event.type
-    assert_equal "added their full name", event.detail
-    assert_equal "Here you go", event.message
-  end
-
-  test "new update: updated info" do
-    attributes = {name: "Quentin Daniels", address: "123 Quantum Ln\nGalt's Gulch, CO"}
-    event = @quentin_request.update_user(user: attributes, event: {message: "I have a new address"})
-
-    assert_equal "123 Quantum Ln\nGalt's Gulch, CO", @quentin_request.address
-    assert_equal "update", event.type
-    assert_equal "updated shipping info", event.detail
-    assert_equal "I have a new address", event.message
-  end
-
-  test "new update: message only" do
-    event = @quentin_request.update_user(user: {name: @quentin.name, address: @quentin.address}, event: {message: "just a message"})
-
-    assert_equal @quentin, event.user
-    assert_equal "message", event.type
-    assert !event.is_thanks?
-    assert_equal "just a message", event.message
-  end
-
-  test "update user requires address if granted" do
-    event = @dagny_request.update_user(user: {name: "Dagny Taggart", address: ""}, event: {message: "Here you go"})
-    assert !@dagny_request.user_valid?
+  test "update requires address if granted" do
+    @quentin_request.address = ""
+    @quentin_request.valid?
+    assert @quentin_request.errors[:address].any?, @quentin_request.errors.inspect
   end
 
   # Metrics
