@@ -15,6 +15,7 @@ class AdminController < ApplicationController
 
     @request_metrics = Request.metrics
     @pledge_metrics = Pledge.metrics
+    @donation_metrics = Donation.metrics
     @book_metrics = Request.book_metrics
   end
 end

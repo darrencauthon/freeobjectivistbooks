@@ -69,34 +69,6 @@ class RequestTest < ActiveSupport::TestCase
     verify_scope(:granted) {|request| request.granted?}
   end
 
-  test "flagged" do
-    verify_scope(:flagged) {|request| request.flagged?}
-  end
-
-  test "not flagged" do
-    verify_scope(:not_flagged) {|request| !request.flagged?}
-  end
-
-  test "thanked" do
-    verify_scope(:thanked) {|request| request.thanked?}
-  end
-
-  test "not thanked" do
-    verify_scope(:not_thanked) {|request| !request.thanked?}
-  end
-
-  test "sent" do
-    verify_scope(:sent) {|request| request.sent?}
-  end
-
-  test "not sent" do
-    verify_scope(:not_sent) {|request| !request.sent?}
-  end
-
-  test "received" do
-    verify_scope(:received) {|request| request.received?}
-  end
-
   # Derived attributes
 
   test "address" do
@@ -185,9 +157,8 @@ class RequestTest < ActiveSupport::TestCase
     values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
 
     assert_equal values['Total'], values['Granted'] + Request.open.count, metrics.inspect
-    assert_equal values['Total'], values['Flagged'] + Request.not_flagged.count, metrics.inspect
-    assert_equal values['Granted'], values['Sent'] + Request.not_sent.count, metrics.inspect
-    assert_equal values['Total'], values['Thanked'] + Request.not_thanked.count, metrics.inspect
+    assert_equal values['Granted'], values['Sent'] + Donation.not_sent.count, metrics.inspect
+    assert values['Received'] <= values['Sent'], metrics.inspect
   end
 
   test "book metrics" do

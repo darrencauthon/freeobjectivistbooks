@@ -23,6 +23,9 @@ class Donation < ActiveRecord::Base
   scope :active, where(canceled: false)
   scope :canceled, where(canceled: true)
 
+  scope :thanked, active.where(thanked: true)
+  scope :not_thanked, active.where(thanked: false)
+
   scope :flagged, active.where(flagged: true)
   scope :not_flagged, active.where(flagged: false)
 
@@ -140,5 +143,16 @@ class Donation < ActiveRecord::Base
       request.flagged = false
       request.save!
     end
+  end
+  # Metrics
+
+  def self.metrics
+    calculate_metrics [
+      {name: 'Active',   value: active.count},
+      {name: 'Flagged',  value: flagged.count,  denominator: 'Active'},
+      {name: 'Thanked',  value: thanked.count,  denominator: 'Active'},
+      {name: 'Canceled', value: canceled.count, denominator: 'Total'},
+      {name: 'Total',    value: count},
+    ]
   end
 end

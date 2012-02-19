@@ -4,7 +4,7 @@ class Pledge < ActiveRecord::Base
     message: "Please enter a number of books to pledge."
 
   def self.metrics
-    metrics = [
+    [
       {name: 'Donors pledging',     value: count},
       {name: 'Books pledged',       value: sum(:quantity)},
       {name: 'Average pledge size', value: average(:quantity)},

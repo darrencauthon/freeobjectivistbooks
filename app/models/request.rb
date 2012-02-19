@@ -38,18 +38,8 @@ class Request < ActiveRecord::Base
 
   # Scopes
 
-  scope :open, where(donor_id: nil)
-  scope :granted, where('donor_id is not null')
-
-  scope :flagged, where(flagged: true)
-  scope :not_flagged, where(flagged: [false, nil])
-
-  scope :thanked, where(thanked: true)
-  scope :not_thanked, where(thanked: [false, nil])
-
-  scope :not_sent, scoped_by_status("not_sent")
-  scope :sent, scoped_by_status(%w{sent received})
-  scope :received, scoped_by_status("received")
+  scope :open, where(donation_id: nil)
+  scope :granted, where('donation_id is not null')
 
   # Callbacks
 
@@ -116,21 +106,12 @@ class Request < ActiveRecord::Base
   # Metrics
 
   def self.metrics
-    metrics = [
+    calculate_metrics [
       {name: 'Total',    value: count},
-      {name: 'Granted',  value: granted.count,  denominator: 'Total'},
-      {name: 'Sent',     value: sent.count,     denominator: 'Granted'},
-      {name: 'Received', value: received.count, denominator: 'Sent'},
-      {name: 'Flagged',  value: flagged.count,  denominator: 'Granted'},
-      {name: 'Thanked',  value: thanked.count,  denominator: 'Granted'},
+      {name: 'Granted',  value: granted.count,           denominator: 'Total'},
+      {name: 'Sent',     value: Donation.sent.count,     denominator: 'Granted'},
+      {name: 'Received', value: Donation.received.count, denominator: 'Sent'},
     ]
-
-    values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
-
-    metrics.each do |metric|
-      denominator = metric[:denominator]
-      metric[:percent] = metric[:value].to_f / values[denominator] if denominator && metric[:value] > 0
-    end
   end
 
   def self.book_metrics
