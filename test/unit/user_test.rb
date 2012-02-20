@@ -101,6 +101,18 @@ class UserTest < ActiveSupport::TestCase
     assert !@john.save
   end
 
+  test "can't sign up with duplicate email" do
+    @john.email = "roark@stanton.edu"
+    assert !@john.save
+    assert @john.errors[:email].any?
+  end
+
+  test "email uniqueness check is case-insensitive" do
+    @john.email = "ROARK@stanton.edu"
+    assert !@john.save
+    assert @john.errors[:email].any?
+  end
+
   # Login
 
   test "password" do

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :donations
 
   validates_presence_of :name, :location, :email
-  validates_uniqueness_of :email, message: "There is already an account with this email."
+  validates_uniqueness_of :email, case_sensitive: false, message: "There is already an account with this email."
 
   validate :name_must_have_proper_format, on: :create, if: lambda {|user| user.name.present? }
 
