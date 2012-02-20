@@ -20,6 +20,14 @@ class User < ActiveRecord::Base
 
   validates_presence_of :address, on: :granted, message: "We need your address to send you your book."
 
+  before_validation do |user|
+    [:name, :email, :location, :school, :studying].each do |attribute|
+      value = user.send attribute
+      value.strip! if value
+      value.squeeze! " " if value
+    end
+  end
+
   after_create do |user|
     Rails.logger.info "New user: #{@user.inspect}"
   end

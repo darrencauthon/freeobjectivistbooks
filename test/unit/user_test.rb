@@ -54,6 +54,20 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "John Galt", @john.name
   end
 
+  # Callbacks
+
+  test "email is normalized on save" do
+    @john.email = "john@galt.com "
+    @john.save!
+    assert_equal "john@galt.com", @john.email
+  end
+
+  test "name is normalized on save" do
+    @john.name = " John  Galt   "
+    @john.save!
+    assert_equal "John Galt", @john.name
+  end
+
   # Finders
 
   test "find by email" do
