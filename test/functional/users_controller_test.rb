@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SignupControllerTest < ActionController::TestCase
+class UsersControllerTest < ActionController::TestCase
   def request_reason
     "Everyone tells me I really need to read this book!"
   end

@@ -1,4 +1,4 @@
-class SignupController < ApplicationController
+class UsersController < ApplicationController
   def load_models
     @user = User.new params[:user]
     @request = @user.requests.build params[:request] if params[:request]
