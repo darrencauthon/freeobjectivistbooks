@@ -38,7 +38,7 @@
 </ul>
 
 <div class="grid_12">
-<%= form_for @user, url: { action: :submit } do |f| %>
+<%= form_for @user do |f| %>
     <h2>What book do you want to read?</h2>
 
     <%= fields_for @request do |r| %>

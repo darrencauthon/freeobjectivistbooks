@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
 
   validates_presence_of :address, on: :granted, message: "We need your address to send you your book."
 
+  after_create do |user|
+    Rails.logger.info "New user: #{@user.inspect}"
+  end
+
   def self.find_by_email(email)
     where("lower(email) = ?", email.downcase).first
   end

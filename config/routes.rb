@@ -26,9 +26,9 @@ FreeBooks::Application.routes.draw do
   post "login" => "sessions#create"
   match "logout" => "sessions#destroy"
 
+  resources :users, only: [:create]
   get "signup/read" => "users#read"
   get "signup/donate" => "users#donate"
-  post "signup/submit" => "users#submit"
 
   resource :password, only: [:edit, :update], path_names: {edit: "reset"} do
     member do

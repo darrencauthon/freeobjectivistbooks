@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  before_filter :seen_signup, only: [:read, :donate]
+
+  def seen_signup
+    session[:seen_signup] = true
+  end
+
   def load_models
     @user = User.new params[:user]
     @request = @user.requests.build params[:request] if params[:request]
@@ -6,18 +12,15 @@ class UsersController < ApplicationController
   end
 
   def read
-    session[:seen_signup] = true
     @request ||= @user.requests.build
   end
 
   def donate
-    session[:seen_signup] = true
     @pledge ||= @user.pledges.build quantity: 5
   end
 
-  def submit
+  def create
     if @user.save
-      logger.info "new signup: #{@user.name} (#{@user.id})"
       set_current_user @user
       if @user.pledges.any?
         redirect_to donate_url

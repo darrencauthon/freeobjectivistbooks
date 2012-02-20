@@ -27,6 +27,8 @@ class UsersControllerTest < ActionController::TestCase
     { quantity: 5, reason: pledge_reason }
   end
 
+  # Read
+
   test "read" do
     get :read
     assert_response :success
@@ -36,6 +38,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '.sidebar h2', "Already signed up?"
   end
 
+  test "read when logged in" do
+    get :read, params, session_for(users :howard)
+    assert_response :success
+    assert_select '.sidebar h2', "Already signed in"
+    assert_select '.sidebar p', /already signed in as Howard Roark/
+  end
+
+  # Donate
+
   test "donate" do
     get :donate
     assert_response :success
@@ -43,11 +54,20 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '.sidebar h2', "Already signed up?"
   end
 
-  test "read submit" do
+  test "donate when logged in" do
+    get :donate, params, session_for(users :howard)
+    assert_response :success
+    assert_select '.sidebar h2', "Already signed in"
+    assert_select '.sidebar p', /already signed in as Howard Roark/
+  end
+
+  # Create
+
+  test "create student" do
     user = user_attributes
     request = request_attributes
 
-    post :submit, user: user, request: request, from_action: "read"
+    post :create, user: user, request: request, from_action: "read"
 
     user = User.find_by_name "John Galt"
     assert_not_nil user
@@ -67,7 +87,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to request
   end
 
-  test "read submit failure" do
+  test "create student failure" do
     user = user_attributes
     user[:email] = ""
     user[:password_confirmation] = "dany"
@@ -75,7 +95,7 @@ class UsersControllerTest < ActionController::TestCase
     request = request_attributes
     request.delete :pledge
 
-    post :submit, user: user, request: request, from_action: "read"
+    post :create, user: user, request: request, from_action: "read"
     assert_response :unprocessable_entity
 
     assert !User.exists?(name: "John Galt")
@@ -86,11 +106,11 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '.field_with_errors', /must pledge to read/
   end
 
-  test "donate submit" do
+  test "create donor" do
     user = user_attributes
     pledge = pledge_attributes
 
-    post :submit, user: user, pledge: pledge, from_action: "donate"
+    post :create, user: user, pledge: pledge, from_action: "donate"
     assert_redirected_to donate_url
 
     user = User.find_by_name "John Galt"
@@ -109,7 +129,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal [], user.requests
   end
 
-  test "donate submit failure" do
+  test "create donor failure" do
     user = user_attributes
     user[:email] = ""
     user[:password_confirmation] = "dany"
@@ -117,7 +137,7 @@ class UsersControllerTest < ActionController::TestCase
     pledge = pledge_attributes
     pledge[:quantity] = "x"
 
-    post :submit, user: user, pledge: pledge, from_action: "donate"
+    post :create, user: user, pledge: pledge, from_action: "donate"
     assert_response :unprocessable_entity
 
     assert !User.exists?(name: "John Galt")
@@ -126,19 +146,5 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '.field_with_errors', /can't be blank/
     assert_select '.field_with_errors', /didn't match/
     assert_select '.field_with_errors', /Please enter a number/
-  end
-
-  test "read when logged in" do
-    get :read, params, session_for(users :howard)
-    assert_response :success
-    assert_select '.sidebar h2', "Already signed in"
-    assert_select '.sidebar p', /already signed in as Howard Roark/
-  end
-
-  test "donate when logged in" do
-    get :donate, params, session_for(users :howard)
-    assert_response :success
-    assert_select '.sidebar h2', "Already signed in"
-    assert_select '.sidebar p', /already signed in as Howard Roark/
   end
 end
