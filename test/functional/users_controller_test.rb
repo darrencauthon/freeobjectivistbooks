@@ -104,6 +104,21 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '.field_with_errors', /can't be blank/
     assert_select '.field_with_errors', /didn't match/
     assert_select '.field_with_errors', /must pledge to read/
+    assert_select 'form a', text: /log in/i, count: 0
+  end
+
+  test "create student with duplicate email" do
+    user = user_attributes
+    user[:email] = @howard.email
+
+    post :create, user: user, request: request_attributes, from_action: "read"
+    assert_response :unprocessable_entity
+
+    assert !User.exists?(name: "John Galt")
+
+    assert_select '.message.error .headline', /problems with your signup/
+    assert_select '.field_with_errors', /already an account/
+    assert_select 'form a', /log in/i
   end
 
   test "create donor" do
@@ -146,5 +161,20 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '.field_with_errors', /can't be blank/
     assert_select '.field_with_errors', /didn't match/
     assert_select '.field_with_errors', /Please enter a number/
+    assert_select 'form a', text: /log in/i, count: 0
+  end
+
+  test "create donor with duplicate email" do
+    user = user_attributes
+    user[:email] = @hugh.email
+
+    post :create, user: user, pledge: pledge_attributes, from_action: "donate"
+    assert_response :unprocessable_entity
+
+    assert !User.exists?(name: "John Galt")
+
+    assert_select '.message.error .headline', /problems with your signup/
+    assert_select '.field_with_errors', /already an account/
+    assert_select 'form a', /log in/i
   end
 end

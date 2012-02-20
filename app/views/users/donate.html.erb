@@ -66,9 +66,11 @@
     <%= f.label :email, class: "grid_5 alpha" %><div class="clear"></div>
     <%= f.text_field :email, class: "grid_5 alpha" %>
     <% if @user.errors[:email].any? %>
-    <div class="grid_6 omega field_with_errors">
-        <p><%= @user.errors[:email].join(", ") %></p>
+    <div class="grid_6 omega">
+        <p class="field_with_errors"><%= @user.errors[:email].join(", ") %></p>
+        <% if @user.is_duplicate? %>
         <p><%= link_to 'Log in', login_path(email: @user.email) %> if you've already signed up.</p>
+        <% end %>
     </div>
     <% end %>
     <div class="clear"></div>

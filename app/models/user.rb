@@ -1,6 +1,8 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
+  include ActiveModel::Validations
+
   LETMEIN_EXPIRATION = 24.hours
 
   attr_reader :password
@@ -13,12 +15,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, case_sensitive: false, message: "There is already an account with this email."
 
   validate :name_must_have_proper_format, on: :create, if: lambda {|user| user.name.present? }
+  validates :email, email: {message: "is not a valid email address"}, allow_nil: true
 
   validates_presence_of :password, on: :create
   validates_presence_of :password_confirmation, if: :password_digest_changed?
   validates_confirmation_of :password, message: "didn't match confirmation"
-
-  validates_presence_of :address, on: :granted, message: "We need your address to send you your book."
 
   before_validation do |user|
     [:name, :email, :location, :school, :studying].each do |attribute|
@@ -60,6 +61,11 @@ class User < ActiveRecord::Base
     end
 
     errors.add(:name, "please include full first and last name") if (!has_upper && !has_lower) || name.words.size < 2
+  end
+
+  def is_duplicate?
+    user = User.find_by_email email
+    user && user != self
   end
 
   def update_detail

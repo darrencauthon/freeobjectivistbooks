@@ -6,6 +6,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'dynamic_form'
 gem 'jquery-rails'
 gem 'exception_notification'
+gem 'valid_email'
 
 group :production do
   gem 'pg'

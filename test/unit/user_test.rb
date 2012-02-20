@@ -113,6 +113,17 @@ class UserTest < ActiveSupport::TestCase
     assert @john.errors[:email].any?
   end
 
+  test "email must have proper format" do
+    @john.email = "johngalt"
+    assert !@john.save
+    assert @john.errors[:email].any?
+  end
+
+  test "is duplicate?" do
+    @john.email = "roark@stanton.edu"
+    assert @john.is_duplicate?
+  end
+
   # Login
 
   test "password" do
