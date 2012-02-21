@@ -253,7 +253,7 @@ class DonationTest < ActiveSupport::TestCase
     event = donation.fix({student_name: "Howard Roark", address: "123 Independence St"}, {message: ""})
     assert !donation.flagged?
 
-    assert_equal "update", event.type
+    assert_equal "fix", event.type
     assert_equal "added a shipping address", event.detail
     assert event.message.blank?, event.message.inspect
   end
@@ -263,7 +263,7 @@ class DonationTest < ActiveSupport::TestCase
     event = @quentin_donation.fix(attributes, {message: "I have a new address"})
     assert !@quentin_donation.flagged?
 
-    assert_equal "update", event.type
+    assert_equal "fix", event.type
     assert_equal "updated shipping info", event.detail
     assert_equal "I have a new address", event.message
   end
@@ -273,7 +273,7 @@ class DonationTest < ActiveSupport::TestCase
     assert !@quentin_donation.flagged?
 
     assert_equal @quentin, event.user
-    assert_equal "message", event.type
+    assert_equal "fix", event.type
     assert !event.is_thanks?
     assert_equal "just a message", event.message
   end

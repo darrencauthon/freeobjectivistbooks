@@ -43,7 +43,7 @@ hugh_flags_dagny:
   notified_at: 2012-01-17 00:15:25
 
 quentin_adds_name:
-  type: update
+  type: fix
   request: quentin_wants_vos
   user: quentin
   donation: hugh_grants_quentin_wants_vos
@@ -52,7 +52,7 @@ quentin_adds_name:
   notified_at: 2012-01-18 00:14:25
 
 quentin_adds_address:
-  type: update
+  type: fix
   request: quentin_wants_vos
   user: quentin
   donation: hugh_grants_quentin_wants_vos
@@ -60,6 +60,15 @@ quentin_adds_address:
   message: There you go
   happened_at: 2012-01-18 00:15:25
   notified_at: 2012-01-18 00:15:25
+
+quentin_fixes:
+  type: fix
+  request: quentin_wants_vos
+  user: quentin
+  donation: hugh_grants_quentin_wants_vos
+  message: This is correct
+  happened_at: 2012-01-18 00:16:25
+  notified_at: 2012-01-18 00:16:25
 
 hugh_messages_quentin:
   type: message

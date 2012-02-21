@@ -21,7 +21,7 @@ class FlagsController < ApplicationController
   end
 
   def fix
-    @event = @donation.events.build
+    @event = @donation.fix_events.build
   end
 
   def destroy

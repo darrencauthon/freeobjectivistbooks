@@ -112,12 +112,7 @@ class Donation < ActiveRecord::Base
   def fix(attributes, event_attributes = {})
     self.attributes = attributes
     self.flagged = false
-
-    event = events.build event_attributes
-    event.user = student
-    event.type = student.changed? ? "update" : "message"
-    event.detail = student.update_detail
-    event
+    fix_events.build event_attributes.merge(detail: student.update_detail)
   end
 
   def cancel(params)

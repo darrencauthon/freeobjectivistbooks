@@ -3,10 +3,11 @@ require 'test_helper'
 class EventTest < ActiveSupport::TestCase
   def setup
     super
-    @new_flag = @dagny_request.events.build type: "flag", user: @hugh, message: "Problem here"
-    @new_message = @hank_donation.events.build type: "message", user: @hank, message: "Info is correct"
-    @new_thank = @quentin_donation.events.build type: "message", is_thanks: true, user: @quentin, message: "Thanks!", public: false
-    @new_cancel = @hank_donation.events.build type: "cancel", user: @hugh, message: "Sorry!"
+    @new_flag = @dagny_donation.flag_events.build message: "Problem here"
+    @new_fix = @hank_donation.fix_events.build detail: "updated shipping info", message: "Fixed"
+    @new_message = @hank_donation.message_events.build user: @hank, message: "Info is correct"
+    @new_thank = @quentin_donation.message_events.build user: @quentin, message: "Thanks!", is_thanks: true, public: false
+    @new_cancel = @hank_donation.cancel_events.build message: "Sorry!"
   end
 
   # Associations
@@ -38,6 +39,27 @@ class EventTest < ActiveSupport::TestCase
     @new_flag.message = ""
     assert @new_flag.invalid?
     assert @new_flag.errors[:message].any?
+  end
+
+  test "valid fix" do
+    assert @new_fix.valid?
+  end
+
+  test "flag with detail doesn't need message" do
+    @new_fix.message = ""
+    assert @new_fix.valid?
+  end
+
+  test "flag with message doesn't need detail" do
+    @new_fix.detail = nil
+    assert @new_fix.valid?
+  end
+
+  test "flag requires detail or message" do
+    @new_fix.detail = nil
+    @new_fix.message = ""
+    assert @new_fix.invalid?
+    assert @new_fix.errors[:message].any?
   end
 
   test "valid message" do

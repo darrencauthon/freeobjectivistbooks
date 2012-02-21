@@ -13,14 +13,20 @@ class EventMailer < ApplicationMailer
     notification "We found a donor to send you #{@event.book}!"
   end
 
+  def update_event(event)
+    @event = event
+    notification "#{@event.user.name} #{@event.detail} on Free Objectivist Books"
+  end
+
   def flag_event(event)
     @event = event
     notification "Problem with your shipping info on Free Objectivist Books"
   end
 
-  def update_event(event)
+  def fix_event(event)
     @event = event
-    notification "#{@event.user.name} #{@event.detail} on Free Objectivist Books"
+    action = event.detail || "responded to your flag"
+    notification "#{@event.user.name} #{action} on Free Objectivist Books"
   end
 
   def message_event(event)

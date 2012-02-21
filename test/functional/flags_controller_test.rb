@@ -119,21 +119,21 @@ class FlagsControllerTest < ActionController::TestCase
     options = {student_name: "Dagny Taggart", address: "123 Somewhere Road", message: "Added my full name"}
     destroy @dagny_donation, options
     verify_destroy @dagny_donation, options
-    verify_event @dagny_donation, "update", detail: "added their full name", notified?: true
+    verify_event @dagny_donation, "fix", detail: "added their full name", notified?: true
   end
 
   test "destroy update shipping info" do
     options = {student_name: "Quentin Daniels", address: "123 Quantum Ln", message: ""}
     destroy @quentin_donation, options
     verify_destroy @quentin_donation, options
-    verify_event @quentin_donation, "update", detail: "updated shipping info", notified?: true
+    verify_event @quentin_donation, "fix", detail: "updated shipping info", notified?: true
   end
 
   test "destroy only message" do
     options = {student_name: "Quentin Daniels", address: @quentin.address, message: "No changes here"}
     destroy @quentin_donation, options
     verify_destroy @quentin_donation, options
-    verify_event @quentin_donation, "message", message: "No changes here", notified?: true
+    verify_event @quentin_donation, "fix", detail: nil, message: "No changes here", notified?: true
   end
 
   test "destroy requires address" do
@@ -141,6 +141,13 @@ class FlagsControllerTest < ActionController::TestCase
     destroy @dagny_donation, options
     assert_response :success
     assert_select '.field_with_errors', /We need your address/
+  end
+
+  test "destroy without change requires message" do
+    options = {student_name: "Quentin Daniels", address: @quentin.address, message: "", expect_events: 0}
+    destroy @quentin_donation, options
+    assert_response :success
+    assert_select '.field_with_errors', /enter a message/
   end
 
   test "destroy requires login" do

@@ -1,0 +1,17 @@
+<p>You flagged <%= @event.student.name %>'s request on Free Objectivist Books.</p>
+
+<p>
+    <% if @event.detail.present? %>They have <%= @event.detail %>.<% end %>
+    <% if @event.message.present? %>They said: "<%= @event.message %>"<% end %>
+</p>
+
+<p>Please send <i><%= @event.book %></i> to:</p>
+
+<p>
+<%= @event.student.name %><br>
+<%= format_address @event.request.address %>
+</p>
+
+<p><strong>
+    <%= link_to 'Confirm with us when you have sent this book', edit_donation_status_url(@event.donation, status: "sent") %>
+</strong></p>

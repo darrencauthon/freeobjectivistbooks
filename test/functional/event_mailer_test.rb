@@ -57,13 +57,14 @@ class EventMailerTest < ActionMailer::TestCase
     mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hugh/
-      assert_select 'p', /Quentin Daniels added their full name/
+      assert_select 'p', /You flagged Quentin Daniels's request/
+      assert_select 'p', /They have added their full name./
       assert_select 'p', text: /said/, count: 0
-      assert_select 'p', /The shipping info for The Virtue of Selfishness is now/
+      assert_select 'p', /Please send The Virtue of Selfishness to/
       @quentin.address.split("\n").each do |line|
         assert_select 'p', /#{line}/
       end
-      assert_select 'a', /Full details for this request/
+      assert_select 'a', /Confirm/
     end
   end
 
@@ -76,13 +77,34 @@ class EventMailerTest < ActionMailer::TestCase
     mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hugh/
-      assert_select 'p', /Quentin Daniels added a shipping address/
+      assert_select 'p', /You flagged Quentin Daniels's request/
+      assert_select 'p', /They have added a shipping address./
       assert_select 'p', /They said: "There you go"/
-      assert_select 'p', /The shipping info for The Virtue of Selfishness is now/
+      assert_select 'p', /Please send The Virtue of Selfishness to/
       @quentin.address.split("\n").each do |line|
         assert_select 'p', /#{line}/
       end
-      assert_select 'a', /Full details for this request/
+      assert_select 'a', /Confirm/
+    end
+  end
+
+  test "fix with message" do
+    mail = EventMailer.mail_for_event events(:quentin_fixes)
+    assert_equal "Quentin Daniels responded to your flag on Free Objectivist Books", mail.subject
+    assert_equal ["akston@patrickhenry.edu"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hugh/
+      assert_select 'p', /You flagged Quentin Daniels's request/
+      assert_select 'p', text: /They have /, count: 0
+      assert_select 'p', /They said: "This is correct"/
+      assert_select 'p', /Please send The Virtue of Selfishness to/
+      @quentin.address.split("\n").each do |line|
+        assert_select 'p', /#{line}/
+      end
+      assert_select 'a', /Confirm/
     end
   end
 
