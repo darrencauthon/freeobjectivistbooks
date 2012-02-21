@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   validates_presence_of :password_confirmation, if: :password_digest_changed?
   validates_confirmation_of :password, message: "didn't match confirmation"
 
+  scope :with_email, lambda {|email| where("lower(email) = ?", email.downcase)}
+
   before_validation do |user|
     [:name, :email, :location, :school, :studying].each do |attribute|
       value = user.send attribute
@@ -34,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_email(email)
-    where("lower(email) = ?", email.downcase).first
+    with_email(email).first
   end
 
   def self.login(email, password)
@@ -64,8 +66,9 @@ class User < ActiveRecord::Base
   end
 
   def is_duplicate?
-    user = User.find_by_email email
-    user && user != self
+    query = User.with_email(email)
+    query = query.where('id != ?', id) if id
+    query.any?
   end
 
   def update_detail
