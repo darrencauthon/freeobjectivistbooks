@@ -59,11 +59,11 @@ class EventMailerTest < ActionMailer::TestCase
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /Quentin Daniels added their full name/
       assert_select 'p', text: /said/, count: 0
-      assert_select 'p', /Please send The Virtue of Selfishness to/
+      assert_select 'p', /The shipping info for The Virtue of Selfishness is now/
       @quentin.address.split("\n").each do |line|
         assert_select 'p', /#{line}/
       end
-      assert_select 'a', /See this and all the latest books/
+      assert_select 'a', /Full details for this request/
     end
   end
 
@@ -78,11 +78,11 @@ class EventMailerTest < ActionMailer::TestCase
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /Quentin Daniels added a shipping address/
       assert_select 'p', /They said: "There you go"/
-      assert_select 'p', /Please send The Virtue of Selfishness to/
+      assert_select 'p', /The shipping info for The Virtue of Selfishness is now/
       @quentin.address.split("\n").each do |line|
         assert_select 'p', /#{line}/
       end
-      assert_select 'a', /See this and all the latest books/
+      assert_select 'a', /Full details for this request/
     end
   end
 
@@ -97,9 +97,8 @@ class EventMailerTest < ActionMailer::TestCase
       assert_select 'p', /Hi Quentin/
       assert_select 'p', /Hugh Akston sent you a\s+message/
       assert_select 'p', /"Thanks! I will send you the book"/
-      assert_select 'p', text: /Please send/, count: 0
       assert_select 'a', /Reply to Hugh/
-      assert_select 'a', /See the status of your request/
+      assert_select 'a', /Full details for this request/
     end
   end
 

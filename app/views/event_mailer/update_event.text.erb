@@ -4,11 +4,9 @@
 They said: "<%= @event.message %>"
 
 <% end %>
-<% if @event.to_donor? %>
-Please send <%= @event.book %> to:
+The shipping info for <%= @event.book %> is now:
 
 <%= @event.student.name %>
 <%= @event.request.address %>
 
-See this and all the latest books you have pledged to donate at: <%= profile_url %>
-<% end %>
+Full details for this request: <%= request_url(@event.request) %>

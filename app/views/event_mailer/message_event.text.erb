@@ -4,8 +4,4 @@
 
 Reply to <%= @event.from.name %>: <%= new_donation_message_url @event.donation %>
 
-<% if @event.to_donor? %>
-See this and all the latest books you have pledged to donate at: <%= profile_url %>
-<% elsif @event.to_student? %>
-See the status of your request: <%= request_url @event.request %>
-<% end %>
+Full details for this request: <%= request_url(@event.request) %>

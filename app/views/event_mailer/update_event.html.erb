@@ -4,13 +4,11 @@
 <p>They said: "<%= format_block @event.message %>"</p>
 
 <% end %>
-<% if @event.to_donor? %>
-<p>Please send <i><%= @event.book %></i> to:</p>
+<p>The shipping info for <i><%= @event.book %></i> is now:</p>
 
 <p>
 <%= @event.student.name %><br>
 <%= format_address @event.request.address %>
 </p>
 
-<p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>
-<% end %>
+<p><%= link_to 'Full details for this request', request_url(@event.request) %></p>

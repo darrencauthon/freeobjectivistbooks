@@ -3,18 +3,14 @@
 </p>
 
 <% if @event.donation.address.present? %>
-<% if !@event.donation.thanked? %>
-<p><%= link_to "Send thanks to #{@event.donor.name}", new_donation_thank_url(@event.donation) %></p>
-<% end %>
-
-<p>Your book will arrive shortly. The address you gave was:</p>
+<p>The address you gave was:</p>
 
 <p>
 <%= @event.donation.student.name %><br>
 <%= format_address @event.donation.address %>
 </p>
 
-<p>You can <%= link_to 'update this info', edit_request_url(@event.request) %> if needed.</p>
+<p>If this isn't right, please <%= link_to 'update it right away', edit_request_url(@event.request) %>.</p>
 <% else %>
 <p>However, you haven't given us your address! <%= link_to 'Add your address', fix_donation_flag_url(@event.donation) %> to get your book.
 <% end %>

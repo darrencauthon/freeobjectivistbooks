@@ -10,8 +10,4 @@
 
 <p><%= link_to "Reply to #{@event.from.name}", new_donation_message_url(@event.donation) %></p>
 
-<% if @event.to_donor? %>
-<p><%= link_to 'See this and all the latest books you have pledged to donate', profile_url %></p>
-<% elsif @event.to_student? %>
-<p><%= link_to 'See the status of your request', request_url(@event.request) %></p>
-<% end %>
+<p><%= link_to 'Full details for this request', request_url(@event.request) %></p>
