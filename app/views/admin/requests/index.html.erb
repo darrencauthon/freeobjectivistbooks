@@ -19,7 +19,7 @@ td, th {
 <h1 class="grid_16">Requests</h1>
 <div class="grid_12">
     <div class="overview">
-        <%= render partial: "metrics", object: @metrics %>
+        <%= render partial: "metrics", object: @metrics.request_pipeline %>
     </div>
     <%= render partial: "request", collection: @requests, spacer_template: "requests/spacer" %>
 </div>

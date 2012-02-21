@@ -43,10 +43,4 @@ class PledgeTest < ActiveSupport::TestCase
   test "fulfilled" do
     verify_scope(Pledge, :unfulfilled) {|pledge| !pledge.fulfilled?}
   end
-
-  test "metrics" do
-    metrics = Pledge.metrics
-    values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
-    assert_equal values['Average pledge size'], values['Books pledged'].to_f / values['Donors pledging'], metrics.inspect
-  end
 end

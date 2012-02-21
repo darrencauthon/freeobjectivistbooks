@@ -19,7 +19,7 @@ td, th {
 <h1 class="grid_16">Pledges</h1>
 <div class="grid_12">
     <div class="overview">
-        <%= render partial: "admin/metrics", object: @metrics %>
+        <%= render partial: "admin/metrics", object: @metrics.pledge_metrics %>
     </div>
     <%= render partial: "pledge", collection: @pledges, spacer_template: "requests/spacer" %>
 </div>

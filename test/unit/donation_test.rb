@@ -282,15 +282,4 @@ class DonationTest < ActiveSupport::TestCase
     event = @dagny_donation.fix({student_name: "Dagny Taggart", address: ""}, {message: "Here you go"})
     assert !@dagny_donation.valid?
   end
-
-  # Metrics
-
-  test "metrics" do
-    metrics = Donation.metrics
-    values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
-
-    assert_equal values['Total'], values['Active'] + values['Canceled'], metrics.inspect
-    assert_equal values['Active'], values['Flagged'] + Donation.not_flagged.count, metrics.inspect
-    assert_equal values['Active'], values['Thanked'] + Donation.not_thanked.count, metrics.inspect
-  end
 end

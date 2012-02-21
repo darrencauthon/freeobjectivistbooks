@@ -1,6 +1,6 @@
 class Admin::RequestsController < AdminController
   def index
-    @metrics = Request.metrics
+    @metrics = Metrics.new
     @requests = Request.order('created_at desc')
   end
 end

@@ -13,9 +13,6 @@ class AdminController < ApplicationController
 
     @latest_events = Event.order('created_at desc').limit(10)
 
-    @request_metrics = Request.metrics
-    @pledge_metrics = Pledge.metrics
-    @donation_metrics = Donation.metrics
-    @book_metrics = Request.book_metrics
+    @metrics = Metrics.new
   end
 end

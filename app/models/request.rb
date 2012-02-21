@@ -101,20 +101,4 @@ class Request < ActiveRecord::Base
   def build_update_event
     update_events.build detail: user.update_detail if user.changed?
   end
-
-  # Metrics
-
-  def self.metrics
-    calculate_metrics [
-      {name: 'Total',    value: count},
-      {name: 'Granted',  value: granted.count,           denominator: 'Total'},
-      {name: 'Sent',     value: Donation.sent.count,     denominator: 'Granted'},
-      {name: 'Received', value: Donation.received.count, denominator: 'Sent'},
-    ]
-  end
-
-  def self.book_metrics
-    counts = group(:book).count.map {|book,count| {name: book, value: count}}
-    counts.sort {|a,b| b[:value] <=> a[:value]}
-  end
 end

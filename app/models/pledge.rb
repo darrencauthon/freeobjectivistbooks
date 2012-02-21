@@ -3,14 +3,6 @@ class Pledge < ActiveRecord::Base
   validates_numericality_of :quantity, only_integer: true, greater_than: 0,
     message: "Please enter a number of books to pledge."
 
-  def self.metrics
-    [
-      {name: 'Donors pledging',     value: count},
-      {name: 'Books pledged',       value: sum(:quantity)},
-      {name: 'Average pledge size', value: average(:quantity)},
-    ]
-  end
-
   def self.unfulfilled
     all.select {|pledge| !pledge.fulfilled? }
   end

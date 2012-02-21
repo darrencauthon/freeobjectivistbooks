@@ -42,13 +42,13 @@ td, th {
     </p>
 
     <h2>Request pipeline</h2>
-    <%= render partial: "admin/metrics", object: @request_metrics %>
+    <%= render partial: "admin/metrics", object: @metrics.request_pipeline %>
 
     <h2>Donation metrics</h2>
-    <%= render partial: "admin/metrics", object: @donation_metrics %>
+    <%= render partial: "admin/metrics", object: @metrics.donation_metrics %>
 
     <h2>Pledges</h2>
-    <%= render partial: "admin/metrics", object: @pledge_metrics %>
+    <%= render partial: "admin/metrics", object: @metrics.pledge_metrics %>
 
     <h2>Latest events</h2>
     <% @latest_events.each do |event| %>
@@ -56,5 +56,5 @@ td, th {
     <% end %>
 
     <h2>Books leaderboard</h2>
-    <%= render partial: "admin/metrics", object: @book_metrics %>
+    <%= render partial: "admin/metrics", object: @metrics.book_leaderboard %>
 </div>

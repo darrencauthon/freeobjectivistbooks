@@ -149,21 +149,4 @@ class RequestTest < ActiveSupport::TestCase
     @quentin_request.valid?
     assert @quentin_request.errors[:address].any?, @quentin_request.errors.inspect
   end
-
-  # Metrics
-
-  test "metrics" do
-    metrics = Request.metrics
-    values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
-
-    assert_equal values['Total'], values['Granted'] + Request.open.count, metrics.inspect
-    assert_equal values['Granted'], values['Sent'] + Donation.not_sent.count, metrics.inspect
-    assert values['Received'] <= values['Sent'], metrics.inspect
-  end
-
-  test "book metrics" do
-    metrics = Request.book_metrics
-    sum = metrics.inject(0) {|sum,metric| sum += metric[:value]}
-    assert_equal Request.count, sum
-  end
 end

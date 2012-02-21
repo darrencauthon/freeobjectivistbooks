@@ -121,16 +121,4 @@ class Donation < ActiveRecord::Base
     request.donation = nil
     cancel_events.build params[:event]
   end
-
-  # Metrics
-
-  def self.metrics
-    calculate_metrics [
-      {name: 'Active',   value: active.count},
-      {name: 'Flagged',  value: flagged.count,  denominator: 'Active'},
-      {name: 'Thanked',  value: thanked.count,  denominator: 'Active'},
-      {name: 'Canceled', value: canceled.count, denominator: 'Total'},
-      {name: 'Total',    value: count},
-    ]
-  end
 end
