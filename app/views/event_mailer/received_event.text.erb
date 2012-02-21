@@ -2,6 +2,8 @@
 
 <% if @event.message.present? %>
 They said: "<%= @event.message %>"
+
+Reply to <%= @event.from.name %>: <%= new_donation_message_url(@event.donation) %>
 <% else %>
 Thank you for being a donor on Free Objectivist Books.
 <% end %>

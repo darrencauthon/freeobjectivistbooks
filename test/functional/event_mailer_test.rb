@@ -150,6 +150,7 @@ class EventMailerTest < ActionMailer::TestCase
       assert_select 'p', /Hi Henry/
       assert_select 'p', /Hank Rearden has received The Fountainhead/
       assert_select 'p', /They said: "I got the book. Thank you!"/
+      assert_select 'a', /Reply to Hank Rearden/
       assert_select 'a', /Find more students/
       assert_select 'p', /Thanks,/
     end
@@ -170,6 +171,7 @@ class EventMailerTest < ActionMailer::TestCase
       assert_select 'p', /Hank Rearden has received The Fountainhead/
       assert_select 'p', text: /They said/, count: 0
       assert_select 'p', /Thank you for being a donor/
+      assert_select 'a', text: /Reply to Hank Rearden/, count: 0
       assert_select 'a', /Find more students/
       assert_select 'p', /Thanks,/
     end
