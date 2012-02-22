@@ -80,4 +80,19 @@ class ReminderMailerTest < ActionMailer::TestCase
       assert_select 'p', /Thanks,\nFree Objectivist Books/
     end
   end
+
+  test "confirm receipt" do
+    mail = ReminderMailer.confirm_receipt(@quentin_donation)
+    assert_equal "Have you received The Virtue of Selfishness yet?", mail.subject
+    assert_equal ["quentin@mit.edu"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Quentin/
+      assert_select 'p', /Have you received The Virtue of Selfishness/
+      assert_select 'p', /Hugh Akston has sent you this book \(confirmed on Jan 19\)/
+      assert_select 'a', /I have received The Virtue of Selfishness/
+      assert_select 'p', /Thanks,\nFree Objectivist Books/
+    end
+  end
 end

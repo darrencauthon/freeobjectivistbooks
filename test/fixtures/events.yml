@@ -93,6 +93,14 @@ hugh_updates_quentin:
   detail: sent
   happened_at: 2012-01-20 00:15:25
 
+cameron_updates_hank:
+  type: update_status
+  request: hank_wants_fountainhead
+  user: cameron
+  donation: cameron_grants_hank_wants_fountainhead
+  detail: sent
+  happened_at: 2012-01-18 00:15:25
+
 hank_updates_cameron:
   type: update_status
   request: hank_wants_fountainhead

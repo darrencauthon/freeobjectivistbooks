@@ -3,6 +3,7 @@ class ReminderMailer < ApplicationMailer
     case reminder.to_sym
     when :fulfill_pledge then Pledge.unfulfilled
     when :send_books then User.donors_with_unsent_books
+    when :confirm_receipt then Donation.needs_receipt
     else raise "Don't know who should get #{reminder} reminder"
     end
   end
@@ -36,6 +37,12 @@ class ReminderMailer < ApplicationMailer
     else
       "Have you sent your #{@donations.size} books to students from Free Objectivist Books yet?"
     end
-    mail = reminder subject, 'X-Mailgun-Campaign-ID' => 'send_books_2012_02_03'
+    mail = reminder subject, 'X-Mailgun-Campaign-ID' => 'send_books-2012_02_21'
+  end
+
+  def confirm_receipt(donation)
+    @donation = donation
+    @user = donation.student
+    reminder "Have you received #{@donation.book} yet?", 'X-Mailgun-Campaign-ID' => "confirm_receipt-2012_02_21"
   end
 end

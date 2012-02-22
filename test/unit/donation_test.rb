@@ -64,7 +64,11 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "needs sending" do
-    verify_scope(:needs_sending) {|request| request.active? && request.can_send?}
+    verify_scope(:needs_sending) {|donation| donation.active? && donation.can_send?}
+  end
+
+  test "needs receipt" do
+    verify_scope(:needs_receipt) {|donation| donation.in_transit? && (Time.now - donation.sent_at) > 3.days }
   end
 
   # Callbacks
@@ -92,6 +96,12 @@ class DonationTest < ActiveSupport::TestCase
     assert !@dagny_donation.sent?
     assert @quentin_donation.sent?
     assert @hank_donation_received.sent?
+  end
+
+  test "sent at" do
+    assert_nil @dagny_donation.sent_at
+    assert_equal events(:hugh_updates_quentin).happened_at, @quentin_donation.sent_at
+    assert_equal events(:cameron_updates_hank).happened_at, @hank_donation_received.sent_at
   end
 
   test "received?" do

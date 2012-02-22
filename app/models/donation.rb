@@ -37,6 +37,10 @@ class Donation < ActiveRecord::Base
   scope :needs_sending, active.not_flagged.not_sent
   scope :needs_thanks, active.received.not_thanked
 
+  def self.needs_receipt
+    in_transit.select {|donation| donation.sent_at < Time.now - 3.days}
+  end
+
   # Callbacks
 
   before_validation do |donation|
@@ -92,6 +96,11 @@ class Donation < ActiveRecord::Base
   def flag_message
     event = flag_events.order('created_at desc').first
     event.message if event
+  end
+
+  def sent_at
+    event = update_status_events.where(detail: "sent").order('created_at desc').first
+    event.happened_at if event
   end
 
   # Actions
