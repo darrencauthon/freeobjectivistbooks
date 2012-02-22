@@ -55,6 +55,10 @@ class DonationTest < ActiveSupport::TestCase
     verify_scope(:not_sent) {|donation| donation.active? && !donation.sent?}
   end
 
+  test "in transit" do
+    verify_scope(:in_transit) {|donation| donation.sent? && !donation.received?}
+  end
+
   test "received" do
     verify_scope(:received) {|donation| donation.active? && donation.received?}
   end

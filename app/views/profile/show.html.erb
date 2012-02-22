@@ -51,7 +51,7 @@
         <p class="headline"><%= request_summary request %></p>
         <p class="status"><%= status_detail request %></p>
 
-        <% if request.status.sent? %>
+        <% if request.in_transit? %>
         <p><%= link_to "Let #{request.donor.name} know when you have received this book",
             edit_donation_status_path(request.donation, status: "received") %></p>
         <% elsif request.flagged? %>

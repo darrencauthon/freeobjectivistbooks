@@ -69,6 +69,10 @@ class Donation < ActiveRecord::Base
     status.sent? || status.received?
   end
 
+  def in_transit?
+    status.sent?
+  end
+
   def received?
     status.received?
   end

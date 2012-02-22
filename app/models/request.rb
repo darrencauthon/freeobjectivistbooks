@@ -54,7 +54,7 @@ class Request < ActiveRecord::Base
 
   delegate :address, :address=, to: :user
   delegate :name, :name=, to: :user, prefix: true
-  delegate :thanked?, :sent?, :received?, :can_send?, :can_flag?, :flagged?, :flag_message, to: :donation, allow_nil: true
+  delegate :thanked?, :sent?, :in_transit?, :received?, :can_send?, :can_flag?, :flagged?, :flag_message, to: :donation, allow_nil: true
 
   def student
     user
