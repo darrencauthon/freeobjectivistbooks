@@ -38,7 +38,6 @@ class Event < ActiveRecord::Base
       self.donation ||= request.donation if request
       self.request ||= donation.request if donation
       self.user ||= default_user
-      self.detail ||= donation.status if type == "update_status"
       self.happened_at ||= Time.now
     end
   end
@@ -48,7 +47,7 @@ class Event < ActiveRecord::Base
     when "grant", "flag", "cancel" then donor
     when "update", "fix" then student
     when "update_status"
-      case donation.status
+      case detail
       when "sent" then donor
       when "received" then student
       end

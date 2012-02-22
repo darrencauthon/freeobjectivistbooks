@@ -144,17 +144,9 @@ class DonationTest < ActiveSupport::TestCase
   # Update status
 
   test "update status sent" do
-    assert_difference "@dagny_donation.events.count" do
-      @dagny_donation.update_status status: "sent"
-    end
-
-    @dagny_donation.reload
+    event = @dagny_donation.update_status status: "sent"
     assert @dagny_donation.sent?
 
-    @dagny_request.reload
-    assert @dagny_request.sent?
-
-    event = @dagny_donation.events.last
     assert_equal @dagny_donation, event.donation
     assert_equal @dagny_request, event.request
     assert_equal @hugh, event.user
@@ -166,17 +158,9 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "update status received" do
-    assert_difference "@dagny_donation.events.count" do
-      @dagny_donation.update_status status: "received", event: {message: "I got it"}
-    end
-
-    @dagny_donation.reload
+    event = @dagny_donation.update_status status: "received", event: {message: "I got it"}
     assert @dagny_donation.received?
 
-    @dagny_request.reload
-    assert @dagny_request.received?
-
-    event = @dagny_donation.events.last
     assert_equal @dagny_donation, event.donation
     assert_equal @dagny_request, event.request
     assert_equal @dagny, event.user
@@ -189,19 +173,9 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "update status received with thank-you" do
-    assert_difference "@quentin_donation.events.count" do
-      @quentin_donation.update_status status: "received", event: {message: "Thanks!", is_thanks: true, public: false}
-    end
-
-    @quentin_donation.reload
+    event = @quentin_donation.update_status status: "received", event: {message: "Thanks!", is_thanks: true, public: false}
     assert @quentin_donation.received?
-    assert @quentin_donation.thanked?
 
-    @quentin_request.reload
-    assert @quentin_request.received?
-    assert @quentin_request.thanked?
-
-    event = @quentin_donation.events.last
     assert_equal @quentin_donation, event.donation
     assert_equal @quentin_request, event.request
     assert_equal @quentin, event.user
@@ -215,19 +189,9 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "update status received with empty thank-you" do
-    assert_difference "@quentin_donation.events.count" do
-      @quentin_donation.update_status status: "received", event: {message: "", is_thanks: true, public: false}
-    end
-
-    @quentin_donation.reload
+    event = @quentin_donation.update_status status: "received", event: {message: "", is_thanks: true, public: false}
     assert @quentin_donation.received?
-    assert !@quentin_donation.thanked?
 
-    @quentin_request.reload
-    assert @quentin_request.received?
-    assert !@quentin_request.thanked?
-
-    event = @quentin_donation.events.last
     assert_equal @quentin_donation, event.donation
     assert_equal @quentin_request, event.request
     assert_equal @quentin, event.user
@@ -240,9 +204,8 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "update status is idempotent" do
-    assert_no_difference "@quentin_donation.events.count" do
-      @quentin_donation.update_status status: "sent"
-    end
+    event = @quentin_donation.update_status status: "sent"
+    assert_nil event
   end
 
   # Flag

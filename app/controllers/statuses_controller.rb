@@ -1,10 +1,13 @@
 class StatusesController < ApplicationController
   before_filter :require_login
 
+  def status
+    @status ||= params[:status] || params[:donation][:status]
+  end
+
   # Filters
 
   def allowed_users
-    status = params[:status] || params[:donation][:status]
     case status
     when "sent" then @donation.user
     when "received" then @donation.student
@@ -14,11 +17,11 @@ class StatusesController < ApplicationController
   # Actions
 
   def edit
-    @event = @donation.update_status_events.build detail: params[:status]
-    render params[:status]
+    @event = @donation.update_status_events.build detail: status
+    render status
   end
 
-  def notice_for_status(status)
+  def notice
     case status
     when "sent" then "Thanks! We've let #{@donation.student.name} know the book is on its way."
     when "received" then "Great! We've let your donor (#{@donation.user.name}) know that you received this book."
@@ -26,13 +29,17 @@ class StatusesController < ApplicationController
   end
 
   def update
-    @donation.update_status params[:donation]
-    respond_to do |format|
-      format.html do
-        flash[:notice] = notice_for_status @donation.status
-        redirect_to @donation.request
+    @event = @donation.update_status params[:donation]
+    if save @donation, @event
+      respond_to do |format|
+        format.html do
+          flash[:notice] = notice
+          redirect_to @donation.request
+        end
+        format.js { render nothing: true }
       end
-      format.js { render nothing: true }
+    else
+      render status
     end
   end
 end

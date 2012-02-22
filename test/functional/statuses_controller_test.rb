@@ -106,6 +106,21 @@ class StatusesControllerTest < ActionController::TestCase
     verify_event @dagny_donation, "update_status", detail: "received", is_thanks?: false, message: "It came today", public: nil
   end
 
+  test "received with thank-you requires explicit public bit" do
+    event = {message: "Thank you", is_thanks: true}
+    assert_no_difference "@quentin_donation.events.count" do
+      put :update, {donation_id: @quentin_donation.id, donation: {status: "received", event: event}}, session_for(@quentin)
+    end
+
+    assert_response :success
+    assert_select 'h1', /Yes, I have received/
+    assert_select '.field_with_errors', /choose/
+
+    @quentin_donation.reload
+    assert !@quentin_donation.received?, @quentin_donation.status.to_s
+    assert !@quentin_donation.thanked?
+  end
+
   test "received requires login" do
     put :update, {donation_id: @quentin_donation.id, donation: {status: "received"}}
     verify_login_page

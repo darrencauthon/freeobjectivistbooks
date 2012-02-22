@@ -108,14 +108,13 @@ class Donation < ActiveRecord::Base
   def update_status(params)
     self.status = params[:status]
     return unless changed?
-    save!
 
-    event = update_status_events.build (params[:event] || {})
+    event_attributes = params[:event] || {}
+    event = update_status_events.build event_attributes.merge(detail: params[:status])
     if event.message.blank?
       event.is_thanks = nil
       event.public = nil
     end
-    event.save!
     event
   end
 
