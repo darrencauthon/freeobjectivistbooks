@@ -1,5 +1,8 @@
 <p>There seems to be a problem with your shipping info on Free Objectivist Books.</p>
 
-<p>Your donor (<%= @event.user.name %>) says: "<%= format_block @event.message %>"</p>
+<p>Your donor (<%= @event.donor.name %>) says: "<%= format_block @event.message %>"</p>
 
-<p><%= link_to 'Update your shipping info', fix_donation_flag_url(@event.donation) %> to get your copy of <i><%= @event.book %></i>.
+<p><strong>
+    <%= link_to (raw "Respond to #{h @event.donor.name} to get your copy of <i>#{h @event.book}</i>"),
+        fix_donation_flag_url(@event.donation) %>
+</strong></p>

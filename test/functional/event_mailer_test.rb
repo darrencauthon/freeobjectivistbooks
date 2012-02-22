@@ -44,7 +44,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_select_email do
       assert_select 'p', /Hi Dagny/
       assert_select 'p', 'Your donor (Hugh Akston) says: "Please add your full name and address"'
-      assert_select 'a', /update/i
+      assert_select 'a', /Respond to Hugh Akston to get your copy of Capitalism: The Unknown Ideal/
     end
   end
 

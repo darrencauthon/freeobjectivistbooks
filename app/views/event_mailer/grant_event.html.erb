@@ -10,7 +10,11 @@
 <%= format_address @event.donation.address %>
 </p>
 
-<p>If this isn't right, please <%= link_to 'update it right away', edit_request_url(@event.request) %>.</p>
+<p>If this isn't right, please update it right away:</p>
+
+<p><%= link_to 'Update shipping info if needed', edit_request_url(@event.request) %></p>
 <% else %>
-<p>However, you haven't given us your address! <%= link_to 'Add your address', fix_donation_flag_url(@event.donation) %> to get your book.
+<p>However, you haven't given us your address!</p>
+
+<p><strong><%= link_to 'Add your address to get your book', fix_donation_flag_url(@event.donation) %></strong></p>
 <% end %>

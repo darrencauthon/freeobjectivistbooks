@@ -5,7 +5,7 @@
 </p>
 
 <p><strong>
-    <%= link_to (raw "Yes, I have received <i>#{@donation.book}</i>"), edit_donation_status_url(@donation, status: "received") %>
+    <%= link_to (raw "Yes, I have received <i>#{h @donation.book}</i>"), edit_donation_status_url(@donation, status: "received") %>
 </strong></p>
 
 <p>That will let us know for our records, and also notify your donor.</p>
