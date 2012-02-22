@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120216033739) do
+ActiveRecord::Schema.define(:version => 20120219012146) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20120216033739) do
   create_table "events", :force => true do |t|
     t.integer  "request_id"
     t.integer  "user_id"
-    t.integer  "donor_id"
+    t.integer  "donor_id_deprecated"
     t.string   "type"
     t.string   "detail"
     t.text     "message"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 20120216033739) do
   end
 
   add_index "events", ["donation_id"], :name => "index_events_on_donation_id"
-  add_index "events", ["donor_id"], :name => "index_events_on_donor_id"
+  add_index "events", ["donor_id_deprecated"], :name => "index_events_on_donor_id"
   add_index "events", ["request_id"], :name => "index_events_on_request_id"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
@@ -74,10 +74,10 @@ ActiveRecord::Schema.define(:version => 20120216033739) do
     t.text     "reason"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "donor_id"
-    t.boolean  "flagged"
-    t.boolean  "thanked"
-    t.string   "status"
+    t.integer  "donor_id_deprecated"
+    t.boolean  "flagged_deprecated"
+    t.boolean  "thanked_deprecated"
+    t.string   "status_deprecated"
     t.integer  "donation_id"
   end
 

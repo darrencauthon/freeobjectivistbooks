@@ -100,7 +100,8 @@ class CreateDonations < ActiveRecord::Migration
         end
 
         error "Request #{request.id}: donation is for request #{donation.request.id}!" if request != donation.request
-        error "Request #{request.id}: expected donor #{request.donor.name}, got #{donation.user.name}" if request.donor != donation.user
+        error "Request #{request.id}: donor is nil" if !request.donor
+        error "Request #{request.id}: expected donor #{request.donor.name}, got #{donation.user.name}" if request.donor && request.donor != donation.user
 
         if request.flagged? != donation.flagged?
           warn "Request #{request.id}: expected flagged #{request.flagged?}, got #{donation.flagged?}"
