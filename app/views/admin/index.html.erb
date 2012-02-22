@@ -44,10 +44,13 @@ td, th {
     <h2>Request pipeline</h2>
     <%= render partial: "admin/metrics", object: @metrics.request_pipeline %>
 
+    <h2>Reminders needed</h2>
+    <%= render partial: "admin/metrics", object: @metrics.reminders_needed %>
+
     <h2>Donation metrics</h2>
     <%= render partial: "admin/metrics", object: @metrics.donation_metrics %>
 
-    <h2>Pledges</h2>
+    <h2>Pledge metrics</h2>
     <%= render partial: "admin/metrics", object: @metrics.pledge_metrics %>
 
     <h2>Latest events</h2>

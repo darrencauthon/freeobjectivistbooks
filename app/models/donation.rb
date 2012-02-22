@@ -31,9 +31,11 @@ class Donation < ActiveRecord::Base
 
   scope :not_sent, active.scoped_by_status("not_sent")
   scope :sent, active.scoped_by_status(%w{sent received})
+  scope :in_transit, active.scoped_by_status("sent")
   scope :received, active.scoped_by_status("received")
 
   scope :needs_sending, active.not_flagged.not_sent
+  scope :needs_thanks, active.received.not_thanked
 
   # Callbacks
 

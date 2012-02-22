@@ -8,6 +8,16 @@ class Metrics
     ]
   end
 
+  def reminders_needed
+    [
+      {name: 'Open requests', value: Request.open.count},
+      {name: 'Needs sending', value: Donation.needs_sending.count},
+      {name: 'In transit',    value: Donation.in_transit.count},
+      {name: 'Flagged',       value: Donation.flagged.count},
+      {name: 'Needs thanks',  value: Donation.needs_thanks.count},
+    ]
+  end
+
   def donation_metrics
     calculate_metrics [
       {name: 'Active',   value: Donation.active.count},
