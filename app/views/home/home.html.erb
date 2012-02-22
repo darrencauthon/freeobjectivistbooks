@@ -55,8 +55,8 @@ h2 {
         <%= link_to signup_read_path, class: "alpha grid_7" do %><div class="read button"></div><% end %>
         <%= link_to signup_donate_path, class: "prefix_2 grid_7 omega" do %><div class="donate button"></div><% end %>
 
-        <p class="alpha grid_7 detail">Simply pledge to read <span class="title">Atlas Shrugged,</span>
-            <span class="title">The Fountainhead,</span> or any other Objectivist book. We'll find you a donor who
+        <p class="alpha grid_7 detail">Simply pledge to read <%= title "Atlas Shrugged" %>,
+            <%= title "The Fountainhead" %>, or any other Objectivist book. We'll find you a donor who
             will send you the book for free. <%= link_to 'Sign up now', signup_read_path %>
         </p>
         <p class="prefix_2 grid_7 omega detail">Want to give the gift of Objectivism to eager students? A few minutes and a few

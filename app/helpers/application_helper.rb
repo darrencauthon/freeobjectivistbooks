@@ -69,12 +69,16 @@ module ApplicationHelper
     end
   end
 
+  def title(book)
+    raw "<span class=\"title\">#{h book}</span>"
+  end
+
   def request_summary(request)
     student = request.student
     name = h student.name
     location = h student.location
-    book = h request.book
-    raw "#{name} in #{location} wants to read <span class=\"title\">#{book}</span>"
+    book = title request.book
+    raw "#{name} in #{location} wants to read #{book}"
   end
 
   def donation_summary(donation)
@@ -82,7 +86,7 @@ module ApplicationHelper
     name = h donor.name
     location = h donor.location
     action = donation.sent? ? "sent" : "agreed to send"
-    book = h donation.book
-    raw "#{name} in #{location} #{action} you <span class=\"title\">#{book}</span>"
+    book = title donation.book
+    raw "#{name} in #{location} #{action} you #{book}"
   end
 end

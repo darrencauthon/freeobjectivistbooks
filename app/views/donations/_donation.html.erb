@@ -1,7 +1,7 @@
 <div class="donation">
     <%= render "requests/spacer" %>
     <div class="grid_6 alpha request">
-        <p class="headline"><span class="title"><%= donation.book %></span> to:</p>
+        <p class="headline"><%= title donation.book %> to:</p>
         <p class="name"><%= donation.student.name %></p>
         <p class="address"><%= format_address donation.address %></p>
     </div>

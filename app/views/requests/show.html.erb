@@ -45,7 +45,7 @@
 <% end %>
 
 <div class="grid_16">
-    <h1><%= @request.user.name %> wants <span class="title"><%= @request.book %></span></h1>
+    <h1><%= @request.user.name %> wants <%= title @request.book %></h1>
     <p class="overview tagline"><%= user_tagline @request.user %></p>
     <p class="reason"><%= format_block @request.reason %></p>
 </div>
@@ -79,7 +79,7 @@
         <% if current_is_donor? %>
             <% if @request.can_send? %>
             <h2>Update status</h2>
-            <p>Let <%= @request.user.name %> know when you have sent <span class="title"><%= @request.book %>:</span></p>
+            <p>Let <%= @request.user.name %> know when you have sent <%= title @request.book %>:</p>
             <%= form_for @request.donation, url: donation_status_path(@request.donation) do |f| %>
                 <%= f.hidden_field :status, value: "sent" %>
                 <%= f.submit "", class: "grid_3 alpha button sent" %><div class="clear"></div>
@@ -93,7 +93,7 @@
         <% if current_is_student? %>
             <% if @request.in_transit? %>
             <h2>Update status</h2>
-            <p>Let <%= @request.donor.name %> know when you have received <span class="title"><%= @request.book %>:</span></p>
+            <p>Let <%= @request.donor.name %> know when you have received <%= title @request.book %>:</p>
             <%= link_to edit_donation_status_path(@request.donation, status: "received"), class: "grid_3 alpha" do %>
                 <div class="button update"></div>
             <% end %>

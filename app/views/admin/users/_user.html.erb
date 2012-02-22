@@ -2,7 +2,7 @@
     <p class="headline"><%= admin_user_link user %> (<%= user.email %>)</p>
     <p class="tagline"><%= user_tagline user %></p>
     <% user.requests.each do |request| %>
-    <p>Wants <span class="title"><%= request.book %></span></p>
+    <p>Wants <%= title request.book %></p>
     <% end %>
     <% user.pledges.each do |pledge| %>
     <p>Pledged <%= pluralize pledge.quantity, 'book' %></p>

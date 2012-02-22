@@ -16,9 +16,7 @@
 </style>
 <% end %>
 
-<h1 class="grid_16"><%= admin_user_link @request.user %> wants
-    <span class="title"><%= @request.book %></span>
-</h1>
+<h1 class="grid_16"><%= admin_user_link @request.user %> wants <%= title @request.book %></h1>
 
 <div class="request grid_12">
     <p class="tagline"><%= user_tagline @request.user %></p>

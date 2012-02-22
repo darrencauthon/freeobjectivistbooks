@@ -1,6 +1,6 @@
 <div class="request">
     <div class="grid_7 alpha">
-        <div class="headline"><%= request.user.name %> wants <span class="title"><%= request.book %></span></div>
+        <div class="headline"><%= request.user.name %> wants <%= title request.book %></div>
         <div class="tagline"><%= user_tagline request.user %></div>
         <div class="reason"><%= format_block request.reason %></div>
         <div class="timestamp"><%= l request.created_at.to_date %></div>
