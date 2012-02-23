@@ -14,6 +14,11 @@ class Admin::UsersController < AdminController
     end
   end
 
+  def spoof
+    set_current_user @user
+    redirect_to profile_url
+  end
+
   def destroy
     logger.info "deleting user #{@user.name} (#{@user.id})"
     @user.destroy

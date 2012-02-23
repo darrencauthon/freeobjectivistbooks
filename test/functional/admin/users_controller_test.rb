@@ -54,6 +54,13 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_equal "123 Independence St", @howard.address
   end
 
+  test "spoof" do
+    admin_auth
+    post :spoof, id: @howard.id
+    assert_redirected_to profile_url
+    assert_equal @howard.id, session[:user_id]
+  end
+
   test "destroy" do
     admin_auth
     delete :destroy, id: @howard.id
@@ -83,6 +90,12 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
     @howard.reload
     assert_equal "Howard Roark", @howard.name
+  end
+
+  test "spoof requires login" do
+    post :spoof, id: @howard.id
+    assert_response :unauthorized
+    assert_nil session[:user_id]
   end
 
   test "destroy requires login" do

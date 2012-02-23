@@ -12,7 +12,8 @@
 
 .button {
     height: 56px;
-    margin-top: 24px;
+    margin-top: 12px;
+    margin-bottom: 12px;
 }
 
 .button.edit {
@@ -88,10 +89,11 @@
 </div>
 
 <div class="actions grid_3">
-<%= link_to edit_admin_user_path(@user) do %>
-    <div class="edit button"></div>
-<% end %>
-<%= link_to admin_user_path(@user), method: :delete, confirm: "Delete #{@user.name}?" do %>
-    <div class="delete button"></div>
-<% end %>
+    <%= link_to edit_admin_user_path(@user) do %>
+        <div class="edit button"></div>
+    <% end %>
+    <%= link_to admin_user_path(@user), method: :delete, confirm: "Delete #{@user.name}?" do %>
+        <div class="delete button"></div>
+    <% end %>
+    <%= link_to "Spoof user", spoof_admin_user_path(@user), method: :post %>
 </div>

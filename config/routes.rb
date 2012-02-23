@@ -40,7 +40,9 @@ FreeBooks::Application.routes.draw do
   # Admin
   get "admin" => "admin#index"
   namespace :admin do
-    resources :users
+    resources :users do
+      post "spoof", on: :member
+    end
     resources :requests
     resources :pledges
     resources :events
