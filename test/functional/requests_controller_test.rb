@@ -8,10 +8,13 @@ class RequestsControllerTest < ActionController::TestCase
     assert_response :success
     count = @hugh.donations.not_sent.count
     assert_select '.request .headline', "Howard Roark wants Atlas Shrugged"
-    assert_select '.sidebar h2', "Your donations"
-    assert_select '.sidebar p', "You have pledged to donate 5 books."
-    assert_select '.sidebar p', "You previously donated 3 books."
-    assert_select '.sidebar ul'
+
+    assert_select '.sidebar' do
+      assert_select 'h2', "Your donations"
+      assert_select 'p', "You have pledged to donate 5 books."
+      assert_select 'p', "You previously donated 3 books."
+      assert_select 'ul'
+    end
   end
 
   test "index requires login" do

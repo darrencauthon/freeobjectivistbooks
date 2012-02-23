@@ -5,10 +5,14 @@ class ProfileControllerTest < ActionController::TestCase
     get :show, params, session_for(@howard)
     assert_response :success
     assert_select 'h1', "Howard Roark"
-    assert_select '.request .headline', /Atlas Shrugged/
-    assert_select '.request .status', /We are looking for a donor/
-    assert_select '.request a', text: /thank/i, count: 0
-    assert_select '.request a', /see full/i
+
+    assert_select '.request', /Atlas Shrugged/ do
+      assert_select '.headline', /Atlas Shrugged/
+      assert_select '.status', /We are looking for a donor/
+      assert_select 'a', text: /thank/i, count: 0
+      assert_select 'a', /see full/i
+    end
+
     assert_select 'h2', text: /donation/i, count: 0
   end
 
@@ -39,12 +43,16 @@ class ProfileControllerTest < ActionController::TestCase
     get :show, params, session_for(@dagny)
     assert_response :success
     assert_select 'h1', "Dagny"
-    assert_select '.request .headline', /Capitalism/
-    assert_select '.request .status', /Hugh Akston in Boston, MA will donate/
-    assert_select '.request .flagged', /We need your address/
-    assert_select '.request a', /add your address/i
-    assert_select '.request a', text: /thank/i, count: 0
-    assert_select '.request a', /see full/i
+
+    assert_select '.request', /Capitalism/ do
+      assert_select '.headline', /Capitalism/
+      assert_select '.status', /Hugh Akston in Boston, MA will donate/
+      assert_select '.flagged', /We need your address/
+      assert_select 'a', /add your address/i
+      assert_select 'a', text: /thank/i, count: 0
+      assert_select 'a', /see full/i
+    end
+
     assert_select 'h2', text: /donation/i, count: 0
   end
 
@@ -52,6 +60,7 @@ class ProfileControllerTest < ActionController::TestCase
     get :show, params, session_for(@hank)
     assert_response :success
     assert_select 'h1', "Hank Rearden"
+
     assert_select '.request', /Atlas Shrugged/ do
       assert_select '.headline', /Atlas Shrugged/
       assert_select '.status', /Henry Cameron in New York, NY will donate/
@@ -60,6 +69,7 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select 'a', text: /thank/i, count: 0
       assert_select 'a', /see full/i
     end
+
     assert_select 'h2', text: /donation/i, count: 0
   end
 
