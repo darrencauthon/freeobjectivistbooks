@@ -25,6 +25,7 @@ class PasswordsController < ApplicationController
       flash[:notice] = "Your password has been reset."
       redirect_to root_url
     else
+      log_errors @user
       render :edit
     end
   end

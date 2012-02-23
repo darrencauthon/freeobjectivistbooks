@@ -6,7 +6,7 @@ class Admin::UsersController < AdminController
   def update
     @user.attributes = params[:user]
     changed = @user.changed
-    if @user.save
+    if save @user
       flash[:notice] = changed.any? ? "Updated #{changed.join ', '}" : "No changes."
       redirect_to [:admin, @user]
     else

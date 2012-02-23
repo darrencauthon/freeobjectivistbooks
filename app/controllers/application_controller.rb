@@ -56,8 +56,16 @@ class ApplicationController < ActionController::Base
   end
 
   def save(*models)
-    models = models.compact
-    models.each {|m| m.save} if models.all? {|m| m.valid?}
+    models = models.flatten.compact
+    valid = models.all? {|m| m.valid?}
+    log_errors models unless valid
+    models.each {|m| m.save} if valid
+  end
+
+  def log_errors(*models)
+    models.flatten.compact.each do |model|
+      logger.warn "#{model.class} errors: #{model.errors.messages}" if model.invalid?
+    end
   end
 
   unless Rails.application.config.consider_all_requests_local
@@ -88,6 +96,8 @@ class ApplicationController < ActionController::Base
 
   def render_error(exception)
     render template: "errors/500", status: 500
+    trace = exception.backtrace.map {|frame| "    #{frame}"}.join("\n")
+    logger.error "Caught exception #{exception.class}: #{exception.message}\n#{trace}"
     ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
   end
 end

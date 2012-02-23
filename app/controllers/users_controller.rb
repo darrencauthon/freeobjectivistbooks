@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    if @user.save
+    if save @user
       set_current_user @user
       if @user.pledges.any?
         redirect_to donate_url

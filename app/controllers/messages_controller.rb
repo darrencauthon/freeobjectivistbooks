@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
   def create
     attributes = params[:event].merge(user: @current_user)
     @event = @donation.message_events.build attributes
-    if @event.save
+    if save @event
       message = @event.is_thanks? ? "thanks" : "message"
       flash[:notice] = "We sent your #{message} to #{@event.to.name}."
       redirect_to @donation.request

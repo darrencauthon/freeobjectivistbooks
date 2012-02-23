@@ -33,10 +33,9 @@ class RequestsController < ApplicationController
   def create
     @request = @current_user.requests.build
     @request.attributes = params[:request]
-    if @request.save
+    if save @request
       redirect_to @request
     else
-      logger.info "errors: #{@request.errors.messages}"
       render :new
     end
   end
