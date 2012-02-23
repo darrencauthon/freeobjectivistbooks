@@ -7,6 +7,33 @@ class UserTest < ActiveSupport::TestCase
       password_confirmation: "dagny"
   end
 
+  # Associations
+
+  test "requests" do
+    assert_equal [requests(:howard_wants_atlas)], @howard.requests
+  end
+
+  test "pledges" do
+    assert_equal [pledges(:hugh_pledge)], @hugh.pledges
+  end
+
+  test "donations" do
+    assert @hugh.donations.any?
+    @hugh.donations.each {|donation| assert_equal @hugh, donation.user}
+  end
+
+  test "dependent requests are destroyed" do
+    request = @howard.requests.first
+    @howard.destroy
+    assert !Request.exists?(request)
+  end
+
+  test "dependent pledges are destroyed" do
+    pledge = @hugh.pledges.first
+    @hugh.destroy
+    assert !Pledge.exists?(pledge)
+  end
+
   # Validations
 
   test "howard is valid" do
@@ -54,20 +81,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "John Galt", @john.name
   end
 
-  # Callbacks
-
-  test "email is normalized on save" do
-    @john.email = "john@galt.com "
-    @john.save!
-    assert_equal "john@galt.com", @john.email
-  end
-
-  test "name is normalized on save" do
-    @john.name = " John  Galt   "
-    @john.save!
-    assert_equal "John Galt", @john.name
-  end
-
   # Finders
 
   test "find by email" do
@@ -81,6 +94,20 @@ class UserTest < ActiveSupport::TestCase
     verify_scope User, :donors_with_unsent_books do |user|
       user.donations.active.any? {|donation| donation.can_send?}
     end
+  end
+
+  # Callbacks
+
+  test "email is normalized on save" do
+    @john.email = "john@galt.com "
+    @john.save!
+    assert_equal "john@galt.com", @john.email
+  end
+
+  test "name is normalized on save" do
+    @john.name = " John  Galt   "
+    @john.save!
+    assert_equal "John Galt", @john.name
   end
 
   # Signup
@@ -177,35 +204,6 @@ class UserTest < ActiveSupport::TestCase
     assert !@howard.reset_password(password: "newpw", password_confirmation: "oops")
     assert @howard.errors[:password].any?
     assert !User.find(@howard).authenticate("newpw")
-  end
-
-  # Associations
-
-  test "requests" do
-    assert_equal [requests(:howard_wants_atlas)], @howard.requests
-  end
-
-  test "pledges" do
-    assert_equal [pledges(:hugh_pledge)], @hugh.pledges
-  end
-
-  test "donations" do
-    assert @hugh.donations.any?
-    @hugh.donations.each {|donation| assert_equal @hugh, donation.user}
-  end
-
-  # Association dependencies
-
-  test "dependent requests are destroyed" do
-    request = @howard.requests.first
-    @howard.destroy
-    assert !Request.exists?(request)
-  end
-
-  test "dependent pledges are destroyed" do
-    pledge = @hugh.pledges.first
-    @hugh.destroy
-    assert !Pledge.exists?(pledge)
   end
 
   # Letmein

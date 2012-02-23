@@ -7,9 +7,13 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  # Associations
+
   has_many :requests, order: :created_at, dependent: :destroy
   has_many :pledges, order: :created_at, dependent: :destroy
   has_many :donations
+
+  # Validations
 
   validates_presence_of :name, :location, :email
   validates_uniqueness_of :email, case_sensitive: false, message: "There is already an account with this email."
@@ -20,33 +24,6 @@ class User < ActiveRecord::Base
   validates_presence_of :password, on: :create
   validates_presence_of :password_confirmation, if: :password_digest_changed?
   validates_confirmation_of :password, message: "didn't match confirmation"
-
-  scope :with_email, lambda {|email| where("lower(email) = ?", email.downcase)}
-
-  before_validation do |user|
-    [:name, :email, :location, :school, :studying].each do |attribute|
-      value = user.send attribute
-      value.strip! if value
-      value.squeeze! " " if value
-    end
-  end
-
-  after_create do |user|
-    Rails.logger.info "New user: #{@user.inspect}"
-  end
-
-  def self.find_by_email(email)
-    with_email(email).first
-  end
-
-  def self.login(email, password)
-    user = find_by_email email
-    return user if user && user.authenticate(password)
-  end
-
-  def self.donors_with_unsent_books
-    Donation.needs_sending.map {|donation| donation.user}.uniq
-  end
 
   def name_must_have_proper_format
     has_upper = name =~ /[A-Z]/
@@ -65,6 +42,39 @@ class User < ActiveRecord::Base
     errors.add(:name, "please include full first and last name") if (!has_upper && !has_lower) || name.words.size < 2
   end
 
+  # Scopes and finders
+
+  scope :with_email, lambda {|email| where("lower(email) = ?", email.downcase)}
+
+  def self.find_by_email(email)
+    with_email(email).first
+  end
+
+  def self.login(email, password)
+    user = find_by_email email
+    return user if user && user.authenticate(password)
+  end
+
+  def self.donors_with_unsent_books
+    Donation.needs_sending.map {|donation| donation.user}.uniq
+  end
+
+  # Callbacks
+
+  before_validation do |user|
+    [:name, :email, :location, :school, :studying].each do |attribute|
+      value = user.send attribute
+      value.strip! if value
+      value.squeeze! " " if value
+    end
+  end
+
+  after_create do |user|
+    Rails.logger.info "New user: #{@user.inspect}"
+  end
+
+  # Derived attributes
+
   def is_duplicate?
     query = User.with_email(email)
     query = query.where('id != ?', id) if id
@@ -81,6 +91,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Actions
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create password
@@ -88,12 +100,6 @@ class User < ActiveRecord::Base
 
   def authenticate(password)
     password_digest.present? && BCrypt::Password.new(password_digest) == password
-  end
-
-  def reset_password(params)
-    errors.add(:password, "can't be blank") if params[:password].blank?
-    errors.add(:password_confirmation, "can't be blank") if params[:password_confirmation].blank?
-    errors.empty? ? update_attributes(params) : false
   end
 
   def letmein_auth(timestamp)
@@ -111,5 +117,11 @@ class User < ActiveRecord::Base
     return :expired if Time.now - timestamp > LETMEIN_EXPIRATION
     auth = letmein_auth params[:timestamp]
     auth == params[:auth] ? :valid : :invalid
+  end
+
+  def reset_password(params)
+    errors.add(:password, "can't be blank") if params[:password].blank?
+    errors.add(:password_confirmation, "can't be blank") if params[:password_confirmation].blank?
+    errors.empty? ? update_attributes(params) : false
   end
 end
