@@ -11,7 +11,7 @@ class DonationsController < ApplicationController
   # Actions
 
   def index
-    @donations = @current_user.donations.active.order('created_at desc')
+    @donations = @current_user.donations.active
   end
 
   def create

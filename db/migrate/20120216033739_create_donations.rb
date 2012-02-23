@@ -43,7 +43,7 @@ class CreateDonations < ActiveRecord::Migration
       Request.find_each do |request|
         donation = nil
 
-        request.events.order(:happened_at).each do |event|
+        request.events.each do |event|
           donor = event.donor
 
           if !donor

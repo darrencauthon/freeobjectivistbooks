@@ -43,6 +43,6 @@
     <% end %>
 
     <h2>Events</h2>
-    <%= render partial: "admin/events/event", collection: @request.events.order(:created_at), spacer_template: "requests/spacer" %>
+    <%= render partial: "admin/events/event", collection: @request.events, spacer_template: "requests/spacer" %>
 </div>
 <div class="clear"></div>

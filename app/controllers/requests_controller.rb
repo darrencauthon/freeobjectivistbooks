@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
   def index
     @requests = Request.not_granted.order('updated_at desc')
     @donations = @current_user.donations.active if @current_user
-    @pledge = @current_user.pledges.last if @current_user
+    @pledge = @current_user.pledges.first if @current_user
   end
 
   def edit

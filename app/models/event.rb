@@ -25,6 +25,12 @@ class Event < ActiveRecord::Base
     end
   end
 
+  # Scopes
+
+  default_scope order(:happened_at)
+
+  scope :reverse_order, reorder('happened_at desc')
+
   # Callbacks
 
   after_initialize :populate

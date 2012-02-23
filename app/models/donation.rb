@@ -20,6 +20,8 @@ class Donation < ActiveRecord::Base
 
   # Scopes
 
+  default_scope order("created_at desc")
+
   scope :active, where(canceled: false)
   scope :canceled, where(canceled: true)
 
@@ -94,12 +96,12 @@ class Donation < ActiveRecord::Base
   end
 
   def flag_message
-    event = flag_events.order('created_at desc').first
+    event = flag_events.reverse_order.first
     event.message if event
   end
 
   def sent_at
-    event = update_status_events.where(detail: "sent").order('created_at desc').first
+    event = update_status_events.where(detail: "sent").reverse_order.first
     event.happened_at if event
   end
 

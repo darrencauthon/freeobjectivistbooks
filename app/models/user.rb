@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
 
   # Associations
 
-  has_many :requests, order: :created_at, dependent: :destroy
-  has_many :pledges, order: :created_at, dependent: :destroy
+  has_many :requests
+  has_many :pledges
   has_many :donations
 
   # Validations
@@ -43,6 +43,8 @@ class User < ActiveRecord::Base
   end
 
   # Scopes and finders
+
+  default_scope order("created_at desc")
 
   scope :with_email, lambda {|email| where("lower(email) = ?", email.downcase)}
 

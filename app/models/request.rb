@@ -37,6 +37,8 @@ class Request < ActiveRecord::Base
 
   # Scopes
 
+  default_scope order("created_at desc")
+
   scope :granted, where('donation_id is not null')
   scope :not_granted, where(donation_id: nil)
 

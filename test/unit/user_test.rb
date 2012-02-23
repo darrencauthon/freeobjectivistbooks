@@ -22,18 +22,6 @@ class UserTest < ActiveSupport::TestCase
     @hugh.donations.each {|donation| assert_equal @hugh, donation.user}
   end
 
-  test "dependent requests are destroyed" do
-    request = @howard.requests.first
-    @howard.destroy
-    assert !Request.exists?(request)
-  end
-
-  test "dependent pledges are destroyed" do
-    pledge = @hugh.pledges.first
-    @hugh.destroy
-    assert !Pledge.exists?(pledge)
-  end
-
   # Validations
 
   test "howard is valid" do

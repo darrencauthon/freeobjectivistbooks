@@ -1,6 +1,6 @@
 class Admin::PledgesController < AdminController
   def index
     @metrics = Metrics.new
-    @pledges = Pledge.order('created_at desc')
+    @pledges = Pledge.all
   end
 end

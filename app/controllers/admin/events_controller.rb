@@ -1,6 +1,6 @@
 class Admin::EventsController < AdminController
   def index
-    @event_count = Event.count
-    @events = Event.order('created_at desc')
+    @events = Event.all
+    @event_count = @events.count
   end
 end
