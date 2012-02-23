@@ -23,7 +23,7 @@ class ReminderMailer < ApplicationMailer
   def fulfill_pledge(pledge)
     @pledge = pledge
     @user = pledge.user
-    @request_count = Request.open.count
+    @request_count = Request.not_granted.count
     reminder "Fulfill your pledge of #{pledge.quantity} books on Free Objectivist Books",
       'X-Mailgun-Campaign-ID' => "fulfill_pledge-2012_02_21"
   end

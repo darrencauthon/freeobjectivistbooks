@@ -13,7 +13,7 @@ class MetricsTest < ActiveSupport::TestCase
     metrics = @metrics.request_pipeline
     values = values_for metrics
 
-    assert_equal values['Total'], values['Granted'] + Request.open.count, metrics.inspect
+    assert_equal values['Total'], values['Granted'] + Request.not_granted.count, metrics.inspect
     assert_equal values['Granted'], values['Sent'] + Donation.not_sent.count, metrics.inspect
     assert values['Received'] <= values['Sent'], metrics.inspect
   end

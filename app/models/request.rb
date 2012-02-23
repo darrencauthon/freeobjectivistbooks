@@ -37,8 +37,8 @@ class Request < ActiveRecord::Base
 
   # Scopes
 
-  scope :open, where(donation_id: nil)
   scope :granted, where('donation_id is not null')
+  scope :not_granted, where(donation_id: nil)
 
   # Callbacks
 

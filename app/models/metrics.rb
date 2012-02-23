@@ -10,7 +10,7 @@ class Metrics
 
   def reminders_needed
     [
-      {name: 'Open requests', value: Request.open.count},
+      {name: 'Open requests', value: Request.not_granted.count},
       {name: 'Needs sending', value: Donation.needs_sending.count},
       {name: 'In transit',    value: Donation.in_transit.count},
       {name: 'Flagged',       value: Donation.flagged.count},

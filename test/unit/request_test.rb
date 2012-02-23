@@ -61,12 +61,12 @@ class RequestTest < ActiveSupport::TestCase
     super Request, scope
   end
 
-  test "open" do
-    verify_scope(:open) {|request| request.open?}
-  end
-
   test "granted" do
     verify_scope(:granted) {|request| request.granted?}
+  end
+
+  test "not granted" do
+    verify_scope(:not_granted) {|request| request.open?}
   end
 
   # Derived attributes

@@ -123,7 +123,7 @@ class CreateDonations < ActiveRecord::Migration
     end
 
     say_with_time "Checking data integrity: open requests" do
-      Request.open.find_each do |request|
+      Request.not_granted.find_each do |request|
         if request.donation
           warn "Request #{request.id} is open but has donation #{request.donation.id}"
           request.donation = nil
