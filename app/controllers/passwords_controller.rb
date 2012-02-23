@@ -20,7 +20,7 @@ class PasswordsController < ApplicationController
   end
 
   def update
-    if @user.reset_password params[:user]
+    if @user.update_attributes params[:user]
       set_current_user @user
       flash[:notice] = "Your password has been reset."
       redirect_to root_url

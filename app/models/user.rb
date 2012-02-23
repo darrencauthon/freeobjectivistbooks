@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   validate :name_must_have_proper_format, on: :create, if: lambda {|user| user.name.present? }
   validates :email, email: {message: "is not a valid email address"}, allow_nil: true
 
-  validates_presence_of :password, on: :create
+  validates_presence_of :password, unless: "password_digest.present?"
   validates_presence_of :password_confirmation, if: :password_digest_changed?
   validates_confirmation_of :password, message: "didn't match confirmation"
 
@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
 
   def password=(password)
     @password = password
-    self.password_digest = BCrypt::Password.create password
+    self.password_digest = password.present? ? BCrypt::Password.create(password) : nil
   end
 
   def authenticate(password)
@@ -123,11 +123,5 @@ class User < ActiveRecord::Base
     return :expired if Time.now - timestamp > LETMEIN_EXPIRATION
     auth = letmein_auth params[:timestamp]
     auth == params[:auth] ? :valid : :invalid
-  end
-
-  def reset_password(params)
-    errors.add(:password, "can't be blank") if params[:password].blank?
-    errors.add(:password_confirmation, "can't be blank") if params[:password_confirmation].blank?
-    errors.empty? ? update_attributes(params) : false
   end
 end

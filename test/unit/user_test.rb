@@ -69,6 +69,20 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "John Galt", @john.name
   end
 
+  test "password can't be blank" do
+    @howard.password = ""
+    @howard.password_confirmation = ""
+    assert @howard.invalid?
+    assert @howard.errors[:password].any?
+  end
+
+  test "password confirmation must match" do
+    @howard.password = "newpw"
+    @howard.password_confirmation = "oops"
+    assert @howard.invalid?
+    assert @howard.errors[:password].any?
+  end
+
   # Finders
 
   test "find by email" do
@@ -103,17 +117,6 @@ class UserTest < ActiveSupport::TestCase
   test "create" do
     assert @john.save
     assert User.exists? @john
-  end
-
-  test "password required on create" do
-    @john.password = nil
-    @john.password_confirmation = nil
-    assert !@john.save
-  end
-
-  test "password confirmation required on create" do
-    @john.password_confirmation = "oops"
-    assert !@john.save
   end
 
   test "can't sign up with duplicate email" do
@@ -180,25 +183,6 @@ class UserTest < ActiveSupport::TestCase
     assert @hank.can_request?
     assert !@quentin.can_request?
     assert !@howard.can_request?
-  end
-
-  # Reset password
-
-  test "reset password" do
-    assert @howard.reset_password(password: "newpw", password_confirmation: "newpw")
-    assert User.find(@howard).authenticate("newpw")
-  end
-
-  test "reset password can't be blank" do
-    assert !@howard.reset_password(password: "", password_confirmation: "")
-    assert @howard.errors[:password].any?
-    assert !User.find(@howard).authenticate("")
-  end
-
-  test "reset password confirmation must match" do
-    assert !@howard.reset_password(password: "newpw", password_confirmation: "oops")
-    assert @howard.errors[:password].any?
-    assert !User.find(@howard).authenticate("newpw")
   end
 
   # Letmein
