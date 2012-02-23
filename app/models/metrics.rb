@@ -37,7 +37,7 @@ class Metrics
   end
 
   def book_leaderboard
-    counts = Request.group(:book).count.map {|book,count| {name: book, value: count}}
+    counts = Request.unscoped.group(:book).count.map {|book,count| {name: book, value: count}}
     counts.sort {|a,b| b[:value] <=> a[:value]}
   end
 
