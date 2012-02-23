@@ -44,11 +44,11 @@
 <h1 class="grid_16"><%= @current_user.name %></h1>
 
 <div class="grid_12">
-    <% if @current_user.requests.any? %>
-    <h2>Your request</h2>
-    <% @current_user.requests.each do |request| %>
+    <% if @requests.any? %>
+    <h2>Your <%= pluralize_omit_number @requests.count, 'request' %></h2>
+    <% @requests.each do |request| %>
     <div class="request">
-        <p class="headline"><%= request_summary request %></p>
+        <p class="headline"><%= title request.book %></p>
         <p class="status"><%= status_detail request %></p>
 
         <% if request.in_transit? %>
@@ -69,10 +69,16 @@
         <% end %>
 
         <p><%= link_to 'See full request details', request_path(request) %></p>
+
+        <%= render "requests/spacer" %>
     </div>
     <% end %>
-    <p class="multiple-books">Want another book? You can request a second after you've read the first.
-        <%= mail_to 'jason@rationalegoist.com', 'Contact Jason' %> if you want to do this.
+    <p class="multiple-books">
+        <% if @current_user.can_request? %>
+        <%= link_to 'Request another book', new_request_path %>
+        <% else %>
+        You can have one open request at a time. Want another book? You can request it when we find a donor for this one.
+        <% end %>
     </p>
     <% end %>
 

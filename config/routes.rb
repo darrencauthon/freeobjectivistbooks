@@ -8,7 +8,7 @@ FreeBooks::Application.routes.draw do
   get "profile" => "profile#show"
 
   get "donate" => "requests#index"
-  resources :requests, only: [:show, :edit, :update] do
+  resources :requests do
     resource :donation, only: [:create]
   end
 

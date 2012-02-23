@@ -1,0 +1,101 @@
+<% content_for :title do %>Request a Book<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.name {
+    margin-bottom: 0;
+}
+
+.submit {
+    height: 56px;
+    margin-top: 24px;
+    background-image: url(/assets/get-book-button.png);
+}
+
+#shipping_form {
+    display: none;
+}
+</style>
+<% end %>
+
+<% unless @request.errors.empty? %>
+<div class="grid_12 message error">
+    <p class="headline">There were problems with your request</p>
+    <p class="detail">Please see below and make corrections.</p>
+</div>
+<% end %>
+
+<h1 class="grid_16">Get a free Objectivist book</h1>
+
+<div class="grid_12">
+    <div class="overview">
+        <p>Your request will be listed for donors to browse.</p>
+        <p>A donor will choose you and send you the book directly.</p>
+    </div>
+
+    <%= form_for @request do |f| %>
+        <h2>What book do you want to read?</h2>
+
+        <p class="field_with_errors"><%= @request.errors[:book].join(", ") %></p>
+        <% Request::BOOKS.each do |book| %>
+        <div><label><%= f.radio_button :book, book %> <%= book %> <%= Request::BOOK_NOTES[book] %></label></div>
+        <% end %>
+        <div>
+            <label><%= f.radio_button :book, "other" %> Other: </label>
+            <%= f.text_field :other_book, onfocus: "$('#request_book_other').attr('checked', true)" %>
+        </div>
+
+        <h2>Why do you want to read it?</h2>
+
+        <p class="field_with_errors"><%= @request.errors[:reason].join(", ") %></p>
+        <%= f.text_area :reason, rows: 6, cols: 60 %>
+
+        <h2>Ship to</h2>
+
+        <div id="shipping_display">
+            <p class="name"><%= @request.user_name %></p>
+            <p class="address"><%= format_address @request.address %></p>
+            <p><%= link_to 'javascript:void(0)', id: "show_shipping_form" do %>
+                <% if @request.address.present? %>Edit this info<% else %>Add your address<% end %>
+            <% end %></p>
+        </div>
+
+        <div id="shipping_form">
+            <%= f.label :user_name, "Your name", class: "grid_5 alpha" %><div class="clear"></div>
+            <%= f.text_field :user_name, class: "grid_5 alpha" %>
+            <span class="grid_4 omega field_with_errors"><%= @request.errors[:user_name].join(", ") %></span>
+            <div class="clear"></div>
+
+            <%= f.label :address, "Mailing address", class: "grid_5 alpha" %><div class="clear"></div>
+            <%= f.text_area :address, class: "grid_5 alpha", rows: 5 %>
+            <div class="grid_4 omega">
+                <p>Only shared with your donor.</p>
+                <% if @request.address.blank? %><p>You can enter this later.</p><% end %>
+                <p class="field_with_errors"><%= @request.errors[:address].join(", ") %></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <h2>Your pledge</h2>
+
+        <%= fields_for @request do |r| %>
+        <p class="field_with_errors"><%= @request.errors[:pledge].join(", ") %></p>
+        <label><%= r.check_box :pledge %> I pledge to read this book if a donor sends it to me.</label>
+        <div class="clear"></div>
+        <% end %>
+
+        <%= f.submit "", class: "grid_4 alpha submit button" %><div class="clear"></div>
+    <% end %>
+</div>
+
+<% content_for :javascript do %>
+<script>
+$(document).ready(function () {
+    $('a#show_shipping_form').click(function () {
+        $('#shipping_form').show();
+        $('#shipping_display').hide();
+        return false;
+    });
+});
+</script>
+<% end %>

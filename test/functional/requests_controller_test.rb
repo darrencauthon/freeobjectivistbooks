@@ -22,15 +22,111 @@ class RequestsControllerTest < ActionController::TestCase
     verify_login_page
   end
 
-  # Show
+  # New
 
-  def verify_link(text, present = true)
-    if present
-      assert_select 'a', /#{text}/i, "expected link containing '#{text}'"
-    else
-      assert_select 'a', {text: /#{text}/i, count: 0}, "found link containing '#{text}'"
-    end
+  test "new" do
+    get :new, params, session_for(@dagny)
+    assert_response :success
+
+    assert_select 'h1', /Get/
+    assert_select '#request_book_atlas_shrugged[checked="checked"]'
+    assert_select 'p', /No address given/
+    assert_select 'a', /Add/
   end
+
+  test "new with address" do
+    get :new, params, session_for(@hank)
+    assert_response :success
+
+    assert_select 'h1', /Get/
+    assert_select '#request_book_atlas_shrugged[checked="checked"]'
+    assert_select 'p', /987 Steel Way/
+    assert_select 'a', /Edit/
+  end
+
+  test "no new" do
+    get :new, params, session_for(@howard)
+    assert_response :success
+
+    assert_select 'h1', /One request at a time/
+    assert_select 'p', /already have an open request for Atlas Shrugged/
+    assert_select 'form', false
+  end
+
+  # Create
+
+  def new_request(user, options = {})
+    request = {
+      book: "Atlas Shrugged",
+      reason: "Heard it was great",
+      user_name: user.name,
+      address: user.address,
+      pledge: 1
+    }
+
+    {request: request.merge(options)}
+  end
+
+  test "create" do
+    assert_difference "@dagny.requests.count" do
+      post :create, new_request(@dagny), session_for(@dagny)
+    end
+
+    @dagny.reload
+    request = @dagny.requests.first
+    assert_redirected_to request
+
+    assert_equal "Atlas Shrugged", request.book
+    assert_equal "Heard it was great", request.reason
+    assert request.open?
+  end
+
+  test "create with shipping info" do
+    assert_difference "@dagny.requests.count" do
+      post :create, new_request(@dagny, address: "123 Taggart St"), session_for(@dagny)
+    end
+
+    @dagny.reload
+    request = @dagny.requests.first
+    assert_redirected_to request
+
+    assert_equal "Atlas Shrugged", request.book
+    assert_equal "Heard it was great", request.reason
+    assert_equal "123 Taggart St", request.address
+    assert request.open?
+  end
+
+  test "create requires reason" do
+    assert_no_difference "@dagny.requests.count" do
+      post :create, new_request(@dagny, reason: ""), session_for(@dagny)
+    end
+
+    assert_response :success
+    assert_select 'h1', /Get/
+    assert_select '.field_with_errors', /required/
+  end
+
+  test "create requires pledge" do
+    assert_no_difference "@dagny.requests.count" do
+      post :create, new_request(@dagny, pledge: false), session_for(@dagny)
+    end
+
+    assert_response :success
+    assert_select 'h1', /Get/
+    assert_select '.field_with_errors', /must pledge/
+  end
+
+  test "create requires can_request?" do
+    assert_no_difference "@quentin.requests.count" do
+      post :create, new_request(@quentin), session_for(@quentin)
+    end
+
+    assert_response :success
+    assert_select 'h1', /One request at a time/
+    assert_select 'form', false
+  end
+
+  # Show
 
   def verify_thank_link(present = true)
     verify_link 'thank', present

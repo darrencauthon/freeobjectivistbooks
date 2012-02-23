@@ -93,6 +93,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def can_request?
+    requests.not_granted.empty?
+  end
+
   # Actions
 
   def password=(password)

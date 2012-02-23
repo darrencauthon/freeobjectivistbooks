@@ -1,6 +1,19 @@
 require 'test_helper'
 
 class ProfileControllerTest < ActionController::TestCase
+  def verify_new_request_link(present = true)
+    verify_link 'request another', present
+  end
+
+  def verify_one_request_text(present = true)
+    assert_select 'p', text: /one open request/, count: (present ? 1 : 0)
+  end
+
+  def verify_can_request(can_request = true)
+    verify_new_request_link can_request
+    verify_one_request_text !can_request
+  end
+
   test "show for requester with no donor" do
     get :show, params, session_for(@howard)
     assert_response :success
@@ -13,6 +26,8 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select 'a', /see full/i
     end
 
+    verify_can_request false
+
     assert_select 'h2', text: /donation/i, count: 0
   end
 
@@ -22,7 +37,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_select 'h1', "Quentin Daniels"
 
     assert_select '.request', /Virtue of Selfishness/ do
-      assert_select '.headline', /Quentin Daniels in Boston, MA wants to read The Virtue of Selfishness/
+      assert_select '.headline', /The Virtue of Selfishness/
       assert_select '.status', /Hugh Akston in Boston, MA has sent/
       assert_select 'a', /Let Hugh Akston know/i
       assert_select 'a', text: /thank/i, count: 0
@@ -30,11 +45,13 @@ class ProfileControllerTest < ActionController::TestCase
     end
 
     assert_select '.request', /Fountainhead/ do
-      assert_select '.headline', /Quentin Daniels in Boston, MA wants to read The Fountainhead/
+      assert_select '.headline', /The Fountainhead/
       assert_select '.status', /Hugh Akston in Boston, MA will donate/
       assert_select 'a', /thank/i
       assert_select 'a', /see full/i
     end
+
+    verify_can_request false
 
     assert_select 'h2', text: /donation/i, count: 0
   end
@@ -53,6 +70,8 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select 'a', /see full/i
     end
 
+    verify_can_request
+
     assert_select 'h2', text: /donation/i, count: 0
   end
 
@@ -70,6 +89,8 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select 'a', /see full/i
     end
 
+    verify_can_request
+
     assert_select 'h2', text: /donation/i, count: 0
   end
 
@@ -77,6 +98,7 @@ class ProfileControllerTest < ActionController::TestCase
     get :show, params, session_for(@hugh)
     assert_response :success
     assert_select 'h1', "Hugh Akston"
+
     assert_select '.pledge .headline', /You pledged to donate 5 books/
     assert_select 'h2', 'Outstanding donations'
 
@@ -92,6 +114,9 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.actions a', /cancel/i
       assert_select '.actions .flagged', false
     end
+
+    verify_new_request_link false
+    verify_one_request_text false
 
     assert_select 'a', 'See all your donations'
   end

@@ -61,6 +61,14 @@ class ActiveSupport::TestCase
     assert_select 'h1', 'Wrong login?'
   end
 
+  def verify_link(text, present = true)
+    if present
+      assert_select 'a', /#{text}/i, "expected link containing '#{text}'"
+    else
+      assert_select 'a', {text: /#{text}/i, count: 0}, "found link containing '#{text}'"
+    end
+  end
+
   def verify_event(entity, type, options = {})
     entity.reload
     event = entity.events.last

@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
   before_filter :require_login
+  before_filter :require_can_request, only: [:new, :create]
 
   # Filters
 
@@ -10,12 +11,34 @@ class RequestsController < ApplicationController
     end
   end
 
+  def require_can_request
+    unless @current_user.can_request?
+      @request = @current_user.requests.not_granted.first
+      render "no_new"
+    end
+  end
+
   # Actions
 
   def index
     @requests = Request.not_granted.order('updated_at desc')
     @donations = @current_user.donations.active if @current_user
     @pledge = @current_user.pledges.first if @current_user
+  end
+
+  def new
+    @request = @current_user.requests.build
+  end
+
+  def create
+    @request = @current_user.requests.build
+    @request.attributes = params[:request]
+    if @request.save
+      redirect_to @request
+    else
+      logger.info "errors: #{@request.errors.messages}"
+      render :new
+    end
   end
 
   def edit
