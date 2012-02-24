@@ -47,3 +47,11 @@ hank_wants_fountainhead:
   book: The Fountainhead
   reason: Want to read more by this author; heard this was one of her best books
   donation: cameron_grants_hank_wants_fountainhead
+
+# Read
+
+quentin_wants_atlas:
+  user: quentin
+  book: "Atlas Shrugged"
+  reason: I was told this is the book to start with
+  donation: hugh_grants_quentin_wants_atlas

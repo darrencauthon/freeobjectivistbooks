@@ -34,6 +34,13 @@ cameron_grants_hank_wants_fountainhead:
   user: cameron
   status: received
 
+# Read
+
+hugh_grants_quentin_wants_atlas:
+  request: quentin_wants_atlas
+  user: hugh
+  status: read
+
 # Canceled
 
 stadler_grants_quentin_wants_opar:

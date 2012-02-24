@@ -4,6 +4,7 @@ class Donation < ActiveRecord::Base
   belongs_to :request, autosave: true
   belongs_to :user
   has_many :events
+  has_one :review
 
   Event::TYPES.each do |type|
     define_method "#{type}_events" do

@@ -17,6 +17,11 @@ class DonationTest < ActiveSupport::TestCase
     events.each {|event| assert_equal @quentin_donation, event.donation}
   end
 
+  test "review" do
+    assert_nil @hank_donation_received.review
+    assert_equal @quentin_review, @quentin_donation_read.review
+  end
+
   # Scopes
 
   def verify_scope(scope)

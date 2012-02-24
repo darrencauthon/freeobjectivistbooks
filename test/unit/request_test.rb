@@ -104,6 +104,12 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal "Please add your full name and address", @dagny_request.flag_message
   end
 
+  test "review" do
+    assert_nil @howard_request.review
+    assert_nil @hank_request_received.review
+    assert_equal @quentin_review, @quentin_request_read.review
+  end
+
   # Grant
 
   test "grant" do

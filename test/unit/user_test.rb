@@ -22,6 +22,11 @@ class UserTest < ActiveSupport::TestCase
     @hugh.donations.each {|donation| assert_equal @hugh, donation.user}
   end
 
+  test "reviews" do
+    assert_equal [@quentin_review], @quentin.reviews
+    assert_equal [], @dagny.reviews
+  end
+
   # Validations
 
   test "howard is valid" do

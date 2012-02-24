@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+quentin_reviews_atlas:
+  user: quentin
+  book: Atlas Shrugged
+  text: It was great! Especially the physics.
+  recommend: true
+  donation: hugh_grants_quentin_wants_atlas
+
+stadler_reviews_atlas:
+  user: stadler
+  book: Atlas Shrugged
+  text: I found it unrealistic and ill-suited to the problems of our modern age
+  recommend: false

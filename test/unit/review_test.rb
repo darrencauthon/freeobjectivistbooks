@@ -1,0 +1,44 @@
+require 'test_helper'
+
+class ReviewTest < ActiveSupport::TestCase
+  # Associations
+
+  test "user" do
+    assert_equal @quentin, @quentin_review.user
+  end
+
+  test "donation" do
+    assert_equal @quentin_donation_read, @quentin_review.donation
+  end
+
+  # Validations
+
+  test "valid reviews" do
+    assert @quentin_review.valid?
+    assert @stadler_review.valid?
+  end
+
+  test "validates user" do
+    @quentin_review.user = nil
+    assert @quentin_review.invalid?
+    assert @quentin_review.errors[:user].any?
+  end
+
+  test "validates book" do
+    @quentin_review.book = ""
+    assert @quentin_review.invalid?
+    assert @quentin_review.errors[:book].any?
+  end
+
+  test "validates text" do
+    @quentin_review.text = " "
+    assert @quentin_review.invalid?
+    assert @quentin_review.errors[:text].any?
+  end
+
+  test "validates recommend" do
+    @quentin_review.recommend = nil
+    assert @quentin_review.invalid?
+    assert @quentin_review.errors[:recommend].any?
+  end
+end

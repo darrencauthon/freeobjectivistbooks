@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :requests
   has_many :pledges
   has_many :donations
+  has_many :reviews
 
   # Validations
 
