@@ -17,7 +17,7 @@ class Donation < ActiveRecord::Base
   validates_presence_of :request
   validates_presence_of :user
   validates_presence_of :address, unless: :flagged?, message: "We need your address to send you your book."
-  validates_inclusion_of :status, in: %w{not_sent sent received}
+  validates_inclusion_of :status, in: %w{not_sent sent received read}
 
   # Scopes
 
@@ -33,9 +33,11 @@ class Donation < ActiveRecord::Base
   scope :not_flagged, active.where(flagged: false)
 
   scope :not_sent, active.scoped_by_status("not_sent")
-  scope :sent, active.scoped_by_status(%w{sent received})
+  scope :sent, active.scoped_by_status(%w{sent received read})
   scope :in_transit, active.scoped_by_status("sent")
-  scope :received, active.scoped_by_status("received")
+  scope :received, active.scoped_by_status(%w{received read})
+  scope :reading, active.scoped_by_status("received")
+  scope :read, active.scoped_by_status("read")
 
   scope :needs_sending, active.not_flagged.not_sent
   scope :needs_thanks, active.received.not_thanked
@@ -73,7 +75,7 @@ class Donation < ActiveRecord::Base
   end
 
   def sent?
-    status.sent? || status.received?
+    status.sent? || status.received? || status.read?
   end
 
   def in_transit?
@@ -81,7 +83,15 @@ class Donation < ActiveRecord::Base
   end
 
   def received?
+    status.received? || status.read?
+  end
+
+  def reading?
     status.received?
+  end
+
+  def read?
+    status.read?
   end
 
   def can_send?

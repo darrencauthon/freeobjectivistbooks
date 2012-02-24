@@ -5,7 +5,7 @@ quentin_reviews_atlas:
   book: Atlas Shrugged
   text: It was great! Especially the physics.
   recommend: true
-  donation: hugh_grants_quentin_wants_atlas
+  donation: cameron_grants_quentin_wants_atlas
 
 stadler_reviews_atlas:
   user: stadler

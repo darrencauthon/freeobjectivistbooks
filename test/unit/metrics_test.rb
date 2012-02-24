@@ -15,7 +15,8 @@ class MetricsTest < ActiveSupport::TestCase
 
     assert_equal values['Total'], values['Granted'] + Request.not_granted.count, metrics.inspect
     assert_equal values['Granted'], values['Sent'] + Donation.not_sent.count, metrics.inspect
-    assert values['Received'] <= values['Sent'], metrics.inspect
+    assert_equal values['Sent'], values['Received'] + Donation.in_transit.count, metrics.inspect
+    assert_equal values['Received'], values['Read'] + Donation.reading.count, metrics.inspect
   end
 
   test "reminders needed" do

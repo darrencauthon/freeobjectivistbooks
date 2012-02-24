@@ -93,11 +93,33 @@ class RequestTest < ActiveSupport::TestCase
     assert @hank_request_received.sent?
   end
 
+  test "in transit?" do
+    assert !@howard_request.in_transit?
+    assert !@dagny_request.in_transit?
+    assert @quentin_request.in_transit?
+    assert !@hank_request_received.in_transit?
+  end
+
   test "received?" do
     assert !@howard_request.received?
     assert !@dagny_request.received?
     assert !@quentin_request.received?
     assert @hank_request_received.received?
+    assert @quentin_request_read.received?
+  end
+
+  test "reading?" do
+    assert !@howard_request.reading?
+    assert !@quentin_request.reading?
+    assert @hank_request_received.reading?
+    assert !@quentin_request_read.reading?
+  end
+
+  test "read?" do
+    assert !@howard_request.read?
+    assert !@quentin_request.read?
+    assert !@hank_request_received.read?
+    assert @quentin_request_read.read?
   end
 
   test "flag message" do

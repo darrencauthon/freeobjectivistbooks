@@ -55,7 +55,7 @@ class Event < ActiveRecord::Base
     when "update_status"
       case detail
       when "sent" then donor
-      when "received" then student
+      when "received", "read" then student
       end
     else
       student if is_thanks?

@@ -5,6 +5,7 @@ class Metrics
       {name: 'Granted',  value: Request.granted.count,   denominator: 'Total'},
       {name: 'Sent',     value: Donation.sent.count,     denominator: 'Granted'},
       {name: 'Received', value: Donation.received.count, denominator: 'Sent'},
+      {name: 'Read',     value: Donation.read.count,     denominator: 'Received'},
     ]
   end
 

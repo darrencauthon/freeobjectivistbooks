@@ -52,20 +52,28 @@ class DonationTest < ActiveSupport::TestCase
     verify_scope(:not_flagged) {|donation| donation.active? && !donation.flagged?}
   end
 
-  test "sent" do
-    verify_scope(:sent) {|donation| donation.active? && donation.sent?}
-  end
-
   test "not sent" do
     verify_scope(:not_sent) {|donation| donation.active? && !donation.sent?}
   end
 
+  test "sent" do
+    verify_scope(:sent) {|donation| donation.active? && donation.sent?}
+  end
+
   test "in transit" do
-    verify_scope(:in_transit) {|donation| donation.sent? && !donation.received?}
+    verify_scope(:in_transit) {|donation| donation.active? && donation.sent? && !donation.received?}
   end
 
   test "received" do
     verify_scope(:received) {|donation| donation.active? && donation.received?}
+  end
+
+  test "reading" do
+    verify_scope(:reading) {|donation| donation.active? && donation.received? && !donation.read?}
+  end
+
+  test "read" do
+    verify_scope(:read) {|donation| donation.active? && donation.read?}
   end
 
   test "needs sending" do
@@ -109,10 +117,29 @@ class DonationTest < ActiveSupport::TestCase
     assert_equal events(:cameron_updates_hank).happened_at, @hank_donation_received.sent_at
   end
 
+  test "in transit?" do
+    assert !@dagny_donation.in_transit?
+    assert @quentin_donation.in_transit?
+    assert !@hank_donation_received.in_transit?
+  end
+
   test "received?" do
     assert !@dagny_donation.received?
     assert !@quentin_donation.received?
     assert @hank_donation_received.received?
+    assert @quentin_donation_read.received?
+  end
+
+  test "reading?" do
+    assert !@quentin_donation.reading?
+    assert @hank_donation_received.reading?
+    assert !@quentin_donation_read.reading?
+  end
+
+  test "read?" do
+    assert !@quentin_donation.read?
+    assert !@hank_donation_received.read?
+    assert @quentin_donation_read.read?
   end
 
   test "can send?" do
@@ -206,6 +233,15 @@ class DonationTest < ActiveSupport::TestCase
     assert !event.is_thanks?
     assert_nil event.public
     assert_not_nil event.happened_at
+  end
+
+  test "update status read" do
+    event = @hank_donation_received.update_status status: "read"
+    assert @hank_donation_received.read?
+
+    assert_equal @hank, event.user
+    assert_equal "update_status", event.type
+    assert_equal "read", event.detail
   end
 
   test "update status is idempotent" do

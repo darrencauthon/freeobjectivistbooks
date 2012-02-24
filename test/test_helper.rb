@@ -42,7 +42,7 @@ class ActiveSupport::TestCase
     @hank_donation = donations :cameron_grants_hank_wants_atlas
     @quentin_donation_unsent = donations :hugh_grants_quentin_wants_fountainhead
     @hank_donation_received = donations :cameron_grants_hank_wants_fountainhead
-    @quentin_donation_read = donations :hugh_grants_quentin_wants_atlas
+    @quentin_donation_read = donations :cameron_grants_quentin_wants_atlas
 
     @quentin_review = reviews :quentin_reviews_atlas
     @stadler_review = reviews :stadler_reviews_atlas
