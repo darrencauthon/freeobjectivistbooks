@@ -130,4 +130,94 @@ class StatusesControllerTest < ActionController::TestCase
     put :update, {donation_id: @dagny_donation.id, donation: {status: "received"}}, session_for(@hugh)
     verify_wrong_login_page
   end
+
+  # Read form
+
+  test "read form" do
+    get :edit, {donation_id: @hank_donation_received.id, status: "read"}, session_for(@hank)
+    assert_response :success
+    assert_select 'h1', /Yes, I finished reading The Fountainhead/
+    assert_select 'textarea#review_text'
+    assert_select 'input[type="radio"]'
+    assert_select 'input[type="submit"]'
+  end
+
+  test "read form requires login" do
+    get :edit, {donation_id: @hank_donation_received.id, status: "read"}
+    verify_login_page
+  end
+
+  test "read form requires student" do
+    get :edit, {donation_id: @hank_donation_received.id, status: "read"}, session_for(@cameron)
+    verify_wrong_login_page
+  end
+
+  # Read
+
+  test "read" do
+    params = {donation_id: @hank_donation_received.id, donation: {status: "read"}, review: {text: "I loved it", recommend: true}}
+    assert_difference "@hank_donation_received.events.count" do
+      post :update, params, session_for(@hank)
+    end
+    assert_redirected_to @hank_request_received
+    assert_match /Your donor \(Henry Cameron\) will be glad/, flash[:notice]
+
+    @hank_donation_received.reload
+    assert @hank_donation_received.read?
+
+    review = @hank_donation_received.review
+    assert_not_nil review
+    assert_equal @hank, review.user
+    assert_equal "I loved it", review.text
+    assert review.recommend?
+
+    assert_select_email do
+      # make sure the review got included in the notification
+      assert_select 'p', /I loved it/
+    end
+  end
+
+  test "read with no review" do
+    params = {donation_id: @hank_donation_received.id, donation: {status: "read"}, review: {text: ""}}
+    assert_difference "@hank_donation_received.events.count" do
+      post :update, params, session_for(@hank)
+    end
+    assert_redirected_to @hank_request_received
+    assert_match /Your donor \(Henry Cameron\) will be glad/, flash[:notice]
+
+    @hank_donation_received.reload
+    assert @hank_donation_received.read?
+    assert_nil @hank_donation_received.review
+  end
+
+  test "read with review requires recommend bit" do
+    params = {donation_id: @hank_donation_received.id, donation: {status: "read"}, review: {text: "It was OK"}}
+    assert_no_difference "@hank_donation_received.events.count" do
+      post :update, params, session_for(@hank)
+      assert_response :success
+    end
+
+    assert_select 'h1', /Yes, I finished reading/
+    assert_select '.field_with_errors', /choose/
+
+    @hank_donation_received.reload
+    assert !@hank_donation_received.read?
+    assert_nil @hank_donation_received.review
+  end
+
+  test "read requires login" do
+    params = {donation_id: @hank_donation_received.id, donation: {status: "read"}, review: {text: ""}}
+    assert_no_difference "@hank_donation_received.events.count" do
+      post :update, params
+      verify_login_page
+    end
+  end
+
+  test "read requires student" do
+    params = {donation_id: @hank_donation_received.id, donation: {status: "read"}, review: {text: ""}}
+    assert_no_difference "@hank_donation_received.events.count" do
+      post :update, params, session_for(@cameron)
+      verify_wrong_login_page
+    end
+  end
 end

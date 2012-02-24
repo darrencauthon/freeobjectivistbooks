@@ -1,0 +1,43 @@
+<% content_for :title do %>Book Received<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.button {
+    height: 46px;
+    margin-top: 24px;
+    background-position-x: left;
+    background-image: url(/assets/update-button.png);
+}
+
+.public label, .public span {
+    font-size: 1.3em;
+    padding-right: 12px;
+}
+ </style>
+<% end %>
+
+<h1 class="grid_16">Yes, I finished reading <%= title @donation.book %></h1>
+
+<div class="grid_12">
+    <%= form_for @donation, url: donation_status_path(@donation) do |f| %>
+        <%= f.hidden_field :status, value: "read" %>
+
+        <%= fields_for @review do |r| %>
+            <h2>What did you think of it?</h2>
+
+            <p class="field_with_errors"><%= @review.errors[:text].join(", ") %></p>
+            <%= r.text_area :text, rows: 6, cols: 60 %>
+            <div class="clear"></div>
+            <p>We may display this review publicly on the site.</p>
+
+            <h2>Would you recommend this book to others?</h2>
+            <div class="public">
+                <label><%= r.radio_button :recommend, true %> Yes</label>
+                <label><%= r.radio_button :recommend, false %> No</label>
+                <span class="field_with_errors"><%= @review.errors[:recommend].join(", ") %></span>
+            </div>
+        <% end %>
+
+        <%= f.submit "", class: "grid_3 alpha button" %><div class="clear"></div>
+    <% end %>
+</div>
