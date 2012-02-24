@@ -192,6 +192,39 @@ class EventMailerTest < ActionMailer::TestCase
     end
   end
 
+  test "read" do
+    mail = EventMailer.mail_for_event events(:quentin_updates_cameron)
+    assert_equal "Quentin Daniels has read Atlas Shrugged", mail.subject
+    assert_equal ["henry@cameron.com"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Henry/
+      assert_select 'p', /Quentin Daniels has finished reading Atlas Shrugged! Here's what they thought/
+      assert_select 'p', /"It was great! Especially the physics."/
+      assert_select 'a', /Find more students/
+      assert_select 'p', /Thanks,/
+    end
+  end
+
+  test "read no review" do
+    event = @hank_donation_received.update_status status: "read"
+    mail = EventMailer.mail_for_event event
+    assert_equal "Hank Rearden has read The Fountainhead", mail.subject
+    assert_equal ["henry@cameron.com"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Henry/
+      assert_select 'p', /Hank Rearden has finished reading The Fountainhead!/
+      assert_select 'p', text: /Here's what they thought/, count: 0
+      assert_select 'a', /Find more students/
+      assert_select 'p', /Thanks,/
+    end
+  end
+
   test "cancel" do
     mail = EventMailer.mail_for_event events(:stadler_cancels_quentin)
     assert_equal "We need to find you a new donor for Objectivism: The Philosophy of Ayn Rand", mail.subject
