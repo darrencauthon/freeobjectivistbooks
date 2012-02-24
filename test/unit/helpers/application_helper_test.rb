@@ -48,6 +48,22 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "In Boston, MA", user_tagline(users :hugh)
   end
 
+  test "status headline" do
+    assert_equal "Looking for donor", status_headline(@howard_request)
+    assert_equal "Donor found", status_headline(@dagny_request)
+    assert_equal "Book sent", status_headline(@quentin_request)
+    assert_equal "Book received", status_headline(@hank_request_received)
+    assert_equal "Finished reading", status_headline(@quentin_request_read)
+  end
+
+  test "status detail" do
+    assert_equal "We are looking for a donor for this book.", status_detail(@howard_request)
+    assert_equal "Hugh Akston in Boston, MA will donate this book.", status_detail(@dagny_request)
+    assert_equal "Hugh Akston in Boston, MA has sent this book.", status_detail(@quentin_request)
+    assert_equal "Hank Rearden has received this book.", status_detail(@hank_request_received)
+    assert_equal "Quentin Daniels has read this book.", status_detail(@quentin_request_read)
+  end
+
   test "request summary" do
     assert_equal 'Howard Roark in New York, NY wants to read <span class="title">Atlas Shrugged</span>',
       request_summary(@howard_request)

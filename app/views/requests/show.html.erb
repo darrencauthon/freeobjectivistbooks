@@ -67,6 +67,9 @@
 
     <h2>Status: <%= status_headline @request %></h2>
     <p class="status"><%= status_detail @request %></p>
+    <% if @request.review %>
+    <p class="review"><%= format_block @request.review.text %></p>
+    <% end %>
 
     <% if current_is_donor? %>
     <p class="back"><%= link_to 'Back to all donations', profile_path %></p>
@@ -91,14 +94,18 @@
         <% end %>
 
         <% if current_is_student? %>
-            <% if @request.in_transit? %>
+            <% if @request.sent? && !@request.read? %>
             <h2>Update status</h2>
-            <p>Let <%= @request.donor.name %> know when you have received <%= title @request.book %>:</p>
-            <%= link_to edit_donation_status_path(@request.donation, status: "received"), class: "grid_3 alpha" do %>
+            <p>Let <%= @request.donor.name %> know when you have <%= @request.received? ? "finished reading" : "received" %>
+                <%= title @request.book %>:
+            </p>
+            <%= link_to edit_donation_status_path(@request.donation, status: @request.next_status), class: "grid_3 alpha" do %>
                 <div class="button update"></div>
             <% end %>
             <div class="clear"></div>
-            <% elsif @request.needs_thanks? %>
+            <% end %>
+
+            <% if @request.needs_thanks? %>
             <p><%= link_to "Thank #{@request.donor.name}", new_donation_thank_url(@request.donation) %></p>
             <% end %>
 

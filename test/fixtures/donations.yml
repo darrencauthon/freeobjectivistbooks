@@ -40,6 +40,7 @@ cameron_grants_quentin_wants_atlas:
   request: quentin_wants_atlas
   user: cameron
   status: read
+  thanked: true
 
 # Canceled
 

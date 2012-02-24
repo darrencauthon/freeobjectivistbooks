@@ -196,7 +196,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.address', /123 Main St/
     verify_status 'book sent'
     assert_select '.sidebar h2', /Update/
-    verify_thank_link false
+    verify_thank_link
     verify_address_link :none
     verify_no_donor_links
   end
@@ -221,6 +221,18 @@ class RequestsControllerTest < ActionController::TestCase
     verify_donor_links :not_sent
   end
 
+  test "show sent" do
+    get :show, {id: @quentin_request.id}, session_for(@quentin)
+    assert_response :success
+    assert_select 'h1', "Quentin Daniels wants The Virtue of Selfishness"
+    assert_select '.tagline', "Studying physics at MIT in Boston, MA"
+    verify_status 'book sent'
+    assert_select 'p', /Let Hugh Akston know when you have received\s+The Virtue of Selfishness/
+    verify_thank_link
+    verify_address_link :none
+    verify_no_donor_links
+  end
+
   test "show received" do
     get :show, {id: @hank_request_received.id}, session_for(@hank)
     assert_response :success
@@ -228,7 +240,21 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.tagline', "Studying manufacturing at University of Pittsburgh in Philadelphia, PA"
     assert_select '.address', /987 Steel Way/
     verify_status 'book received'
+    assert_select 'p', /Let Henry Cameron know when you have finished reading\s+The Fountainhead/
     verify_thank_link
+    verify_address_link :none
+    verify_no_donor_links
+  end
+
+  test "show read" do
+    get :show, {id: @quentin_request_read.id}, session_for(@quentin)
+    assert_response :success
+    assert_select 'h1', "Quentin Daniels wants Atlas Shrugged"
+    assert_select '.tagline', "Studying physics at MIT in Boston, MA"
+    verify_status 'finished reading'
+    assert_select '.review', /It was great/
+    assert_select 'p', text: /Let .* know/, count: 0
+    verify_thank_link false
     verify_address_link :none
     verify_no_donor_links
   end

@@ -25,7 +25,7 @@
         <% case event.detail %>
         <% when "sent" %>
             to <%= admin_user_link event.student %>
-        <% when "received" %>
+        <% when "received", "read" %>
             from <%= admin_user_link event.donor %>
         <% end %>
     <% end %>

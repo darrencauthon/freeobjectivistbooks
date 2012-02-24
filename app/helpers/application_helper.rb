@@ -56,7 +56,9 @@ module ApplicationHelper
   end
 
   def status_headline(request)
-    if request.received?
+    if request.read?
+      "Finished reading"
+    elsif request.received?
       "Book received"
     elsif request.sent?
       "Book sent"
@@ -68,7 +70,9 @@ module ApplicationHelper
   end
 
   def status_detail(request)
-    if request.received?
+    if request.read?
+      "#{request.user.name} has read this book."
+    elsif request.received?
       "#{request.user.name} has received this book."
     elsif request.sent?
       "#{request.donor.name} in #{request.donor.location} has sent this book."

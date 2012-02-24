@@ -39,7 +39,7 @@ class ProfileControllerTest < ActionController::TestCase
     assert_select '.request', /Virtue of Selfishness/ do
       assert_select '.headline', /The Virtue of Selfishness/
       assert_select '.status', /Hugh Akston in Boston, MA has sent/
-      assert_select 'a', /Let Hugh Akston know/i
+      assert_select 'a', /Let Hugh Akston know when you have received/i
       assert_select 'a', text: /thank/i, count: 0
       assert_select 'a', /see full/i
     end
@@ -48,6 +48,15 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.headline', /The Fountainhead/
       assert_select '.status', /Hugh Akston in Boston, MA will donate/
       assert_select 'a', /thank/i
+      assert_select 'a', /see full/i
+    end
+
+    assert_select '.request', /Atlas Shrugged/ do
+      assert_select '.headline', /Atlas Shrugged/
+      assert_select '.status', /Quentin Daniels has read this book./
+      assert_select '.flagged', false
+      assert_select 'a', text: /Let .* know/, count: 0
+      assert_select 'a', text: /thank/i, count: 0
       assert_select 'a', /see full/i
     end
 
@@ -85,6 +94,15 @@ class ProfileControllerTest < ActionController::TestCase
       assert_select '.status', /Henry Cameron in New York, NY will donate/
       assert_select '.flagged', /problem with your shipping info/
       assert_select 'a', /update/i
+      assert_select 'a', text: /thank/i, count: 0
+      assert_select 'a', /see full/i
+    end
+
+    assert_select '.request', /Fountainhead/ do
+      assert_select '.headline', /The Fountainhead/
+      assert_select '.status', /Hank Rearden has received/
+      assert_select '.flagged', false
+      assert_select 'a', /Let Henry Cameron know when you have finished reading/
       assert_select 'a', text: /thank/i, count: 0
       assert_select 'a', /see full/i
     end

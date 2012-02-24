@@ -51,7 +51,10 @@
         <p class="headline"><%= title request.book %></p>
         <p class="status"><%= status_detail request %></p>
 
-        <% if request.in_transit? %>
+        <% if request.reading? %>
+        <p><%= link_to "Let #{request.donor.name} know when you have finished reading this book",
+            edit_donation_status_path(request.donation, status: "read") %></p>
+        <% elsif request.in_transit? %>
         <p><%= link_to "Let #{request.donor.name} know when you have received this book",
             edit_donation_status_path(request.donation, status: "received") %></p>
         <% elsif request.flagged? %>
