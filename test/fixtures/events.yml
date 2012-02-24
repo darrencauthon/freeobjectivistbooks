@@ -1,4 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# request: howard_wants_atlas
+
+howard_updates_info:
+  type: update
+  request: howard_wants_atlas
+  user: howard
+  detail: updated shipping info
+  happened_at: 2012-01-20 00:15:25
+
+# request: quentin_wants_vos
 
 hugh_grants_quentin:
   type: grant
@@ -7,40 +16,6 @@ hugh_grants_quentin:
   donation: hugh_grants_quentin_wants_vos
   happened_at: 2012-01-16 00:14:25
   notified_at: 2012-01-16 00:14:25
-
-hugh_grants_dagny:
-  type: grant
-  request: dagny_wants_cui
-  user: hugh
-  donation: hugh_grants_dagny_wants_cui
-  happened_at: 2012-01-16 00:15:25
-  notified_at: 2012-01-16 00:15:25
-
-cameron_grants_hank:
-  type: grant
-  request: hank_wants_atlas
-  user: cameron
-  donation: cameron_grants_hank_wants_atlas
-  happened_at: 2012-01-16 00:16:25
-  notified_at: 2012-01-16 00:16:25
-
-cameron_flags_hank:
-  type: flag
-  request: hank_wants_atlas
-  user: cameron
-  donation: cameron_grants_hank_wants_atlas
-  message: Is your address correct?
-  happened_at: 2012-01-17 00:14:25
-  notified_at: 2012-01-17 00:14:25
-
-hugh_flags_dagny:
-  type: flag
-  request: dagny_wants_cui
-  user: hugh
-  donation: hugh_grants_dagny_wants_cui
-  message: Please add your full name and address
-  happened_at: 2012-01-17 00:15:25
-  notified_at: 2012-01-17 00:15:25
 
 quentin_adds_name:
   type: fix
@@ -78,13 +53,6 @@ hugh_messages_quentin:
   message: Thanks! I will send you the book
   happened_at: 2012-01-19 00:15:25
 
-howard_updates_info:
-  type: update
-  request: howard_wants_atlas
-  user: howard
-  detail: updated shipping info
-  happened_at: 2012-01-20 00:15:25
-
 hugh_updates_quentin:
   type: update_status
   request: quentin_wants_vos
@@ -92,6 +60,56 @@ hugh_updates_quentin:
   donation: hugh_grants_quentin_wants_vos
   detail: sent
   happened_at: 2012-01-20 00:15:25
+
+quentin_thanks_hugh:
+  type: message
+  is_thanks: true
+  request: quentin_wants_vos
+  user: quentin
+  donation: hugh_grants_quentin_wants_vos
+  message: Thanks! I am looking forward to reading this
+  happened_at: 2012-01-21 00:15:25
+  notified_at: 2012-01-21 00:15:25
+
+# request: dagny_wants_cui
+
+hugh_grants_dagny:
+  type: grant
+  request: dagny_wants_cui
+  user: hugh
+  donation: hugh_grants_dagny_wants_cui
+  happened_at: 2012-01-16 00:15:25
+  notified_at: 2012-01-16 00:15:25
+
+hugh_flags_dagny:
+  type: flag
+  request: dagny_wants_cui
+  user: hugh
+  donation: hugh_grants_dagny_wants_cui
+  message: Please add your full name and address
+  happened_at: 2012-01-17 00:15:25
+  notified_at: 2012-01-17 00:15:25
+
+# request: hank_wants_atlas
+
+cameron_grants_hank:
+  type: grant
+  request: hank_wants_atlas
+  user: cameron
+  donation: cameron_grants_hank_wants_atlas
+  happened_at: 2012-01-16 00:16:25
+  notified_at: 2012-01-16 00:16:25
+
+cameron_flags_hank:
+  type: flag
+  request: hank_wants_atlas
+  user: cameron
+  donation: cameron_grants_hank_wants_atlas
+  message: Is your address correct?
+  happened_at: 2012-01-17 00:14:25
+  notified_at: 2012-01-17 00:14:25
+
+# request: hank_wants_fountainhead
 
 cameron_updates_hank:
   type: update_status
@@ -110,15 +128,17 @@ hank_updates_cameron:
   message: I got the book. Thank you!
   happened_at: 2012-01-20 00:15:25
 
-quentin_thanks_hugh:
-  type: message
-  is_thanks: true
-  request: quentin_wants_vos
+# request: quentin_wants_atlas
+
+quentin_updates_cameron:
+  type: update_status
+  request: quentin_wants_atlas
   user: quentin
-  donation: hugh_grants_quentin_wants_vos
-  message: Thanks! I am looking forward to reading this
-  happened_at: 2012-01-21 00:15:25
-  notified_at: 2012-01-21 00:15:25
+  donation: cameron_grants_quentin_wants_atlas
+  detail: read
+  happened_at: 2012-02-20 00:15:25
+
+# request: quentin_wants_opar
 
 stadler_cancels_quentin:
   type: cancel
