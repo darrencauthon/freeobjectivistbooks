@@ -3,38 +3,7 @@ require 'test_helper'
 class ApplicationHelperTest < ActionView::TestCase
   include ERB::Util
 
-  test "student tagline" do
-    tagline = "Studying architecture at Stanton Institute of Technology in New York, NY"
-    assert_equal tagline, user_tagline(users :howard)
-  end
-
-  test "donor tagline" do
-    assert_equal "In Boston, MA", user_tagline(users :hugh)
-  end
-
-  test "request summary" do
-    assert_equal 'Howard Roark in New York, NY wants to read <span class="title">Atlas Shrugged</span>',
-      request_summary(@howard_request)
-  end
-
-  test "donation summary" do
-    assert_equal 'Henry Cameron in New York, NY agreed to send you <span class="title">Atlas Shrugged</span>',
-      donation_summary(@hank_request)
-    assert_equal 'Hugh Akston in Boston, MA sent you <span class="title">The Virtue of Selfishness</span>',
-      donation_summary(@quentin_request)
-  end
-
-  test "pluralize omit number" do
-    assert_equal "apples", pluralize_omit_number(0, "apple")
-    assert_equal "apple", pluralize_omit_number(1, "apple")
-    assert_equal "apples", pluralize_omit_number(2, "apple")
-  end
-
-  test "pluralize omit 1" do
-    assert_equal "0 apples", pluralize_omit_1(0, "apple")
-    assert_equal "apple", pluralize_omit_1(1, "apple")
-    assert_equal "2 apples", pluralize_omit_1(2, "apple")
-  end
+  # Generic formatting
 
   test "format number" do
     assert_equal "0", format_number(0)
@@ -54,5 +23,40 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "101", format_number(101)
     assert_equal "999", format_number(999)
     assert_equal "1,000", format_number(1000)
+  end
+
+  test "pluralize omit number" do
+    assert_equal "apples", pluralize_omit_number(0, "apple")
+    assert_equal "apple", pluralize_omit_number(1, "apple")
+    assert_equal "apples", pluralize_omit_number(2, "apple")
+  end
+
+  test "pluralize omit 1" do
+    assert_equal "0 apples", pluralize_omit_1(0, "apple")
+    assert_equal "apple", pluralize_omit_1(1, "apple")
+    assert_equal "2 apples", pluralize_omit_1(2, "apple")
+  end
+
+  # Model-specific formatting
+
+  test "student tagline" do
+    tagline = "Studying architecture at Stanton Institute of Technology in New York, NY"
+    assert_equal tagline, user_tagline(users :howard)
+  end
+
+  test "donor tagline" do
+    assert_equal "In Boston, MA", user_tagline(users :hugh)
+  end
+
+  test "request summary" do
+    assert_equal 'Howard Roark in New York, NY wants to read <span class="title">Atlas Shrugged</span>',
+      request_summary(@howard_request)
+  end
+
+  test "donation summary" do
+    assert_equal 'Henry Cameron in New York, NY agreed to send you <span class="title">Atlas Shrugged</span>',
+      donation_summary(@hank_request)
+    assert_equal 'Hugh Akston in Boston, MA sent you <span class="title">The Virtue of Selfishness</span>',
+      donation_summary(@quentin_request)
   end
 end

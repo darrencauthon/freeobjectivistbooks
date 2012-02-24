@@ -1,7 +1,11 @@
 module ApplicationHelper
+  # User agent
+
   def touch_device?
     request.user_agent =~ /iPad|iPod|iPhone|Android/
   end
+
+  # Generic formatting
 
   def format_block(text)
     raw (h text).gsub("\n", "<br>")
@@ -35,6 +39,12 @@ module ApplicationHelper
     count == 1 ? noun : "#{count} #{noun.pluralize}"
   end
 
+  def title(book)
+    raw "<span class=\"title\">#{h book}</span>"
+  end
+
+  # Model-specific formatting
+
   def user_tagline(user)
     parts = []
     parts << "studying #{user.studying}" unless user.studying.blank?
@@ -67,10 +77,6 @@ module ApplicationHelper
     else
       "We are looking for a donor for this book."
     end
-  end
-
-  def title(book)
-    raw "<span class=\"title\">#{h book}</span>"
   end
 
   def request_summary(request)
