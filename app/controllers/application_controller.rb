@@ -4,7 +4,7 @@ class ForbiddenException < Exception; end
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :find_current_user, :load_models, :check_user
+  before_filter :find_current_user, :parse_params, :load_models, :check_user
 
   def initialize
     super
@@ -29,6 +29,9 @@ class ApplicationController < ActionController::Base
     reset_session
     session[:user_id] = user && user.id
     @current_user = user
+  end
+
+  def parse_params
   end
 
   def load_models

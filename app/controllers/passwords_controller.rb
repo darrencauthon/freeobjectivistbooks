@@ -1,13 +1,16 @@
 class PasswordsController < ApplicationController
   before_filter :validate_letmein, only: [:edit, :update]
 
+  def parse_params
+    @email = params[:email]
+  end
+
   def request_reset
-    email = params[:email]
-    @user = User.find_by_email email unless email.blank?
+    @user = User.find_by_email @email unless @email.blank?
     if @user
       UserMailer.reset_password(@user).deliver
     else
-      @error = email.blank? ? "Please enter an email address" : "No user with that email"
+      @error = @email.blank? ? "Please enter an email address" : "No user with that email"
       render :forgot
     end
   end

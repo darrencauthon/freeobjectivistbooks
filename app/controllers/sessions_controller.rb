@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
-  def load_models
-    @destination = params[:destination] if params[:destination]
+  def parse_params
+    @destination = params[:destination]
   end
 
   def create
