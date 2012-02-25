@@ -71,7 +71,7 @@ class AnnouncementMailerTest < ActionMailer::TestCase
 
   test "mark read books" do
     mail = AnnouncementMailer.mark_read_books @hank_donation_received
-    assert_equal "Have you finished reading The Fountainhead? Let us and your donor know", mail.subject
+    assert_equal "Let us know when you finish reading The Fountainhead", mail.subject
     assert_equal ["hank@rearden.com"], mail.to
 
     mail.deliver
