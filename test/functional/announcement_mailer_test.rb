@@ -11,7 +11,7 @@ class AnnouncementMailerTest < ActionMailer::TestCase
   end
 
   test "thank your donor" do
-    mail = AnnouncementMailer.thank_your_donor requests(:hank_wants_atlas)
+    mail = AnnouncementMailer.thank_your_donor @hank_request
     assert_equal "Thank your donor for Atlas Shrugged", mail.subject
     assert_equal ["hank@rearden.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
@@ -42,7 +42,7 @@ class AnnouncementMailerTest < ActionMailer::TestCase
   end
 
   test "mark sent books" do
-    mail = AnnouncementMailer.mark_sent_books users(:hugh)
+    mail = AnnouncementMailer.mark_sent_books @hugh
     assert_equal "Have you sent your Objectivist books? Let me and the students know", mail.subject
     assert_equal ["akston@patrickhenry.edu"], mail.to
 
@@ -56,7 +56,7 @@ class AnnouncementMailerTest < ActionMailer::TestCase
   end
 
   test "mark received books" do
-    mail = AnnouncementMailer.mark_received_books requests(:quentin_wants_vos)
+    mail = AnnouncementMailer.mark_received_books @quentin_request
     assert_equal "Have you received The Virtue of Selfishness? Let us and your donor know", mail.subject
     assert_equal ["quentin@mit.edu"], mail.to
 
@@ -66,6 +66,20 @@ class AnnouncementMailerTest < ActionMailer::TestCase
       assert_select 'p', /Have you received The Virtue of Selfishness yet/
       assert_select 'p', /Hugh Akston has sent you this book \(confirmed on Jan 19\)/
       assert_select 'a', /Yes, I have received The Virtue of Selfishness/
+    end
+  end
+
+  test "mark read books" do
+    mail = AnnouncementMailer.mark_read_books @hank_donation_received
+    assert_equal "Have you finished reading The Fountainhead? Let us and your donor know", mail.subject
+    assert_equal ["hank@rearden.com"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hank/
+      assert_select 'p', /You received The Fountainhead on Jan 19\s+\((about )?\d+ \w+ ago\)/
+      assert_select 'a', /Yes, I have finished reading The Fountainhead/
+      assert_select 'p', /your donor, Henry Cameron/
     end
   end
 end

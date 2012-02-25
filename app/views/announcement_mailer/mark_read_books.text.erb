@@ -1,0 +1,7 @@
+You received <%= @donation.book %> on <%= l @donation.received_at.to_date, format: :short %> (<%= distance_of_time_in_words_to_now @donation.received_at %> ago). When you finish reading it, you can now confirm on Free Objectivist Books:
+
+<%= edit_donation_status_url(@donation, status: "read") %>
+
+That will let us know for our records, and notify your donor, <%= @donation.donor.name %>. You'll also have the opportunity to say what you thought of the book--we'd love to know.
+
+If you haven't finished reading yet, just use the link above when you do.

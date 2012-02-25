@@ -124,6 +124,11 @@ class Donation < ActiveRecord::Base
     event.happened_at if event
   end
 
+  def received_at
+    event = update_status_events.where(detail: "received").reverse_order.first
+    event.happened_at if event
+  end
+
   # Actions
 
   def update_status(params)
