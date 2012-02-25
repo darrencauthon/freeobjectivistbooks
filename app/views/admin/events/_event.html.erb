@@ -1,6 +1,10 @@
 <div class="event">
     <p class="headline"><%= render partial: "admin/events/event_headline", locals: {event: event} %></p>
-    <% if event.message.present? %><p class="reason"><%= format_block event.message %></p><% end %>
+    <% if event.message.present? %><p><%= format_block event.message %></p><% end %>
+    <% if event.type == "update_status" && event.detail == "read" && event.donation.review %>
+    <p><%= format_block event.donation.review.text %></p>
+    <p><strong><%= event.donation.review.recommend? ? "Would" : "Would not" %></strong> recommend to others</p>
+    <% end %>
     <p class="timestamp"><%= l event.created_at %></p>
 </div>
 <div class="clear"></div>
