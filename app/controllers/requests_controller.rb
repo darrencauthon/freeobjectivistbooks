@@ -4,6 +4,10 @@ class RequestsController < ApplicationController
 
   # Filters
 
+  def parse_params
+    @from_read = params[:from_read].to_bool
+  end
+
   def allowed_users
     case params[:action]
     when "show" then [@request.user, @request.donor]

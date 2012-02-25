@@ -46,6 +46,8 @@ class ActiveSupport::TestCase
 
     @quentin_review = reviews :quentin_reviews_atlas
     @stadler_review = reviews :stadler_reviews_atlas
+
+    ActionMailer::Base.deliveries = []
   end
 
   def admin_auth

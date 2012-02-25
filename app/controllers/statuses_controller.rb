@@ -30,6 +30,14 @@ class StatusesController < ApplicationController
     end
   end
 
+  def redirect_destination
+    case status
+    when "sent", "received" then @donation.request
+    when "read"
+      @current_user.can_request? ? new_request_url(from_read: true) : profile_url
+    end
+  end
+
   def update
     @event = @donation.update_status params[:donation]
     @review = @donation.build_review params[:review] if params[:review] && params[:review][:text].present?
@@ -38,7 +46,7 @@ class StatusesController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:notice] = notice
-          redirect_to @donation.request
+          redirect_to redirect_destination
         end
         format.js { render nothing: true }
       end

@@ -28,20 +28,33 @@ class RequestsControllerTest < ActionController::TestCase
     get :new, params, session_for(@dagny)
     assert_response :success
 
-    assert_select 'h1', /Get/
+    assert_select 'h1', /Get a free Objectivist book/
     assert_select '#request_book_atlas_shrugged[checked="checked"]'
     assert_select 'p', /No address given/
     assert_select 'a', /Add/
+    assert_select 'a', /Cancel/
   end
 
   test "new with address" do
     get :new, params, session_for(@hank)
     assert_response :success
 
-    assert_select 'h1', /Get/
+    assert_select 'h1', /Get a free Objectivist book/
     assert_select '#request_book_atlas_shrugged[checked="checked"]'
     assert_select 'p', /987 Steel Way/
     assert_select 'a', /Edit/
+    assert_select 'a', /Cancel/
+  end
+
+  test "new from read" do
+    get :new, params(from_read: true), session_for(@dagny)
+    assert_response :success
+
+    assert_select 'h1', /Get your next Objectivist book/
+    assert_select '#request_book_atlas_shrugged[checked="checked"]'
+    assert_select 'p', /No address given/
+    assert_select 'a', /Add/
+    assert_select 'a', /Skip/
   end
 
   test "no new" do

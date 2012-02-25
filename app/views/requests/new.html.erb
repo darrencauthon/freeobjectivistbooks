@@ -6,14 +6,19 @@
     margin-bottom: 0;
 }
 
+#shipping_form {
+    display: none;
+}
+
 .submit {
     height: 56px;
     margin-top: 24px;
     background-image: url(/assets/get-book-button.png);
 }
 
-#shipping_form {
-    display: none;
+.cancel {
+    height: 56px;
+    margin-top: 41px;
 }
 </style>
 <% end %>
@@ -25,7 +30,7 @@
 </div>
 <% end %>
 
-<h1 class="grid_16">Get a free Objectivist book</h1>
+<h1 class="grid_16">Get <%= @from_read ? "your next": "a free" %> Objectivist book</h1>
 
 <div class="grid_12">
     <div class="overview">
@@ -34,6 +39,8 @@
     </div>
 
     <%= form_for @request do |f| %>
+        <%= hidden_field_tag :from_read, @from_read %>
+
         <h2>What book do you want to read?</h2>
 
         <p class="field_with_errors"><%= @request.errors[:book].join(", ") %></p>
@@ -84,7 +91,11 @@
         <div class="clear"></div>
         <% end %>
 
-        <%= f.submit "", class: "grid_4 alpha submit button" %><div class="clear"></div>
+        <%= f.submit "", class: "grid_4 alpha submit button" %>
+        <%= link_to profile_path, class: "prefix_1 grid_2 omega cancel" do %>
+            <%= @from_read ? 'Skip this' : 'Cancel' %>
+        <% end %>
+        <div class="clear"></div>
     <% end %>
 </div>
 

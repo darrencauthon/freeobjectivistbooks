@@ -159,7 +159,7 @@ class StatusesControllerTest < ActionController::TestCase
     assert_difference "@hank_donation_received.events.count" do
       post :update, params, session_for(@hank)
     end
-    assert_redirected_to @hank_request_received
+    assert_redirected_to new_request_url(from_read: true)
     assert_match /Your donor \(Henry Cameron\) will be glad/, flash[:notice]
 
     @hank_donation_received.reload
@@ -182,12 +182,24 @@ class StatusesControllerTest < ActionController::TestCase
     assert_difference "@hank_donation_received.events.count" do
       post :update, params, session_for(@hank)
     end
-    assert_redirected_to @hank_request_received
+    assert_redirected_to new_request_url(from_read: true)
     assert_match /Your donor \(Henry Cameron\) will be glad/, flash[:notice]
 
     @hank_donation_received.reload
     assert @hank_donation_received.read?
     assert_nil @hank_donation_received.review
+  end
+
+  test "read for student with outstanding request" do
+    params = {donation_id: @quentin_donation.id, donation: {status: "read"}, review: {text: ""}}
+    assert_difference "@quentin_donation.events.count" do
+      post :update, params, session_for(@quentin)
+    end
+    assert_redirected_to profile_url
+    assert_match /Your donor \(Hugh Akston\) will be glad/, flash[:notice]
+
+    @quentin_donation.reload
+    assert @quentin_donation.read?
   end
 
   test "read with review requires recommend bit" do
