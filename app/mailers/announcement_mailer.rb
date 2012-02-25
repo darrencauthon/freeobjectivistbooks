@@ -40,6 +40,7 @@ class AnnouncementMailer < ApplicationMailer
   def mark_read_books(donation)
     @donation = donation
     @user = donation.student
+    @received_at = donation.received_at || donation.updated_at
     announcement "Let us know when you finish reading #{donation.book}",
       'X-Mailgun-Campaign-ID' => "announcement-mark_read_books"
   end
