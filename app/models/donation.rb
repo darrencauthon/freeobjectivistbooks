@@ -133,7 +133,6 @@ class Donation < ActiveRecord::Base
 
   def update_status(params)
     self.status = params[:status]
-    return unless changed?
 
     event_attributes = params[:event] || {}
     event = update_status_events.build event_attributes.merge(detail: params[:status])

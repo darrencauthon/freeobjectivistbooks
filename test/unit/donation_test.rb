@@ -244,11 +244,6 @@ class DonationTest < ActiveSupport::TestCase
     assert_equal "read", event.detail
   end
 
-  test "update status is idempotent" do
-    event = @quentin_donation.update_status status: "sent"
-    assert_nil event
-  end
-
   # Flag
 
   test "flag" do
