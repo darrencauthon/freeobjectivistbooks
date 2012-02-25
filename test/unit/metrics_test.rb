@@ -34,9 +34,8 @@ class MetricsTest < ActiveSupport::TestCase
     metrics = @metrics.donation_metrics
     values = values_for metrics
 
-    assert_equal values['Total'], values['Active'] + values['Canceled'], metrics.inspect
-    assert_equal values['Active'], values['Flagged'] + Donation.not_flagged.count, metrics.inspect
-    assert_equal values['Active'], values['Thanked'] + Donation.not_thanked.count, metrics.inspect
+    assert_equal values['Total'], Donation.active.count + values['Canceled'], metrics.inspect
+    assert_equal Donation.active.count, values['Thanked'] + Donation.not_thanked.count, metrics.inspect
   end
 
   test "pledge metrics" do

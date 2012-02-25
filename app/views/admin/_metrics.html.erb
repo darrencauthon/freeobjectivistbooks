@@ -4,7 +4,7 @@
         <td class="name"><%= metric[:name] %></td>
         <td class="value"><%= format_number metric[:value] %></td>
         <% if metric[:percent] %>
-        <td class="percent">(<%= format_number (metric[:percent]*100) %>% of <%= metric[:denominator].downcase %>)</td>
+        <td class="percent">(<%= format_number (metric[:percent]*100) %>% of <%= metric[:denominator_name].downcase %>)</td>
         <% end %>
     </tr>
     <% end %>
