@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120224010215) do
+ActiveRecord::Schema.define(:version => 20120301070931) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -64,9 +64,20 @@ ActiveRecord::Schema.define(:version => 20120224010215) do
     t.text     "reason"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "referral_id"
   end
 
+  add_index "pledges", ["referral_id"], :name => "index_pledges_on_referral_id"
   add_index "pledges", ["user_id"], :name => "index_pledges_on_user_id"
+
+  create_table "referrals", :force => true do |t|
+    t.string   "source"
+    t.string   "medium"
+    t.text     "landing_url"
+    t.text     "referring_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "requests", :force => true do |t|
     t.integer  "user_id"
@@ -79,9 +90,11 @@ ActiveRecord::Schema.define(:version => 20120224010215) do
     t.boolean  "thanked_deprecated"
     t.string   "status_deprecated"
     t.integer  "donation_id"
+    t.integer  "referral_id"
   end
 
   add_index "requests", ["donation_id"], :name => "index_requests_on_donation_id"
+  add_index "requests", ["referral_id"], :name => "index_requests_on_referral_id"
   add_index "requests", ["user_id"], :name => "index_requests_on_user_id"
 
   create_table "reviews", :force => true do |t|
@@ -107,6 +120,9 @@ ActiveRecord::Schema.define(:version => 20120224010215) do
     t.text     "address"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "referral_id"
   end
+
+  add_index "users", ["referral_id"], :name => "index_users_on_referral_id"
 
 end

@@ -55,6 +55,11 @@ class RequestTest < ActiveSupport::TestCase
     assert_equal [donations(:stadler_grants_quentin_wants_opar)], requests(:quentin_wants_opar).donations
   end
 
+  test "referral" do
+    assert_equal referrals(:sfl_email), @hank_request.referral
+    assert_nil @hank_request_received.referral
+  end
+
   # Scopes
 
   def verify_scope(scope)

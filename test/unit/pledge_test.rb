@@ -1,18 +1,17 @@
 require 'test_helper'
 
 class PledgeTest < ActiveSupport::TestCase
-  def setup
-    super
-    @hugh_pledge = pledges :hugh_pledge
-    @cameron_pledge = pledges :cameron_pledge
-  end
-
   def reason
     "I want to spread these great ideas."
   end
 
   test "user" do
     assert_equal @hugh, @hugh_pledge.user
+  end
+
+  test "referral" do
+    assert_equal referrals(:sfl_fb), @stadler_pledge.referral
+    assert_nil @hugh_pledge.referral
   end
 
   test "build" do

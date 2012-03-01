@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+sfl_email:
+  source: sfl
+  medium: email
+  landing_url: "http://freeobjectivistbooks.org/signup/read?utm_source=sfl&utm_medium=email"
+
+sfl_fb:
+  source: sfl
+  medium: fb
+  landing_url: "http://freeobjectivistbooks.org/signup/read?utm_source=sfl&utm_medium=fb"
+  referring_url: http://facebook.com

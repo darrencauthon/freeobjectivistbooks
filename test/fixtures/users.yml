@@ -33,6 +33,7 @@ hank:
   school: University of Pittsburgh
   studying: manufacturing
   address: "987 Steel Way\nPhiladelphia, PA 12345"
+  referral: sfl_email
 
 # Donors
 
@@ -53,3 +54,4 @@ stadler:
   email: stadler@scienceinstitute.gov
   password_digest: <%= BCrypt::Password.create "stadler" %>
   location: "Ithaca, NY"
+  referral: sfl_fb

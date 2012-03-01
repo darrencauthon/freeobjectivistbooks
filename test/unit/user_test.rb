@@ -27,6 +27,12 @@ class UserTest < ActiveSupport::TestCase
     assert_equal [], @dagny.reviews
   end
 
+  test "referral" do
+    assert_equal referrals(:sfl_email), @hank.referral
+    assert_equal referrals(:sfl_fb), @stadler.referral
+    assert_nil @howard.referral
+  end
+
   # Validations
 
   test "howard is valid" do

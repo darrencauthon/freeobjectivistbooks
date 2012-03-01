@@ -27,6 +27,11 @@ class ActiveSupport::TestCase
 
     @hugh = users :hugh
     @cameron = users :cameron
+    @stadler = users :stadler
+
+    @hugh_pledge = pledges :hugh_pledge
+    @cameron_pledge = pledges :cameron_pledge
+    @stadler_pledge = pledges :stadler_pledge
 
     @howard_request = requests :howard_wants_atlas
     @quentin_request = requests :quentin_wants_vos
