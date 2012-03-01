@@ -177,4 +177,43 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '.field_with_errors', /already an account/
     assert_select 'form a', /log in/i
   end
+
+  # Referral tracking
+
+  test "store referral" do
+    @request.env['HTTP_REFERER'] = "http://studentsforliberty.org/freeobjectivistbooks"
+    get :read, utm_source: "sfl", utm_medium: "blog"
+    assert_response :success
+    assert_not_nil session[:referral_id]
+
+    referral = Referral.find session[:referral_id]
+    assert_equal "sfl", referral.source
+    assert_equal "blog", referral.medium
+    assert_match %r{^http://test.host/signup/read\?}, referral.landing_url
+    assert_equal "http://studentsforliberty.org/freeobjectivistbooks", referral.referring_url
+  end
+
+  test "save referral on request" do
+    user = user_attributes
+    request = request_attributes
+    referral = referrals :sfl_email
+    session[:referral_id] = referral.id
+    post :create, user: user, request: request, from_action: "read"
+
+    user = User.find_by_name "John Galt"
+    assert_equal referral, user.referral
+    assert_equal referral, user.requests.first.referral
+  end
+
+  test "save referral on pledge" do
+    user = user_attributes
+    pledge = pledge_attributes
+    referral = referrals :sfl_email
+    session[:referral_id] = referral.id
+    post :create, user: user, pledge: pledge, from_action: "donate"
+
+    user = User.find_by_name "John Galt"
+    assert_equal referral, user.referral
+    assert_equal referral, user.pledges.first.referral
+  end
 end

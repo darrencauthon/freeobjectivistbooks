@@ -4,7 +4,7 @@ class ForbiddenException < Exception; end
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :find_current_user, :parse_params, :load_models, :check_user
+  before_filter :find_current_user, :store_referral, :parse_params, :load_models, :check_user
 
   def initialize
     super
@@ -29,6 +29,13 @@ class ApplicationController < ActionController::Base
     reset_session
     session[:user_id] = user && user.id
     @current_user = user
+  end
+
+  def store_referral
+    return unless params[:utm_source] || params[:utm_medium]
+    referral = Referral.create source: params[:utm_source], medium: params[:utm_medium], landing_url: request.url,
+      referring_url: request.env["HTTP_REFERER"]
+    session[:referral_id] = referral.id
   end
 
   def parse_params

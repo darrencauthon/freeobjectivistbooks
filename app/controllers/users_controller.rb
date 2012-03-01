@@ -20,6 +20,11 @@ class UsersController < ApplicationController
   end
 
   def create
+    referral_id = session[:referral_id]
+    @user.referral_id = referral_id
+    @request.referral_id = referral_id if @request
+    @pledge.referral_id = referral_id if @pledge
+
     if save @user
       set_current_user @user
       if @user.pledges.any?
