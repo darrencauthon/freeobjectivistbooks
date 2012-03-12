@@ -35,10 +35,11 @@ td, th {
 
 <div class="grid_12 overview">
     <p>
-        <%= link_to pluralize(@user_count, 'user'), admin_users_path %> &ndash;
-        <%= link_to pluralize(@request_count, 'request'), admin_requests_path %> &ndash;
-        <%= link_to pluralize(@pledge_count, 'pledge'), admin_pledges_path %> &ndash;
-        <%= link_to pluralize(@event_count, 'event'), admin_events_path %>
+        <%= link_to pluralize(@user_count, 'user'), admin_users_path %>
+        &ndash; <%= link_to pluralize(@request_count, 'request'), admin_requests_path %>
+        &ndash; <%= link_to pluralize(@pledge_count, 'pledge'), admin_pledges_path %>
+        &ndash; <%= link_to pluralize(@event_count, 'event'), admin_events_path %>
+        &ndash; <%= link_to pluralize(@referral_count, 'referral'), admin_referrals_path %>
     </p>
 
     <h2>Request pipeline</h2>

@@ -52,6 +52,9 @@ class ActiveSupport::TestCase
     @quentin_review = reviews :quentin_reviews_atlas
     @stadler_review = reviews :stadler_reviews_atlas
 
+    @email_referral = referrals :sfl_email
+    @fb_referral = referrals :sfl_fb
+
     ActionMailer::Base.deliveries = []
   end
 

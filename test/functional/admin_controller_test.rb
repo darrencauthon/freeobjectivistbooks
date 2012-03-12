@@ -9,6 +9,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_select 'a', /request/
     assert_select 'a', /pledge/
     assert_select 'a', /event/
+    assert_select 'a', /referral/
   end
 
   test "admin password is required" do

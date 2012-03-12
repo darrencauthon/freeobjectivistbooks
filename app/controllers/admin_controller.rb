@@ -10,6 +10,7 @@ class AdminController < ApplicationController
     @request_count = Request.count
     @pledge_count = Pledge.count
     @event_count = Event.count
+    @referral_count = Referral.count
 
     @latest_events = Event.reverse_order.limit(10)
 

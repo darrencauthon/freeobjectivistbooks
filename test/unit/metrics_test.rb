@@ -49,4 +49,18 @@ class MetricsTest < ActiveSupport::TestCase
     sum = metrics.inject(0) {|sum,metric| sum += metric[:value]}
     assert_equal Request.count, sum
   end
+
+  test "referral metrics" do
+    keys = @metrics.referral_metrics_keys
+    assert !keys.empty?, "referral metrics keys are empty"
+
+    sum = keys.inject(0) do |sum, key|
+      metrics = @metrics.referral_metrics(key)
+      assert_not_nil metrics
+      values = values_for metrics
+      sum += values['Clicks']
+    end
+
+    assert_equal sum, Referral.count
+  end
 end

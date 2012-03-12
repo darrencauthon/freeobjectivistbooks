@@ -10,7 +10,7 @@ class PledgeTest < ActiveSupport::TestCase
   end
 
   test "referral" do
-    assert_equal referrals(:sfl_fb), @stadler_pledge.referral
+    assert_equal @fb_referral, @stadler_pledge.referral
     assert_nil @hugh_pledge.referral
   end
 

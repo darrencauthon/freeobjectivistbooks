@@ -42,6 +42,42 @@ class Metrics
     counts.sort {|a,b| b[:value] <=> a[:value]}
   end
 
+  def referral_counts
+    @referral_counts ||= Referral.unscoped.group(:source, :medium).count
+  end
+
+  def count_referrals(model)
+    counts = model.unscoped.joins(:referral).group(:source, :medium).count
+    counts.default = 0
+    counts
+  end
+
+  def user_referrals
+    @user_referrals ||= count_referrals User
+  end
+
+  def request_referrals
+    @request_referrals ||= count_referrals Request
+  end
+
+  def pledge_referrals
+    @pledge_referrals ||= count_referrals Pledge
+  end
+
+  def referral_metrics_keys
+    referral_counts.keys.map {|pair| {source: pair.first, medium: pair.second}}
+  end
+
+  def referral_metrics(key)
+    pair = [key[:source], key[:medium]]
+    calculate_metrics [
+      {name: 'Clicks',   value: referral_counts[pair]},
+      {name: 'Signups',  value: user_referrals[pair],    denominator_name: 'Clicks'},
+      {name: 'Requests', value: request_referrals[pair], denominator_name: 'Signups'},
+      {name: 'Pledges',  value: pledge_referrals[pair],  denominator_name: 'Signups'},
+    ]
+  end
+
 private
   def calculate_metrics(metrics)
     values = metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}

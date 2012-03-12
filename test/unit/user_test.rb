@@ -28,8 +28,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "referral" do
-    assert_equal referrals(:sfl_email), @hank.referral
-    assert_equal referrals(:sfl_fb), @stadler.referral
+    assert_equal @email_referral, @hank.referral
+    assert_equal @fb_referral, @stadler.referral
     assert_nil @howard.referral
   end
 

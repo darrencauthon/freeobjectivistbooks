@@ -196,24 +196,22 @@ class UsersControllerTest < ActionController::TestCase
   test "save referral on request" do
     user = user_attributes
     request = request_attributes
-    referral = referrals :sfl_email
-    session[:referral_id] = referral.id
+    session[:referral_id] = @email_referral.id
     post :create, user: user, request: request, from_action: "read"
 
     user = User.find_by_name "John Galt"
-    assert_equal referral, user.referral
-    assert_equal referral, user.requests.first.referral
+    assert_equal @email_referral, user.referral
+    assert_equal @email_referral, user.requests.first.referral
   end
 
   test "save referral on pledge" do
     user = user_attributes
     pledge = pledge_attributes
-    referral = referrals :sfl_email
-    session[:referral_id] = referral.id
+    session[:referral_id] = @fb_referral.id
     post :create, user: user, pledge: pledge, from_action: "donate"
 
     user = User.find_by_name "John Galt"
-    assert_equal referral, user.referral
-    assert_equal referral, user.pledges.first.referral
+    assert_equal @fb_referral, user.referral
+    assert_equal @fb_referral, user.pledges.first.referral
   end
 end
