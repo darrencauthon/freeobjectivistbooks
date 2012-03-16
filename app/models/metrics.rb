@@ -65,7 +65,8 @@ class Metrics
   end
 
   def referral_metrics_keys
-    referral_counts.keys.map {|pair| {source: pair.first, medium: pair.second}}
+    keys = referral_counts.keys.map {|pair| {source: pair.first, medium: pair.second}}
+    keys.sort_by {|key| "#{key[:source]}#{key[:medium]}"}
   end
 
   def referral_metrics(key)
