@@ -1,0 +1,14 @@
+<% content_for :title do %>Reviews – Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+h1 {
+    margin-bottom: 20px;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16">Reviews</h1>
+<div class="grid_12">
+    <%= render partial: "review", collection: @reviews, spacer_template: "requests/spacer" %>
+</div>

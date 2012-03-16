@@ -46,6 +46,7 @@ FreeBooks::Application.routes.draw do
     resources :requests
     resources :pledges
     resources :events
+    resources :reviews
     resources :referrals
     resources :campaign_targets, only: [:index, :new, :create, :destroy]
   end
