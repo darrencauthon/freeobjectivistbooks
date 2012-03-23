@@ -1,0 +1,40 @@
+<% content_for :title do %>Testimonials<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+h2 {
+    margin-bottom: 20px;
+}
+
+.testimonial .text {
+    padding-top: 12px;
+    font-size: 1.2em;
+}
+
+.testimonial .tagline {
+    text-align: right;
+}
+
+.testimonial .quote {
+    float: right;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16">What people are saying about Free Objectivist Books</h1>
+
+<div class="grid_12">
+    <h2>From students</h2>
+    <%= render partial: "testimonial", collection: @students, spacer_template: "requests/spacer" %>
+
+    <h2>From donors</h2>
+    <%= render partial: "testimonial", collection: @donors, spacer_template: "requests/spacer" %>
+
+    <h2>Inspired?
+        <% if @current_user %>
+        <%= link_to 'Donate books now.', donate_path %>
+        <% else %>
+        Sign up <%= link_to 'to read', signup_read_path %> or <%= link_to 'to donate', signup_donate_path %> today.
+        <% end %>
+    </h2>
+</div>
