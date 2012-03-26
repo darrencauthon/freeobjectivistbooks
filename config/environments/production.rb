@@ -58,6 +58,9 @@ FreeBooks::Application.configure do
     password: "47yry7f8jtl8"
   }
 
+  config.mailgun_domain = "freeobjectivistbooks.mailgun.org"
+  config.mailgun_api_key = "key-5clk2a0tya0jz2p8qaidprut3-5qfey1"
+
   # Enable threaded mode
   # config.threadsafe!
 

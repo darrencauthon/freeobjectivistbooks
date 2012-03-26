@@ -4,8 +4,9 @@ gem 'rails', '3.1.3'
 
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'dynamic_form'
-gem 'jquery-rails'
 gem 'exception_notification'
+gem 'jquery-rails'
+gem 'rest-client'
 gem 'valid_email'
 
 group :production do
