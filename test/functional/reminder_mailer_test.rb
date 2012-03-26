@@ -96,4 +96,18 @@ class ReminderMailerTest < ActionMailer::TestCase
       assert_select 'p', /Thanks,\nFree Objectivist Books/
     end
   end
+
+  test "read books" do
+    mail = ReminderMailer.read_books @hank_donation_received
+    assert_equal "Have you finished reading The Fountainhead?", mail.subject
+    assert_equal ["hank@rearden.com"], mail.to
+
+    mail.deliver
+    assert_select_email do
+      assert_select 'p', /Hi Hank/
+      assert_select 'p', /You received The Fountainhead on Jan 19\s+\((about )?\d+ \w+ ago\)/
+      assert_select 'a', /Yes, I have finished reading The Fountainhead/
+      assert_select 'p', /your donor, Henry Cameron/
+    end
+  end
 end

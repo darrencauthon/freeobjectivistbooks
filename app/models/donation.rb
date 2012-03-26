@@ -46,6 +46,10 @@ class Donation < ActiveRecord::Base
     in_transit.select {|donation| donation.sent_at < Time.now - 3.days}
   end
 
+  def self.needs_reading
+    reading.select {|donation| donation.received_at < Time.now - 2.weeks}
+  end
+
   # Callbacks
 
   before_validation do |donation|

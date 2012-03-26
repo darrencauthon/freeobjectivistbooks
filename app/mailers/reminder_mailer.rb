@@ -4,6 +4,7 @@ class ReminderMailer < ApplicationMailer
     when :fulfill_pledge then Pledge.unfulfilled
     when :send_books then User.donors_with_unsent_books
     when :confirm_receipt then Donation.needs_receipt
+    when :read_books then Donation.needs_reading
     else raise "Don't know who should get #{reminder} reminder"
     end
   end
@@ -41,5 +42,12 @@ class ReminderMailer < ApplicationMailer
     @donation = donation
     @user = donation.student
     reminder "Have you received #{@donation.book} yet?"
+  end
+
+  def read_books(donation)
+    @donation = donation
+    @user = donation.student
+    @received_at = donation.received_at || donation.updated_at
+    reminder "Have you finished reading #{@donation.book}?"
   end
 end
