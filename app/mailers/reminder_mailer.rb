@@ -9,11 +9,8 @@ class ReminderMailer < ApplicationMailer
   end
 
   def self.send_reminder(reminder)
-    targets_for(reminder).each do |target|
-      mail = self.send reminder, target
-      Rails.logger.info "Sending #{reminder} to #{mail.to}"
-      mail.deliver
-    end
+    targets = targets_for reminder
+    send_campaign reminder, targets
   end
 
   def reminder(subject, options = {})
@@ -24,8 +21,7 @@ class ReminderMailer < ApplicationMailer
     @pledge = pledge
     @user = pledge.user
     @request_count = Request.not_granted.count
-    reminder "Fulfill your pledge of #{pledge.quantity} books on Free Objectivist Books",
-      'X-Mailgun-Campaign-ID' => "fulfill_pledge-2012_02_21"
+    reminder "Fulfill your pledge of #{pledge.quantity} books on Free Objectivist Books"
   end
 
   def send_books(user)
@@ -38,12 +34,12 @@ class ReminderMailer < ApplicationMailer
     else
       "Have you sent your #{@donations.size} books to students from Free Objectivist Books yet?"
     end
-    mail = reminder subject, 'X-Mailgun-Campaign-ID' => 'send_books-2012_02_21'
+    mail = reminder subject
   end
 
   def confirm_receipt(donation)
     @donation = donation
     @user = donation.student
-    reminder "Have you received #{@donation.book} yet?", 'X-Mailgun-Campaign-ID' => "confirm_receipt-2012_02_21"
+    reminder "Have you received #{@donation.book} yet?"
   end
 end

@@ -44,6 +44,14 @@ module Mailgun
         campaign = new attributes
         prune_if_needed_and_add campaign
       end
+
+      def find_or_create attributes
+        begin
+          find attributes[:id]
+        rescue RestClient::ResourceNotFound
+          prune_if_needed_and_create attributes
+        end
+      end
     end
   end
 end

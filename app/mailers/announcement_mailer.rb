@@ -1,12 +1,4 @@
 class AnnouncementMailer < ApplicationMailer
-  def self.send_announcement(announcement, targets)
-    targets.each do |target|
-      mail = self.send announcement, target
-      Rails.logger.info "Sending #{announcement} to #{mail.to}"
-      mail.deliver
-    end
-  end
-
   def announcement(subject, options = {})
     mail_to_user @user, options.merge(subject: subject)
   end
@@ -33,15 +25,13 @@ class AnnouncementMailer < ApplicationMailer
     @request = request
     @user = request.user
     @sent_event = request.update_status_events.where(detail: "sent").last
-    announcement "Have you received #{request.book}? Let us and your donor know",
-      'X-Mailgun-Campaign-ID' => "announcement-mark_received_books"
+    announcement "Have you received #{request.book}? Let us and your donor know"
   end
 
   def mark_read_books(donation)
     @donation = donation
     @user = donation.student
     @received_at = donation.received_at || donation.updated_at
-    announcement "Let us know when you finish reading #{donation.book}",
-      'X-Mailgun-Campaign-ID' => "announcement-mark_read_books"
+    announcement "Let us know when you finish reading #{donation.book}"
   end
 end
