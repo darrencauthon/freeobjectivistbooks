@@ -1,6 +1,10 @@
 module Mailgun
   class Base
+    cattr_accessor :test_mode
+
     class << self
+      @@stub_data = {}
+
       def base_url
         "https://api.mailgun.net/v2/#{Rails.application.config.mailgun_domain}"
       end
@@ -31,6 +35,8 @@ module Mailgun
       end
 
       def all
+        return @@stub_data.values if test_mode
+        Rails.logger.info "GET #{client}"
         client.get
       end
 
@@ -40,6 +46,7 @@ module Mailgun
       end
 
       def add object
+        return stub(object) if test_mode
         Rails.logger.info "POST #{client} #{object.attributes}"
         response = client.post object.attributes
         attributes = response[name.demodulize.underscore]
@@ -50,6 +57,10 @@ module Mailgun
       def create attributes
         object = new attributes
         add object
+      end
+
+      def stub(object)
+        @@stub_data[object.id] = object
       end
     end
 
@@ -70,6 +81,7 @@ module Mailgun
     end
 
     def load
+      return @@stub_data[id] || (raise RestClient::ResourceNotFound.new) if test_mode
       Rails.logger.info "GET #{client}"
       self.attributes = client.get
       self
@@ -80,6 +92,7 @@ module Mailgun
     end
 
     def destroy
+      return @@stub_data.delete id if test_mode
       Rails.logger.info "DELETE #{client}"
       client.delete
     end

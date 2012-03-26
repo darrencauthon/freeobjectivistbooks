@@ -1,12 +1,13 @@
 require 'test_helper'
 
 class AnnouncementMailerTest < ActionMailer::TestCase
-  test "send announcement" do
+  test "send campaign" do
+    Mailgun::Campaign.test_mode = true
     requests = Donation.not_thanked.map {|donation| donation.request}
     assert requests.any?
 
     assert_difference "ActionMailer::Base.deliveries.count", requests.count do
-      AnnouncementMailer.send_announcement :thank_your_donor, requests
+      AnnouncementMailer.send_campaign :thank_your_donor, requests
     end
   end
 

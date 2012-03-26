@@ -2,6 +2,7 @@ require 'test_helper'
 
 class ReminderMailerTest < ActionMailer::TestCase
   test "send reminder" do
+    Mailgun::Campaign.test_mode = true
     pledges = Pledge.unfulfilled
     assert pledges.any?
 
