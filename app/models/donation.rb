@@ -125,12 +125,20 @@ class Donation < ActiveRecord::Base
 
   def sent_at
     event = update_status_events.where(detail: "sent").reverse_order.first
-    event.happened_at if event
+    if event
+      event.happened_at
+    elsif self.sent?
+      updated_at
+    end
   end
 
   def received_at
     event = update_status_events.where(detail: "received").reverse_order.first
-    event.happened_at if event
+    if event
+      event.happened_at
+    elsif self.received?
+      updated_at
+    end
   end
 
   # Actions

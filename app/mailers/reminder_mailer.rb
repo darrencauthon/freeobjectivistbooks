@@ -47,7 +47,7 @@ class ReminderMailer < ApplicationMailer
   def read_books(donation)
     @donation = donation
     @user = donation.student
-    @received_at = donation.received_at || donation.updated_at
+    @received_at = donation.received_at
     reminder "Have you finished reading #{@donation.book}?"
   end
 end
