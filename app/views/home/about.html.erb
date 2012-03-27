@@ -2,9 +2,17 @@
 
 <% content_for :stylesheet do %>
 <style>
+.question {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 3px;
+}
+
 .signup {
     margin-top: 72px;
 }
+
 .signup p {
     font-size: 1.2em;
 }
@@ -27,52 +35,82 @@
 
     <h1>FAQ</h1>
 
-    <h2>Why are people willing to donate these books?</h2>
+    <h2>General</h2>
+
+    <p class="question">Why are people willing to donate these books?</p>
     <p>The donors are big fans of Ayn Rand and her philosophy. Most of us would say that reading her
         works changed our lives. We want to spread her ideas and we're happy to help students discover her work.
         Read our <%= link_to 'testimonials', testimonials_path %> for quotes from our donors.
     </p>
 
-    <h2>Who is Ayn Rand? What is "Objectivism"?</h2>
+    <p class="question">Who is Ayn Rand? What is "Objectivism"?</p>
     <p>Ayn Rand was a 20th-century novelist and philosopher, most famous for her novels
         <%= title 'Atlas Shrugged' %> and <%= title 'The Fountainhead' %>. "Objectivism" is the
         name she gave to her philosophy, which upholds reason, individualism, and capitalism. Learn more from
         <a href="http://aynrand.org">The Ayn Rand Institute</a>.
     </p>
 
-    <h2>Who is behind this?</h2>
+    <p class="question">Do you send books outside the US?</p>
+    <p>Yes! Our donors have sent books to students in Australia, Bolivia, Canada, Finland, Guatemala, Iceland, Israel,
+        Kenya, Morocco, the Netherlands, New Zealand, Nigeria, Sweden, Tunisia, Turkey, and more.
+    </p>
+
+    <p class="question">Who is behind this?</p>
     <p>This site is a private project by Jason Crawford, of <a href="http://rationalegoist.com">The
         Rational Egoist</a>.
     </p>
 
-    <h2>What will you do with my info?</h2>
+    <h2>Requesting books</h2>
+
+    <p class="question">Can I request multiple books?</p>
+    <p>Yes, but you can only have one open request at a time. Once we've found a donor for your first request, you can
+        request another book.
+    </p>
+
+    <p class="question">Can I request books for friends or others?</p>
+    <p>Please have your friends sign up on the site directly to receive a book. Everyone who receives a book should be
+        registered for a Free Objectivist Books account. You can email this link to anyone who wants to sign up:
+        <%= link_to signup_read_url, signup_read_url %>
+    </p>
+
+    <p class="question">My donor sent the book a while ago, but I haven't received it. What do I do?</p>
+    <p>Send your donor a message through the site and ask them for an update or a tracking number. If they don't
+        respond or if you still don't get your book, contact me at
+        <%= mail_to 'jason@rationalegoist.com', 'jason@rationalegoist.com' %>
+    </p>
+
+    <h2>Donating books</h2>
+
+    <p class="question">Can I donate used books?</p>
+    <p>Yes, used books are fine.</p>
+
+    <p class="question">Do I have to mail the books myself? Can I just buy them online?</p>
+    <p>Yes, that's fine. Many donors buy books on Amazon or AbeBooks and ship them directly to students. No need to
+        pack boxes or visit the post office.
+    </p>
+
+    <p class="question">Can I just give money?</p>
+    <p>The best way to contribute is to send books directly to students. If you aren't willing to do that,
+        but still want to help, we may be able to use a cash contribution: contact me at
+        <%= mail_to 'jason@rationalegoist.com', 'jason@rationalegoist.com' %>. (We have not yet been recognized as a
+        501(c)(3) public charity and cannot guarantee that contributions are tax-deductible.)
+    </p>
+
+    <p class="question">Why not list requests in the order they are received?</p>
+    <p>Requests are listed with the most recent on top to give each student a turn in the most prominent position. If
+        a request is immediately appealing to donors, it will be granted right away. Otherwise, it is moved down the
+        page to give newer appeals a chance to be seen.
+    </p>
+
+    <h2>Privacy</h2>
+
+    <p class="question">What will you do with my info?</p>
     <p>Your public profile shows only your name and city (and for students, school and area of study). Students and the
         books they want to read will be displayed publicly on the site so that donors can find them and fulfill their
         requests.
     </p>
     <p>Your email address will be used by us to contact you, but will not be displayed publicly. For students, your
         mailing address will only be shown to the donor who sends your book.
-    </p>
-
-    <h2>I'm a student, can I request multiple books?</h2>
-    <p>Yes, but you can only have one open request at a time. Once we've found a donor for your first request, you can
-        request another book.
-    </p>
-
-    <h2>Can I request books for friends or others?</h2>
-    <p>Please have your friends sign up on the site directly to receive a book. Everyone who receives a book should be
-        registered for a Free Objectivist Books account. You can email this link to anyone who wants to sign up:
-        <%= link_to signup_read_url, signup_read_url %>
-    </p>
-
-    <h2>Can I donate used books?</h2>
-    <p>Yes, used books are fine.</p>
-
-    <h2>I want to help, but do I have to send books? Can I just give money?</h2>
-    <p>The best way to contribute is to send books directly to students. If you aren't willing to do that,
-        but still want to help, we may be able to use a cash contribution: contact me at
-        <%= mail_to 'jason@rationalegoist.com', 'jason@rationalegoist.com' %>. (We have not yet been recognized as a
-        501(c)(3) public charity and cannot guarantee that contributions are tax-deductible.)
     </p>
 
     <h1>Contact</h1>
