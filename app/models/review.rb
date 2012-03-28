@@ -9,6 +9,10 @@ class Review < ActiveRecord::Base
   validates_presence_of :user, :book, :text
   validates_inclusion_of :recommend, in: [true, false], message: 'Please choose "Yes" or "No".'
 
+  # Scopes and finders
+
+  default_scope order("created_at desc")
+
   # Callbacks
 
   after_initialize :populate
