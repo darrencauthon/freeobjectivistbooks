@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class StatusesControllerTest < ActionController::TestCase
+  # Sent "form"
+
+  test "received form redirects to request" do
+    get :edit, {donation_id: @dagny_donation.id, status: "sent"}, session_for(@hugh)
+    assert_redirected_to @dagny_request
+  end
+
   # Sent
 
   test "sent" do

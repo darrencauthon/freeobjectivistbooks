@@ -8,4 +8,4 @@ Please send <%= @event.book %> to:
 <%= @event.request.address %>
 
 Confirm with us when you have sent this book:
-<%= edit_donation_status_url(@event.donation, status: "sent") %>
+<%= request_url(@event.request) %>

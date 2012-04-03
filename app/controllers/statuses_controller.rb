@@ -17,9 +17,13 @@ class StatusesController < ApplicationController
   # Actions
 
   def edit
-    @event = @donation.update_status_events.build detail: status
-    @review = @donation.build_review
-    render status
+    if status == "sent"
+      redirect_to @donation.request
+    else
+      @event = @donation.update_status_events.build detail: status
+      @review = @donation.build_review
+      render status
+    end
   end
 
   def notice
