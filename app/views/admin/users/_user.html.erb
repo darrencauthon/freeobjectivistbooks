@@ -10,4 +10,5 @@
     <% if user.donations.active.any? %>
     <p>Sponsored <%= pluralize user.donations.active.count, 'book' %></p>
     <% end %>
+    <% if user.referral %><%= render user.referral %><% end %>
 </div>

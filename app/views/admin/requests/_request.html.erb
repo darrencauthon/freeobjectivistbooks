@@ -16,6 +16,7 @@
         <% end %>
     </p>
     <% end %>
+    <% if request.referral %><%= render request.referral %><% end %>
     <div><%= link_to (l request.created_at), admin_request_path(request), class: "timestamp" %></div>
 </div>
 <div class="clear"></div>
