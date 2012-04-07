@@ -76,15 +76,6 @@ class DonationsControllerTest < ActionController::TestCase
     verify_event donation, "grant", notified?: true
   end
 
-  test "create is idempotent" do
-    request = @quentin_request
-    post :create, {request_id: request.id, format: "json"}, session_for(@hugh)
-    assert_response :success
-
-    request.reload
-    assert_equal @quentin_donation, request.donation
-  end
-
   test "create no address" do
     request = @howard_request
     post :create, {request_id: request.id, format: "json"}, session_for(@hugh)
@@ -103,9 +94,42 @@ class DonationsControllerTest < ActionController::TestCase
     verify_event donation, "grant", notified?: true
   end
 
+  test "create is idempotent" do
+    request = @quentin_request
+    post :create, {request_id: request.id, format: "json"}, session_for(@hugh)
+    assert_response :success
+
+    request.reload
+    assert_equal @quentin_donation, request.donation
+  end
+
+  test "can't grant request that is already granted" do
+    request = @quentin_request
+    post :create, {request_id: request.id, format: "json"}, session_for(@cameron)
+    assert_response :bad_request
+
+    hash = decode_json_response
+    assert_match /already/i, hash['message']
+
+    request.reload
+    assert_equal @hugh, request.donor
+  end
+
+  test "can't donate to self" do
+    request = @quentin_request
+    post :create, {request_id: request.id, format: "json"}, session_for(@quentin)
+    assert_response :bad_request
+
+    hash = decode_json_response
+    assert_match /yourself/i, hash['message']
+
+    request.reload
+    assert_equal @hugh, request.donor
+  end
+
   test "create requires login" do
     post :create, request_id: @howard_request.id, format: "json"
-    verify_login_page
+    assert_response :unauthorized
   end
 
   # Cancel

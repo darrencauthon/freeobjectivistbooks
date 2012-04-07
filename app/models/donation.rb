@@ -18,6 +18,12 @@ class Donation < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :address, unless: :flagged?, message: "We need your address to send you your book."
   validates_inclusion_of :status, in: %w{not_sent sent received read}
+  validates_uniqueness_of :request_id, scope: :canceled, if: :active?, message: "has already been granted"
+  validate :donor_cannot_be_requester
+
+  def donor_cannot_be_requester
+    errors.add :base, "You can't donate to yourself!" if donor == student
+  end
 
   # Scopes
 

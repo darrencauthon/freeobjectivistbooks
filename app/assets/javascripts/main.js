@@ -9,8 +9,15 @@
             },
             "ajax:success" : handler,
             "ajax:error" : function (event, request, status, error) {
-                alert('Sorry, we hit an unexpected error. Try again or email me at jason@rationalegoist.com for help.');
-            },
+                var message = 'Sorry, we hit an unexpected error. Try again or email me at jason@rationalegoist.com for help.';
+                if (request.getResponseHeader("Content-Type").match("application/json")) {
+                    response = JSON.parse(request.responseText);
+                    if (response.message) {
+                        message = response.message;
+                    }
+                }
+                alert(message);
+            }
         });
     };
 

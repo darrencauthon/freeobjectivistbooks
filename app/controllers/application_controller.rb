@@ -90,24 +90,45 @@ class ApplicationController < ActionController::Base
   rescue_from ForbiddenException, with: :render_forbidden
 
   def render_unauthorized
-    logger.info "no current user, rendering login page"
-    @destination = request.url
-    render "sessions/new", status: 401
+    respond_to do |format|
+      format.html do
+        logger.info "no current user, rendering login page"
+        @destination = request.url
+        render "sessions/new", status: 401
+      end
+      format.json do
+        render json: {message: 'Sorry, something went wrong. Try logging in again.'}, status: 401
+      end
+    end
   end
 
   def render_forbidden
-    @destination = request.url
-    render template: "errors/403", status: 403
+    respond_to do |format|
+      format.html do
+        @destination = request.url
+        render template: "errors/403", status: 403
+      end
+      format.json do
+        render json: {message: 'Sorry, something went wrong. Try logging in again.'}, status: 403
+      end
+    end
   end
 
   def render_not_found
-    render template: "errors/404", status: 404
+    respond_to do |format|
+      format.html { render template: "errors/404", status: 404 }
+      format.json { render json: {message: 'Sorry, we hit an unexpected error. Try reloading the page.'}, status: 404 }
+    end
   end
 
   def render_error(exception)
-    render template: "errors/500", status: 500
     trace = exception.backtrace.map {|frame| "    #{frame}"}.join("\n")
     logger.error "Caught exception #{exception.class}: #{exception.message}\n#{trace}"
     ExceptionNotifier::Notifier.exception_notification(request.env, exception).deliver
+
+    respond_to do |format|
+      format.html { render template: "errors/500", status: 500 }
+      format.json { render json: {message: 'Sorry, we hit an unexpected error.'}, status: 500 }
+    end
   end
 end

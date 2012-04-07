@@ -15,10 +15,24 @@ class DonationsController < ApplicationController
   end
 
   def create
-    @donation = @request.grant @current_user
-    respond_to do |format|
-      format.html { redirect_to @request }
-      format.json { render json: @request.as_json(include: :user) }
+    @event = @request.grant @current_user
+    if save @request, @event
+      respond_to do |format|
+        format.html { redirect_to @request }
+        format.json { render json: @request, include: :user }
+      end
+    else
+      message = @request.donation.errors.full_messages.join ", "
+      respond_to do |format|
+        format.html do
+          flash[:error] = message
+          redirect_to @request
+        end
+        format.json do
+          response = {message: message}
+          render json: response, status: :bad_request
+        end
+      end
     end
   end
 

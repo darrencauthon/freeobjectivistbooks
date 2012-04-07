@@ -260,7 +260,9 @@ class DonationTest < ActiveSupport::TestCase
   # Fix
 
   test "fix: added address" do
-    donation = @howard_request.grant @hugh
+    @howard_request.grant @hugh
+    @howard_request.save!
+    donation = @howard_request.donation
     assert donation.flagged?
 
     event = donation.fix({student_name: "Howard Roark", address: "123 Independence St"}, {message: ""})

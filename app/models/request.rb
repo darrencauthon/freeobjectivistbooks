@@ -91,19 +91,8 @@ class Request < ActiveRecord::Base
   # Actions
 
   def grant(user)
-    if donation
-      raise "Already granted" if donation.user != user
-    else
-      self.donation = donations.build user: user, flagged: address.blank?
-      save!
-    end
-
-    if donation.grant_events.empty?
-      event = donation.grant_events.build
-      event.save!
-    end
-
-    donation
+    self.donation = donations.build(user: user, flagged: address.blank?) unless donation && donor == user
+    donation.grant_events.last || grant_events.build(donation: donation)
   end
 
   def build_update_event

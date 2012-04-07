@@ -141,44 +141,54 @@ class RequestTest < ActiveSupport::TestCase
 
   test "grant" do
     request = @quentin_request_open
-    donation = request.grant @hugh
+    event = request.grant @hugh
 
     assert request.granted?
-    assert_equal donation, request.donation
+    assert_equal @hugh, request.donor
+    assert !request.flagged?
+    assert !request.sent?
 
-    assert_equal @hugh, donation.user
-    assert !donation.flagged?
-    assert !donation.sent?
-
-    verify_event donation, "grant", user: @hugh
+    request.save!
+    event.save!
+    verify_event request.donation, "grant", user: @hugh
   end
 
   test "grant no address" do
-    donation = @howard_request.grant @hugh
+    request = @howard_request
+    event = request.grant @hugh
 
     assert @howard_request.granted?
-    assert_equal donation, @howard_request.donation
+    assert_equal @hugh, request.donor
+    assert request.flagged?
+    assert !request.sent?
 
-    assert_equal @hugh, donation.user
-    assert donation.flagged?
-    assert !donation.sent?
-
-    verify_event donation, "grant", user: @hugh
+    request.save!
+    event.save!
+    verify_event request.donation, "grant", user: @hugh
   end
 
   test "grant is idempotent" do
     request = @quentin_request
-    donation = @quentin_request.grant @hugh
+    event = request.grant @hugh
+    assert Event.exists?(event)
 
+    request.save!
     assert request.granted?
     assert_equal 1, request.donations.size
-    assert_equal @quentin_donation, donation
-    assert_equal 1, @quentin_donation.grant_events.size
+    assert_equal @quentin_donation, request.donation
+    assert_equal 1, request.donation.grant_events.size
   end
 
   test "can't grant if already granted" do
     request = @quentin_request
-    assert_raise(RuntimeError) { @quentin_request.grant @cameron }
+    event = request.grant @cameron
+    assert request.invalid?
+  end
+
+  test "can't grant to self" do
+    request = @quentin_request_open
+    event = request.grant @quentin
+    assert request.invalid?
   end
 
   # Build update event
