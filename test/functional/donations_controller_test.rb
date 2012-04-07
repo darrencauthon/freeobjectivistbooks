@@ -76,6 +76,15 @@ class DonationsControllerTest < ActionController::TestCase
     verify_event donation, "grant", notified?: true
   end
 
+  test "create is idempotent" do
+    request = @quentin_request
+    post :create, {request_id: request.id, format: "json"}, session_for(@hugh)
+    assert_response :success
+
+    request.reload
+    assert_equal @quentin_donation, request.donation
+  end
+
   test "create no address" do
     request = @howard_request
     post :create, {request_id: request.id, format: "json"}, session_for(@hugh)

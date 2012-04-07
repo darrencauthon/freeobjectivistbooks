@@ -91,13 +91,17 @@ class Request < ActiveRecord::Base
   # Actions
 
   def grant(user)
-    donation = donations.build user: user, flagged: address.blank?
-    donation.save!
+    if donation
+      raise "Already granted" if donation.user != user
+    else
+      self.donation = donations.build user: user, flagged: address.blank?
+      save!
+    end
 
-    update_attributes! donation: donation
-
-    event = donation.grant_events.build
-    event.save!
+    if donation.grant_events.empty?
+      event = donation.grant_events.build
+      event.save!
+    end
 
     donation
   end

@@ -166,6 +166,21 @@ class RequestTest < ActiveSupport::TestCase
     verify_event donation, "grant", user: @hugh
   end
 
+  test "grant is idempotent" do
+    request = @quentin_request
+    donation = @quentin_request.grant @hugh
+
+    assert request.granted?
+    assert_equal 1, request.donations.size
+    assert_equal @quentin_donation, donation
+    assert_equal 1, @quentin_donation.grant_events.size
+  end
+
+  test "can't grant if already granted" do
+    request = @quentin_request
+    assert_raise(RuntimeError) { @quentin_request.grant @cameron }
+  end
+
   # Build update event
 
   test "build update event" do
