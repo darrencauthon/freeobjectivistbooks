@@ -6,7 +6,10 @@ class MetricsTest < ActiveSupport::TestCase
   end
 
   def values_for(metrics)
-    metrics.inject({}) {|hash,metric| hash.merge(metric[:name] => metric[:value])}
+    metrics.inject({}) do |hash,metric|
+      value = metric[:value] || metric[:values]["Total"]
+      hash.merge(metric[:name] => value)
+    end
   end
 
   test "request pipeline" do
@@ -19,21 +22,21 @@ class MetricsTest < ActiveSupport::TestCase
     assert_equal values['Received'], values['Read'] + Donation.reading.count, metrics.inspect
   end
 
-  test "reminders needed" do
-    metrics = @metrics.reminders_needed
-    values = values_for metrics
+  test "pipeline breakdown" do
+    metrics = @metrics.pipeline_breakdown
+    values = values_for metrics[:rows]
 
-    assert_equal Request.count, Request.granted.count + values['Open requests'], metrics.inspect
-    assert_equal Donation.not_sent.count, values['Needs sending'] + Donation.not_sent.flagged.count, metrics.inspect
-    assert_equal Donation.sent.count, values['In transit'] + Donation.received.count, metrics.inspect
-    assert_equal Donation.active.count, values['Flagged'] + Donation.not_flagged.count, metrics.inspect
-    assert_equal Donation.received.count, values['Needs thanks'] + Donation.received.thanked.count, metrics.inspect
+    assert_equal Request.count, Request.granted.count + values['Open requests'], values.inspect
+    assert_equal Donation.not_sent.count, values['Needs sending'] + Donation.not_sent.flagged.count, values.inspect
+    assert_equal Donation.sent.count, values['In transit'] + Donation.received.count, values.inspect
   end
 
   test "donation metrics" do
     metrics = @metrics.donation_metrics
     values = values_for metrics
 
+    assert_equal Donation.active.count, values['Flagged'] + Donation.not_flagged.count, metrics.inspect
+    assert_equal Donation.received.count, values['Needs thanks'] + Donation.received.thanked.count, metrics.inspect
     assert_equal values['Total'], Donation.active.count + values['Canceled'], metrics.inspect
     assert_equal Donation.active.count, values['Thanked'] + Donation.not_thanked.count, metrics.inspect
   end

@@ -9,23 +9,59 @@ class Metrics
     ]
   end
 
-  def reminders_needed
-    [
-      {name: 'Open requests', value: Request.not_granted.count},
-      {name: 'Needs sending', value: Donation.needs_sending.count},
-      {name: 'Flagged',       value: Donation.flagged.count},
-      {name: 'In transit',    value: Donation.in_transit.count},
-      {name: 'Reading',       value: Donation.reading.count},
-      {name: 'Needs thanks',  value: Donation.needs_thanks.count},
-    ]
+  def time_columns
+    @time_columns ||= ["Total", "3 days", "1 wk", "2 wks", "3 wks", "1 mo", "2 mos", "3 mos"]
+  end
+
+  def times
+    @times = time_columns.inject({}) do |hash,column|
+      time = case column
+      when /total/i then 0
+      else
+        number, unit = column.split
+        method = case unit[0]
+        when "d" then :days
+        when "w" then :weeks
+        when "m" then :months
+        end
+        number.to_i.send method
+      end
+      hash.merge(column => time)
+    end
+  end
+
+  def now
+    @now ||= Time.now
+  end
+
+  def breakdown_by_time(relation, timestamp_column = :created_at)
+    time_columns.inject({}) do |hash,column|
+      time = times[column]
+      relation = relation.where("#{timestamp_column} < ?", now - time) if time > 0
+      hash.merge(column => relation.count)
+    end
+  end
+
+  def pipeline_breakdown
+    {
+      columns: time_columns,
+      rows: [
+        {name: 'Open requests', values: breakdown_by_time(Request.not_granted)},
+        {name: 'Needs sending', values: breakdown_by_time(Donation.needs_sending)},
+        {name: 'In transit',    values: breakdown_by_time(Donation.in_transit, :status_updated_at)},
+        {name: 'Reading',       values: breakdown_by_time(Donation.reading, :status_updated_at)},
+      ],
+    }
   end
 
   def donation_metrics
     calculate_metrics [
-      {name: 'Thanked',  value: Donation.thanked.count,  denominator_name: 'Active', denominator_value: Donation.active.count},
-      {name: 'Reviewed', value: Review.count,            denominator_name: 'Read',   denominator_value: Donation.read.count},
-      {name: 'Canceled', value: Donation.canceled.count, denominator_name: 'Total'},
-      {name: 'Total',    value: Donation.count},
+      {name: 'Flagged',      value: Donation.flagged.count,      denominator_name: 'Not sent', denominator_value: Donation.not_sent.count},
+      {name: 'Needs thanks', value: Donation.needs_thanks.count, denominator_name: 'Received', denominator_value: Donation.received.count},
+      {name: 'Thanked',      value: Donation.thanked.count,      denominator_name: 'Active',   denominator_value: Donation.active.count},
+      {name: 'Reviewed',     value: Review.count,                denominator_name: 'Read',     denominator_value: Donation.read.count},
+      {name: 'Canceled',     value: Donation.canceled.count,     denominator_name: 'Total'},
+      {name: 'Total',        value: Donation.count},
     ]
   end
 

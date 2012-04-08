@@ -1,0 +1,16 @@
+<table>
+    <tr>
+        <th></th>
+        <% metrics_table[:columns].each do |column| %>
+        <th class="metric_header"><%= column %></th>
+        <% end %>
+    </tr>
+    <% metrics_table[:rows].each do |row| %>
+    <tr class="metric">
+        <td class="name"><%= row[:name] %></td>
+        <% metrics_table[:columns].each do |column| %>
+        <td class="value"><%= format_number row[:values][column] %></td>
+        <% end %>
+    </tr>
+    <% end %>
+</table>

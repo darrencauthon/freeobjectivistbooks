@@ -11,6 +11,11 @@ td, th {
     padding-right: 12px;
 }
 
+.metric_header {
+    font-size: 0.9em;
+    width: 48px;
+}
+
 .overview {
     font-size: 1.5em;
     margin-bottom: 0;
@@ -46,8 +51,8 @@ td, th {
     <h2>Request pipeline</h2>
     <%= render partial: "admin/metrics", object: @metrics.request_pipeline %>
 
-    <h2>Reminders needed</h2>
-    <%= render partial: "admin/metrics", object: @metrics.reminders_needed %>
+    <h2>Pipeline breakdown</h2>
+    <%= render partial: "admin/metrics_table", object: @metrics.pipeline_breakdown %>
 
     <h2>Donation metrics</h2>
     <%= render partial: "admin/metrics", object: @metrics.donation_metrics %>
