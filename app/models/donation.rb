@@ -175,7 +175,9 @@ class Donation < ActiveRecord::Base
   def cancel(params)
     return if canceled?
     self.canceled = true
-    request.donation = nil
-    cancel_events.build params[:event]
+    if request.donation == self
+      request.donation = nil
+      cancel_events.build params[:event]
+    end
   end
 end

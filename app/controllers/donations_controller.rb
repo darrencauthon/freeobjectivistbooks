@@ -43,10 +43,12 @@ class DonationsController < ApplicationController
   def destroy
     @event = @donation.cancel params[:donation]
     if save @donation, @event
-      flash[:notice] = {
-        headline: "We let #{@donation.student.name} know that you canceled this donation.",
-        detail: "We will try to find another donor for them."
-      }
+      if @event
+        flash[:notice] = {
+          headline: "We let #{@donation.student.name} know that you canceled this donation.",
+          detail: "We will try to find another donor for them."
+        }
+      end
       redirect_to donations_url
     else
       render :cancel
