@@ -18,8 +18,8 @@ class Donation < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :address, unless: :flagged?, message: "We need your address to send you your book."
   validates_inclusion_of :status, in: %w{not_sent sent received read}
-  validates_uniqueness_of :request_id, scope: :canceled, if: :active?, message: "has already been granted"
-  validate :donor_cannot_be_requester
+  validates_uniqueness_of :request_id, scope: :canceled, if: :active?, message: "has already been granted", on: :create
+  validate :donor_cannot_be_requester, on: :create
 
   def donor_cannot_be_requester
     errors.add :base, "You can't donate to yourself!" if donor == student
@@ -59,7 +59,10 @@ class Donation < ActiveRecord::Base
   # Callbacks
 
   before_validation do |donation|
-    donation.status = "not_sent" if donation.status.blank?
+    if donation.status.blank?
+      donation.status = "not_sent"
+      donation.status_updated_at = donation.created_at
+    end
   end
 
   # Derived attributes
@@ -125,32 +128,38 @@ class Donation < ActiveRecord::Base
   end
 
   def flag_message
-    event = flag_events.reverse_order.first
+    event = flag_events.last
     event.message if event
   end
 
-  def sent_at
-    event = update_status_events.where(detail: "sent").reverse_order.first
+  def updated_at_for_status(status)
+    return created_at if status == "not_sent"
+
+    event = update_status_events.where(detail: status).last
     if event
       event.happened_at
-    elsif self.sent?
+    elsif self.status == status
       updated_at
     end
   end
 
+  def sent_at
+    updated_at_for_status "sent"
+  end
+
   def received_at
-    event = update_status_events.where(detail: "received").reverse_order.first
-    if event
-      event.happened_at
-    elsif self.received?
-      updated_at
-    end
+    updated_at_for_status "received"
+  end
+
+  def read_at
+    updated_at_for_status "read"
   end
 
   # Actions
 
-  def update_status(params)
+  def update_status(params, time = Time.now)
     self.status = params[:status]
+    self.status_updated_at = time
 
     event_attributes = params[:event] || {}
     event = update_status_events.build event_attributes.merge(detail: params[:status])

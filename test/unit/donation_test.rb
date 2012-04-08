@@ -89,6 +89,7 @@ class DonationTest < ActiveSupport::TestCase
   test "default status is not_sent" do
     donation = @howard_request.donations.create user: @hugh
     assert_equal "not_sent", donation.status
+    assert_equal donation.created_at, donation.status_updated_at
   end
 
   # Derived attributes
@@ -176,8 +177,11 @@ class DonationTest < ActiveSupport::TestCase
   # Update status
 
   test "update status sent" do
+    time = Time.now
     event = @dagny_donation.update_status status: "sent"
+
     assert @dagny_donation.sent?
+    assert @dagny_donation.status_updated_at >= time
 
     assert_equal @dagny_donation, event.donation
     assert_equal @dagny_request, event.request
@@ -190,8 +194,11 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "update status received" do
+    time = Time.now
     event = @dagny_donation.update_status status: "received", event: {message: "I got it"}
+
     assert @dagny_donation.received?
+    assert @dagny_donation.status_updated_at >= time
 
     assert_equal @dagny_donation, event.donation
     assert_equal @dagny_request, event.request
@@ -236,8 +243,11 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "update status read" do
+    time = Time.now
     event = @hank_donation_received.update_status status: "read"
+
     assert @hank_donation_received.read?
+    assert @hank_donation_received.status_updated_at >= time
 
     assert_equal @hank, event.user
     assert_equal "update_status", event.type

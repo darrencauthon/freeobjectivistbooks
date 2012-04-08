@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301070931) do
+ActiveRecord::Schema.define(:version => 20120408000244) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -27,11 +27,12 @@ ActiveRecord::Schema.define(:version => 20120301070931) do
     t.integer  "request_id"
     t.integer  "user_id"
     t.string   "status"
-    t.boolean  "flagged",    :default => false, :null => false
-    t.boolean  "thanked",    :default => false, :null => false
-    t.boolean  "canceled",   :default => false, :null => false
+    t.boolean  "flagged",           :default => false, :null => false
+    t.boolean  "thanked",           :default => false, :null => false
+    t.boolean  "canceled",          :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "status_updated_at"
   end
 
   add_index "donations", ["request_id"], :name => "index_donations_on_request_id"
