@@ -19,8 +19,8 @@ class Request < ActiveRecord::Base
 
   belongs_to :user, autosave: true
   belongs_to :donation
-  has_many :donations
-  has_many :events
+  has_many :donations, dependent: :destroy
+  has_many :events, dependent: :destroy
   belongs_to :referral
 
   Event::TYPES.each do |type|

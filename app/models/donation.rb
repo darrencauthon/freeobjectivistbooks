@@ -3,7 +3,7 @@ class Donation < ActiveRecord::Base
 
   belongs_to :request, autosave: true
   belongs_to :user
-  has_many :events
+  has_many :events, dependent: :destroy
   has_one :review
 
   Event::TYPES.each do |type|
