@@ -92,7 +92,8 @@ class Request < ActiveRecord::Base
 
   def grant(user)
     self.donation = donations.build(user: user, flagged: address.blank?) unless donation && donor == user
-    donation.grant_events.last || grant_events.build(donation: donation)
+    event = donation.grant_events.last unless donation.new_record?
+    event || grant_events.build(donation: donation)
   end
 
   def build_update_event
