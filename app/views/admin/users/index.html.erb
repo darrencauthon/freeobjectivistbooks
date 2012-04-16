@@ -11,8 +11,10 @@
 </style>
 <% end %>
 
-<h1 class="grid_16"><%= pluralize @users.count, 'user' %></h1>
+<h1 class="grid_16"><%= pluralize @total, 'user' %></h1>
 
 <div class="grid_12">
+    <p class="overview">Showing <%= @start+1 %>&ndash;<%= @end %></p>
     <%= render @users %>
+    <p class="more"><%= more_link {|params| admin_users_path params}%></a>
 </div>

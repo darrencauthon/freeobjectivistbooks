@@ -21,5 +21,7 @@ td, th {
     <div class="overview">
         <%= render partial: "admin/metrics", object: @metrics.pledge_metrics %>
     </div>
+    <p class="overview">Showing <%= @start+1 %>&ndash;<%= @end %></p>
     <%= render partial: "pledge", collection: @pledges, spacer_template: "requests/spacer" %>
+    <p class="more"><%= more_link {|params| admin_pledges_path params}%></a>
 </div>

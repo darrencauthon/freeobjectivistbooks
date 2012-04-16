@@ -1,6 +1,6 @@
 class Admin::UsersController < AdminController
   def index
-    @users = User.all
+    @users = limit_and_offset User
   end
 
   def update

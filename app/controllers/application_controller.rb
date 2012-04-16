@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
     @model_ivar_name = "@#{@model_class_name.underscore}"
   end
 
+  # Filters
+
   def find_current_user
     if session[:user_id]
       @current_user = User.find_by_id session[:user_id]
@@ -65,6 +67,8 @@ class ApplicationController < ActionController::Base
     require_user users unless users.empty?
   end
 
+  # Helpers
+
   def save(*models)
     models = models.flatten.compact
     valid = models.all? {|m| m.valid?}
@@ -77,6 +81,24 @@ class ApplicationController < ActionController::Base
       logger.warn "#{model.class} errors: #{model.errors.messages}" if model.invalid?
     end
   end
+
+  def limit_and_offset(relation, default_limit = 100)
+    offset = params[:offset]
+    limit = params[:limit] || default_limit
+
+    @total = relation.count
+
+    relation = relation.limit limit.to_i if limit
+    relation = relation.offset offset.to_i if offset
+
+    @all = relation.all
+    @start = offset.to_i
+    @end = @start + @all.size
+
+    @all
+  end
+
+  # Error handling
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found

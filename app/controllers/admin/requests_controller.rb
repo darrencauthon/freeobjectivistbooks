@@ -1,6 +1,6 @@
 class Admin::RequestsController < AdminController
   def index
     @metrics = Metrics.new
-    @requests = Request.all
+    @requests = limit_and_offset Request
   end
 end

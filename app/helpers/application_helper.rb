@@ -99,4 +99,17 @@ module ApplicationHelper
     book = title donation.book
     raw "#{name} in #{location} #{action} you #{book}"
   end
+
+  # Pagination
+
+  def has_more?
+    @total > @end
+  end
+
+  def more_link
+    if has_more?
+      path = yield offset: @end, limit: params[:limit]
+      link_to 'More', path
+    end
+  end
 end

@@ -1,6 +1,5 @@
 class Admin::EventsController < AdminController
   def index
-    @events = Event.reverse_order
-    @event_count = @events.count
+    @events = limit_and_offset Event.reverse_order
   end
 end

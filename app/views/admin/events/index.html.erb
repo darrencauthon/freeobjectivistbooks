@@ -1,6 +1,8 @@
 <% content_for :title do %>Events – Admin<% end %>
 
-<h1 class="grid_16"><%= pluralize @events.count, 'event' %></h1>
+<h1 class="grid_16"><%= pluralize @total, 'event' %></h1>
 <div class="grid_12">
+    <p class="overview">Showing <%= @start+1 %>&ndash;<%= @end %></p>
     <%= render partial: "event", collection: @events, spacer_template: "requests/spacer" %>
+    <p class="more"><%= more_link {|params| admin_requests_path params}%></a>
 </div>

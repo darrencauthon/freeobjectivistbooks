@@ -21,5 +21,7 @@ td, th {
     <div class="overview">
         <%= render partial: "metrics", object: @metrics.request_pipeline %>
     </div>
+    <p class="overview">Showing <%= @start+1 %>&ndash;<%= @end %></p>
     <%= render partial: "request", collection: @requests, spacer_template: "requests/spacer" %>
+    <p class="more"><%= more_link {|params| admin_requests_path params}%></a>
 </div>
