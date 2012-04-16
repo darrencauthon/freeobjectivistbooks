@@ -8,4 +8,4 @@ en:
       short: "%b %-d"
   time:
     formats:
-      default: "%a %-d %b %Y %-l:%M:%S%P"
+      default: "%a %-d %b %Y %-l:%M%P"

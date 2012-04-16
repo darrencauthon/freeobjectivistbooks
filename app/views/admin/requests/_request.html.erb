@@ -2,7 +2,12 @@
     <div class="headline"><%= request_summary request %></div>
     <div class="tagline"><%= user_tagline request.user %></div>
     <div class="reason"><%= format_block request.reason %></div>
-    <p class="status"><%= status_detail request %></p>
+    <p class="status">
+        <%= status_detail request %>
+        <% if request.donation && request.donation.status_updated_at %>
+            <span class="timestamp"><%= l request.donation.status_updated_at %></span>
+        <% end %>
+    </p>
     <p class="student">Student: <%= admin_user_link request.user %></p>
     <% if request.donor %>
     <p class="donor">Donor: <%= admin_user_link request.donor %> <% if request.thanked? %>&ndash; thanked<% end %></p>

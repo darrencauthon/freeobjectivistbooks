@@ -16,12 +16,14 @@ td, th {
 </style>
 <% end %>
 
-<h1 class="grid_16">Requests</h1>
+<h1 class="grid_16">Requests<% if params[:type] %>: <%= params[:type].humanize %><% end %></h1>
 <div class="grid_12">
+    <% unless params[:type] %>
     <div class="overview">
         <%= render partial: "metrics", object: @metrics.request_pipeline %>
     </div>
-    <p class="overview">Showing <%= @start+1 %>&ndash;<%= @end %></p>
+    <% end %>
+    <% if @start && @end %><p class="overview">Showing <%= @start+1 %>&ndash;<%= @end %></p><% end %>
     <%= render partial: "request", collection: @requests, spacer_template: "requests/spacer" %>
-    <p class="more"><%= more_link {|params| admin_requests_path params}%></a>
+    <% if @total %><p class="more"><%= more_link {|params| admin_requests_path params}%></a><% end %>
 </div>

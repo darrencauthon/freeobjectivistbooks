@@ -7,7 +7,13 @@
     </tr>
     <% metrics_table[:rows].each do |row| %>
     <tr class="metric">
-        <td class="name"><%= row[:name] %></td>
+        <td class="name">
+            <% if links && links[row[:name]] %>
+            <%= link_to row[:name], links[row[:name]] %>
+            <% else %>
+            <%= row[:name] %>
+            <% end %>
+        </td>
         <% metrics_table[:columns].each do |column| %>
         <td class="value"><%= format_number row[:values][column] %></td>
         <% end %>
