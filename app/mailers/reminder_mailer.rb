@@ -14,7 +14,7 @@ class ReminderMailer < ApplicationMailer
     @user = reminder.user
     @pledge = reminder.pledge
     @request_count = Request.not_granted.count
-    reminder_mail "Fulfill your pledge of #{@pledge.quantity} books on Free Objectivist Books"
+    reminder_mail "Fulfill your pledge of #{@pledge.quantity} Objectivist books"
   end
 
   def send_books(reminder)
@@ -25,7 +25,7 @@ class ReminderMailer < ApplicationMailer
     subject = if @single
       "Have you sent #{@donation.book} to #{@donation.student.name} yet?"
     else
-      "Have you sent your #{@donations.size} books to students from Free Objectivist Books yet?"
+      "Have you sent your #{@donations.size} Objectivist books to students yet?"
     end
     reminder_mail subject
   end

@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "Free Objectivist Books <jason@rationalegoist.com>"
+  default from: "Ayn Rand and Objectivist Books For Students <jason@rationalegoist.com>"
 
   def mail_to_user(user, options)
     options = if Rails.application.config.email_recipient_override

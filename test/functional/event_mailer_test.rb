@@ -36,7 +36,7 @@ class EventMailerTest < ActionMailer::TestCase
 
   test "flag" do
     mail = EventMailer.mail_for_event events(:hugh_flags_dagny)
-    assert_equal "Problem with your shipping info on Free Objectivist Books", mail.subject
+    assert_equal "Problem with your shipping info for Capitalism: The Unknown Ideal", mail.subject
     assert_equal ["dagny@taggart.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
@@ -50,7 +50,7 @@ class EventMailerTest < ActionMailer::TestCase
 
   test "add name" do
     mail = EventMailer.mail_for_event events(:quentin_adds_name)
-    assert_equal "Quentin Daniels added their full name on Free Objectivist Books", mail.subject
+    assert_equal "Quentin Daniels added their full name for The Virtue of Selfishness", mail.subject
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
@@ -70,7 +70,7 @@ class EventMailerTest < ActionMailer::TestCase
 
   test "add address" do
     mail = EventMailer.mail_for_event events(:quentin_adds_address)
-    assert_equal "Quentin Daniels added a shipping address on Free Objectivist Books", mail.subject
+    assert_equal "Quentin Daniels added a shipping address for The Virtue of Selfishness", mail.subject
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
@@ -90,7 +90,7 @@ class EventMailerTest < ActionMailer::TestCase
 
   test "fix with message" do
     mail = EventMailer.mail_for_event events(:quentin_fixes)
-    assert_equal "Quentin Daniels responded to your flag on Free Objectivist Books", mail.subject
+    assert_equal "Quentin Daniels responded to your flag for The Virtue of Selfishness", mail.subject
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
@@ -110,7 +110,7 @@ class EventMailerTest < ActionMailer::TestCase
 
   test "message" do
     mail = EventMailer.mail_for_event events(:hugh_messages_quentin)
-    assert_equal "Hugh Akston sent you a message on Free Objectivist Books", mail.subject
+    assert_equal "Hugh Akston sent you a message about The Virtue of Selfishness", mail.subject
     assert_equal ["quentin@mit.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 

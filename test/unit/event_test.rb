@@ -145,8 +145,6 @@ class EventTest < ActiveSupport::TestCase
     assert !event.notified?
     assert_difference("ActionMailer::Base.deliveries.count") { event.notify }
     assert event.notified?
-    mail = ActionMailer::Base.deliveries.last
-    assert_equal "Hugh Akston sent you a message on Free Objectivist Books", mail.subject
   end
 
   test "notify is idempotent" do
