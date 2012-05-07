@@ -7,7 +7,7 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert pledges.any?
 
     assert_difference "ActionMailer::Base.deliveries.size", pledges.count do
-      Reminder.send_reminder_mails :fulfill_pledge
+      Reminder.send_reminders :fulfill_pledge
     end
   end
 

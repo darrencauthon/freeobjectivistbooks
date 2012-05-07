@@ -1,12 +1,16 @@
 class Reminder < ActiveRecord::Base
   self.inheritance_column = 'class'  # anything other than "type", to let us use "type" for something else
 
+  TYPES = %w{fulfill_pledge send_books confirm_receipt read_books}
+
   # Associations
 
   belongs_to :user
   has_many :reminder_entities, dependent: :destroy
   has_many :pledges, through: :reminder_entities, source: :entity, source_type: 'Pledge'
   has_many :donations, through: :reminder_entities, source: :entity, source_type: 'Donation'
+
+  validates_inclusion_of :type, in: TYPES
 
   # Constructors
 
@@ -36,9 +40,13 @@ class Reminder < ActiveRecord::Base
     end
   end
 
-  def self.send_reminder_mails(type)
+  def self.send_reminders(type)
     reminders = reminders_for type
     ReminderMailer.send_campaign type, reminders
+  end
+
+  def self.send_all_reminders
+    TYPES.each {|type| send_reminders type}
   end
 
   # Derived attributes
