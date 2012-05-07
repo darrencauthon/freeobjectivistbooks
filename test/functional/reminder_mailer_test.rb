@@ -7,13 +7,13 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert pledges.any?
 
     assert_difference "ActionMailer::Base.deliveries.size", pledges.count do
-      ReminderMailer.send_reminder :fulfill_pledge
+      Reminder.send_reminder_mails :fulfill_pledge
     end
   end
 
   test "fulfill pledge" do
     assert_difference "Reminder.count" do
-      @mail = ReminderMailer.fulfill_pledge(pledges :hugh_pledge)
+      @mail = ReminderMailer.send_to_target :fulfill_pledge, Reminder.new_fulfill_pledge(@hugh_pledge)
     end
     assert_equal "Fulfill your pledge of 5 books on Free Objectivist Books", @mail.subject
     assert_equal ["akston@patrickhenry.edu"], @mail.to
@@ -24,7 +24,6 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert_equal [@hugh_pledge], reminder.pledges
     assert_equal @mail.subject, reminder.subject
 
-    @mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /Thank you for\s+donating 3 books so far/
@@ -37,7 +36,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
   test "fulfill pledge for donor with no donations" do
     assert_difference "Reminder.count" do
-      @mail = ReminderMailer.fulfill_pledge(pledges :stadler_pledge)
+      @mail = ReminderMailer.send_to_target :fulfill_pledge, Reminder.new_fulfill_pledge(@stadler_pledge)
     end
     assert_equal "Fulfill your pledge of 3 books on Free Objectivist Books", @mail.subject
     assert_equal ["stadler@scienceinstitute.gov"], @mail.to
@@ -48,7 +47,6 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert_equal [@stadler_pledge], reminder.pledges
     assert_equal @mail.subject, reminder.subject
 
-    @mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Robert/
       assert_select 'p', /Thank you for\s+signing up to donate books/
@@ -61,7 +59,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
   test "send books for donor with one outstanding donation" do
     assert_difference "Reminder.count" do
-      @mail = ReminderMailer.send_books(@hugh)
+      @mail = ReminderMailer.send_to_target :send_books, Reminder.new_send_books(@hugh)
     end
     assert_equal "Have you sent The Fountainhead to Quentin Daniels yet?", @mail.subject
     assert_equal ["akston@patrickhenry.edu"], @mail.to
@@ -72,7 +70,6 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert_equal [@quentin_donation_unsent], reminder.donations
     assert_equal @mail.subject, reminder.subject
 
-    @mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /said you would donate The Fountainhead to Quentin Daniels in Boston, MA/
@@ -89,7 +86,7 @@ class ReminderMailerTest < ActionMailer::TestCase
     @dagny_donation.save!
 
     assert_difference "Reminder.count" do
-      @mail = ReminderMailer.send_books(@hugh)
+      @mail = ReminderMailer.send_to_target :send_books, Reminder.new_send_books(@hugh)
     end
     assert_equal "Have you sent your 2 books to students from Free Objectivist Books yet?", @mail.subject
     assert_equal ["akston@patrickhenry.edu"], @mail.to
@@ -100,7 +97,6 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert_equal [@quentin_donation_unsent, @dagny_donation].to_set, reminder.donations.to_set
     assert_equal @mail.subject, reminder.subject
 
-    @mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /said you would donate these books/
@@ -116,7 +112,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
   test "confirm receipt" do
     assert_difference "Reminder.count" do
-      @mail = ReminderMailer.confirm_receipt(@quentin_donation)
+      @mail = ReminderMailer.send_to_target :confirm_receipt, Reminder.new_confirm_receipt(@quentin_donation)
     end
     assert_equal "Have you received The Virtue of Selfishness yet?", @mail.subject
     assert_equal ["quentin@mit.edu"], @mail.to
@@ -127,7 +123,6 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert_equal [@quentin_donation], reminder.donations
     assert_equal @mail.subject, reminder.subject
 
-    @mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Quentin/
       assert_select 'p', /Have you received The Virtue of Selfishness/
@@ -139,7 +134,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
   test "read books" do
     assert_difference "Reminder.count" do
-      @mail = ReminderMailer.read_books @hank_donation_received
+      @mail = ReminderMailer.send_to_target :read_books, Reminder.new_read_books(@hank_donation_received)
     end
     assert_equal "Have you finished reading The Fountainhead?", @mail.subject
     assert_equal ["hank@rearden.com"], @mail.to
@@ -150,7 +145,6 @@ class ReminderMailerTest < ActionMailer::TestCase
     assert_equal [@hank_donation_received], reminder.donations
     assert_equal @mail.subject, reminder.subject
 
-    @mail.deliver
     assert_select_email do
       assert_select 'p', /Hi Hank/
       assert_select 'p', /You received The Fountainhead on Jan 19\s+\((about )?\d+ \w+ ago\)/

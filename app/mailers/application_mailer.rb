@@ -21,14 +21,17 @@ class ApplicationMailer < ActionMailer::Base
     Mailgun::Campaign.find_or_create id: id, name: name
   end
 
+  def self.send_to_target(method, target)
+    mail = send method, target
+    Rails.logger.info "sending: #{mail.to} <= \"#{mail.subject}\""
+    mail.deliver
+    mail
+  end
+
   def self.send_campaign(method, targets)
     campaign = campaign_for_method method
     default 'X-Mailgun-Campaign-ID' => campaign.id
     Rails.logger.info "Beginning campaign: #{campaign.name}"
-    targets.each do |target|
-      mail = send method, target
-      Rails.logger.info "sending: #{mail.to} <= \"#{mail.subject}\""
-      mail.deliver
-    end
+    targets.each {|target| send_to_target method, target}
   end
 end
