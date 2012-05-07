@@ -1,28 +1,30 @@
 class ReminderMailer < ApplicationMailer
-  def self.targets_for(reminder)
-    case reminder.to_sym
+  def self.targets_for(type)
+    case type.to_sym
     when :fulfill_pledge then Pledge.unfulfilled
     when :send_books then User.donors_with_unsent_books
     when :confirm_receipt then Donation.needs_receipt
     when :read_books then Donation.needs_reading
-    else raise "Don't know who should get #{reminder} reminder"
+    else raise "Don't know who should get #{type} reminder"
     end
   end
 
-  def self.send_reminder(reminder)
-    targets = targets_for reminder
-    send_campaign reminder, targets
+  def self.send_reminder(type)
+    targets = targets_for type
+    send_campaign type, targets
   end
 
-  def reminder(subject, options = {})
-    mail_to_user @user, options.merge(subject: subject)
+  def reminder_mail(subject)
+    mail_to_user @user, subject: subject
   end
 
   def fulfill_pledge(pledge)
     @pledge = pledge
     @user = pledge.user
     @request_count = Request.not_granted.count
-    reminder "Fulfill your pledge of #{pledge.quantity} books on Free Objectivist Books"
+    subject = "Fulfill your pledge of #{pledge.quantity} books on Free Objectivist Books"
+    Reminder.create! user: @user, type: :fulfill_pledge, subject: subject, pledges: [@pledge]
+    reminder_mail subject
   end
 
   def send_books(user)
@@ -35,19 +37,24 @@ class ReminderMailer < ApplicationMailer
     else
       "Have you sent your #{@donations.size} books to students from Free Objectivist Books yet?"
     end
-    mail = reminder subject
+    Reminder.create! user: @user, type: :send_books, subject: subject, donations: @donations
+    mail = reminder_mail subject
   end
 
   def confirm_receipt(donation)
     @donation = donation
     @user = donation.student
-    reminder "Have you received #{@donation.book} yet?"
+    subject = "Have you received #{@donation.book} yet?"
+    Reminder.create! user: @user, type: :confirm_receipt, subject: subject, donations: [@donation]
+    reminder_mail subject
   end
 
   def read_books(donation)
     @donation = donation
     @user = donation.student
     @received_at = donation.received_at
-    reminder "Have you finished reading #{@donation.book}?"
+    subject = "Have you finished reading #{@donation.book}?"
+    Reminder.create! user: @user, type: :read_books, subject: subject, donations: [@donation]
+    reminder_mail subject
   end
 end
