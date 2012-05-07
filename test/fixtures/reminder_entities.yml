@@ -1,0 +1,11 @@
+hugh_fulfill_pledge_pledge:
+  reminder: hugh_fulfill_pledge
+  entity: hugh_pledge (Pledge)
+
+cameron_send_books_donation_1:
+  reminder: cameron_send_books
+  entity: cameron_grants_hank_wants_atlas (Donation)
+
+cameron_send_books_donation_2:
+  reminder: cameron_send_books
+  entity: cameron_grants_hank_wants_fountainhead (Donation)

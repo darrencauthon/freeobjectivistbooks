@@ -55,6 +55,9 @@ class ActiveSupport::TestCase
     @email_referral = referrals :sfl_email
     @fb_referral = referrals :sfl_fb
 
+    @hugh_reminder = reminders :hugh_fulfill_pledge
+    @cameron_reminder = reminders :cameron_send_books
+
     ActionMailer::Base.deliveries = []
   end
 

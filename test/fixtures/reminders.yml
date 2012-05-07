@@ -1,0 +1,9 @@
+hugh_fulfill_pledge:
+  user: hugh
+  type: fulfill_pledge
+  subject: "Fulfill your pledge of 5 books on Free Objectivist Books"
+
+cameron_send_books:
+  user: cameron
+  type: send_books
+  subject: "Have you sent your 2 books to students from Free Objectivist Books yet?"

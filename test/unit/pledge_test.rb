@@ -5,6 +5,8 @@ class PledgeTest < ActiveSupport::TestCase
     "I want to spread these great ideas."
   end
 
+  # Associations
+
   test "user" do
     assert_equal @hugh, @hugh_pledge.user
   end
@@ -13,6 +15,13 @@ class PledgeTest < ActiveSupport::TestCase
     assert_equal @fb_referral, @stadler_pledge.referral
     assert_nil @hugh_pledge.referral
   end
+
+  test "reminders" do
+    assert_equal [@hugh_reminder], @hugh_pledge.reminders
+    assert_equal [], @cameron_pledge.reminders
+  end
+
+  # Validations
 
   test "build" do
     pledge = @hugh.pledges.build quantity: "5", reason: reason
@@ -33,6 +42,8 @@ class PledgeTest < ActiveSupport::TestCase
     pledge = @hugh.pledges.build quantity: "0", reason: reason
     assert pledge.invalid?
   end
+
+  # Derived attributes
 
   test "fulfilled?" do
     assert @cameron_pledge.fulfilled?

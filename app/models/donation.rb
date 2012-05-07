@@ -5,6 +5,8 @@ class Donation < ActiveRecord::Base
   belongs_to :user
   has_many :events, dependent: :destroy
   has_one :review
+  has_many :reminder_entities, as: :entity
+  has_many :reminders, through: :reminder_entities
 
   Event::TYPES.each do |type|
     define_method "#{type}_events" do

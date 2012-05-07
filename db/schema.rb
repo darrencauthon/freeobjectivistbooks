@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120408000244) do
+ActiveRecord::Schema.define(:version => 20120506234446) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -79,6 +79,28 @@ ActiveRecord::Schema.define(:version => 20120408000244) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "reminder_entities", :force => true do |t|
+    t.integer  "reminder_id"
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reminder_entities", ["entity_id"], :name => "index_reminder_entities_on_entity_id"
+  add_index "reminder_entities", ["entity_type"], :name => "index_reminder_entities_on_entity_type"
+  add_index "reminder_entities", ["reminder_id"], :name => "index_reminder_entities_on_reminder_id"
+
+  create_table "reminders", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.string   "subject"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reminders", ["user_id"], :name => "index_reminders_on_user_id"
 
   create_table "requests", :force => true do |t|
     t.integer  "user_id"

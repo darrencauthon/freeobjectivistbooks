@@ -33,6 +33,12 @@ class UserTest < ActiveSupport::TestCase
     assert_nil @howard.referral
   end
 
+  test "reminders" do
+    assert_equal [@hugh_reminder], @hugh.reminders
+    assert_equal [@cameron_reminder], @cameron.reminders
+    assert_equal [], @dagny.reminders
+  end
+
   # Validations
 
   test "howard is valid" do

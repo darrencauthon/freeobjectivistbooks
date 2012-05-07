@@ -22,6 +22,12 @@ class DonationTest < ActiveSupport::TestCase
     assert_equal @quentin_review, @quentin_donation_read.review
   end
 
+  test "reminders" do
+    assert_equal [@cameron_reminder], @hank_donation.reminders
+    assert_equal [@cameron_reminder], @hank_donation_received.reminders
+    assert_equal [], @quentin_donation.reminders
+  end
+
   # Scopes
 
   def verify_scope(scope)
