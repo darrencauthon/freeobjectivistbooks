@@ -11,6 +11,16 @@ class Hash
   end
 end
 
+class Time
+  def self.since(datetime)
+    Time.now - datetime
+  end
+
+  def self.until(datetime)
+    datetime - Time.now
+  end
+end
+
 # to_bool
 
 class TrueClass
