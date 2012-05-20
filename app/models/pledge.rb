@@ -10,7 +10,7 @@ class Pledge < ActiveRecord::Base
   default_scope order("created_at desc")
 
   def self.unfulfilled
-    all.select {|pledge| !pledge.fulfilled? }
+    includes(:user).select {|pledge| !pledge.fulfilled? }
   end
 
   def fulfilled?

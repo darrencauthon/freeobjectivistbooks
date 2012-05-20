@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def self.donors_with_unsent_books
-    Donation.needs_sending.map {|donation| donation.user}.uniq
+    Donation.needs_sending.includes(:user).map {|donation| donation.user}.uniq
   end
 
   # Callbacks

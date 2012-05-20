@@ -4,7 +4,7 @@ class Reminders::ConfirmReceipt < Reminder
   end
 
   def self.all_key_entities
-    Donation.in_transit
+    Donation.in_transit.includes(request: :user)
   end
 
   def key_entity

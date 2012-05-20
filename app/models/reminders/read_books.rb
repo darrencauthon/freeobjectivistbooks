@@ -4,7 +4,7 @@ class Reminders::ReadBooks < Reminder
   end
 
   def self.all_key_entities
-    Donation.reading
+    Donation.reading.includes(request: :user)
   end
 
   def key_entity
