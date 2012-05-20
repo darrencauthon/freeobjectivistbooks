@@ -123,7 +123,7 @@ class User < ActiveRecord::Base
 
   def letmein?(params)
     timestamp = Time.parse params[:timestamp]
-    return :expired if Time.now - timestamp > LETMEIN_EXPIRATION
+    return :expired if Time.since(timestamp) > LETMEIN_EXPIRATION
     auth = letmein_auth params[:timestamp]
     auth == params[:auth] ? :valid : :invalid
   end
