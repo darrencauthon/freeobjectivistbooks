@@ -2,8 +2,10 @@ hugh_fulfill_pledge:
   user: hugh
   type: Reminders::FulfillPledge
   subject: "Fulfill your pledge of 5 Objectivist books"
+  created_at: 2012-01-22 08:00:00
 
 cameron_send_books:
   user: cameron
   type: Reminders::SendBooks
   subject: "Have you sent your 2 Objectivist books to students yet?"
+  created_at: <%= Time.now - 5.days %>

@@ -1,6 +1,6 @@
 class ReminderMailer < ApplicationMailer
   def self.send_reminders(type)
-    method = type.name.demodulize.underscore
+    method = type.type_name
     reminders = type.all_reminders
     send_campaign method, reminders
   end
@@ -10,6 +10,7 @@ class ReminderMailer < ApplicationMailer
   end
 
   def self.send_to_target(method, reminder)
+    return if !reminder.can_send?
     mail = super
     reminder.subject = mail.subject
     reminder.save!

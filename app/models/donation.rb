@@ -50,14 +50,6 @@ class Donation < ActiveRecord::Base
   scope :needs_sending, active.not_flagged.not_sent
   scope :needs_thanks, active.received.not_thanked
 
-  def self.needs_receipt
-    in_transit.select {|donation| donation.sent_at < Time.now - 3.days}
-  end
-
-  def self.needs_reading
-    reading.select {|donation| donation.received_at < Time.now - 2.weeks}
-  end
-
   # Callbacks
 
   before_validation do |donation|

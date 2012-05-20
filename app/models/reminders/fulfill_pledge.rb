@@ -6,4 +6,22 @@ class Reminders::FulfillPledge < Reminder
   def self.all_key_entities
     Pledge.unfulfilled
   end
+
+  def key_entity
+    pledge
+  end
+
+  # Can send?
+
+  def too_soon?
+    Time.since(pledge.created_at) < 1.week
+  end
+
+  def min_interval
+    1.week
+  end
+
+  def max_reminders
+    3
+  end
 end

@@ -86,10 +86,6 @@ class DonationTest < ActiveSupport::TestCase
     verify_scope(:needs_sending) {|donation| donation.active? && donation.can_send?}
   end
 
-  test "needs receipt" do
-    verify_scope(:needs_receipt) {|donation| donation.in_transit? && (Time.now - donation.sent_at) > 3.days }
-  end
-
   # Callbacks
 
   test "default status is not_sent" do
