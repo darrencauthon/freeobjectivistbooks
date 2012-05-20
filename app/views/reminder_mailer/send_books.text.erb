@@ -12,10 +12,12 @@ You said you would donate these books:
 Have you sent these books yet?
 <% end %>
 
-If so, please go to your donations list to confirm. That will let us know for our records, and notify the <%= @single ? "student" : "students" %> that the <% if @single %>book is on its<% else %>books are on their<% end %> way:
+If so, please go to your donations list to confirm, using this link:
 
 <%= profile_url %>
 
-If not, please send <%= @single ? "it" : "them" %> soon! And then go to your donations list to confirm.
+That will let us know for our records, and notify the <%= @single ? "student" : "students" %> that the <% if @single %>book is on its<% else %>books are on their<% end %> way.
+
+If not, please send <%= @single ? "it" : "them" %> soon! And then go to your donations list to confirm using the link above.
 
 If you need to cancel any donation, you can do that from your donations list as well.
