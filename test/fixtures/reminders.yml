@@ -1,9 +1,9 @@
 hugh_fulfill_pledge:
   user: hugh
-  type: fulfill_pledge
+  type: Reminders::FulfillPledge
   subject: "Fulfill your pledge of 5 Objectivist books"
 
 cameron_send_books:
   user: cameron
-  type: send_books
+  type: Reminders::SendBooks
   subject: "Have you sent your 2 Objectivist books to students yet?"

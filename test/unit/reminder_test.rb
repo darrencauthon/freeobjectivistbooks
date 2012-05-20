@@ -22,7 +22,7 @@ class ReminderTest < ActiveSupport::TestCase
   # Constructors
 
   def verify_reminders_for(type)
-    reminders = Reminder.reminders_for type
+    reminders = type.all_reminders
     assert reminders.any?
     reminders.each do |reminder|
       assert_equal type.to_s, reminder.type
@@ -31,7 +31,7 @@ class ReminderTest < ActiveSupport::TestCase
   end
 
   test "reminders for fulfill pledge" do
-    verify_reminders_for :fulfill_pledge do |reminder|
+    verify_reminders_for Reminders::FulfillPledge do |reminder|
       assert_not_nil reminder.pledge
       assert_equal reminder.pledge.user, reminder.user
       assert !reminder.pledge.fulfilled?
@@ -39,7 +39,7 @@ class ReminderTest < ActiveSupport::TestCase
   end
 
   test "reminders for send books" do
-    verify_reminders_for :send_books do |reminder|
+    verify_reminders_for Reminders::SendBooks do |reminder|
       assert_not_nil reminder.user
       reminder.donations.each do |donation|
         assert_equal reminder.user, donation.user
@@ -49,7 +49,7 @@ class ReminderTest < ActiveSupport::TestCase
   end
 
   test "reminders for confirm receipt" do
-    verify_reminders_for :confirm_receipt do |reminder|
+    verify_reminders_for Reminders::ConfirmReceipt do |reminder|
       assert_not_nil reminder.donation
       assert_equal reminder.donation.student, reminder.user
       assert reminder.donation.in_transit?
@@ -57,7 +57,7 @@ class ReminderTest < ActiveSupport::TestCase
   end
 
   test "reminders for read books" do
-    verify_reminders_for :read_books do |reminder|
+    verify_reminders_for Reminders::ReadBooks do |reminder|
       assert_not_nil reminder.donation
       assert_equal reminder.donation.student, reminder.user
       assert reminder.donation.reading?

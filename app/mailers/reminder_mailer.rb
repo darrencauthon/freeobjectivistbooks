@@ -1,4 +1,14 @@
 class ReminderMailer < ApplicationMailer
+  def self.send_reminders(type)
+    method = type.name.demodulize.underscore
+    reminders = type.all_reminders
+    send_campaign method, reminders
+  end
+
+  def self.send_all_reminders
+    Reminder::TYPES.each {|type| send_reminders type}
+  end
+
   def self.send_to_target(method, reminder)
     mail = super
     reminder.subject = mail.subject
@@ -9,6 +19,8 @@ class ReminderMailer < ApplicationMailer
   def reminder_mail(subject)
     mail_to_user @user, subject: subject
   end
+
+  # Reminder types
 
   def fulfill_pledge(reminder)
     @user = reminder.user
