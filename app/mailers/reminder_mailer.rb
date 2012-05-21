@@ -1,26 +1,4 @@
 class ReminderMailer < ApplicationMailer
-  def self.send_reminders(type)
-    method = type.type_name
-    Rails.logger.info "Gathering #{method} reminders..."
-    reminders = type.all_reminders
-    Rails.logger.info "Filtering #{reminders.size} #{method} reminders..."
-    reminders.select! {|reminder| reminder.can_send?}
-
-    if reminders.any?
-      Rails.logger.info "Sending #{reminders.size} #{method} reminders..."
-      send_campaign method, reminders
-      Rails.logger.info "Done with #{method} reminders"
-    else
-      Rails.logger.info "No #{method} reminders to send"
-    end
-  end
-
-  def self.send_all_reminders
-    Rails.logger.info "Sending all reminders..."
-    Reminder::TYPES.each {|type| send_reminders type}
-    Rails.logger.info "All reminders sent"
-  end
-
   def self.send_to_target(method, reminder)
     return if !reminder.can_send?
     mail = super

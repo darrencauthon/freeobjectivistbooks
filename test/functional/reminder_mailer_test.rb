@@ -1,16 +1,6 @@
 require 'test_helper'
 
 class ReminderMailerTest < ActionMailer::TestCase
-  test "send reminder" do
-    Mailgun::Campaign.test_mode = true
-    pledges = Pledge.unfulfilled
-    assert pledges.any?
-
-    assert_difference "ActionMailer::Base.deliveries.size", pledges.count do
-      ReminderMailer.send_reminders Reminders::FulfillPledge
-    end
-  end
-
   test "fulfill pledge" do
     reminder = Reminders::FulfillPledge.new_for_entity @hugh_pledge
 
