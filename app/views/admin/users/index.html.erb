@@ -14,7 +14,10 @@
 <h1 class="grid_16"><%= pluralize @total, 'user' %></h1>
 
 <div class="grid_12">
-    <p class="overview">Showing <%= @start+1 %>&ndash;<%= @end %></p>
+    <p class="overview">Showing
+        <% if @start && @end %><%= @start+1 %>&ndash;<%= @end %><% end %>
+        <% if @query %>matching "<%= @query %>"<% end %>
+    </p>
     <%= render @users %>
     <p class="more"><%= more_link {|params| admin_users_path params}%></a>
 </div>

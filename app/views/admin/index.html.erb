@@ -48,6 +48,12 @@ td, th {
         &ndash; <%= link_to pluralize(@referral_count, 'referral'), admin_referrals_path %>
     </p>
 
+    <h2>User search</h2>
+    <%= form_tag admin_users_path, method: :get do %>
+    <%= text_field_tag :q, "", placeholder: 'Name or email' %>
+    <%= submit_tag 'Go' %>
+    <% end %>
+
     <h2>Request pipeline</h2>
     <%= render partial: "admin/metrics", object: @metrics.request_pipeline %>
 

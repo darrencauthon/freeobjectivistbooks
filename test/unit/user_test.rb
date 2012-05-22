@@ -115,6 +115,22 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  test "search" do
+    users = User.search "h"
+    assert users.any?
+    users.each do |user|
+      assert user.name =~ /h/i || user.email =~ /h/i
+    end
+  end
+
+  test "search includes emails" do
+    assert_equal [@hugh], User.search("patrickhenry.edu")
+  end
+
+  test "search is case-insensitive" do
+    assert_equal [@hugh], User.search("HUGH")
+  end
+
   # Callbacks
 
   test "email is normalized on save" do

@@ -9,6 +9,20 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_select '.user', User.count
   end
 
+  test "search" do
+    admin_auth
+    get :index, q: "h"
+    assert_response :success
+    assert_select '.overview', /matching/
+    assert_select '.user'
+  end
+
+  test "search with one result" do
+    admin_auth
+    get :index, q: "roark"
+    assert_redirected_to [:admin, @howard]
+  end
+
   test "show student" do
     admin_auth
     get :show, id: @howard.id

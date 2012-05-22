@@ -1,6 +1,13 @@
 class Admin::UsersController < AdminController
   def index
-    @users = limit_and_offset User
+    @users = User
+
+    if @query = params[:q]
+      @users = @users.search @query
+      redirect_to [:admin, @users.first] if @users.count == 1
+    end
+
+    @users = limit_and_offset @users
   end
 
   def update

@@ -55,6 +55,11 @@ class User < ActiveRecord::Base
     with_email(email).first
   end
 
+  def self.search(query)
+    pattern = "%#{query.downcase}%"
+    where('lower(name) like :pattern or lower(email) like :pattern', pattern: pattern)
+  end
+
   def self.login(email, password)
     user = find_by_email email
     return user if user && user.authenticate(password)

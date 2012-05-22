@@ -103,7 +103,7 @@ module ApplicationHelper
   # Pagination
 
   def has_more?
-    @total > @end
+    @total.present? && @end.present? && @total > @end
   end
 
   def more_link
