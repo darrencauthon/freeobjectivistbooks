@@ -65,7 +65,7 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "request summary" do
-    assert_equal 'Howard Roark in New York, NY wants to read <span class="title">Atlas Shrugged</span>',
+    assert_equal 'Howard Roark wants to read <span class="title">Atlas Shrugged</span>',
       request_summary(@howard_request)
   end
 

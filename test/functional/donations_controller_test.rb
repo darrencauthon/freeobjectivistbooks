@@ -138,7 +138,7 @@ class DonationsControllerTest < ActionController::TestCase
     get :cancel, {id: @quentin_donation_unsent.id}, session_for(@hugh)
     assert_response :success
     assert_select 'h1', /cancel/i
-    assert_select '.headline', /Quentin Daniels in Boston, MA wants to read The Fountainhead/
+    assert_select '.headline', /Quentin Daniels wants to read The Fountainhead/
     assert_select 'h2', /Explain to Quentin Daniels/
     assert_select 'textarea#donation_event_message'
     assert_select 'input[type="submit"]'

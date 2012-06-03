@@ -23,7 +23,7 @@ class MessagesControllerTest < ActionController::TestCase
     get :new, params(@quentin_donation), session_for(@hugh)
     assert_response :success
     assert_select 'h1', /Send a message to Quentin Daniels/
-    assert_select '.overview', /Quentin Daniels in Boston, MA wants to read\s+The Virtue of Selfishness/
+    assert_select '.overview', /Quentin Daniels wants to read\s+The Virtue of Selfishness/
     assert_select 'textarea#event_message'
     assert_select 'input[type="submit"]'
     assert_select 'a', 'Cancel'

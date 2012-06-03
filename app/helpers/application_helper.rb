@@ -90,9 +90,8 @@ module ApplicationHelper
   def request_summary(request)
     student = request.student
     name = h student.name
-    location = h student.location
     book = title request.book
-    raw "#{name} in #{location} wants to read #{book}"
+    raw "#{name} wants to read #{book}"
   end
 
   def donation_summary(donation)
