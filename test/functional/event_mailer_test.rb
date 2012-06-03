@@ -1,14 +1,19 @@
 require 'test_helper'
 
 class EventMailerTest < ActionMailer::TestCase
+  def verify_mail_body(mail, &block)
+    assert mail.body.encoded.present?, "mail is blank"
+    mail.deliver
+    assert_select_email &block
+  end
+
   test "grant" do
     mail = EventMailer.mail_for_event events(:hugh_grants_quentin)
     assert_equal "We found a donor to send you The Virtue of Selfishness!", mail.subject
     assert_equal ["quentin@mit.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
       assert_select 'p', /found a donor to send you The Virtue of Selfishness/
       assert_select 'p', /Hugh Akston in Boston, MA/
@@ -25,8 +30,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["dagny@taggart.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Dagny/
       assert_select 'p', /found a donor to send you Capitalism: The Unknown Ideal/
       assert_select 'p', /Hugh Akston in Boston, MA/
@@ -40,8 +44,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["dagny@taggart.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Dagny/
       assert_select 'p', 'Your donor (Hugh Akston) says: "Please add your full name and address"'
       assert_select 'a', /Respond to Hugh Akston to get your copy of Capitalism: The Unknown Ideal/
@@ -54,8 +57,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /You flagged Quentin Daniels's request/
       assert_select 'p', /They have added their full name./
@@ -74,8 +76,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /You flagged Quentin Daniels's request/
       assert_select 'p', /They have added a shipping address./
@@ -94,8 +95,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /You flagged Quentin Daniels's request/
       assert_select 'p', text: /They have /, count: 0
@@ -114,8 +114,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["quentin@mit.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
       assert_select 'p', /Hugh Akston sent you a\s+message/
       assert_select 'p', /"Thanks! I will send you the book"/
@@ -130,8 +129,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["quentin@mit.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
       assert_select 'p', /Hugh Akston has sent you The Virtue of Selfishness!/
       assert_select 'a', /Let Hugh Akston know/
@@ -145,8 +143,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["henry@cameron.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Henry/
       assert_select 'p', /Hank Rearden has received The Fountainhead/
       assert_select 'p', /They said: "I got the book. Thank you!"/
@@ -165,8 +162,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["henry@cameron.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Henry/
       assert_select 'p', /Hank Rearden has received The Fountainhead/
       assert_select 'p', text: /They said/, count: 0
@@ -183,8 +179,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["akston@patrickhenry.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
       assert_select 'p', /Quentin Daniels sent you a\s+thank-you note for The Virtue of Selfishness/
       assert_select 'p', /"Thanks! I am looking forward to reading this"/
@@ -198,8 +193,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["henry@cameron.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Henry/
       assert_select 'p', /Quentin Daniels has finished reading Atlas Shrugged! Here's what they thought/
       assert_select 'p', /"It was great! Especially the physics."/
@@ -215,8 +209,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["henry@cameron.com"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Henry/
       assert_select 'p', /Hank Rearden has finished reading The Fountainhead!/
       assert_select 'p', text: /Here's what they thought/, count: 0
@@ -231,8 +224,7 @@ class EventMailerTest < ActionMailer::TestCase
     assert_equal ["quentin@mit.edu"], mail.to
     assert_equal ["jason@rationalegoist.com"], mail.from
 
-    mail.deliver
-    assert_select_email do
+    verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
       assert_select 'p', /Robert Stadler has canceled their donation of Objectivism: The Philosophy of Ayn Rand/
       assert_select 'p', /Robert Stadler said: "Sorry! I can't give you this after all"/
