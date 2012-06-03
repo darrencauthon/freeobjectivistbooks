@@ -165,7 +165,7 @@ class DonationTest < ActiveSupport::TestCase
   # Cancel
 
   test "cancel" do
-    event = @hank_donation.cancel(event: {message: "Sorry"})
+    event = @hank_donation.cancel({event: {message: "Sorry"}}, @cameron)
     assert @hank_donation.canceled?, "donation not canceled"
 
     assert_equal "cancel", event.type

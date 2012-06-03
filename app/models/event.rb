@@ -50,7 +50,7 @@ class Event < ActiveRecord::Base
 
   def default_user
     case type
-    when "grant", "flag", "cancel" then donor
+    when "grant", "flag" then donor
     when "update", "fix" then student
     when "update_status"
       case detail

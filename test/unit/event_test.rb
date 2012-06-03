@@ -7,7 +7,7 @@ class EventTest < ActiveSupport::TestCase
     @new_fix = @hank_donation.fix_events.build detail: "updated shipping info", message: "Fixed"
     @new_message = @hank_donation.message_events.build user: @hank, message: "Info is correct"
     @new_thank = @quentin_donation.message_events.build user: @quentin, message: "Thanks!", is_thanks: true, public: false
-    @new_cancel = @hank_donation.cancel_events.build message: "Sorry!"
+    @new_cancel = @hank_donation.cancel_events.build user: @cameron, message: "Sorry!"
   end
 
   # Associations

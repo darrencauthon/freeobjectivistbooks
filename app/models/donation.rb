@@ -175,12 +175,12 @@ class Donation < ActiveRecord::Base
     fix_events.build event_attributes.merge(detail: student.update_detail)
   end
 
-  def cancel(params)
+  def cancel(params, user)
     return if canceled?
     self.canceled = true
     if request.donation == self
       request.donation = nil
-      cancel_events.build params[:event]
+      cancel_events.build params[:event].merge(user: user)
     end
   end
 end
