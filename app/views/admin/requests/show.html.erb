@@ -26,7 +26,7 @@
     <p class="name"><%= @request.user.name %></p>
     <p class="address"><%= format_address @request.address %></p>
 
-    <% if @request.flagged? %>
+    <% if @request.needs_fix? %>
     <p class="flagged">
         <% if @request.address.present? %>
         Shipping info flagged

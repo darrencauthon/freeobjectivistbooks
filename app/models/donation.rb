@@ -109,6 +109,10 @@ class Donation < ActiveRecord::Base
     end
   end
 
+  def needs_fix?
+    active? && flagged?
+  end
+
   def can_send?
     !sent? && !flagged?
   end

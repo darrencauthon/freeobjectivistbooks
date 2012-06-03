@@ -140,6 +140,13 @@ class RequestTest < ActiveSupport::TestCase
     assert @quentin_request_read.read?
   end
 
+  test "needs fix?" do
+    assert @dagny_request.needs_fix?, "dagny request doesn't need fix"
+    assert !@howard_request.needs_fix?, "howard request needs fix"
+    assert !@quentin_request.needs_fix?, "quentin request needs fix"
+    assert !@dagny_request_canceled.needs_fix?, "dagny request canceled needs fix"
+  end
+
   test "flag message" do
     assert_equal "Please add your full name and address", @dagny_request.flag_message
   end

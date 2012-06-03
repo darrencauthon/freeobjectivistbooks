@@ -50,7 +50,7 @@
             No donor yet
             <% end %>
         </p>
-        <% if request.flagged? %>
+        <% if request.needs_fix? %>
         <p class="flagged">
             <% if request.address.blank? %>
             Missing address flagged

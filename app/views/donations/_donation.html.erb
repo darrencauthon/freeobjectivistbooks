@@ -17,7 +17,7 @@
         <p class="status"><%= status_headline donation.request %></p>
         <% end %>
 
-        <% if donation.flagged? %>
+        <% if donation.needs_fix? %>
         <p class="flagged">
             <% if donation.address.present? %>
             Shipping info flagged

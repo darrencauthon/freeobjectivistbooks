@@ -145,6 +145,12 @@ class DonationTest < ActiveSupport::TestCase
     assert @quentin_donation_read.read?
   end
 
+  test "needs fix?" do
+    assert @dagny_donation.needs_fix?
+    assert !@quentin_donation.needs_fix?
+    assert !@dagny_donation_canceled.needs_fix?
+  end
+
   test "can send?" do
     assert @quentin_donation_unsent.can_send?
     assert !@quentin_donation.can_send?  # already sent

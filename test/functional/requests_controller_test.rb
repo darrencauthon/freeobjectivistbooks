@@ -346,6 +346,16 @@ class RequestsControllerTest < ActionController::TestCase
     verify_no_donor_links
   end
 
+  test "show flagged and canceled" do
+    get :show, {id: @dagny_request_canceled.id}, session_for(@dagny)
+    assert_response :success
+    assert_select 'h1', "Dagny wants Atlas Shrugged"
+    verify_thank_link false
+    verify_address_link :none
+    verify_cancel_request_link false
+    verify_no_donor_links
+  end
+
   test "show requires login" do
     get :show, id: @howard_request.id
     verify_login_page

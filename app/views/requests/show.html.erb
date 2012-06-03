@@ -30,7 +30,7 @@
 </style>
 <% end %>
 
-<% if @request.flagged? && current_is_student? %>
+<% if @request.needs_fix? && current_is_student? %>
 <div class="grid_12 message error">
     <p class="headline">
         <% if @request.address.blank? %>
@@ -55,7 +55,7 @@
     <p class="name"><%= @request.user.name %></p>
     <p class="address"><%= format_address @request.address %></p>
 
-    <% if current_is_donor? && @request.flagged? %>
+    <% if current_is_donor? && @request.needs_fix? %>
     <p class="flagged">
         <% if @request.address.present? %>
         Shipping info flagged
