@@ -18,28 +18,35 @@
     background-image: url(/assets/cancel-button.png);
     background-position-x: left;
 }
+
+.cancel {
+    height: 46px;
+    margin-top: 36px;
+}
  </style>
 <% end %>
 
 <h1 class="grid_16">Cancel donation</h1>
 
-<div class="request grid_12">
-    <p class="headline"><%= request_summary @donation.request %></p>
-    <p class="tagline"><%= user_tagline @donation.student %></p>
-    <p class="reason"><%= format_block @donation.request.reason %></p>
-</div>
+<div class="grid_12">
+    <div class="request">
+        <p class="headline"><%= request_summary @donation.request %></p>
+        <p class="tagline"><%= user_tagline @donation.student %></p>
+        <p class="reason"><%= format_block @donation.request.reason %></p>
+    </div>
 
-<div class="grid_10">
-<%= form_for @donation, method: :delete do |f| %>
-    <%= f.fields_for @event do |e| %>
-        <h2>Explain to <%= @donation.student.name %> why you are canceling:</h2>
+    <%= form_for @donation, method: :delete do |f| %>
+        <%= f.fields_for @event do |e| %>
+            <h2>Explain to <%= @donation.student.name %> why you are canceling:</h2>
 
-        <p>We'll send your message to the student and try to find a new donor for them.</p>
-        <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
-        <%= e.text_area :message, rows: 6, cols: 60 %>
+            <p>We'll send your message to the student and try to find a new donor for them.</p>
+            <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
+            <%= e.text_area :message, rows: 6, cols: 60 %>
+            <div class="clear"></div>
+        <% end %>
+
+        <%= f.submit "", class: "grid_3 alpha submit button" %>
+        <%= link_to "Don't cancel", @donation.request, class: "grid_2 omega cancel" %>
         <div class="clear"></div>
     <% end %>
-
-    <%= f.submit "", class: "grid_3 alpha submit button" %><div class="clear"></div>
-<% end %>
 </div>
