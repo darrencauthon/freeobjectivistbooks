@@ -231,4 +231,19 @@ class EventMailerTest < ActionMailer::TestCase
       assert_select 'p', /Yours,\nFree Objectivist Books/
     end
   end
+
+  test "cancel request" do
+    mail = EventMailer.mail_for_event events(:dagny_cancels)
+    assert_equal "Dagny has canceled their request for Atlas Shrugged", mail.subject
+    assert_equal ["akston@patrickhenry.edu"], mail.to
+    assert_equal ["jason@rationalegoist.com"], mail.from
+
+    verify_mail_body mail do
+      assert_select 'p', /Hi Hugh/
+      assert_select 'p', /Dagny has canceled their request for Atlas Shrugged/
+      assert_select 'p', /They said: "I don't need this anymore"/
+      assert_select 'a', /Find more students/
+      assert_select 'p', /Thanks,/
+    end
+  end
 end

@@ -10,6 +10,10 @@
     font-size: 1.2em;
 }
 
+h2 {
+    margin-bottom: 6px;
+}
+
 .submit {
     height: 46px;
     margin-top: 24px;
@@ -34,8 +38,11 @@
 
     <%= form_for @request, method: :delete do |f| %>
         <%= f.fields_for @event do |e| %>
-            <h2>Please tell us why you are canceling your request:</h2>
+            <h2>Why you are canceling your request? (optional)</h2>
 
+            <% if @request.granted? %>
+            <p>We'll send this to your donor (<%= @request.donor.name %>) and let them know they don't need to send the book.</p>
+            <% end %>
             <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
             <%= e.text_area :message, rows: 6, cols: 60 %>
             <div class="clear"></div>

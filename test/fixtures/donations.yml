@@ -49,3 +49,9 @@ stadler_grants_quentin_wants_opar:
   user: stadler
   status: not_sent
   canceled: true
+
+hugh_grants_dagny_wants_atlas:
+  request: dagny_wants_atlas
+  user: hugh
+  status: not_sent
+  canceled: true

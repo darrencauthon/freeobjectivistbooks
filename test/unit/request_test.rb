@@ -151,15 +151,16 @@ class RequestTest < ActiveSupport::TestCase
   end
 
   test "can update?" do
-    assert @howard_request.can_update?  # open
-    assert @quentin_request_unsent.can_update?  # not sent
-    assert !@quentin_request.can_update?  # sent
+    assert @howard_request.can_update?            # open
+    assert @quentin_request_unsent.can_update?    # not sent
+    assert !@quentin_request.can_update?          # sent
     assert !@howard_request_canceled.can_update?  # canceled
   end
 
   test "can cancel?" do
-    assert @howard_request.can_cancel?
-    assert !@quentin_request.can_cancel?  # granted
+    assert @howard_request.can_cancel?            # open
+    assert @quentin_request_unsent.can_cancel?    # not sent
+    assert !@quentin_request.can_cancel?          # sent
     assert !@howard_request_canceled.can_cancel?  # already canceled
   end
 
@@ -237,6 +238,19 @@ class RequestTest < ActiveSupport::TestCase
   # Cancel
 
   test "cancel" do
+    event = @hank_request.cancel event: {message: "Don't want it anymore"}
+    assert @hank_request.canceled?
+    assert @hank_request.donation.canceled?
+
+    assert_equal "cancel_request", event.type
+    assert_equal @hank_request, event.request
+    assert_equal @hank, event.user
+    assert_equal @hank_donation, event.donation
+    assert_equal "Don't want it anymore", event.message
+    assert_equal @cameron, event.to
+  end
+
+  test "cancel no donor" do
     event = @howard_request.cancel event: {message: "I bought the book myself"}
     assert @howard_request.canceled?
 

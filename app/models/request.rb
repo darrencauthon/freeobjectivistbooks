@@ -100,7 +100,7 @@ class Request < ActiveRecord::Base
   end
 
   def can_cancel?
-    open? && !canceled?
+    !sent? && !canceled?
   end
 
   # Actions
@@ -117,6 +117,7 @@ class Request < ActiveRecord::Base
 
   def cancel(params)
     self.canceled = true
+    donation.canceled = true if donation
     cancel_request_events.build params[:event]
   end
 end

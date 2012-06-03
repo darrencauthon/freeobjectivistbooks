@@ -71,6 +71,34 @@ quentin_thanks_hugh:
   happened_at: 2012-01-21 00:15:25
   notified_at: 2012-01-21 00:15:25
 
+# request: dagny_wants_atlas
+
+hugh_grants_dagny_atlas:
+  type: grant
+  request: dagny_wants_atlas
+  user: hugh
+  donation: hugh_grants_dagny_wants_atlas
+  happened_at: 2012-01-13 00:15:25
+  notified_at: 2012-01-13 00:15:25
+
+hugh_flags_dagny_atlas:
+  type: flag
+  request: dagny_wants_atlas
+  user: hugh
+  donation: hugh_grants_dagny_wants_atlas
+  message: Please add your full name and address
+  happened_at: 2012-01-14 00:15:25
+  notified_at: 2012-01-14 00:15:25
+
+dagny_cancels:
+  type: cancel_request
+  request: dagny_wants_atlas
+  user: dagny
+  donation: hugh_grants_dagny_wants_atlas
+  message: I don't need this anymore
+  happened_at: 2012-01-15 00:15:25
+  notified_at: 2012-01-15 00:15:25
+
 # request: dagny_wants_cui
 
 hugh_grants_dagny:
@@ -148,3 +176,12 @@ stadler_cancels_quentin:
   message: Sorry! I can't give you this after all
   happened_at: 2012-01-22 00:15:25
   notified_at: 2012-01-22 00:15:25
+
+# request: howard_wants_fountainhead
+
+howard_cancels:
+  type: cancel_request
+  request: howard_wants_fountainhead
+  user: howard
+  message: I ended up buying this book for myself.
+  happened_at: 2012-01-19 00:15:25

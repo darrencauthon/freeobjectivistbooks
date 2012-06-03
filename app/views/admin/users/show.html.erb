@@ -73,9 +73,9 @@
     <% end %>
     <% end %>
 
-    <% if @user.donations.active.any? %>
+    <% if @user.donations.any? %>
     <h2>Donations</h2>
-    <% @user.donations.active.each do |donation| %>
+    <% @user.donations.each do |donation| %>
     <p class="donation">
         <%= link_to admin_request_path(donation.request) do %>
             <%= title donation.book %> to <%= donation.student.name %> in <%= donation.student.location %>

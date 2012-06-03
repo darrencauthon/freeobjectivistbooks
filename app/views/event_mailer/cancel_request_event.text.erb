@@ -1,0 +1,9 @@
+<%= @event.user.name %> has canceled their request for <%= @event.book %>.
+
+<% if @event.message.present? %>
+They said: "<%= @event.message %>"
+
+<% end %>
+You don't need to send this book anymore.
+
+Find more students to donate to: <%= donate_url %>

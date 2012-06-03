@@ -47,4 +47,9 @@ class EventMailer < ApplicationMailer
     @closer = "Yours"
     notification "We need to find you a new donor for #{@event.book}"
   end
+
+  def cancel_request_event(event)
+    @event = event
+    notification "#{@event.user.name} has canceled their request for #{@event.book}"
+  end
 end

@@ -64,3 +64,9 @@ howard_wants_fountainhead:
   book: The Fountainhead
   reason: Feels like this would resonate with me
   canceled: true
+
+dagny_wants_atlas:
+  user: dagny
+  book: Atlas Shrugged
+  reason: Really curious about the heroine
+  canceled: true

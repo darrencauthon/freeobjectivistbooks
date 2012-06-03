@@ -69,7 +69,7 @@ class RequestsController < ApplicationController
 
   def destroy
     @event = @request.cancel params[:request]
-    if save @request, @event
+    if save @request, @request.donation, @event
       flash[:notice] = "Your request has been canceled."
       redirect_to profile_url
     else

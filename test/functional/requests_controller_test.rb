@@ -300,7 +300,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_status 'donor found'
     verify_thank_link false
     verify_address_link :add
-    verify_cancel_request_link false
+    verify_cancel_request_link
     verify_no_donor_links
   end
 
@@ -312,7 +312,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
     verify_thank_link true
     verify_address_link :update
-    verify_cancel_request_link false
+    verify_cancel_request_link
     verify_no_donor_links
   end
 
@@ -442,10 +442,22 @@ class RequestsControllerTest < ActionController::TestCase
   # Cancel
 
   test "cancel" do
+    get :cancel, {id: @hank_request.id}, session_for(@hank)
+    assert_response :success
+    assert_select 'h1', /Cancel/
+    assert_select '.headline', /Atlas Shrugged/
+    assert_select 'p', /We'll send this to your donor \(Henry Cameron\)/
+    assert_select 'textarea#request_event_message', ""
+    assert_select 'input[type="submit"]'
+    assert_select 'a', /Don't cancel/
+  end
+
+  test "cancel no donor" do
     get :cancel, {id: @howard_request.id}, session_for(@howard)
     assert_response :success
     assert_select 'h1', /Cancel/
     assert_select '.headline', /Atlas Shrugged/
+    assert_select 'p', text: /We'll send this to your donor/, count: 0
     assert_select 'textarea#request_event_message', ""
     assert_select 'input[type="submit"]'
     assert_select 'a', /Don't cancel/
@@ -464,6 +476,22 @@ class RequestsControllerTest < ActionController::TestCase
   # Destroy
 
   test "destroy" do
+    assert_difference "@hank_request.events.count" do
+      delete :destroy, {id: @hank_request.id, request: {event: {message: "Not needed"}}}, session_for(@hank)
+    end
+    assert_redirected_to profile_url
+    assert_match /request has been canceled/, flash[:notice]
+
+    @hank_request.reload
+    assert @hank_request.canceled?, "request not canceled"
+
+    @hank_donation.reload
+    assert @hank_donation.canceled?, "donation not canceled"
+
+    verify_event @hank_request, "cancel_request", message: "Not needed", notified?: true
+  end
+
+  test "destroy no donor" do
     assert_difference "@howard_request.events.count" do
       delete :destroy, {id: @howard_request.id, request: {event: {message: "Not needed"}}}, session_for(@howard)
     end
@@ -471,9 +499,9 @@ class RequestsControllerTest < ActionController::TestCase
     assert_match /request has been canceled/, flash[:notice]
 
     @howard_request.reload
-    assert @howard_request.canceled?
+    assert @howard_request.canceled?, "request not canceled"
 
-    verify_event @howard_request, "cancel_request", message: "Not needed"
+    verify_event @howard_request, "cancel_request", message: "Not needed", notified?: false
   end
 
   test "destroy requires login" do
