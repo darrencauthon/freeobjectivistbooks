@@ -42,7 +42,7 @@ class EventMailer < ApplicationMailer
     notification "#{@event.user.name} has #{@event.detail} #{@event.book}", template_name: "#{@event.detail}_event"
   end
 
-  def cancel_event(event)
+  def cancel_donation_event(event)
     @event = event
     @closer = "Yours"
     notification "We need to find you a new donor for #{@event.book}"

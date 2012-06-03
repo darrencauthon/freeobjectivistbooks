@@ -76,6 +76,7 @@
     <% end %>
 </div>
 
+<% if @request.active? %>
 <div class="grid_5 sidebar">
     <div class="top_5">&nbsp;</div>
     <div class="content_5">
@@ -120,6 +121,12 @@
             <p><%= link_to "Send a message to #{other_user.name}", new_donation_message_path(@request.donation) %></p>
         <% end %>
 
+        <% if current_is_student? %>
+            <% if @request.can_cancel? %>
+            <p><%= link_to 'Cancel this request', cancel_request_path(@request) %></p>
+            <% end %>
+        <% end %>
+
         <% if current_is_donor? %>
             <% if @request.donation.can_cancel? %>
             <p><%= link_to 'Cancel this donation', cancel_donation_path(@request.donation) %></p>
@@ -128,5 +135,6 @@
     </div>
     <div class="bottom_5">&nbsp;</div>
 </div>
+<% end %>
 
 <div class="clear"></div>

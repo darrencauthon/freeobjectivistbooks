@@ -37,11 +37,11 @@ class DonationsController < ApplicationController
   end
 
   def cancel
-    @event = @donation.cancel_events.build user: @current_user
+    @event = @donation.cancel_request_events.build user: @current_user
   end
 
   def destroy
-    @event = @donation.cancel params[:donation], @current_user
+    @event = @donation.cancel params[:donation]
     if save @donation, @event
       if @event
         flash[:notice] = {

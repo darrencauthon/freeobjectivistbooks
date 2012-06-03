@@ -17,8 +17,10 @@
         <% end %>
     <% when "update_status" %>
         <%= event.detail %>
-    <% when "cancel" %>
+    <% when "cancel_donation" %>
         canceled <%= admin_user_link event.student %>'s request for
+    <% when "cancel_request" %>
+        canceled their request for
     <% end %>
     <%= link_to (title event.book), admin_request_path(event.request) %>
     <% if event.type == "update_status" %>

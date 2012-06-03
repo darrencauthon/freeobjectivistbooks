@@ -16,17 +16,18 @@ class MetricsTest < ActiveSupport::TestCase
     metrics = @metrics.request_pipeline
     values = values_for metrics
 
-    assert_equal values['Total'], values['Granted'] + Request.not_granted.count, metrics.inspect
+    assert_equal values['Active'], values['Granted'] + Request.not_granted.count, metrics.inspect
     assert_equal values['Granted'], values['Sent'] + Donation.not_sent.count, metrics.inspect
     assert_equal values['Sent'], values['Received'] + Donation.in_transit.count, metrics.inspect
     assert_equal values['Received'], values['Read'] + Donation.reading.count, metrics.inspect
+    assert_equal Request.count, values['Canceled'] + values['Active'], metrics.inspect
   end
 
   test "pipeline breakdown" do
     metrics = @metrics.pipeline_breakdown
     values = values_for metrics[:rows]
 
-    assert_equal Request.count, Request.granted.count + values['Open requests'], values.inspect
+    assert_equal Request.active.count, Request.granted.count + values['Open requests'], values.inspect
     assert_equal Donation.not_sent.count, values['Needs sending'] + Donation.not_sent.flagged.count, values.inspect
     assert_equal Donation.sent.count, values['In transit'] + Donation.received.count, values.inspect
   end
@@ -50,7 +51,7 @@ class MetricsTest < ActiveSupport::TestCase
   test "book leaderboard" do
     metrics = @metrics.book_leaderboard
     sum = metrics.inject(0) {|sum,metric| sum += metric[:value]}
-    assert_equal Request.count, sum
+    assert_equal Request.active.count, sum
   end
 
   test "referral metrics" do

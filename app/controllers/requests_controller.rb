@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
   def allowed_users
     case params[:action]
     when "show" then [@request.user, @request.donor]
-    when "edit", "update" then @request.user
+    when "edit", "update", "cancel", "destroy" then @request.user
     end
   end
 
@@ -60,6 +60,20 @@ class RequestsController < ApplicationController
       redirect_to @request
     else
       render :edit
+    end
+  end
+
+  def cancel
+    @event = @request.cancel_request_events.build user: @current_user
+  end
+
+  def destroy
+    @event = @request.cancel params[:request]
+    if save @request, @event
+      flash[:notice] = "Your request has been canceled."
+      redirect_to profile_url
+    else
+      render :cancel
     end
   end
 end

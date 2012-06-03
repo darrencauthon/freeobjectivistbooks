@@ -15,6 +15,8 @@ class RequestsControllerTest < ActionController::TestCase
       assert_select 'p', "You previously donated 3 books."
       assert_select 'ul'
     end
+
+    assert_select '.request .headline', text: "Howard Roark wants The Fountainhead", count: 0
   end
 
   test "index requires login" do
@@ -174,19 +176,31 @@ class RequestsControllerTest < ActionController::TestCase
     verify_update_shipping_link (which == :update)
   end
 
+  def verify_cancel_request_link(present = true)
+    verify_link 'cancel this request', present
+  end
+
+  def verify_cancel_donation_link(present = true)
+    verify_link 'cancel this donation', present
+  end
+
   def verify_donor_links(status)
     verify_back_link
     verify_flag_link (status == :not_sent)
     verify_sent_button (status == :not_sent)
+    verify_cancel_donation_link (status.in? [:not_sent, :flagged])
+
     verify_thank_link false
     verify_add_address_link false
     verify_update_shipping_link false
+    verify_cancel_request_link false
   end
 
   def verify_no_donor_links
     verify_back_link false
     verify_flag_link false
     verify_sent_button false
+    verify_cancel_donation_link false
   end
 
   test "show no donor" do
@@ -198,6 +212,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_status 'looking'
     verify_thank_link false
     verify_address_link :add
+    verify_cancel_request_link
     verify_no_donor_links
   end
 
@@ -211,6 +226,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.sidebar h2', /Update/
     verify_thank_link
     verify_address_link :none
+    verify_cancel_request_link false
     verify_no_donor_links
   end
 
@@ -243,6 +259,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'p', /Let Hugh Akston know when you have received\s+The Virtue of Selfishness/
     verify_thank_link
     verify_address_link :none
+    verify_cancel_request_link false
     verify_no_donor_links
   end
 
@@ -256,6 +273,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'p', /Let Henry Cameron know when you have finished reading\s+The Fountainhead/
     verify_thank_link
     verify_address_link :none
+    verify_cancel_request_link false
     verify_no_donor_links
   end
 
@@ -269,6 +287,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'p', text: /Let .* know/, count: 0
     verify_thank_link false
     verify_address_link :none
+    verify_cancel_request_link false
     verify_no_donor_links
   end
 
@@ -281,6 +300,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_status 'donor found'
     verify_thank_link false
     verify_address_link :add
+    verify_cancel_request_link false
     verify_no_donor_links
   end
 
@@ -292,6 +312,7 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'h1', "Hank Rearden wants Atlas Shrugged"
     verify_thank_link true
     verify_address_link :update
+    verify_cancel_request_link false
     verify_no_donor_links
   end
 
@@ -313,6 +334,16 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.address', /987 Steel Way/i
     assert_select '.flagged', /Shipping info flagged/i
     verify_donor_links :flagged
+  end
+
+  test "show canceled" do
+    get :show, {id: @howard_request_canceled.id}, session_for(@howard)
+    assert_response :success
+    assert_select 'h1', "Howard Roark wants The Fountainhead"
+    verify_thank_link false
+    verify_address_link :none
+    verify_cancel_request_link false
+    verify_no_donor_links
   end
 
   test "show requires login" do
@@ -405,6 +436,53 @@ class RequestsControllerTest < ActionController::TestCase
   test "update requires request owner" do
     options = {user_name: "Howard Roark", address: "123 Independence St", current_user: @quentin, expect_events: 0}
     update @howard_request, options
+    verify_wrong_login_page
+  end
+
+  # Cancel
+
+  test "cancel" do
+    get :cancel, {id: @howard_request.id}, session_for(@howard)
+    assert_response :success
+    assert_select 'h1', /Cancel/
+    assert_select '.headline', /Atlas Shrugged/
+    assert_select 'textarea#request_event_message', ""
+    assert_select 'input[type="submit"]'
+    assert_select 'a', /Don't cancel/
+  end
+
+  test "cancel requires login" do
+    get :cancel, id: @howard_request.id
+    verify_login_page
+  end
+
+  test "cancel requires request owner" do
+    get :cancel, {id: @howard_request.id}, session_for(@quentin)
+    verify_wrong_login_page
+  end
+
+  # Destroy
+
+  test "destroy" do
+    assert_difference "@howard_request.events.count" do
+      delete :destroy, {id: @howard_request.id, request: {event: {message: "Not needed"}}}, session_for(@howard)
+    end
+    assert_redirected_to profile_url
+    assert_match /request has been canceled/, flash[:notice]
+
+    @howard_request.reload
+    assert @howard_request.canceled?
+
+    verify_event @howard_request, "cancel_request", message: "Not needed"
+  end
+
+  test "destroy requires login" do
+    delete :destroy, id: @howard_request.id
+    verify_login_page
+  end
+
+  test "destroy requires request owner" do
+    delete :destroy, {id: @howard_request.id}, session_for(@quentin)
     verify_wrong_login_page
   end
 end

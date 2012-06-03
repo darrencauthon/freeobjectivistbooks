@@ -56,7 +56,9 @@ module ApplicationHelper
   end
 
   def status_headline(request)
-    if request.read?
+    if request.canceled?
+      "Canceled"
+    elsif request.read?
       "Finished reading"
     elsif request.received?
       "Book received"
@@ -70,7 +72,9 @@ module ApplicationHelper
   end
 
   def status_detail(request)
-    if request.read?
+    if request.canceled?
+      "This request has been canceled."
+    elsif request.read?
       "#{request.user.name} has read this book."
     elsif request.received?
       "#{request.user.name} has received this book."

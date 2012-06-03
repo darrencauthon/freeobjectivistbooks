@@ -225,7 +225,7 @@ class EventMailerTest < ActionMailer::TestCase
     end
   end
 
-  test "cancel" do
+  test "cancel donation" do
     mail = EventMailer.mail_for_event events(:stadler_cancels_quentin)
     assert_equal "We need to find you a new donor for Objectivism: The Philosophy of Ayn Rand", mail.subject
     assert_equal ["quentin@mit.edu"], mail.to

@@ -170,7 +170,7 @@ class DonationsControllerTest < ActionController::TestCase
     @quentin_request_unsent.reload
     assert @quentin_request_unsent.open?, "request is not open"
 
-    verify_event @quentin_donation_unsent, "cancel", message: "Sorry!", notified?: true
+    verify_event @quentin_donation_unsent, "cancel_donation", message: "Sorry!", notified?: true
   end
 
   test "destroy requires message" do

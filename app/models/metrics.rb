@@ -1,11 +1,12 @@
 class Metrics
   def request_pipeline
     calculate_metrics [
-      {name: 'Total',    value: Request.count},
-      {name: 'Granted',  value: Request.granted.count,   denominator_name: 'Total'},
+      {name: 'Active',   value: Request.active.count},
+      {name: 'Granted',  value: Request.granted.count,   denominator_name: 'Active'},
       {name: 'Sent',     value: Donation.sent.count,     denominator_name: 'Granted'},
       {name: 'Received', value: Donation.received.count, denominator_name: 'Sent'},
       {name: 'Read',     value: Donation.read.count,     denominator_name: 'Received'},
+      {name: 'Canceled', value: Request.canceled.count,  denominator_name: 'Total',   denominator_value: Request.count},
     ]
   end
 
@@ -74,7 +75,7 @@ class Metrics
   end
 
   def book_leaderboard
-    counts = Request.unscoped.group(:book).count.map {|book,count| {name: book, value: count}}
+    counts = Request.unscoped.active.group(:book).count.map {|book,count| {name: book, value: count}}
     counts.sort {|a,b| b[:value] <=> a[:value]}
   end
 

@@ -10,7 +10,7 @@ class UserTest < ActiveSupport::TestCase
   # Associations
 
   test "requests" do
-    assert_equal [requests(:howard_wants_atlas)], @howard.requests
+    assert_equal [requests(:howard_wants_atlas), requests(:howard_wants_fountainhead)], @howard.requests
   end
 
   test "pledges" do

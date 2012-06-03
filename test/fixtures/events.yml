@@ -141,7 +141,7 @@ quentin_updates_cameron:
 # request: quentin_wants_opar
 
 stadler_cancels_quentin:
-  type: cancel
+  type: cancel_donation
   request: quentin_wants_opar
   user: stadler
   donation: stadler_grants_quentin_wants_opar

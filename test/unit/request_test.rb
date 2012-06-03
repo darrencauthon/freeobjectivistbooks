@@ -66,6 +66,14 @@ class RequestTest < ActiveSupport::TestCase
     super Request, scope
   end
 
+  test "active" do
+    verify_scope(:active) {|request| request.active?}
+  end
+
+  test "canceled" do
+    verify_scope(:canceled) {|request| request.canceled?}
+  end
+
   test "granted" do
     verify_scope(:granted) {|request| request.granted?}
   end
@@ -75,6 +83,11 @@ class RequestTest < ActiveSupport::TestCase
   end
 
   # Derived attributes
+
+  test "active?" do
+    assert @quentin_request.active?
+    assert !@howard_request_canceled.active?
+  end
 
   test "address" do
     assert_equal @quentin.address, @quentin_request.address
@@ -135,6 +148,19 @@ class RequestTest < ActiveSupport::TestCase
     assert_nil @howard_request.review
     assert_nil @hank_request_received.review
     assert_equal @quentin_review, @quentin_request_read.review
+  end
+
+  test "can update?" do
+    assert @howard_request.can_update?  # open
+    assert @quentin_request_unsent.can_update?  # not sent
+    assert !@quentin_request.can_update?  # sent
+    assert !@howard_request_canceled.can_update?  # canceled
+  end
+
+  test "can cancel?" do
+    assert @howard_request.can_cancel?
+    assert !@quentin_request.can_cancel?  # granted
+    assert !@howard_request_canceled.can_cancel?  # already canceled
   end
 
   # Grant
@@ -206,5 +232,19 @@ class RequestTest < ActiveSupport::TestCase
     @quentin_request.address = ""
     @quentin_request.valid?
     assert @quentin_request.errors[:address].any?, @quentin_request.errors.inspect
+  end
+
+  # Cancel
+
+  test "cancel" do
+    event = @howard_request.cancel event: {message: "I bought the book myself"}
+    assert @howard_request.canceled?
+
+    assert_equal "cancel_request", event.type
+    assert_equal @howard_request, event.request
+    assert_equal @howard, event.user
+    assert_equal "I bought the book myself", event.message
+    assert_nil event.donation
+    assert_nil event.to
   end
 end

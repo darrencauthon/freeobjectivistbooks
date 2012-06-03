@@ -1,0 +1,48 @@
+<% content_for :title do %>Cancel Request<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.request {
+    margin-top: 24px;
+}
+
+.headline {
+    font-size: 1.2em;
+}
+
+.submit {
+    height: 46px;
+    margin-top: 24px;
+    background-image: url(/assets/cancel-button.png);
+    background-position-x: left;
+}
+
+.cancel {
+    height: 46px;
+    margin-top: 36px;
+}
+ </style>
+<% end %>
+
+<h1 class="grid_16">Cancel request</h1>
+
+<div class="grid_12">
+    <div class="request">
+        <p class="headline"><%= title @request.book %></p>
+        <p class="reason"><%= format_block @request.reason %></p>
+    </div>
+
+    <%= form_for @request, method: :delete do |f| %>
+        <%= f.fields_for @event do |e| %>
+            <h2>Please tell us why you are canceling your request:</h2>
+
+            <p class="field_with_errors"><%= @event.errors[:message].join(", ") %></p>
+            <%= e.text_area :message, rows: 6, cols: 60 %>
+            <div class="clear"></div>
+        <% end %>
+
+        <%= f.submit "", class: "grid_3 alpha submit button" %>
+        <%= link_to "Don't cancel", @request, class: "grid_2 omega cancel" %>
+        <div class="clear"></div>
+    <% end %>
+</div>

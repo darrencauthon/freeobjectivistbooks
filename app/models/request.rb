@@ -40,8 +40,11 @@ class Request < ActiveRecord::Base
 
   default_scope order("created_at desc")
 
-  scope :granted, where('donation_id is not null')
-  scope :not_granted, where(donation_id: nil)
+  scope :active, where(canceled: [nil, false])
+  scope :canceled, where(canceled: true)
+
+  scope :granted, active.where('donation_id is not null')
+  scope :not_granted, active.where(donation_id: nil)
 
   # Callbacks
 
@@ -68,6 +71,10 @@ class Request < ActiveRecord::Base
     donation && donation.user
   end
 
+  def active?
+    !canceled?
+  end
+
   def granted?
     donation.present?
   end
@@ -88,6 +95,14 @@ class Request < ActiveRecord::Base
     donation ? donation.status : ActiveSupport::StringInquirer.new("")
   end
 
+  def can_update?
+    active? && !sent?
+  end
+
+  def can_cancel?
+    open? && !canceled?
+  end
+
   # Actions
 
   def grant(user)
@@ -98,5 +113,10 @@ class Request < ActiveRecord::Base
 
   def build_update_event
     update_events.build detail: user.update_detail if user.changed?
+  end
+
+  def cancel(params)
+    self.canceled = true
+    cancel_request_events.build params[:event]
   end
 end

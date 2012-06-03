@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   self.inheritance_column = 'class'  # anything other than "type", to let us use "type" for something else
 
-  TYPES = %w{grant update flag fix message update_status cancel}
+  TYPES = %w{grant update flag fix message update_status cancel_donation cancel_request}
 
   # Associations
 
@@ -12,10 +12,10 @@ class Event < ActiveRecord::Base
   # Validations
 
   validates_presence_of :request, :user, :type
-  validates_presence_of :donation, if: lambda {|e| e.type.in? %w{grant flag fix message update_status cancel}}
+  validates_presence_of :donation, if: lambda {|e| e.type.in? %w{grant flag fix message update_status cancel_donation}}
   validates_inclusion_of :type, in: TYPES
 
-  validates_presence_of :message, if: lambda {|e| e.type.in? %w{flag message cancel}}, message: "Please enter a message."
+  validates_presence_of :message, if: lambda {|e| e.type.in? %w{flag message cancel_donation}}, message: "Please enter a message."
   validates_inclusion_of :public, in: [true, false], if: :is_thanks?, message: 'Please choose "Yes" or "No".'
   validate :message_or_detail_must_be_present, if: lambda {|e| e.type == "fix" && e.request.address.present?}
 
@@ -50,8 +50,8 @@ class Event < ActiveRecord::Base
 
   def default_user
     case type
-    when "grant", "flag" then donor
-    when "update", "fix" then student
+    when "grant", "flag", "cancel_donation" then donor
+    when "update", "fix", "cancel_request" then student
     when "update_status"
       case detail
       when "sent" then donor

@@ -9,6 +9,7 @@ FreeBooks::Application.routes.draw do
 
   get "donate" => "requests#index"
   resources :requests do
+    get "cancel", on: :member
     resource :donation, only: [:create]
   end
 

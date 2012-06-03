@@ -41,6 +41,7 @@ class ActiveSupport::TestCase
     @hank_request_received = requests :hank_wants_fountainhead
     @quentin_request_open = requests :quentin_wants_opar
     @quentin_request_read = requests :quentin_wants_atlas
+    @howard_request_canceled = requests :howard_wants_fountainhead
 
     @quentin_donation = donations :hugh_grants_quentin_wants_vos
     @dagny_donation = donations :hugh_grants_dagny_wants_cui

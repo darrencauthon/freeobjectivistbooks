@@ -56,3 +56,11 @@ quentin_wants_atlas:
   book: "Atlas Shrugged"
   reason: I was told this is the book to start with
   donation: cameron_grants_quentin_wants_atlas
+
+# Canceled
+
+howard_wants_fountainhead:
+  user: howard
+  book: The Fountainhead
+  reason: Feels like this would resonate with me
+  canceled: true
