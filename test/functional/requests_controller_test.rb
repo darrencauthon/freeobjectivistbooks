@@ -473,6 +473,18 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select 'a', /Don't cancel/
   end
 
+  test "cancel already-canceled request" do
+    get :cancel, {id: @howard_request_canceled.id}, session_for(@howard)
+    assert_redirected_to @howard_request_canceled
+    assert_match /already been canceled/i, flash[:notice]
+  end
+
+  test "cancel request that can't be canceled" do
+    get :cancel, {id: @quentin_request.id}, session_for(@quentin)
+    assert_redirected_to @quentin_request
+    assert_match /can't cancel/i, flash[:error]
+  end
+
   test "cancel requires login" do
     get :cancel, id: @howard_request.id
     verify_login_page
@@ -490,7 +502,7 @@ class RequestsControllerTest < ActionController::TestCase
       delete :destroy, {id: @hank_request.id, request: {event: {message: "Not needed"}}}, session_for(@hank)
     end
     assert_redirected_to profile_url
-    assert_match /request has been canceled/, flash[:notice]
+    assert_match /request has been canceled/i, flash[:notice]
 
     @hank_request.reload
     assert @hank_request.canceled?, "request not canceled"
@@ -506,12 +518,29 @@ class RequestsControllerTest < ActionController::TestCase
       delete :destroy, {id: @howard_request.id, request: {event: {message: "Not needed"}}}, session_for(@howard)
     end
     assert_redirected_to profile_url
-    assert_match /request has been canceled/, flash[:notice]
+    assert_match /request has been canceled/i, flash[:notice]
 
     @howard_request.reload
     assert @howard_request.canceled?, "request not canceled"
 
     verify_event @howard_request, "cancel_request", message: "Not needed", notified?: false
+  end
+
+  test "destroy already-canceled request" do
+    assert_no_difference "@howard_request_canceled.events.count" do
+      delete :destroy, {id: @howard_request_canceled.id, request: {event: {message: ""}}}, session_for(@howard)
+    end
+    assert_redirected_to profile_url
+    assert_match /request has been canceled/i, flash[:notice]
+  end
+
+  test "destroy request that can't be canceled" do
+    delete :destroy, {id: @quentin_request.id, request: {event: {message: ""}}}, session_for(@quentin)
+    assert_redirected_to @quentin_request
+    assert_match /can't cancel/i, flash[:error]
+
+    @quentin_request.reload
+    assert !@quentin_request.canceled?
   end
 
   test "destroy requires login" do

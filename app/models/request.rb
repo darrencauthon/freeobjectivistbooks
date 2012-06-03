@@ -115,7 +115,10 @@ class Request < ActiveRecord::Base
     update_events.build detail: user.update_detail if user.changed?
   end
 
-  def cancel(params)
+  def cancel(params = {})
+    return if canceled?
+    raise "Can't cancel" if !can_cancel?
+
     self.canceled = true
     donation.canceled = true if donation
     cancel_request_events.build params[:event]

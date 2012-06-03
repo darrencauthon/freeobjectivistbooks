@@ -1,6 +1,7 @@
 class RequestsController < ApplicationController
   before_filter :require_login
   before_filter :require_can_request, only: [:new, :create]
+  before_filter :require_unsent_for_cancel, only: [:cancel, :destroy]
 
   # Filters
 
@@ -19,6 +20,13 @@ class RequestsController < ApplicationController
     unless @current_user.can_request?
       @request = @current_user.requests.not_granted.first
       render "no_new"
+    end
+  end
+
+  def require_unsent_for_cancel
+    if !@request.canceled? && @request.sent?
+      flash[:error] = "Can't cancel this request because the book has already been sent."
+      redirect_to @request
     end
   end
 
@@ -64,6 +72,11 @@ class RequestsController < ApplicationController
   end
 
   def cancel
+    if @request.canceled?
+      flash[:notice] = "This request has already been canceled."
+      redirect_to @request
+    end
+
     @event = @request.cancel_request_events.build user: @current_user
   end
 

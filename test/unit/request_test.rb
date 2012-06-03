@@ -268,4 +268,16 @@ class RequestTest < ActiveSupport::TestCase
     assert_nil event.donation
     assert_nil event.to
   end
+
+  test "cancel when already canceled" do
+    event = @howard_request_canceled.cancel
+    assert @howard_request_canceled.canceled?
+    assert_nil event
+  end
+
+  test "cancel raises exception if you can't cancel" do
+    assert_raise RuntimeError do
+      @quentin_request.cancel
+    end
+  end
 end
