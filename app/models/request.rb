@@ -40,7 +40,7 @@ class Request < ActiveRecord::Base
 
   default_scope order("created_at desc")
 
-  scope :active, where(canceled: [nil, false])
+  scope :active, where(canceled: false)
   scope :canceled, where(canceled: true)
 
   scope :granted, active.where('donation_id is not null')

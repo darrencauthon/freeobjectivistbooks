@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120603035546) do
+ActiveRecord::Schema.define(:version => 20120603060708) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(:version => 20120603035546) do
     t.string   "status_deprecated"
     t.integer  "donation_id"
     t.integer  "referral_id"
-    t.boolean  "canceled"
+    t.boolean  "canceled",            :default => false, :null => false
   end
 
   add_index "requests", ["donation_id"], :name => "index_requests_on_donation_id"
