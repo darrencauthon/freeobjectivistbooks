@@ -33,7 +33,6 @@ h2 {
 <div class="grid_12">
     <div class="request">
         <p class="headline"><%= title @request.book %></p>
-        <p class="reason"><%= format_block @request.reason %></p>
     </div>
 
     <%= form_for @request, method: :delete do |f| %>
