@@ -1,8 +1,13 @@
 class StatusesController < ApplicationController
   before_filter :require_login
+  before_filter :require_status
+
+  def donation_status
+    params[:donation][:status] if params[:donation]
+  end
 
   def status
-    @status ||= params[:status] || params[:donation][:status]
+    @status ||= params[:status] || donation_status
   end
 
   # Filters
@@ -12,6 +17,10 @@ class StatusesController < ApplicationController
     when "sent" then @donation.user
     when "received", "read" then @donation.student
     end
+  end
+
+  def require_status
+    render_not_found if status.blank?
   end
 
   # Actions
