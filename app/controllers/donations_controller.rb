@@ -41,7 +41,7 @@ class DonationsController < ApplicationController
   end
 
   def destroy
-    @event = @donation.cancel params[:donation]
+    @event = @donation.cancel params[:donation], @current_user
     if save @donation, @event
       if @event
         flash[:notice] = {

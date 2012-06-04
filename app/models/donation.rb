@@ -121,8 +121,22 @@ class Donation < ActiveRecord::Base
     !sent? && !flagged?
   end
 
-  def can_cancel?
+  def donor_can_cancel?
     !sent?
+  end
+
+  def student_can_cancel?
+    return false if sent? || flagged? || Time.since(created_at) < 3.weeks
+    reminder = reminders.where(type: Reminders::SendBooks).reorder(:created_at).first
+    reminder && Time.since(reminder.created_at) >= 1.week
+  end
+
+  def can_cancel?(user)
+    case user
+    when donor then donor_can_cancel?
+    when student then student_can_cancel?
+    else false
+    end
   end
 
   def flag_message
@@ -179,12 +193,13 @@ class Donation < ActiveRecord::Base
     fix_events.build event_attributes.merge(detail: student.update_detail)
   end
 
-  def cancel(params)
+  def cancel(params, user)
     return if canceled?
+    raise "Can't cancel" unless can_cancel? user
     self.canceled = true
     if request.donation == self
       request.donation = nil
-      cancel_donation_events.build params[:event]
+      cancel_donation_events.build params[:event].merge(user: user)
     end
   end
 end

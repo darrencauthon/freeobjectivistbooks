@@ -8,6 +8,7 @@ class EventTest < ActiveSupport::TestCase
     @new_message = @hank_donation.message_events.build user: @hank, message: "Info is correct"
     @new_thank = @quentin_donation.message_events.build user: @quentin, message: "Thanks!", is_thanks: true, public: false
     @new_cancel = @hank_donation.cancel_donation_events.build user: @cameron, message: "Sorry!"
+    @new_student_cancel = @quentin_donation_unsent.cancel_donation_events.build user: @quentin, detail: "not_received"
   end
 
   # Associations
@@ -32,7 +33,7 @@ class EventTest < ActiveSupport::TestCase
   # Validations
 
   test "valid flag" do
-    assert @new_flag.valid?
+    assert @new_flag.valid?, @new_flag.errors.inspect
   end
 
   test "flag requires message" do
@@ -42,17 +43,17 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "valid fix" do
-    assert @new_fix.valid?
+    assert @new_fix.valid?, @new_fix.errors.inspect
   end
 
   test "flag with detail doesn't need message" do
     @new_fix.message = ""
-    assert @new_fix.valid?
+    assert @new_fix.valid?, @new_fix.errors.inspect
   end
 
   test "flag with message doesn't need detail" do
     @new_fix.detail = nil
-    assert @new_fix.valid?
+    assert @new_fix.valid?, @new_fix.errors.inspect
   end
 
   test "flag requires detail or message" do
@@ -63,7 +64,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "valid message" do
-    assert @new_message.valid?
+    assert @new_message.valid?, @new_message.errors.inspect
   end
 
   test "message requires message" do
@@ -73,7 +74,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "valid thank" do
-    assert @new_thank.valid?
+    assert @new_thank.valid?, @new_thank.errors.inspect
   end
 
   test "thank requires explicit public bit" do
@@ -83,13 +84,17 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "valid cancel" do
-    assert @new_cancel.valid?
+    assert @new_cancel.valid?, @new_cancel.errors.inspect
   end
 
   test "cancel requires message" do
     @new_cancel.message = ""
     assert @new_cancel.invalid?
     assert @new_cancel.errors[:message].any?
+  end
+
+  test "valid student cancel" do
+    assert @new_student_cancel.valid?, @new_student_cancel.errors.inspect
   end
 
   test "validates type" do

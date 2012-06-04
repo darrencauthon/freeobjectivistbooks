@@ -29,7 +29,7 @@
         <p class="not-sent"><%= link_to 'Flag problem with shipping info', new_donation_flag_path(donation) %></p>
         <% end %>
 
-        <% if donation.can_cancel? %>
+        <% if donation.donor_can_cancel? %>
         <p class="not-sent"><%= link_to 'Cancel this donation', cancel_donation_path(donation) %></p>
         <% end %>
 

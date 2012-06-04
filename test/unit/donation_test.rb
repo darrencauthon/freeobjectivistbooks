@@ -163,23 +163,88 @@ class DonationTest < ActiveSupport::TestCase
     assert !@dagny_donation.can_flag?    # already flagged
   end
 
+  test "donor can cancel?" do
+    assert @hank_donation.donor_can_cancel?
+    assert !@quentin_donation.donor_can_cancel?  # already sent
+  end
+
+  test "student can cancel?" do
+    assert @quentin_donation_unsent.student_can_cancel?
+  end
+
+  test "student can't cancel if sent" do
+    event = @quentin_donation_unsent.update_status status: "sent"
+    @quentin_donation_unsent.save! && event.save!
+    assert !@quentin_donation_unsent.student_can_cancel?
+  end
+
+  test "student can't cancel if flagged" do
+    event = @quentin_donation_unsent.flag message: "Bad"
+    @quentin_donation_unsent.save! && event.save!
+    assert !@quentin_donation_unsent.student_can_cancel?
+  end
+
+  test "student can't cancel if new" do
+    @quentin_donation_unsent.created_at = Time.now
+    @quentin_donation_unsent.save!
+    assert !@quentin_donation_unsent.student_can_cancel?
+  end
+
+  test "student can't cancel if no reminders" do
+    @quentin_donation_unsent.reminders.destroy_all
+    assert !@quentin_donation_unsent.student_can_cancel?
+  end
+
   test "can cancel?" do
-    assert @hank_donation.can_cancel?
-    assert !@quentin_donation.can_cancel?  # already sent
+    assert @hank_donation.can_cancel?(@cameron)
+    assert !@hank_donation.can_cancel?(@hank)
+    assert !@hank_donation.can_cancel?(@quentin)
+
+    assert !@quentin_donation.can_cancel?(@hugh)
+    assert !@quentin_donation.can_cancel?(@quentin)
+    assert !@quentin_donation.can_cancel?(@howard)
+
+    assert @quentin_donation_unsent.can_cancel?(@quentin)
+    assert @quentin_donation_unsent.can_cancel?(@hugh)
+    assert !@quentin_donation_unsent.can_cancel?(@dagny)
   end
 
   # Cancel
 
-  test "cancel" do
-    event = @hank_donation.cancel event: {message: "Sorry"}
+  test "cancel by donor" do
+    event = @hank_donation.cancel({event: {message: "Sorry"}}, @cameron)
     assert @hank_donation.canceled?, "donation not canceled"
 
     assert_equal "cancel_donation", event.type
+    assert_nil event.detail
     assert_equal @hank_request, event.request
     assert_equal @cameron, event.user
     assert_equal @cameron, event.donor
     assert_equal "Sorry", event.message
     assert_not_nil event.happened_at
+  end
+
+  test "cancel by student" do
+    event = @quentin_donation_unsent.cancel({event: {detail: "not_received"}}, @quentin)
+    assert @quentin_donation_unsent.canceled?, "donation not canceled"
+
+    assert_equal "cancel_donation", event.type
+    assert_equal "not_received", event.detail
+    assert_equal @quentin_request_unsent, event.request
+    assert_equal @quentin, event.user
+    assert_equal @hugh, event.donor
+    assert_nil event.message
+    assert_not_nil event.happened_at
+  end
+
+  test "cancel raises exception if can't cancel" do
+    assert_raise RuntimeError do
+      @quentin_donation.cancel({event: {message: "Sorry"}}, @hugh)
+    end
+
+    assert_raise RuntimeError do
+      @dagny_donation.cancel({event: {detail: "not_received"}}, @dagny)
+    end
   end
 
   # Update status

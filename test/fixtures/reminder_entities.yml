@@ -9,3 +9,7 @@ cameron_send_books_donation_1:
 cameron_send_books_donation_2:
   reminder: cameron_send_books
   entity: cameron_grants_hank_wants_fountainhead (Donation)
+
+hugh_send_books_donation:
+  reminder: hugh_send_books
+  entity: hugh_grants_quentin_wants_fountainhead (Donation)

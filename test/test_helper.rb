@@ -59,6 +59,7 @@ class ActiveSupport::TestCase
     @fb_referral = referrals :sfl_fb
 
     @hugh_reminder = reminders :hugh_fulfill_pledge
+    @hugh_send_books_reminder = reminders :hugh_send_books
     @cameron_reminder = reminders :cameron_send_books
 
     ActionMailer::Base.deliveries = []

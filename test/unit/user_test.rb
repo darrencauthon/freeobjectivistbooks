@@ -10,11 +10,13 @@ class UserTest < ActiveSupport::TestCase
   # Associations
 
   test "requests" do
-    assert_equal [requests(:howard_wants_atlas), requests(:howard_wants_fountainhead)], @howard.requests
+    assert @howard.requests.any?
+    @howard.requests.each {|request| assert_equal @howard, request.user}
   end
 
   test "pledges" do
-    assert_equal [pledges(:hugh_pledge)], @hugh.pledges
+    assert @hugh.pledges.any?
+    @hugh.pledges.each {|pledge| assert_equal @hugh, pledge.user}
   end
 
   test "donations" do
@@ -34,9 +36,9 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "reminders" do
-    assert_equal [@hugh_reminder], @hugh.reminders
-    assert_equal [@cameron_reminder], @cameron.reminders
-    assert_equal [], @dagny.reminders
+    assert @hugh.reminders.any?
+    @hugh.reminders.each {|reminder| assert_equal @hugh, reminder.user}
+    assert !@dagny.reminders.any?
   end
 
   # Validations

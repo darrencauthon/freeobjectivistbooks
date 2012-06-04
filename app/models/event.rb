@@ -15,9 +15,17 @@ class Event < ActiveRecord::Base
   validates_presence_of :donation, if: lambda {|e| e.type.in? %w{grant flag fix message update_status cancel_donation}}
   validates_inclusion_of :type, in: TYPES
 
-  validates_presence_of :message, if: lambda {|e| e.type.in? %w{flag message cancel_donation}}, message: "Please enter a message."
+  validates_presence_of :message, if: :requires_message?, message: "Please enter a message."
   validates_inclusion_of :public, in: [true, false], if: :is_thanks?, message: 'Please choose "Yes" or "No".'
   validate :message_or_detail_must_be_present, if: lambda {|e| e.type == "fix" && e.request.address.present?}
+
+  def requires_message?
+    case type
+    when "flag", "message" then true
+    when "cancel_donation" then detail != "not_received"
+    else false
+    end
+  end
 
   def message_or_detail_must_be_present
     if detail.blank? && message.blank?
@@ -50,7 +58,7 @@ class Event < ActiveRecord::Base
 
   def default_user
     case type
-    when "grant", "flag", "cancel_donation" then donor
+    when "grant", "flag" then donor
     when "update", "fix", "cancel_request" then student
     when "update_status"
       case detail
