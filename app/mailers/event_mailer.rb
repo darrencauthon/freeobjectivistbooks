@@ -45,7 +45,13 @@ class EventMailer < ApplicationMailer
   def cancel_donation_event(event)
     @event = event
     @closer = "Yours"
-    notification "We need to find you a new donor for #{@event.book}"
+    case @event.to
+    when @event.student
+      notification "We need to find you a new donor for #{@event.book}"
+    when @event.donor
+      notification "Your donation of #{@event.book} to #{@event.student.name} has been canceled",
+        template_name: "#{event.detail}_event"
+    end
   end
 
   def cancel_request_event(event)

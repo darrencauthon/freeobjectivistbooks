@@ -7,6 +7,21 @@ howard_updates_info:
   detail: updated shipping info
   happened_at: 2012-01-20 00:15:25
 
+stadler_grants_howard:
+  type: grant
+  request: howard_wants_atlas
+  user: stadler
+  donation: stadler_grants_howard_wants_atlas
+  happened_at: 2012-01-21 00:15:25
+
+howard_cancels_stadler:
+  type: cancel_donation
+  detail: not_received
+  request: howard_wants_atlas
+  user: howard
+  donation: stadler_grants_howard_wants_atlas
+  happened_at: 2012-02-21 00:15:25
+
 # request: quentin_wants_vos
 
 hugh_grants_quentin:

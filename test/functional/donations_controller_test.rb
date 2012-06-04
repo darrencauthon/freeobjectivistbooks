@@ -144,13 +144,42 @@ class DonationsControllerTest < ActionController::TestCase
     assert_select 'input[type="submit"]'
   end
 
+  test "cancel by student" do
+    get :cancel, {id: @quentin_donation_unsent.id, reason: "not_received"}, session_for(@quentin)
+    assert_response :success
+    assert_select 'h1', /I have not received/i
+    assert_select '.overview', /Hugh Akston in Boston, MA agreed to send you The Fountainhead/
+    assert_select '.overview', /we have not confirmed/i
+    assert_select 'input#donation_event_detail[type="hidden"][value="not_received"]'
+    assert_select 'input[type="submit"]'
+    assert_select 'a', /nevermind/i
+    assert_select 'a', /actually, yes/i
+  end
+
+  test "cancel requires unsent donation" do
+    get :cancel, {id: @quentin_donation.id}, session_for(@hugh)
+    assert_redirected_to @quentin_request
+    assert_not_nil flash[:error]
+  end
+
+  test "cancel by student requires unsent donation" do
+    get :cancel, {id: @quentin_donation.id, reason: "not_received"}, session_for(@quentin)
+    assert_redirected_to @quentin_request
+    assert_not_nil flash[:error]
+  end
+
   test "cancel requires login" do
     get :cancel, id: @quentin_donation_unsent.id
     verify_login_page
   end
 
   test "cancel requires donor" do
-    get :cancel, {id: @quentin_donation_unsent.id}, session_for(@howard)
+    get :cancel, {id: @quentin_donation_unsent.id}, session_for(@quentin)
+    verify_wrong_login_page
+  end
+
+  test "cancel for not-received requires student" do
+    get :cancel, {id: @quentin_donation_unsent.id, reason: "not_received"}, session_for(@hugh)
     verify_wrong_login_page
   end
 
@@ -186,6 +215,45 @@ class DonationsControllerTest < ActionController::TestCase
 
     @quentin_request_unsent.reload
     assert @quentin_request_unsent.granted?
+  end
+
+  test "destroy by student" do
+    assert_difference "@quentin_donation_unsent.events.count" do
+      delete :destroy, {id: @quentin_donation_unsent.id, donation: {event: {detail: "not_received"}}}, session_for(@quentin)
+    end
+
+    assert_redirected_to @quentin_request_unsent
+    assert_match /put you back at the top/i, flash[:notice]
+
+    @quentin_donation_unsent.reload
+    assert @quentin_donation_unsent.canceled?, "donation is not canceled"
+
+    @quentin_request_unsent.reload
+    assert @quentin_request_unsent.open?, "request is not open"
+
+    verify_event @quentin_donation_unsent, "cancel_donation", detail: "not_received", notified?: true
+  end
+
+  test "destroy requires unsent donation" do
+    assert_no_difference "@quentin_donation.events.count" do
+      delete :destroy, {id: @quentin_donation.id, donation: {event: {message: "Sorry!"}}}, session_for(@hugh)
+    end
+    assert_redirected_to @quentin_request
+    assert_not_nil flash[:error]
+
+    @quentin_donation.reload
+    assert !@quentin_donation.canceled?, "donation was canceled"
+  end
+
+  test "destroy by student requires unsent donation" do
+    assert_no_difference "@quentin_donation.events.count" do
+      delete :destroy, {id: @quentin_donation.id, donation: {event: {detail: "not_received"}}}, session_for(@quentin)
+    end
+    assert_redirected_to @quentin_request
+    assert_not_nil flash[:error]
+
+    @quentin_donation.reload
+    assert !@quentin_donation.canceled?, "donation was canceled"
   end
 
   test "destroy requires login" do

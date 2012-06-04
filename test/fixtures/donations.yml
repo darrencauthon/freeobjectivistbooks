@@ -51,6 +51,13 @@ stadler_grants_quentin_wants_opar:
   status: not_sent
   canceled: true
 
+stadler_grants_howard_wants_atlas:
+  request: howard_wants_atlas
+  user: stadler
+  status: not_sent
+  canceled: true
+  created_at: 2012-01-21 00:15:25
+
 hugh_grants_dagny_wants_atlas:
   request: dagny_wants_atlas
   user: hugh

@@ -1,0 +1,41 @@
+<% content_for :title do %>Book Received?<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.button {
+    height: 46px;
+    background-position-x: left;
+    background-image: url(/assets/cancel-button.png);
+}
+
+.links {
+    margin-top: 24px;
+}
+ </style>
+<% end %>
+
+<h1 class="grid_16">No, I have not received my book</h1>
+
+<div class="grid_12">
+    <p class="overview"><%= donation_summary @donation %>.
+        <% if !@donation.sent? %>We have not confirmed whether they have sent this book.<% end %>
+    </p>
+
+    <p class="overview">
+        If you have <em>not</em> received the book yet, you can cancel this donation and put yourself back on the list
+        to find another donor:
+    </p>
+
+    <%= form_for @donation, method: :delete do |f| %>
+        <%= f.fields_for @event do |e| %>
+            <%= e.hidden_field :detail %>
+        <% end %>
+
+        <%= f.submit "", class: "grid_3 alpha button" %><div class="clear"></div>
+    <% end %>
+
+    <div class="links">
+        <p><%= link_to "Nevermind, I'll wait a bit longer", request_path(@donation.request) %></p>
+        <p><%= link_to "Actually, yes, I have recieved the book", edit_donation_status_path(@donation, status: "received") %></p>
+    </div>
+</div>

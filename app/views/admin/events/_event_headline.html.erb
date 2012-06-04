@@ -18,7 +18,12 @@
     <% when "update_status" %>
         <%= event.detail %>
     <% when "cancel_donation" %>
-        canceled <%= admin_user_link event.student %>'s request for
+        canceled
+        <% if event.from_donor? %>
+            <%= admin_user_link event.student %>'s request for
+        <% else %>
+            <%= admin_user_link event.donor %>'s donation of
+        <% end %>
     <% when "cancel_request" %>
         canceled their request for
     <% end %>

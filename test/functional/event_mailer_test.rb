@@ -2,6 +2,7 @@ require 'test_helper'
 
 class EventMailerTest < ActionMailer::TestCase
   def verify_mail_body(mail, &block)
+    assert_equal ["jason@rationalegoist.com"], mail.from
     assert mail.body.encoded.present?, "mail is blank"
     mail.deliver
     assert_select_email &block
@@ -10,8 +11,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "grant" do
     mail = EventMailer.mail_for_event events(:hugh_grants_quentin)
     assert_equal "We found a donor to send you The Virtue of Selfishness!", mail.subject
-    assert_equal ["quentin@mit.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@quentin.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
@@ -27,8 +27,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "grant no address" do
     mail = EventMailer.mail_for_event events(:hugh_grants_dagny)
     assert_equal "We found a donor to send you Capitalism: The Unknown Ideal!", mail.subject
-    assert_equal ["dagny@taggart.com"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@dagny.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Dagny/
@@ -41,8 +40,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "flag" do
     mail = EventMailer.mail_for_event events(:hugh_flags_dagny)
     assert_equal "Problem with your shipping info for Capitalism: The Unknown Ideal", mail.subject
-    assert_equal ["dagny@taggart.com"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@dagny.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Dagny/
@@ -54,8 +52,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "add name" do
     mail = EventMailer.mail_for_event events(:quentin_adds_name)
     assert_equal "Quentin Daniels added their full name for The Virtue of Selfishness", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@hugh.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
@@ -73,8 +70,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "add address" do
     mail = EventMailer.mail_for_event events(:quentin_adds_address)
     assert_equal "Quentin Daniels added a shipping address for The Virtue of Selfishness", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@hugh.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
@@ -92,8 +88,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "fix with message" do
     mail = EventMailer.mail_for_event events(:quentin_fixes)
     assert_equal "Quentin Daniels responded to your flag for The Virtue of Selfishness", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@hugh.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
@@ -111,8 +106,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "message" do
     mail = EventMailer.mail_for_event events(:hugh_messages_quentin)
     assert_equal "Hugh Akston sent you a message about The Virtue of Selfishness", mail.subject
-    assert_equal ["quentin@mit.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@quentin.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
@@ -126,8 +120,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "sent" do
     mail = EventMailer.mail_for_event events(:hugh_updates_quentin)
     assert_equal "Hugh Akston has sent The Virtue of Selfishness", mail.subject
-    assert_equal ["quentin@mit.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@quentin.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
@@ -140,8 +133,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "received" do
     mail = EventMailer.mail_for_event events(:hank_updates_cameron)
     assert_equal "Hank Rearden has received The Fountainhead", mail.subject
-    assert_equal ["henry@cameron.com"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@cameron.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Henry/
@@ -159,8 +151,7 @@ class EventMailerTest < ActionMailer::TestCase
 
     mail = EventMailer.mail_for_event event
     assert_equal "Hank Rearden has received The Fountainhead", mail.subject
-    assert_equal ["henry@cameron.com"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@cameron.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Henry/
@@ -176,8 +167,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "thank" do
     mail = EventMailer.mail_for_event events(:quentin_thanks_hugh)
     assert_equal "Quentin Daniels sent you a thank-you note for The Virtue of Selfishness", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@hugh.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Hugh/
@@ -190,8 +180,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "read" do
     mail = EventMailer.mail_for_event events(:quentin_updates_cameron)
     assert_equal "Quentin Daniels has read Atlas Shrugged", mail.subject
-    assert_equal ["henry@cameron.com"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@cameron.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Henry/
@@ -206,8 +195,7 @@ class EventMailerTest < ActionMailer::TestCase
     event = @hank_donation_received.update_status status: "read"
     mail = EventMailer.mail_for_event event
     assert_equal "Hank Rearden has read The Fountainhead", mail.subject
-    assert_equal ["henry@cameron.com"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@cameron.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Henry/
@@ -221,8 +209,7 @@ class EventMailerTest < ActionMailer::TestCase
   test "cancel donation" do
     mail = EventMailer.mail_for_event events(:stadler_cancels_quentin)
     assert_equal "We need to find you a new donor for Objectivism: The Philosophy of Ayn Rand", mail.subject
-    assert_equal ["quentin@mit.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@quentin.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Quentin/
@@ -232,11 +219,23 @@ class EventMailerTest < ActionMailer::TestCase
     end
   end
 
+  test "cancel donation not received" do
+    mail = EventMailer.mail_for_event events(:howard_cancels_stadler)
+    assert_equal "Your donation of Atlas Shrugged to Howard Roark has been canceled", mail.subject
+    assert_equal [@stadler.email], mail.to
+
+    verify_mail_body mail do
+      assert_select 'p', /Hi Robert/
+      assert_select 'p', /Howard Roark says they have not yet received Atlas Shrugged/
+      assert_select 'p', /you agreed to donate to them on\s+Jan 20 \(.* ago\)/
+      assert_select 'p', /Yours,/
+    end
+  end
+
   test "cancel request" do
     mail = EventMailer.mail_for_event events(:dagny_cancels)
     assert_equal "Dagny has canceled their request for Atlas Shrugged", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
-    assert_equal ["jason@rationalegoist.com"], mail.from
+    assert_equal [@hugh.email], mail.to
 
     verify_mail_body mail do
       assert_select 'p', /Hi Hugh/

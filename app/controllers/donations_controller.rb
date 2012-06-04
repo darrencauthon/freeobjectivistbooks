@@ -1,11 +1,37 @@
 class DonationsController < ApplicationController
   before_filter :require_login
-  before_filter :require_donor, only: [:cancel, :destroy]
+  before_filter :require_can_cancel, only: [:cancel, :destroy]
+
+  def event_detail
+    params[:donation][:event][:detail] if params[:donation] && params[:donation][:event]
+  end
+
+  def reason
+    @reason ||= params[:reason] || event_detail
+  end
 
   # Filters
 
-  def require_donor
-    require_user @donation.user
+  def allowed_users
+    case params[:action]
+    when "cancel", "destroy"
+      if reason == "not_received"
+        @donation.student
+      else
+        @donation.user
+      end
+    end
+  end
+
+  def require_can_cancel
+    unless @donation.can_cancel? @current_user
+      flash[:error] = if @donation.sent?
+        "This donation cannot be canceled because the book has already been sent."
+      else
+        "You have clicked an old link, or you have hit a bug. Email us if you need help."
+      end
+      redirect_to @donation.request
+    end
   end
 
   # Actions
@@ -37,21 +63,27 @@ class DonationsController < ApplicationController
   end
 
   def cancel
-    @event = @donation.cancel_request_events.build user: @current_user
+    @event = @donation.cancel_request_events.build user: @current_user, detail: reason
+    render reason || :cancel
   end
 
   def destroy
     @event = @donation.cancel params[:donation], @current_user
     if save @donation, @event
-      if @event
-        flash[:notice] = {
-          headline: "We let #{@donation.student.name} know that you canceled this donation.",
-          detail: "We will try to find another donor for them."
-        }
+      if @current_user == @donation.donor
+        if @event
+          flash[:notice] = {
+            headline: "We let #{@donation.student.name} know that you canceled this donation.",
+            detail: "We will try to find another donor for them."
+          }
+        end
+        redirect_to donations_url
+      else
+        flash[:notice] = "We've put you back at the top of the list and will keep looking for a donor for you."
+        redirect_to @donation.request
       end
-      redirect_to donations_url
     else
-      render :cancel
+      render reason || :cancel
     end
   end
 end
