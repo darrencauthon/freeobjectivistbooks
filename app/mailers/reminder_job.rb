@@ -1,6 +1,13 @@
 class ReminderJob
   # This class exists to work around https://github.com/collectiveidea/delayed_job/issues/306
 
+  TYPES = [
+    Reminders::FulfillPledge,
+    Reminders::SendBooks,
+    Reminders::ConfirmReceipt,
+    Reminders::ReadBooks,
+  ]
+
   def self.send_all_reminders
     new.send_all_reminders
   end
@@ -33,7 +40,7 @@ class ReminderJob
 
   def send_all_reminders
     logger.info "Sending all reminders..."
-    Reminder::TYPES.each {|type| send_reminders type}
+    TYPES.each {|type| send_reminders type}
     logger.info "All reminders sent"
   end
 

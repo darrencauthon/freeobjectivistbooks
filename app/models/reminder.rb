@@ -1,11 +1,4 @@
 class Reminder < ActiveRecord::Base
-  TYPES = [
-    Reminders::FulfillPledge,
-    Reminders::SendBooks,
-    Reminders::ConfirmReceipt,
-    Reminders::ReadBooks,
-  ]
-
   def self.type_name
     name.demodulize.underscore
   end
