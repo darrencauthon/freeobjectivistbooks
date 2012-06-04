@@ -180,6 +180,10 @@ class RequestsControllerTest < ActionController::TestCase
     verify_link 'cancel this request', present
   end
 
+  def verify_not_received_link(present = true)
+    verify_link 'report book not received', present
+  end
+
   def verify_cancel_donation_link(present = true)
     verify_link 'cancel this donation', present
   end
@@ -194,6 +198,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_add_address_link false
     verify_update_shipping_link false
     verify_cancel_request_link false
+    verify_not_received_link false
   end
 
   def verify_no_donor_links
@@ -213,20 +218,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_thank_link false
     verify_address_link :add
     verify_cancel_request_link
-    verify_no_donor_links
-  end
-
-  test "show with donor" do
-    get :show, {id: @quentin_request.id}, session_for(@quentin)
-    assert_response :success
-    assert_select 'h1', "Quentin Daniels wants The Virtue of Selfishness"
-    assert_select '.tagline', "Studying physics at MIT in Boston, MA"
-    assert_select '.address', /123 Main St/
-    verify_status 'book sent'
-    assert_select '.sidebar h2', /Update/
-    verify_thank_link
-    verify_address_link :none
-    verify_cancel_request_link false
+    verify_not_received_link false
     verify_no_donor_links
   end
 
@@ -250,16 +242,39 @@ class RequestsControllerTest < ActionController::TestCase
     verify_donor_links :not_sent
   end
 
+  test "show unsent" do
+    get :show, {id: @quentin_request_unsent.id}, session_for(@quentin)
+    assert_response :success
+    assert_select 'h1', "Quentin Daniels wants The Fountainhead"
+    assert_select '.tagline', "Studying physics at MIT in Boston, MA"
+    assert_select '.address', /123 Main St/
+    verify_status 'donor found'
+    assert_select '.sidebar' do
+      assert_select 'h2', /Update/
+      assert_select 'p', /Let Hugh Akston know when you have received\s+The Fountainhead/
+    end
+    verify_not_received_link
+    verify_thank_link
+    verify_address_link :update
+    verify_cancel_request_link
+    verify_no_donor_links
+  end
+
   test "show sent" do
     get :show, {id: @quentin_request.id}, session_for(@quentin)
     assert_response :success
     assert_select 'h1', "Quentin Daniels wants The Virtue of Selfishness"
     assert_select '.tagline', "Studying physics at MIT in Boston, MA"
+    assert_select '.address', /123 Main St/
     verify_status 'book sent'
-    assert_select 'p', /Let Hugh Akston know when you have received\s+The Virtue of Selfishness/
+    assert_select '.sidebar' do
+      assert_select 'h2', /Update/
+      assert_select 'p', /Let Hugh Akston know when you have received\s+The Virtue of Selfishness/
+    end
     verify_thank_link
     verify_address_link :none
     verify_cancel_request_link false
+    verify_not_received_link false
     verify_no_donor_links
   end
 
@@ -270,10 +285,14 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.tagline', "Studying manufacturing at University of Pittsburgh in Philadelphia, PA"
     assert_select '.address', /987 Steel Way/
     verify_status 'book received'
-    assert_select 'p', /Let Henry Cameron know when you have finished reading\s+The Fountainhead/
+    assert_select '.sidebar' do
+      assert_select 'h2', /Update/
+      assert_select 'p', /Let Henry Cameron know when you have finished reading\s+The Fountainhead/
+    end
     verify_thank_link
     verify_address_link :none
     verify_cancel_request_link false
+    verify_not_received_link false
     verify_no_donor_links
   end
 
@@ -288,6 +307,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_thank_link false
     verify_address_link :none
     verify_cancel_request_link false
+    verify_not_received_link false
     verify_no_donor_links
   end
 
@@ -301,6 +321,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_thank_link false
     verify_address_link :add
     verify_cancel_request_link
+    verify_not_received_link false
     verify_no_donor_links
   end
 
@@ -313,6 +334,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_thank_link true
     verify_address_link :update
     verify_cancel_request_link
+    verify_not_received_link false
     verify_no_donor_links
   end
 
@@ -343,6 +365,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_thank_link false
     verify_address_link :none
     verify_cancel_request_link false
+    verify_not_received_link false
     verify_no_donor_links
   end
 
@@ -353,6 +376,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_thank_link false
     verify_address_link :none
     verify_cancel_request_link false
+    verify_not_received_link false
     verify_no_donor_links
   end
 

@@ -12,6 +12,10 @@
 .public label, .public span {
     padding-left: 12px;
 }
+
+.links {
+    margin-top: 24px;
+}
  </style>
 <% end %>
 
@@ -46,5 +50,11 @@
         <% end %>
 
         <%= f.submit "", class: "grid_3 alpha button" %><div class="clear"></div>
+    <% end %>
+
+    <% if @donation.student_can_cancel? %>
+    <div class="links">
+        <p><%= link_to "Actually, no, I have not recieved my book", cancel_donation_path(@donation, reason: "not_received") %></p>
+    </div>
     <% end %>
 </div>

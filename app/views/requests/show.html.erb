@@ -95,15 +95,24 @@
         <% end %>
 
         <% if current_is_student? %>
-            <% if @request.sent? && !@request.read? %>
-            <h2>Update status</h2>
-            <p>Let <%= @request.donor.name %> know when you have <%= @request.received? ? "finished reading" : "received" %>
-                <%= title @request.book %>:
-            </p>
-            <%= link_to edit_donation_status_path(@request.donation, status: @request.next_status), class: "grid_3 alpha" do %>
-                <div class="button update"></div>
-            <% end %>
-            <div class="clear"></div>
+            <% if @request.granted? %>
+                <% if !@request.read? %>
+                <h2>Update status</h2>
+                <p>Let <%= @request.donor.name %> know when you have <%= @request.received? ? "finished reading" : "received" %>
+                    <%= title @request.book %>:
+                </p>
+                <%= link_to edit_donation_status_path(@request.donation, status: (@request.received? ? "read" : "received")),
+                        class: "grid_3 alpha" do %>
+                    <div class="button update"></div>
+                <% end %>
+                <div class="clear"></div>
+                <% end %>
+
+                <% if @request.donation.student_can_cancel? %>
+                <p><%= link_to cancel_donation_path(@request.donation, reason: "not_received") do %>
+                    Report book <em>not</em> received
+                <% end %></p>
+                <% end %>
             <% end %>
 
             <% if @request.needs_thanks? %>

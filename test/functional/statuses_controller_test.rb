@@ -46,6 +46,18 @@ class StatusesControllerTest < ActionController::TestCase
     assert_select 'input[type="submit"]'
   end
 
+  test "received form for an unsent donation" do
+    get :edit, {donation_id: @quentin_donation_unsent.id, status: "received"}, session_for(@quentin)
+    assert_response :success
+    assert_select 'p', /Hugh Akston in Boston, MA\s+agreed to send you The Fountainhead/
+    assert_select 'h2', /Add a thank-you message for Hugh Akston/
+    assert_select 'input#donation_event_is_thanks[type="hidden"][value=true]'
+    assert_select 'textarea#donation_event_message'
+    assert_select 'input[type="radio"]'
+    assert_select 'input[type="submit"]'
+    assert_select 'a', /actually, no/i
+  end
+
   test "received form for an already-thanked donation" do
     get :edit, {donation_id: @dagny_donation.id, status: "received"}, session_for(@dagny)
     assert_response :success
@@ -62,7 +74,7 @@ class StatusesControllerTest < ActionController::TestCase
     verify_login_page
   end
 
-  test "thank form requires student" do
+  test "received form requires student" do
     get :edit, {donation_id: @dagny_donation.id, status: "received"}, session_for(@hugh)
     verify_wrong_login_page
   end

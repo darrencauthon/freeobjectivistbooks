@@ -101,14 +101,6 @@ class Donation < ActiveRecord::Base
     status.read?
   end
 
-  def next_status
-    case status
-    when "not_sent" then "sent"
-    when "sent" then "received"
-    when "received" then "read"
-    end
-  end
-
   def needs_fix?
     active? && flagged?
   end
