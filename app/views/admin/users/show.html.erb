@@ -80,7 +80,14 @@
         <%= link_to admin_request_path(donation.request) do %>
             <%= title donation.book %> to <%= donation.student.name %> in <%= donation.student.location %>
         <% end %>
-        <% if donation.canceled? %>(canceled)<% end %>
+        &ndash;
+        <% if donation.request.canceled? %>
+        Request canceled
+        <% elsif donation.canceled? %>
+        Canceled
+        <% else %>
+        <%= donation.status.humanize %>
+        <% end %>
     </p>
     <% end %>
     <% end %>
