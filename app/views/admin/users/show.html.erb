@@ -85,6 +85,8 @@
         Request canceled
         <% elsif donation.canceled? %>
         Canceled
+        <% elsif donation.flagged? %>
+        Flagged
         <% else %>
         <%= donation.status.humanize %>
         <% end %>
