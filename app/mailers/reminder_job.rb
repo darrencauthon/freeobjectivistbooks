@@ -4,6 +4,7 @@ class ReminderJob
   TYPES = [
     Reminders::FulfillPledge,
     Reminders::SendBooks,
+    Reminders::ConfirmReceiptUnsent,
     Reminders::ConfirmReceipt,
     Reminders::ReadBooks,
   ]

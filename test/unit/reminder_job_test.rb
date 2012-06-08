@@ -7,6 +7,7 @@ class ReminderJobTest < ActiveSupport::TestCase
     expected = 0
     expected += Pledge.unfulfilled.size
     expected += User.donors_with_unsent_books.count
+    expected += Donation.needs_sending.count
     expected += Donation.in_transit.count
     expected += Donation.reading.count
     assert expected > 0

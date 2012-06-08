@@ -1,0 +1,20 @@
+<p>Have you received <i><%= @donation.book %></i> yet? <%= @donation.donor.name %> agreed to send you this book on
+    <%= l @granted_at.to_date, format: :short %> (<%= distance_of_time_in_words_to_now @granted_at %> ago), but we have
+    not yet confirmed that they have sent it.
+</p>
+
+<p>If you <em>have</em> received it, let us know using this link:</p>
+
+<p>
+    <%= link_to edit_donation_status_url(@donation, status: "received") do %>
+    <strong>Yes, I have received <i><%= @donation.book %></i></strong>
+    <% end %>
+</p>
+
+<p>If you have <em>not</em> received it, you can try to find another donor using this link:</p>
+
+<p>
+    <%= link_to cancel_donation_url(@donation, reason: "not_received") do %>
+    <strong>No, I have NOT received <i><%= @donation.book %></i></strong>
+    <% end %>
+</p>

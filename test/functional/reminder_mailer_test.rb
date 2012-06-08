@@ -6,7 +6,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
     mail = ReminderMailer.send_to_target :fulfill_pledge, reminder
     assert_equal "Fulfill your pledge of 5 Objectivist books", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
+    assert_equal [@hugh.email], mail.to
 
     assert !reminder.new_record?
     assert_equal mail.subject, reminder.subject
@@ -26,7 +26,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
     mail = ReminderMailer.send_to_target :fulfill_pledge, reminder
     assert_equal "Fulfill your pledge of 3 Objectivist books", mail.subject
-    assert_equal ["stadler@scienceinstitute.gov"], mail.to
+    assert_equal [@stadler.email], mail.to
 
     assert !reminder.new_record?
     assert_equal mail.subject, reminder.subject
@@ -46,7 +46,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
     mail = ReminderMailer.send_to_target :send_books, reminder
     assert_equal "Have you sent The Fountainhead to Quentin Daniels yet?", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
+    assert_equal [@hugh.email], mail.to
 
     assert !reminder.new_record?
     assert_equal mail.subject, reminder.subject
@@ -70,7 +70,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
     mail = ReminderMailer.send_to_target :send_books, reminder
     assert_equal "Have you sent your 2 Objectivist books to students yet?", mail.subject
-    assert_equal ["akston@patrickhenry.edu"], mail.to
+    assert_equal [@hugh.email], mail.to
 
     assert !reminder.new_record?
     assert_equal mail.subject, reminder.subject
@@ -88,12 +88,32 @@ class ReminderMailerTest < ActionMailer::TestCase
     end
   end
 
+  test "confirm receipt unsent" do
+    reminder = Reminders::ConfirmReceiptUnsent.new_for_entity @quentin_donation_unsent
+
+    mail = ReminderMailer.send_to_target :confirm_receipt_unsent, reminder
+    assert_equal "Have you received The Fountainhead yet?", mail.subject
+    assert_equal [@quentin.email], mail.to
+
+    assert !reminder.new_record?
+    assert_equal mail.subject, reminder.subject
+
+    assert_select_email do
+      assert_select 'p', /Hi Quentin/
+      assert_select 'p', /Have you received The Fountainhead/
+      assert_select 'p', /Hugh Akston agreed to send you this book on\s+May 1 \(.* ago\)/
+      assert_select 'a', /Yes, I have received The Fountainhead/
+      assert_select 'a', /No, I have NOT received The Fountainhead/
+      assert_select 'p', /Thanks,\nFree Objectivist Books/
+    end
+  end
+
   test "confirm receipt" do
     reminder = Reminders::ConfirmReceipt.new_for_entity @quentin_donation
 
     mail = ReminderMailer.send_to_target :confirm_receipt, reminder
     assert_equal "Have you received The Virtue of Selfishness yet?", mail.subject
-    assert_equal ["quentin@mit.edu"], mail.to
+    assert_equal [@quentin.email], mail.to
 
     assert !reminder.new_record?
     assert_equal mail.subject, reminder.subject
@@ -112,7 +132,7 @@ class ReminderMailerTest < ActionMailer::TestCase
 
     mail = ReminderMailer.send_to_target :read_books, reminder
     assert_equal "Have you finished reading The Fountainhead?", mail.subject
-    assert_equal ["hank@rearden.com"], mail.to
+    assert_equal [@hank.email], mail.to
 
     assert !reminder.new_record?
     assert_equal mail.subject, reminder.subject

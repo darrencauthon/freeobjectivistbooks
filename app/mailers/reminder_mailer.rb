@@ -33,6 +33,13 @@ class ReminderMailer < ApplicationMailer
     reminder_mail subject
   end
 
+  def confirm_receipt_unsent(reminder)
+    @user = reminder.user
+    @donation = reminder.donation
+    @granted_at = @donation.created_at
+    reminder_mail "Have you received #{@donation.book} yet?"
+  end
+
   def confirm_receipt(reminder)
     @user = reminder.user
     @donation = reminder.donation
