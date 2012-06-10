@@ -10,6 +10,10 @@ class Reminder < ActiveRecord::Base
   has_many :pledges, through: :reminder_entities, source: :entity, source_type: 'Pledge'
   has_many :donations, through: :reminder_entities, source: :entity, source_type: 'Donation'
 
+  # Scopes
+
+  default_scope order(:created_at)
+
   # Constructors
 
   def self.new_for_entity(donation)
