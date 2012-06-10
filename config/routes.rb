@@ -48,6 +48,7 @@ FreeBooks::Application.routes.draw do
     end
     resources :requests
     resources :pledges
+    resources :donations
     resources :events
     resources :reviews
     resources :referrals
