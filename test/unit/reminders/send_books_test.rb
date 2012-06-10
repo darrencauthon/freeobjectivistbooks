@@ -34,9 +34,10 @@ class Reminders::SendBooksTest < ActiveSupport::TestCase
   end
 
   test "can't send too many" do
-    5.times do
+    4.times do
       reminder = new_reminder
       reminder.created_at = 1.year.ago
+      assert new_reminder.can_send?, "can't send reminder"
       reminder.save!
     end
 
