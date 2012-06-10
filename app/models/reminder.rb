@@ -61,10 +61,6 @@ class Reminder < ActiveRecord::Base
 
   # Other derived attributes
 
-  def type_name
-    self.class.type_name
-  end
-
   def pledge
     pledges.first
   end
@@ -88,6 +84,6 @@ class Reminder < ActiveRecord::Base
   end
 
   def to_s
-    "#{type_name} re #{key_entity.class} #{key_entity.id}"
+    "#{type.demodulize} re #{key_entity.class} #{key_entity.id}"
   end
 end
