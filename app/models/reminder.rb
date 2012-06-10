@@ -83,7 +83,8 @@ class Reminder < ActiveRecord::Base
 
   def past_reminder_count
     # We want the minimum past reminder count among all entities this reminder is for.
-    (donations + pledges).map {|entity| entity.reminders.count}.min
+    entities = donations + pledges
+    entities.map {|entity| entity.reminders.where(type: type, user_id: user).count}.min
   end
 
   def to_s
