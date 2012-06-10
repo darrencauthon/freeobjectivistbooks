@@ -69,6 +69,7 @@
     <div class="pledge">
         <p class="headline"><%= pluralize pledge.quantity, 'book' %></p>
         <% if pledge.reason.present? %><p class="reason"><%= format_block pledge.reason %></p><% end %>
+        <p class="timestamp"><%= l pledge.created_at %></p>
     </div>
     <% end %>
     <% end %>
@@ -90,8 +91,18 @@
         <% else %>
         <%= donation.status.humanize %>
         <% end %>
+        <% if donation.reminders.where(user_id: @user).any? %>
+        &ndash; <%= donation.reminders.where(user_id: @user).count %> reminders
+        <% end %>
     </p>
     <% end %>
+    <% end %>
+
+    <h2>Reminders</h2>
+    <% if @user.reminders.any? %>
+    <%= render partial: "admin/reminders/user_reminder", collection: @user.reminders, spacer_template: "requests/spacer" %>
+    <% else %>
+    <p>None.</p>
     <% end %>
 
     <p class="back"><%= link_to 'Back to all users', admin_users_path %></p>

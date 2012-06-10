@@ -1,0 +1,6 @@
+<div class="reminder">
+    <p class="headline"><%= admin_user_link donation_reminder.user %>: <%= donation_reminder.type.demodulize.underscore.humanize %></p>
+    <p><%= donation_reminder.subject %></p>
+    <p class="timestamp"><%= l donation_reminder.created_at %></p>
+</div>
+<div class="clear"></div>

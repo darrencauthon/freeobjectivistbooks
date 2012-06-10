@@ -44,5 +44,14 @@
 
     <h2>Events</h2>
     <%= render partial: "admin/events/event", collection: @request.events, spacer_template: "requests/spacer" %>
+
+    <% if @request.donation %>
+    <h2>Reminders (current donation)</h2>
+        <% if @request.donation.reminders.any? %>
+        <%= render partial: "admin/reminders/donation_reminder", collection: @request.donation.reminders, spacer_template: "requests/spacer" %>
+        <% else %>
+        <p>None.</p>
+        <% end %>
+    <% end %>
 </div>
 <div class="clear"></div>
