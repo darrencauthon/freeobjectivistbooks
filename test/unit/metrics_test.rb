@@ -40,6 +40,7 @@ class MetricsTest < ActiveSupport::TestCase
     assert_equal Donation.received.count, values['Needs thanks'] + Donation.received.thanked.count, metrics.inspect
     assert_equal values['Total'], Donation.active.count + values['Canceled'], metrics.inspect
     assert_equal Donation.active.count, values['Thanked'] + Donation.not_thanked.count, metrics.inspect
+    assert_equal values['Reviewed'], values['Recommended'] + Review.where(recommend: false).count, metrics.inspect
   end
 
   test "pledge metrics" do
@@ -50,8 +51,13 @@ class MetricsTest < ActiveSupport::TestCase
 
   test "book leaderboard" do
     metrics = @metrics.book_leaderboard
-    sum = metrics.inject(0) {|sum,metric| sum += metric[:value]}
-    assert_equal Request.active.count, sum
+    rows = metrics[:rows]
+
+    request_sum = rows.inject(0) {|sum,row| sum += row[:values]["Requested"]}
+    assert_equal Request.active.count, request_sum
+
+    donation_sum = rows.inject(0) {|sum,row| sum += row[:values]["Donated"]}
+    assert_equal Donation.active.count, donation_sum
   end
 
   test "referral metrics" do

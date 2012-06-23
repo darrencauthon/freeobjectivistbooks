@@ -61,6 +61,7 @@ class Metrics
       {name: 'Needs thanks', value: Donation.needs_thanks.count, denominator_name: 'Received', denominator_value: Donation.received.count},
       {name: 'Thanked',      value: Donation.thanked.count,      denominator_name: 'Active',   denominator_value: Donation.active.count},
       {name: 'Reviewed',     value: Review.count,                denominator_name: 'Read',     denominator_value: Donation.read.count},
+      {name: 'Recommended',  value: Review.recommended.count,    denominator_name: 'Reviewed'},
       {name: 'Canceled',     value: Donation.canceled.count,     denominator_name: 'Total'},
       {name: 'Total',        value: Donation.count},
     ]
@@ -75,8 +76,13 @@ class Metrics
   end
 
   def book_leaderboard
-    counts = Request.unscoped.active.group(:book).count.map {|book,count| {name: book, value: count}}
-    counts.sort {|a,b| b[:value] <=> a[:value]}
+    request_counts = Request.unscoped.active.group(:book).count
+    donation_counts = Donation.unscoped.active.joins(:request).group(:book).count
+    rows = request_counts.map do |book,count|
+      {name: book, values: {"Requested" => count, "Donated" => (donation_counts[book] || 0)}}
+    end
+    rows.sort_by! {|row| -row[:values]["Requested"]}
+    {columns: ["Requested", "Donated"], rows: rows}
   end
 
   def referral_counts

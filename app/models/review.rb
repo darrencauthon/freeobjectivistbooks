@@ -13,6 +13,8 @@ class Review < ActiveRecord::Base
 
   default_scope order("created_at desc")
 
+  scope :recommended, where(recommend: true)
+
   # Callbacks
 
   after_initialize :populate
