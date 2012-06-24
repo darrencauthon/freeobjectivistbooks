@@ -38,6 +38,7 @@ class Event < ActiveRecord::Base
   default_scope order(:happened_at)
 
   scope :reverse_order, reorder('happened_at desc')
+  scope :testimonials, where(is_thanks: true, public: true)
 
   # Callbacks
 

@@ -45,6 +45,7 @@ td, th {
         &ndash; <%= link_to pluralize(@pledge_count, 'pledge'), admin_pledges_path %>
         &ndash; <%= link_to pluralize(@event_count, 'event'), admin_events_path %>
         &ndash; <%= link_to pluralize(@review_count, 'review'), admin_reviews_path %>
+        &ndash; <%= link_to pluralize(@testimonial_event_count, 'public thank-yous'), admin_events_path(testimonials: true) %>
         &ndash; <%= link_to pluralize(@referral_count, 'referral'), admin_referrals_path %>
     </p>
 

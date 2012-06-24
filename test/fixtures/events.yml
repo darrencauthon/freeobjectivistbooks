@@ -79,6 +79,7 @@ hugh_updates_quentin:
 quentin_thanks_hugh:
   type: message
   is_thanks: true
+  public: true
   request: quentin_wants_vos
   user: quentin
   donation: hugh_grants_quentin_wants_vos

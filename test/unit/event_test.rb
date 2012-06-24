@@ -30,6 +30,12 @@ class EventTest < ActiveSupport::TestCase
     assert_equal @quentin_donation, events(:hugh_grants_quentin).donation
   end
 
+  # Scopes
+
+  test "testimonials" do
+    verify_scope(Event, :testimonials) {|event| event.is_thanks? && event.public?}
+  end
+
   # Validations
 
   test "valid flag" do

@@ -1,5 +1,11 @@
 class Admin::EventsController < AdminController
+  def parse_params
+    @testimonials = params[:testimonials].to_bool
+  end
+
   def index
-    @events = limit_and_offset Event.reverse_order
+    @events = Event.reverse_order
+    @events = @events.testimonials if @testimonials
+    @events = limit_and_offset @events
   end
 end
