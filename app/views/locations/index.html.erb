@@ -6,16 +6,21 @@
     width: 100%;
     height: 540px;
 }
+
+.countries {
+    margin-top: 24px;
+}
 </style>
 <% end %>
 
 <h1 class="grid_16">Users around the world</h1>
 
 <div class="grid_16">
-    <p class="overview"><%= format_number @users.count %> students in <%= @countries.count %> countries around the world
-        have requested Objectivist books:
+    <p class="overview"><%= format_number @users.count %> students have requested Objectivist books
+        from <%= @countries.count %> countries around the world
     </p>
     <div id="map"></div>
+    <p class="countries">... including <%= @countries.to_sentence %>!</p>
 </div>
 
 <% content_for :javascript do %>
@@ -23,7 +28,7 @@
 <script>
 $(document).ready(function () {
     var canvas = $('#map').get(0);
-    var center = new google.maps.LatLng(24, 0);
+    var center = new google.maps.LatLng(24, 10);
     var map = new google.maps.Map(canvas, {
         center: center,
         zoom: 2,
@@ -31,19 +36,19 @@ $(document).ready(function () {
         disableDefaultUI: true
     });
 
-    var locations = [
-        <% @locations.each do |location| %>
+    var markers = [
+        <% @markers.each do |marker| %>
         {
-            title: '<%=j location.name %>',
-            lat: <%= location.lat %>,
-            lon: <%= location.lon %>
+            title: '<%=j marker.name %>',
+            lat: <%= marker.lat %>,
+            lon: <%= marker.lon %>
         },
         <% end %>
     ];
 
-    $.each(locations, function (i, location) {
-        var position = new google.maps.LatLng(location.lat, location.lon);
-        new google.maps.Marker({position: position, map: map, title: location.title});
+    $.each(markers, function (i, marker) {
+        var position = new google.maps.LatLng(marker.lat, marker.lon);
+        new google.maps.Marker({position: position, map: map, title: marker.title});
     });
 });
 </script>
