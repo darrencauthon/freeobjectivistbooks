@@ -16,8 +16,12 @@ class Geocoder
     def geocode(address)
       Rails.logger.info "Geocoding '#{address}'"
       response = client.get params: {address: address, sensor: false}
-      raise "Geocode response status: #{response['status']}" if response['status'] != "OK"
-      response['results']
+      case response['status']
+      when "OK" then response['results']
+      when "ZERO_RESULTS" then []
+      else
+        raise "Geocode response status: #{response['status']}"
+      end
     end
   end
 end
