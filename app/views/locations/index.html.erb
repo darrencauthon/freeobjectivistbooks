@@ -12,7 +12,9 @@
 <h1 class="grid_16">Users around the world</h1>
 
 <div class="grid_16">
-    <p class="overview"><%= pluralize @users.count, 'student' %> in <%= pluralize @countries.count, 'country' %> have requested Objectivist books:</p>
+    <p class="overview"><%= format_number @users.count %> students in <%= @countries.count %> countries around the world
+        have requested Objectivist books:
+    </p>
     <div id="map"></div>
 </div>
 
@@ -32,7 +34,7 @@ $(document).ready(function () {
     var locations = [
         <% @locations.each do |location| %>
         {
-            title: '<%= location.name %>',
+            title: '<%=j location.name %>',
             lat: <%= location.lat %>,
             lon: <%= location.lon %>
         },
