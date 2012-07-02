@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120603060708) do
+ActiveRecord::Schema.define(:version => 20120701233933) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -74,6 +74,15 @@ ActiveRecord::Schema.define(:version => 20120603060708) do
   add_index "events", ["donor_id_deprecated"], :name => "index_events_on_donor_id"
   add_index "events", ["request_id"], :name => "index_events_on_request_id"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.text     "geocoder_results"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["name"], :name => "index_locations_on_name"
 
   create_table "pledges", :force => true do |t|
     t.integer  "user_id"

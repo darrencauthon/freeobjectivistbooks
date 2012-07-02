@@ -147,6 +147,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "John Galt", @john.name
   end
 
+  test "location is created on save" do
+    @john.save!
+    assert Location.exists?(name: "Atlantis, CO")
+  end
+
   # Signup
 
   test "create" do

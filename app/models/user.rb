@@ -79,6 +79,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  after_save :create_location_if_needed
+
   after_create do |user|
     Rails.logger.info "New user: #{@user.inspect}"
   end
@@ -131,5 +133,9 @@ class User < ActiveRecord::Base
     return :expired if Time.since(timestamp) > LETMEIN_EXPIRATION
     auth = letmein_auth params[:timestamp]
     auth == params[:auth] ? :valid : :invalid
+  end
+
+  def create_location_if_needed
+    Location.find_or_create_by_name location
   end
 end
