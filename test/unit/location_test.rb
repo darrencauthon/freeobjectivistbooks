@@ -14,4 +14,12 @@ class LocationTest < ActiveSupport::TestCase
   test "locality?" do
     assert @sf.locality?
   end
+
+  test "formatted address" do
+    assert_equal "San Francisco, CA, USA", @sf.formatted_address
+  end
+
+  test "country" do
+    assert_equal "United States", @sf.country
+  end
 end

@@ -3,33 +3,53 @@ class Location < ActiveRecord::Base
 
   after_create :geocode!
 
+  # Parsing the geocoder results
+
   def first_geocoder_result
-    @result ||= geocoder_results[0] if geocoder_results && !geocoder_results.empty?
+    return {} if geocoder_results.nil? || geocoder_results.empty?
+    geocoder_results[0]
+  end
+
+  def address_components
+    first_geocoder_result['address_components'] || []
+  end
+
+  def country
+    component = address_components.find {|component| component['types'].include? "country"}
+    component['long_name'] if component
+  end
+
+  def formatted_address
+    first_geocoder_result['formatted_address']
   end
 
   def geometry
-    @geometry ||= first_geocoder_result['geometry'] if first_geocoder_result
+    first_geocoder_result['geometry'] || {}
   end
 
   def location
-    @location ||= geometry['location'] if geometry
+    geometry['location'] || {}
   end
 
   def lat
-    @lat ||= location['lat'] if location
+    location['lat']
   end
 
   def lon
-    @lon ||= location['lng'] if location
+    location['lng']
   end
 
   def types
-    @types ||= first_geocoder_result['types'] if first_geocoder_result
+    first_geocoder_result['types'] || []
   end
 
+  # Derived attributes
+
   def locality?
-    types.include? "locality"
+    types.include?("locality")
   end
+
+  # Actions
 
   def geocode!
     self.geocoder_results = Geocoder.geocode name

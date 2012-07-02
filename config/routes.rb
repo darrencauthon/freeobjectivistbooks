@@ -25,6 +25,8 @@ FreeBooks::Application.routes.draw do
 
   resources :testimonials, only: :index
 
+  resources :locations, only: :index
+
   get "login" => "sessions#new"
   post "login" => "sessions#create"
   match "logout" => "sessions#destroy"

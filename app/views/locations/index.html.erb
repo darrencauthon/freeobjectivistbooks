@@ -1,0 +1,48 @@
+<% content_for :title do %>Users Around the World<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+#map {
+    width: 100%;
+    height: 540px;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16">Users around the world</h1>
+
+<div class="grid_16">
+    <p class="overview"><%= pluralize @users.count, 'student' %> in <%= pluralize @countries.count, 'country' %> have requested Objectivist books:</p>
+    <div id="map"></div>
+</div>
+
+<% content_for :javascript do %>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBuW7WIKA_G8dA9S5j8-XIPklwHY5FUV00&sensor=false"></script>
+<script>
+$(document).ready(function () {
+    var canvas = $('#map').get(0);
+    var center = new google.maps.LatLng(24, 0);
+    var map = new google.maps.Map(canvas, {
+        center: center,
+        zoom: 2,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true
+    });
+
+    var locations = [
+        <% @locations.each do |location| %>
+        {
+            title: '<%= location.name %>',
+            lat: <%= location.lat %>,
+            lon: <%= location.lon %>
+        },
+        <% end %>
+    ];
+
+    $.each(locations, function (i, location) {
+        var position = new google.maps.LatLng(location.lat, location.lon);
+        new google.maps.Marker({position: position, map: map, title: location.title});
+    });
+});
+</script>
+<% end %>
