@@ -12,7 +12,7 @@ class DonationsControllerTest < ActionController::TestCase
       assert_select '.request .name', /Quentin Daniels/
       assert_select '.request .address', /123 Main St/
       assert_select '.actions a', /see full/i
-      assert_select '.actions a', text: /cancel/i, count: 0
+      assert_select '.actions a', /cancel/i
       assert_select '.actions a', text: /flag/i, count: 0
     end
 
@@ -156,9 +156,9 @@ class DonationsControllerTest < ActionController::TestCase
     assert_select 'a', /actually, yes/i
   end
 
-  test "cancel requires unsent donation" do
-    get :cancel, {id: @quentin_donation.id}, session_for(@hugh)
-    assert_redirected_to @quentin_request
+  test "cancel requires unreceived donation" do
+    get :cancel, {id: @hank_donation_received.id}, session_for(@cameron)
+    assert_redirected_to @hank_request_received
     assert_not_nil flash[:error]
   end
 
@@ -235,14 +235,14 @@ class DonationsControllerTest < ActionController::TestCase
   end
 
   test "destroy requires unsent donation" do
-    assert_no_difference "@quentin_donation.events.count" do
-      delete :destroy, {id: @quentin_donation.id, donation: {event: {message: "Sorry!"}}}, session_for(@hugh)
+    assert_no_difference "@hank_donation_received.events.count" do
+      delete :destroy, {id: @hank_donation_received.id, donation: {event: {message: "Sorry!"}}}, session_for(@cameron)
     end
-    assert_redirected_to @quentin_request
+    assert_redirected_to @hank_request_received
     assert_not_nil flash[:error]
 
-    @quentin_donation.reload
-    assert !@quentin_donation.canceled?, "donation was canceled"
+    @hank_donation_received.reload
+    assert !@hank_donation_received.canceled?, "donation was canceled"
   end
 
   test "destroy by student requires unsent donation" do

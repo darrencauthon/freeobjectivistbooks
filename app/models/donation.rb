@@ -114,7 +114,7 @@ class Donation < ActiveRecord::Base
   end
 
   def donor_can_cancel?
-    !sent?
+    !received?
   end
 
   def student_can_cancel?

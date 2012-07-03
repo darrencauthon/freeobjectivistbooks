@@ -165,7 +165,8 @@ class DonationTest < ActiveSupport::TestCase
 
   test "donor can cancel?" do
     assert @hank_donation.donor_can_cancel?
-    assert !@quentin_donation.donor_can_cancel?  # already sent
+    assert @quentin_donation.donor_can_cancel?
+    assert !@hank_donation_received.donor_can_cancel?
   end
 
   test "student can cancel?" do
@@ -200,9 +201,9 @@ class DonationTest < ActiveSupport::TestCase
     assert !@hank_donation.can_cancel?(@hank)
     assert !@hank_donation.can_cancel?(@quentin)
 
-    assert !@quentin_donation.can_cancel?(@hugh)
-    assert !@quentin_donation.can_cancel?(@quentin)
-    assert !@quentin_donation.can_cancel?(@howard)
+    assert !@hank_donation_received.can_cancel?(@cameron)
+    assert !@hank_donation_received.can_cancel?(@hank)
+    assert !@hank_donation_received.can_cancel?(@quentin)
 
     assert @quentin_donation_unsent.can_cancel?(@quentin)
     assert @quentin_donation_unsent.can_cancel?(@hugh)
@@ -239,7 +240,7 @@ class DonationTest < ActiveSupport::TestCase
 
   test "cancel raises exception if can't cancel" do
     assert_raise RuntimeError do
-      @quentin_donation.cancel({event: {message: "Sorry"}}, @hugh)
+      @hank_donation_received.cancel({event: {message: "Sorry"}}, @cameron)
     end
 
     assert_raise RuntimeError do

@@ -192,7 +192,7 @@ class RequestsControllerTest < ActionController::TestCase
     verify_back_link
     verify_flag_link (status == :not_sent)
     verify_sent_button (status == :not_sent)
-    verify_cancel_donation_link (status.in? [:not_sent, :flagged])
+    verify_cancel_donation_link (status.in? [:not_sent, :sent, :flagged])
 
     verify_thank_link false
     verify_add_address_link false
@@ -240,6 +240,14 @@ class RequestsControllerTest < ActionController::TestCase
     assert_select '.address', /123 Main St/
     verify_status 'donor found'
     verify_donor_links :not_sent
+  end
+
+  test "show to donor received" do
+    get :show, {id: @hank_request_received.id}, session_for(@cameron)
+    assert_response :success
+    assert_select 'h1', "Hank Rearden wants The Fountainhead"
+    verify_status 'book received'
+    verify_donor_links :received
   end
 
   test "show unsent" do
