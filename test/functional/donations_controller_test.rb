@@ -137,8 +137,20 @@ class DonationsControllerTest < ActionController::TestCase
   test "cancel" do
     get :cancel, {id: @quentin_donation_unsent.id}, session_for(@hugh)
     assert_response :success
+    assert_select '.flash .error', false
     assert_select 'h1', /cancel/i
     assert_select '.headline', /Quentin Daniels wants to read The Fountainhead/
+    assert_select 'h2', /Explain to Quentin Daniels/
+    assert_select 'textarea#donation_event_message'
+    assert_select 'input[type="submit"]'
+  end
+
+  test "cancel already 'sent'" do
+    get :cancel, {id: @quentin_donation.id}, session_for(@hugh)
+    assert_response :success
+    assert_select '.flash .error', /You marked this book as sent/
+    assert_select 'h1', /cancel/i
+    assert_select '.headline', /Quentin Daniels wants to read The Virtue of Selfishness/
     assert_select 'h2', /Explain to Quentin Daniels/
     assert_select 'textarea#donation_event_message'
     assert_select 'input[type="submit"]'
@@ -234,7 +246,7 @@ class DonationsControllerTest < ActionController::TestCase
     verify_event @quentin_donation_unsent, "cancel_donation", detail: "not_received", notified?: true
   end
 
-  test "destroy requires unsent donation" do
+  test "destroy requires unreceived donation" do
     assert_no_difference "@hank_donation_received.events.count" do
       delete :destroy, {id: @hank_donation_received.id, donation: {event: {message: "Sorry!"}}}, session_for(@cameron)
     end

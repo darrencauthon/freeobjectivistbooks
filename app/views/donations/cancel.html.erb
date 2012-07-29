@@ -26,6 +26,17 @@
  </style>
 <% end %>
 
+<% if @donation.sent? %>
+<div class="grid_12 flash">
+    <div class="message error">
+        <p class="headline">You marked this book as sent on <%= l @donation.sent_at.to_date, format: :short %>. Was this in error?</p>
+        <p class="detail">You should not cancel this donation if you did in fact send the book. Only cancel if you have not
+            actually sent the book and are not going to send it.
+        </p>
+    </div>
+</div>
+<% end %>
+
 <h1 class="grid_16">Cancel donation</h1>
 
 <div class="grid_12">
