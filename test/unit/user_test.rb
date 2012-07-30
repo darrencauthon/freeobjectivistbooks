@@ -113,7 +113,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "donors with unsent books" do
     verify_scope User, :donors_with_unsent_books do |user|
-      user.donations.active.any? {|donation| donation.can_send?}
+      user.donations.active.any? {|donation| donation.needs_sending?}
     end
   end
 

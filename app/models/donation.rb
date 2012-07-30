@@ -18,7 +18,7 @@ class Donation < ActiveRecord::Base
 
   validates_presence_of :request
   validates_presence_of :user
-  validates_presence_of :address, unless: :flagged?, message: "We need your address to send you your book."
+  validates_presence_of :address, if: :needs_address?, message: "We need your address to send you your book."
   validates_inclusion_of :status, in: %w{not_sent sent received read}
   validates_uniqueness_of :request_id, scope: :canceled, if: :active?, message: "has already been granted", on: :create
   validate :donor_cannot_be_requester, on: :create
@@ -101,12 +101,20 @@ class Donation < ActiveRecord::Base
     status.read?
   end
 
+  def needs_address?
+    !flagged? && !sent?
+  end
+
   def needs_fix?
     active? && flagged?
   end
 
-  def can_send?
+  def needs_sending?
     !sent? && !flagged?
+  end
+
+  def can_send?
+    !sent?
   end
 
   def can_flag?
@@ -164,6 +172,7 @@ class Donation < ActiveRecord::Base
   def update_status(params, time = Time.now)
     self.status = params[:status]
     self.status_updated_at = time
+    self.flagged = false if sent?
 
     event_attributes = params[:event] || {}
     event = update_status_events.build event_attributes.merge(detail: params[:status])

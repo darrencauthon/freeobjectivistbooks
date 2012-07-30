@@ -83,7 +83,7 @@ class DonationTest < ActiveSupport::TestCase
   end
 
   test "needs sending" do
-    verify_scope(:needs_sending) {|donation| donation.active? && donation.can_send?}
+    verify_scope(:needs_sending) {|donation| donation.active? && donation.needs_sending?}
   end
 
   # Callbacks
@@ -151,10 +151,16 @@ class DonationTest < ActiveSupport::TestCase
     assert !@dagny_donation_canceled.needs_fix?
   end
 
+  test "needs sending?" do
+    assert @quentin_donation_unsent.needs_sending?
+    assert !@dagny_donation.needs_sending?    # flagged
+    assert !@quentin_donation.needs_sending?  # already sent
+  end
+
   test "can send?" do
     assert @quentin_donation_unsent.can_send?
+    assert @dagny_donation.can_send?     # flagged
     assert !@quentin_donation.can_send?  # already sent
-    assert !@dagny_donation.can_send?    # flagged
   end
 
   test "can flag?" do
@@ -252,10 +258,28 @@ class DonationTest < ActiveSupport::TestCase
 
   test "update status sent" do
     time = Time.now
+    event = @quentin_donation_unsent.update_status status: "sent"
+
+    assert @quentin_donation_unsent.sent?
+    assert @quentin_donation_unsent.status_updated_at >= time
+
+    assert_equal @quentin_donation_unsent, event.donation
+    assert_equal @quentin_request_unsent, event.request
+    assert_equal @hugh, event.user
+    assert_equal @hugh, event.donor
+    assert_equal "update_status", event.type
+    assert_equal "sent", event.detail
+    assert_nil event.message
+    assert_not_nil event.happened_at
+  end
+
+  test "update status sent when flagged" do
+    time = Time.now
     event = @dagny_donation.update_status status: "sent"
 
     assert @dagny_donation.sent?
     assert @dagny_donation.status_updated_at >= time
+    assert !@dagny_donation.flagged
 
     assert_equal @dagny_donation, event.donation
     assert_equal @dagny_request, event.request

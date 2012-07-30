@@ -191,7 +191,7 @@ class RequestsControllerTest < ActionController::TestCase
   def verify_donor_links(status)
     verify_back_link
     verify_flag_link (status == :not_sent)
-    verify_sent_button (status == :not_sent)
+    verify_sent_button (status.in? [:not_sent, :flagged])
     verify_cancel_donation_link (status.in? [:not_sent, :sent, :flagged])
 
     verify_thank_link false
