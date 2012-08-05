@@ -4,10 +4,10 @@
     </div>
 
     <div class="alpha grid_11 omega left">
-        <div class="text"><%= markdown testimonial[:text] %></div>
-        <div class="tagline"><%= markdown testimonial[:attribution]%></div>
+        <div class="text"><%= markdown testimonial.text %></div>
+        <div class="tagline"><%= markdown testimonial.attribution %></div>
         <% if defined?(permalink) && permalink %>
-        <p class="permalink"><%= link_to 'Permalink to share', "/testimonials/#{testimonial[:id]}" %></p>
+        <p class="permalink"><%= link_to 'Permalink to share', @testimonial %></p>
         <% end %>
     </div>
 

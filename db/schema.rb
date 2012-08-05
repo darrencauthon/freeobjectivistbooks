@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120701233933) do
+ActiveRecord::Schema.define(:version => 20120805005014) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -158,6 +158,14 @@ ActiveRecord::Schema.define(:version => 20120701233933) do
 
   add_index "reviews", ["donation_id"], :name => "index_reviews_on_donation_id"
   add_index "reviews", ["user_id"], :name => "index_reviews_on_user_id"
+
+  create_table "testimonials", :force => true do |t|
+    t.string   "title"
+    t.text     "text"
+    t.string   "attribution"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

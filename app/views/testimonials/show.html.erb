@@ -31,7 +31,7 @@ h2 {
 </style>
 <% end %>
 
-<h1 class="grid_15"><%= markdown @testimonial[:title] %></h1>
+<h1 class="grid_15"><%= markdown @testimonial.title %></h1>
 
 <div class="grid_12">
     <%= render partial: "testimonial", object: @testimonial %>
