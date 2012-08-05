@@ -13,4 +13,10 @@ class TestimonialsControllerTest < ActionController::TestCase
     assert_response :success
     assert_select 'a', /donate books/i
   end
+
+  test "show" do
+    testimonial = testimonials :testimonial_1
+    get :show, id: testimonial.id
+    assert_response :success
+  end
 end
