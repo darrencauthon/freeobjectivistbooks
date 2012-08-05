@@ -3,6 +3,7 @@ class Review < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :donation
+  has_one :testimonial, as: :source
 
   # Validations
 
@@ -24,5 +25,12 @@ class Review < ActiveRecord::Base
       self.user ||= donation.student if donation
       self.book ||= donation.book if donation
     end
+  end
+
+  # Other methods
+
+  def to_testimonial
+    Testimonial.new source: self, title: "On *#{book}*", text: text,
+      attribution: "#{user.name}, studying #{user.studying.downcase} at #{user.school}"
   end
 end

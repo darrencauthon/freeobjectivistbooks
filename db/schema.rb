@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805005014) do
+ActiveRecord::Schema.define(:version => 20120805225806) do
 
   create_table "campaign_targets", :force => true do |t|
     t.string   "name"
@@ -165,6 +165,8 @@ ActiveRecord::Schema.define(:version => 20120805005014) do
     t.string   "attribution"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "source_id"
+    t.string   "source_type"
   end
 
   create_table "users", :force => true do |t|

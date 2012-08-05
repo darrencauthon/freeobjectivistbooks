@@ -1,10 +1,22 @@
 class Admin::TestimonialsController < AdminController
+  def load_models
+    super
+    if params[:source_type] && params[:source_id]
+      klass = params[:source_type].constantize
+      @source = klass.find params[:source_id]
+    end
+  end
+
   def index
     @testimonials = Testimonial.order('created_at desc')
   end
 
   def new
-    @testimonial = Testimonial.new
+    @testimonial = if @source
+      @source.to_testimonial
+    else
+      Testimonial.new
+    end
     render :edit
   end
 

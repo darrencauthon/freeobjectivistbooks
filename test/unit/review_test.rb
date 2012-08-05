@@ -41,4 +41,14 @@ class ReviewTest < ActiveSupport::TestCase
     assert @quentin_review.invalid?
     assert @quentin_review.errors[:recommend].any?
   end
+
+  # To testimonial
+
+  test "to testimonial" do
+    testimonial = @quentin_review.to_testimonial
+    assert_equal @quentin_review, testimonial.source
+    assert_equal "On *Atlas Shrugged*", testimonial.title
+    assert_equal @quentin_review.text, testimonial.text
+    assert_equal "Quentin Daniels, studying physics at MIT", testimonial.attribution
+  end
 end

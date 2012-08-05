@@ -3,6 +3,15 @@
         <div class="headline"><%= markdown testimonial.title %></div>
         <div class="text"><%= markdown testimonial.text %></div>
         <div class="tagline"><%= markdown testimonial.attribution %></div>
+        <% if testimonial.source %>
+        From
+            <% case testimonial.source %>
+            <% when Review %>
+            review of <%= link_to (title testimonial.source.book), admin_request_path(testimonial.source.donation.request) %>
+            <% else %>
+            <%= testimonial.class.to_s.downcase %>
+            <% end %>
+        <% end %>
         <p>
             <%= link_to 'Edit', edit_admin_testimonial_path(testimonial) %>
             &ndash;

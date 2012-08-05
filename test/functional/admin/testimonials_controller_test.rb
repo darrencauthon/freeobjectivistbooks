@@ -25,6 +25,15 @@ class Admin::TestimonialsControllerTest < ActionController::TestCase
     assert_select 'input[type="submit"]'
   end
 
+  test "new from source" do
+    get :new, source_type: 'Review', source_id: @quentin_review.id
+    assert_response :success
+    assert_select 'input#testimonial_source_type[value="Review"]'
+    assert_select 'input#testimonial_source_id[value="' + @quentin_review.id.to_s + '"]'
+    assert_select 'input#testimonial_title[value="On *Atlas Shrugged*"]'
+    assert_select 'input[type="submit"]'
+  end
+
   # Create
 
   test "create" do
@@ -33,6 +42,17 @@ class Admin::TestimonialsControllerTest < ActionController::TestCase
     end
     assert_redirected_to admin_testimonials_url
     assert_match /Created/, flash[:notice]
+  end
+
+  test "create from source" do
+    assert_difference "Testimonial.count" do
+      post :create, testimonial: @new_testimonial.merge(source_type: 'Review', source_id: @quentin_review.id)
+    end
+    assert_redirected_to admin_testimonials_url
+    assert_match /Created/, flash[:notice]
+
+    testimonial = Testimonial.last
+    assert_equal @quentin_review, testimonial.source
   end
 
   # Edit
