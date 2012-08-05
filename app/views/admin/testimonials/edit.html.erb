@@ -1,0 +1,43 @@
+<% content_for :title do %>Add/Edit Testimonial – Admin<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+.button {
+    height: 46px;
+    margin-top: 24px;
+    background-image: url(/assets/update-button.png);
+}
+
+</style>
+<% end %>
+
+<h1 class="grid_16"><%= @testimonial.new_record? ? "Add" : "Edit" %> testimonial</h1>
+
+<% if @testimonial.errors.any? %>
+<div class="grid_12 message error">
+    <p class="headline">There were problems with your submission</p>
+    <p class="detail">Please see below and make corrections.</p>
+</div>
+<% end %>
+
+<div class="grid_12">
+<%= form_for [:admin, @testimonial] do |f| %>
+    <%= f.label :title, class: "grid_8 alpha" %><div class="clear"></div>
+    <%= f.text_field :title, class: "grid_8 alpha" %>
+    <span class="grid_4 field_with_errors"><%= @testimonial.errors[:title].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :text, class: "grid_8 alpha" %><div class="clear"></div>
+    <%= f.text_area :text, class: "grid_8 alpha", rows: 5 %>
+    <span class="grid_4 field_with_errors"><%= @testimonial.errors[:text].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.label :attribution, class: "grid_8 alpha" %><div class="clear"></div>
+    <%= f.text_field :attribution, class: "grid_8 alpha" %>
+    <span class="grid_4 field_with_errors"><%= @testimonial.errors[:attribution].join(", ") %></span>
+    <div class="clear"></div>
+
+    <%= f.submit "", class: "grid_3 alpha submit button" %>
+    <div class="clear"></div>
+<% end %>
+</div>

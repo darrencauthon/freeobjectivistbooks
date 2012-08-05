@@ -1,0 +1,13 @@
+<% content_for :title do %>Testimonials<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+</style>
+<% end %>
+
+<h1 class="grid_16">Testimonials</h1>
+
+<div class="grid_12">
+    <p class="overview"><%= link_to 'Add new', new_admin_testimonial_path %></p>
+    <%= render partial: "testimonial", collection: @testimonials, spacer_template: "requests/spacer" %>
+</div>

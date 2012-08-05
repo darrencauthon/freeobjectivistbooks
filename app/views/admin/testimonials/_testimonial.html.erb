@@ -1,0 +1,14 @@
+<div class="testimonial">
+    <div class="alpha grid_12 omega left">
+        <div class="headline"><%= markdown testimonial.title %></div>
+        <div class="text"><%= markdown testimonial.text %></div>
+        <div class="tagline"><%= markdown testimonial.attribution %></div>
+        <p>
+            <%= link_to 'Edit', edit_admin_testimonial_path(testimonial) %>
+            &ndash;
+            <%= link_to 'Delete', admin_testimonial_path(testimonial), method: :delete, confirm: "Delete this testimonial?" %>
+        </p>
+    </div>
+
+    <div class="clear"></div>
+</div>
