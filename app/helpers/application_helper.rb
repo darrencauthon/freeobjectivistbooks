@@ -43,6 +43,16 @@ module ApplicationHelper
     raw "<span class=\"title\">#{h book}</span>"
   end
 
+  # Markdown
+
+  def markdown_renderer
+    @@renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+  end
+
+  def markdown(text)
+    raw markdown_renderer.render(text)
+  end
+
   # Model-specific formatting
 
   def user_tagline(user)

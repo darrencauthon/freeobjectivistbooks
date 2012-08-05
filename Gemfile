@@ -7,6 +7,7 @@ gem 'delayed_job_active_record'
 gem 'dynamic_form'
 gem 'exception_notification'
 gem 'jquery-rails'
+gem 'redcarpet'
 gem 'rest-client'
 gem 'valid_email'
 
