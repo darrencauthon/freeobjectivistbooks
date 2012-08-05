@@ -5,9 +5,10 @@
 
     <div class="alpha grid_11 omega left">
         <p class="text"><%= testimonial[:text] %><p>
-        <p class="tagline">
-            <strong><%= testimonial[:name] %>,</strong> <%= testimonial[:attribution ]%> <%= title testimonial[:book] %>
-        </p>
+        <p class="tagline"><%= testimonial[:attribution]%></p>
+        <% if defined?(permalink) && permalink %>
+        <p class="permalink"><%= link_to 'Permalink to share', "/testimonials/#{testimonial[:id]}" %></p>
+        <% end %>
     </div>
 
     <div class="clear"></div>

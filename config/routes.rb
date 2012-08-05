@@ -23,7 +23,7 @@ FreeBooks::Application.routes.draw do
     end
   end
 
-  resources :testimonials, only: :index
+  resources :testimonials, only: [:index, :show]
 
   resources :locations, only: :index
 

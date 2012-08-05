@@ -1,0 +1,50 @@
+<% content_for :title do %>Testimonial<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+h1 {
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 36px;
+    margin-bottom: 12px;
+}
+
+.testimonial .text {
+    padding-top: 12px;
+    font-size: 1.2em;
+}
+
+.testimonial .tagline {
+    text-align: right;
+    font-size: 1.2em;
+}
+
+.testimonial .quote {
+    float: right;
+}
+
+.readmore {
+    font-size: 1.4em;
+}
+</style>
+<% end %>
+
+<h1 class="grid_15"><%= @testimonial[:title] %></h1>
+
+<div class="grid_12">
+    <%= render partial: "testimonial", object: @testimonial %>
+
+    <%= render partial: "requests/spacer" %>
+
+    <h2>Inspired?
+        <% if @current_user %>
+        <%= link_to 'Donate books now.', donate_path %>
+        <% else %>
+        Sign up <%= link_to 'to read', signup_read_path %> or <%= link_to 'to donate', signup_donate_path %> today.
+        <% end %>
+    </h2>
+
+    <p class="readmore">Or, <%= link_to 'read more quotes', testimonials_path %></p>
+</div>
