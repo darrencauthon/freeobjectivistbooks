@@ -7,7 +7,7 @@
         <div class="text"><%= markdown testimonial.text %></div>
         <div class="tagline"><%= markdown testimonial.attribution %></div>
         <% if defined?(permalink) && permalink %>
-        <p class="permalink"><%= link_to 'Permalink to share', @testimonial %></p>
+        <p class="permalink"><%= link_to 'Permalink to share', testimonial %></p>
         <% end %>
     </div>
 
