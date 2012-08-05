@@ -12,7 +12,7 @@ class AdminController < ApplicationController
     @event_count = Event.count
     @review_count = Review.count
     @referral_count = Referral.count
-    @testimonial_event_count = Event.testimonials.count
+    @public_thanks_count = Event.public_thanks.count
 
     @latest_events = Event.reverse_order.limit(10)
 

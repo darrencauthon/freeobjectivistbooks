@@ -9,12 +9,12 @@ class Admin::EventsControllerTest < ActionController::TestCase
     assert_select '.event', Event.count
   end
 
-  test "testimonials" do
+  test "public thanks" do
     admin_auth
-    get :index, testimonials: 'true'
+    get :index, public_thanks: 'true'
     assert_response :success
     assert_select 'h1', /public thank-yous/
-    assert_select '.event', Event.testimonials.count
+    assert_select '.event', Event.public_thanks.count
   end
 
   test "show requires login" do
