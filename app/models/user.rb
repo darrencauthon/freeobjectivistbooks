@@ -87,6 +87,14 @@ class User < ActiveRecord::Base
 
   # Derived attributes
 
+  def attribution
+    if school.present?
+      "#{name}, studying #{studying.downcase} at #{school}"
+    else
+      "#{name}, #{location}"
+    end
+  end
+
   def is_duplicate?
     query = User.with_email(email)
     query = query.where('id != ?', id) if id

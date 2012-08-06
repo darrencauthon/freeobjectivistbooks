@@ -25,12 +25,22 @@ class Admin::TestimonialsControllerTest < ActionController::TestCase
     assert_select 'input[type="submit"]'
   end
 
-  test "new from source" do
+  test "new from review" do
     get :new, source_type: 'Review', source_id: @quentin_review.id
     assert_response :success
     assert_select 'input#testimonial_source_type[value="Review"]'
     assert_select 'input#testimonial_source_id[value="' + @quentin_review.id.to_s + '"]'
     assert_select 'input#testimonial_title[value="On *Atlas Shrugged*"]'
+    assert_select 'input[type="submit"]'
+  end
+
+  test "new from thank-you" do
+    event = events :quentin_thanks_hugh
+    get :new, source_type: 'Event', source_id: event.id
+    assert_response :success
+    assert_select 'input#testimonial_source_type[value="Event"]'
+    assert_select 'input#testimonial_source_id[value="' + event.id.to_s + '"]'
+    assert_select 'input#testimonial_title[value="A thank-you"]'
     assert_select 'input[type="submit"]'
   end
 

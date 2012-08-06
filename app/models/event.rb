@@ -8,6 +8,7 @@ class Event < ActiveRecord::Base
   belongs_to :request
   belongs_to :user
   belongs_to :donation
+  has_one :testimonial, as: :source
 
   # Validations
 
@@ -136,5 +137,11 @@ class Event < ActiveRecord::Base
 
   def log
     Rails.logger.info "Event: #{inspect}"
+  end
+
+  # Conversions
+
+  def to_testimonial
+    Testimonial.new source: self, title: "A thank-you", text: message, attribution: "#{from.attribution}, to #{to.attribution}"
   end
 end

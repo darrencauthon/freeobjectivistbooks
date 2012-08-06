@@ -8,6 +8,13 @@
             <% case testimonial.source %>
             <% when Review %>
             review of <%= link_to (title testimonial.source.book), admin_request_path(testimonial.source.donation.request) %>
+            <% when Event %>
+                <% if testimonial.source.is_thanks? %>
+                thank-you for
+                <% else %>
+                <%= testimonial.source.type %> <%= testimonial.source.detail %> event on
+                <% end %>
+                <%= link_to (title testimonial.source.book), admin_request_path(testimonial.source.request) %>
             <% else %>
             <%= testimonial.class.to_s.downcase %>
             <% end %>

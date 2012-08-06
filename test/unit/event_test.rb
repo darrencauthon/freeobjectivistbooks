@@ -32,8 +32,8 @@ class EventTest < ActiveSupport::TestCase
 
   # Scopes
 
-  test "testimonials" do
-    verify_scope(Event, :testimonials) {|event| event.is_thanks? && event.public?}
+  test "public thanks" do
+    verify_scope(Event, :public_thanks) {|event| event.is_thanks? && event.public?}
   end
 
   # Validations
@@ -168,5 +168,16 @@ class EventTest < ActiveSupport::TestCase
     event = events :howard_updates_info
     assert !event.notified?
     assert_no_difference("ActionMailer::Base.deliveries.count") { event.notify }
+  end
+
+  # Conversions
+
+  test "to testimonial" do
+    event = events :quentin_thanks_hugh
+    testimonial = event.to_testimonial
+    assert_equal event, testimonial.source
+    assert_equal "A thank-you", testimonial.title
+    assert_equal event.message, testimonial.text
+    assert_equal "Quentin Daniels, studying physics at MIT, to Hugh Akston, Boston, MA", testimonial.attribution
   end
 end

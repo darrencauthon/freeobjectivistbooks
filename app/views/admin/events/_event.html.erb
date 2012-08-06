@@ -5,6 +5,16 @@
     <p><%= format_block event.donation.review.text %></p>
     <p><strong><%= event.donation.review.recommend? ? "Would" : "Would not" %></strong> recommend to others</p>
     <% end %>
-    <p class="timestamp"><%= l event.created_at %></p>
+    <p class="timestamp">
+        <%= l event.created_at %>
+        <% if event.is_thanks? && event.public? %>
+        &ndash;
+            <% if event.testimonial.present? %>
+            Already has testimonial
+            <% else %>
+            <%= link_to 'Make testimonial', new_admin_testimonial_path(source_type: 'Event', source_id: event.id) %>
+            <% end %>
+        <% end %>
+    </p>
 </div>
 <div class="clear"></div>
