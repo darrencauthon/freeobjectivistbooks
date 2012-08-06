@@ -3,25 +3,30 @@
         <div class="headline"><%= markdown testimonial.title %></div>
         <div class="text"><%= markdown testimonial.text %></div>
         <div class="tagline"><%= markdown testimonial.attribution %></div>
-        <% if testimonial.source %>
-        <p>From
-            <% case testimonial.source %>
-            <% when Review %>
-            review of <%= link_to (title testimonial.source.book), admin_request_path(testimonial.source.donation.request) %>
-            <% when Pledge %>
-            <%= admin_user_link(testimonial.source.user) %>'s pledge
-            <% when Event %>
-                <% if testimonial.source.is_thanks? %>
-                thank-you for
+        <p>
+            <%= (testimonial.type || "none").capitalize %>
+            <% if testimonial.priority != 0 %>
+            &ndash; <%= format_number testimonial.priority %>
+            <% end %>
+            <% if testimonial.source %>
+            &ndash; From
+                <% case testimonial.source %>
+                <% when Review %>
+                review of <%= link_to (title testimonial.source.book), admin_request_path(testimonial.source.donation.request) %>
+                <% when Pledge %>
+                <%= admin_user_link(testimonial.source.user) %>'s pledge
+                <% when Event %>
+                    <% if testimonial.source.is_thanks? %>
+                    thank-you for
+                    <% else %>
+                    <%= testimonial.source.type %> <%= testimonial.source.detail %> event on
+                    <% end %>
+                    <%= link_to (title testimonial.source.book), admin_request_path(testimonial.source.request) %>
                 <% else %>
-                <%= testimonial.source.type %> <%= testimonial.source.detail %> event on
+                <%= testimonial.source.class.to_s.downcase %>
                 <% end %>
-                <%= link_to (title testimonial.source.book), admin_request_path(testimonial.source.request) %>
-            <% else %>
-            <%= testimonial.source.class.to_s.downcase %>
             <% end %>
         </p>
-        <% end %>
         <p>
             <%= link_to 'Edit', edit_admin_testimonial_path(testimonial) %>
             &ndash;

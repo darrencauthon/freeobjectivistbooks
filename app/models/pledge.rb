@@ -19,6 +19,6 @@ class Pledge < ActiveRecord::Base
   end
 
   def to_testimonial
-    Testimonial.new source: self, title: "From a donor", text: reason, attribution: "#{user.name}, a donor in #{user.location}"
+    Testimonial.new source: self, type: 'donor', title: "From a donor", text: reason, attribution: "#{user.name}, a donor in #{user.location}"
   end
 end

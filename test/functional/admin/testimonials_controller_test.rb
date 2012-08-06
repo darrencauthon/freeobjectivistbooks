@@ -4,7 +4,7 @@ class Admin::TestimonialsControllerTest < ActionController::TestCase
   def setup
     super
     @testimonial = testimonials :testimonial_1
-    @new_testimonial = {title: "Title", text: "Some text here", attribution: "John Galt, Patrick Henry U."}
+    @new_testimonial = {title: "Title", type: 'student', text: "Some text here", attribution: "John Galt, Patrick Henry U."}
     admin_auth
   end
 

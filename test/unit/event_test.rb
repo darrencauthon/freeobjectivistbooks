@@ -176,6 +176,7 @@ class EventTest < ActiveSupport::TestCase
     event = events :quentin_thanks_hugh
     testimonial = event.to_testimonial
     assert_equal event, testimonial.source
+    assert_equal 'student', testimonial.type
     assert_equal "A thank-you", testimonial.title
     assert_equal event.message, testimonial.text
     assert_equal "Quentin Daniels, studying physics at MIT, to donor Hugh Akston", testimonial.attribution

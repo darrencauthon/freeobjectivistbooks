@@ -47,6 +47,7 @@ class ReviewTest < ActiveSupport::TestCase
   test "to testimonial" do
     testimonial = @quentin_review.to_testimonial
     assert_equal @quentin_review, testimonial.source
+    assert_equal 'student', testimonial.type
     assert_equal "On *Atlas Shrugged*", testimonial.title
     assert_equal @quentin_review.text, testimonial.text
     assert_equal "Quentin Daniels, studying physics at MIT", testimonial.attribution
