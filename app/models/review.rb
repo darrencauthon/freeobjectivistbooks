@@ -31,6 +31,6 @@ class Review < ActiveRecord::Base
 
   def to_testimonial
     Testimonial.new source: self, title: "On *#{book}*", text: text,
-      attribution: "#{user.name}, studying #{user.studying} at #{user.school}"
+      attribution: "#{user.name}, studying #{user.studying.downcase} at #{user.school}"
   end
 end
