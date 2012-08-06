@@ -142,6 +142,7 @@ class Event < ActiveRecord::Base
   # Conversions
 
   def to_testimonial
-    Testimonial.new source: self, title: "A thank-you", text: message, attribution: "#{from.attribution}, to #{to.attribution}"
+    Testimonial.new source: self, title: "A thank-you", text: message,
+      attribution: "#{student.name}, studying #{student.studying} at #{student.school}, to donor #{donor.name}"
   end
 end

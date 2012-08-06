@@ -178,6 +178,6 @@ class EventTest < ActiveSupport::TestCase
     assert_equal event, testimonial.source
     assert_equal "A thank-you", testimonial.title
     assert_equal event.message, testimonial.text
-    assert_equal "Quentin Daniels, studying physics at MIT, to Hugh Akston, Boston, MA", testimonial.attribution
+    assert_equal "Quentin Daniels, studying physics at MIT, to donor Hugh Akston", testimonial.attribution
   end
 end
