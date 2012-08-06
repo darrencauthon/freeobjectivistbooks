@@ -53,4 +53,12 @@ class PledgeTest < ActiveSupport::TestCase
   test "fulfilled" do
     verify_scope(Pledge, :unfulfilled) {|pledge| !pledge.fulfilled?}
   end
+
+  test "to testimonial" do
+    testimonial = @hugh_pledge.to_testimonial
+    assert_equal @hugh_pledge, testimonial.source
+    assert_equal "From a donor", testimonial.title
+    assert_equal @hugh_pledge.reason, testimonial.text
+    assert_equal "Hugh Akston, a donor in Boston, MA", testimonial.attribution
+  end
 end

@@ -6,6 +6,16 @@
     <% if pledge.reason.present? %><div class="reason"><%= format_block pledge.reason %></div><% end %>
     <div class="donations"><%= pluralize pledge.user.donations.active.count, 'donation' %> so far</div>
     <% if pledge.referral %><%= render pledge.referral %><% end %>
-    <div class="timestamp"><%= l pledge.created_at %></div>
+    <div class="timestamp">
+        <%= l pledge.created_at %>
+        <% if pledge.reason.present? %>
+        &ndash;
+            <% if pledge.testimonial.present? %>
+            Already has testimonial
+            <% else %>
+            <%= link_to 'Make testimonial', new_admin_testimonial_path(source_type: 'Pledge', source_id: pledge.id) %>
+            <% end %>
+        <% end %>
+    </div>
 </div>
 <div class="clear"></div>
