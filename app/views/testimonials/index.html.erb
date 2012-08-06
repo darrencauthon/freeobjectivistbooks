@@ -42,7 +42,7 @@ h1 {
 <h1 class="grid_16">What people are saying about Free Objectivist Books</h1>
 
 <div class="grid_12">
-    <%= render partial: "testimonial", collection: @testimonials, spacer_template: "requests/spacer" %>
+    <%= render partial: "testimonial", collection: @testimonials, locals: {permalink: true}, spacer_template: "requests/spacer" %>
 </div>
 
 <div class="grid_4 sidebar">
