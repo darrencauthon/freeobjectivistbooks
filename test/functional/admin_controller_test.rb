@@ -9,8 +9,8 @@ class AdminControllerTest < ActionController::TestCase
     assert_select 'a', /request/
     assert_select 'a', /pledge/
     assert_select 'a', /event/
-    assert_select 'a', /public thank-you/
     assert_select 'a', /review/
+    assert_select 'a', /testimonial/
     assert_select 'a', /referral/
   end
 
