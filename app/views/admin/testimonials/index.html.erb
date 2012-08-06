@@ -8,6 +8,11 @@
 <h1 class="grid_16">Testimonials</h1>
 
 <div class="grid_12">
-    <p class="overview"><%= link_to 'Add new', new_admin_testimonial_path %></p>
+    <p class="overview">
+        <%= link_to 'Add new', new_admin_testimonial_path %>
+        &ndash; <%= link_to 'from reviews', admin_reviews_path %>
+        &ndash; <%= link_to 'from thank-yous', admin_events_path(public_thanks: true) %>
+    </p>
+
     <%= render partial: "testimonial", collection: @testimonials, spacer_template: "requests/spacer" %>
 </div>
