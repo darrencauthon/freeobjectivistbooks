@@ -2,62 +2,35 @@
 
 <% content_for :stylesheet do %>
 <style>
-h1 {
+h2.main {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.testimonial .text {
-    padding-top: 12px;
-    font-size: 1.2em;
+.more-link {
+    margin-bottom: 36px;
 }
 
-.testimonial .tagline {
-    text-align: right;
-}
-
-.testimonial .permalink {
-    text-align: right;
-}
-
-.testimonial .permalink a {
-    color: #707070;
-    text-decoration: underline;
-}
-
-.testimonial .quote {
-    float: right;
-}
-
-.fixed {
-    position: fixed;
+.sidebar {
+    margin-top: 20px;
 }
 
 .sidebar p {
     font-size: 1.2em;
 }
-
 </style>
 <% end %>
 
 <h1 class="grid_16">What people are saying about Free Objectivist Books</h1>
 
 <div class="grid_12">
-    <%= render partial: "testimonial", collection: @testimonials, locals: {permalink: true}, spacer_template: "requests/spacer" %>
+    <h2 class="main">From students</h2>
+    <%= render partial: "testimonial", collection: @students, locals: {permalink: true}, spacer_template: "requests/spacer" %>
+    <p class="more-link"><%= link_to 'More quotes from students...', students_testimonials_path %></p>
+
+    <h2 class="main">From donors</h2>
+    <%= render partial: "testimonial", collection: @donors, locals: {permalink: true}, spacer_template: "requests/spacer" %>
+    <p class="more-link"><%= link_to 'More quotes from students...', donors_testimonials_path %></p>
 </div>
 
-<div class="grid_4 sidebar">
-    <div class="grid_4 fixed">
-        <div class="top">&nbsp;</div>
-        <div class="content">
-            <h2>Inspired?</h2>
-            <p>
-                <% if @current_user %>
-                <%= link_to 'Donate books now.', donate_path %>
-                <% else %>
-                Sign up <%= link_to 'to read', signup_read_path %> or <%= link_to 'to donate', signup_donate_path %> today.
-                <% end %>
-            </p>
-        </div>
-        <div class="bottom">&nbsp;</div>
-    </div>
-</div>
+<%= render 'sidebar' %>

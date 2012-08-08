@@ -1,8 +1,12 @@
 class TestimonialsController < ApplicationController
-  def index
-    @testimonials = Testimonial.order('created_at desc')
+  def load_models
+    super
+    @students = Testimonial.students.display_order
+    @donors = Testimonial.donors.display_order
   end
 
-  def show
+  def index
+    @students = @students.limit 5
+    @donors = @donors.limit 5
   end
 end

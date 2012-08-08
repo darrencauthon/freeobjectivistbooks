@@ -23,7 +23,12 @@ FreeBooks::Application.routes.draw do
     end
   end
 
-  resources :testimonials, only: [:index, :show]
+  resources :testimonials, only: [:index, :show] do
+    collection do
+      get "students"
+      get "donors"
+    end
+  end
 
   resources :locations, only: :index
 

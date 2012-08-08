@@ -83,6 +83,10 @@ a:active {
     margin-top: 24px;
 }
 
+.fixed {
+    position: fixed;
+}
+
 /****************************************************************************************************/
 /* Header */
 
@@ -243,6 +247,31 @@ a:active {
 .thankyou .attribution {
     color: #006000;
     margin-bottom: 1px;
+}
+
+/****************************************************************************************************/
+/* Testimonial */
+
+.testimonial .text {
+    padding-top: 12px;
+    font-size: 1.2em;
+}
+
+.testimonial .tagline {
+    text-align: right;
+}
+
+.testimonial .permalink {
+    text-align: right;
+}
+
+.testimonial .permalink a {
+    color: #707070;
+    text-decoration: underline;
+}
+
+.testimonial .quote {
+    float: right;
 }
 
 /****************************************************************************************************/

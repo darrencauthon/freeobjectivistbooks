@@ -1,0 +1,22 @@
+<% content_for :title do %>Student Testimonials<% end %>
+
+<% content_for :stylesheet do %>
+<style>
+h1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar p {
+    font-size: 1.2em;
+}
+</style>
+<% end %>
+
+<h1 class="grid_16">What students are saying about Free Objectivist Books</h1>
+
+<div class="grid_12">
+    <%= render partial: "testimonial", collection: @students, locals: {permalink: true}, spacer_template: "requests/spacer" %>
+</div>
+
+<%= render 'sidebar' %>

@@ -8,7 +8,7 @@ class Admin::TestimonialsController < AdminController
   end
 
   def index
-    @testimonials = Testimonial.order('created_at desc')
+    @testimonials = Testimonial.order('type desc').display_order
   end
 
   def new
