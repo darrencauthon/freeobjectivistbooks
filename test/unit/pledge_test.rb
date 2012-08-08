@@ -60,6 +60,6 @@ class PledgeTest < ActiveSupport::TestCase
     assert_equal 'donor', testimonial.type
     assert_equal "From a donor", testimonial.title
     assert_equal @hugh_pledge.reason, testimonial.text
-    assert_equal "Hugh Akston, a donor in Boston, MA", testimonial.attribution
+    assert_equal "Hugh Akston, Boston, MA", testimonial.attribution
   end
 end
