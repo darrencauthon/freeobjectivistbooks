@@ -19,7 +19,7 @@ module ApplicationHelper
     if number == 0
       1
     elsif number < 0
-      digits -number
+      count_digits -number
     else
       1 + Math.log10(number).floor
     end

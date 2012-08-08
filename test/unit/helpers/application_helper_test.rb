@@ -25,6 +25,15 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "1,000", format_number(1000)
   end
 
+  test "format negative numbers" do
+    assert_equal "-0.5", format_number(-0.5)
+    assert_equal "-1", format_number(-1)
+    assert_equal "-11", format_number(-11)
+    assert_equal "-99", format_number(-99)
+    assert_equal "-100", format_number(-100)
+    assert_equal "-1,000", format_number(-1000)
+  end
+
   test "pluralize omit number" do
     assert_equal "apples", pluralize_omit_number(0, "apple")
     assert_equal "apple", pluralize_omit_number(1, "apple")
