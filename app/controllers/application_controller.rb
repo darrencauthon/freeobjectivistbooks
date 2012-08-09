@@ -1,5 +1,5 @@
-class UnauthorizedException < Exception; end
-class ForbiddenException < Exception; end
+class UnauthorizedException < StandardError; end
+class ForbiddenException < StandardError; end
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
