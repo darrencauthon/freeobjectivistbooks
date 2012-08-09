@@ -50,26 +50,25 @@ class PasswordsControllerTest < ActionController::TestCase
   end
 
   test "edit" do
-    get :edit, @hugh.letmein_params
+    get :edit, auth: @hugh.auth_token
     validate_reset_form
     assert_nil session[:user_id]
   end
 
-  test "edit with invalid letmein" do
-    get :edit, @hugh.invalid_letmein_params
+  test "edit with invalid auth" do
+    get :edit, auth: "wrong"
     validate_invalid_page
   end
 
-  test "edit with expired letmein" do
-    get :edit, @hugh.expired_letmein_params
+  test "edit with expired auth" do
+    get :edit, auth: @hugh.expired_auth_token
     validate_expired_page
   end
 
   def post_password_update(password, options = {})
     confirmation = options[:confirmation] || password
     user_params = {password: password, password_confirmation: confirmation}
-    params = @hugh.letmein_params.merge user: user_params
-    post :update, params
+    post :update, {user: user_params, auth: @hugh.auth_token}
     @hugh.reload
 
     if options[:expect_error]
@@ -96,13 +95,13 @@ class PasswordsControllerTest < ActionController::TestCase
     post_password_update "password", confirmation: "wrong", expect_error: /didn't match/
   end
 
-  test "update with invalid letmein" do
-    post :update, @hugh.invalid_letmein_params
+  test "update with invalid auth" do
+    post :update, auth: "wrong"
     validate_invalid_page
   end
 
-  test "update with expired letmein" do
-    post :update, @hugh.expired_letmein_params
+  test "update with expired auth" do
+    post :update, auth: @hugh.expired_auth_token
     validate_expired_page
   end
 end

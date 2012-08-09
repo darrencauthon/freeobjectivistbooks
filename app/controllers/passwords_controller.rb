@@ -1,5 +1,7 @@
 class PasswordsController < ApplicationController
-  before_filter :validate_letmein, only: [:edit, :update]
+  before_filter :validate_auth, only: [:edit, :update]
+  rescue_from(User::AuthTokenExpired) { render :expired_reset }
+  rescue_from(User::AuthTokenInvalid) { render :invalid_reset }
 
   def parse_params
     @email = params[:email]
@@ -15,11 +17,9 @@ class PasswordsController < ApplicationController
     end
   end
 
-  def validate_letmein
+  def validate_auth
     set_current_user nil
-    @user = User.find_by_id params[:id]
-    result = @user ? @user.letmein?(params) : :invalid
-    render "#{result}_reset" if result != :valid
+    @user = User.find_by_auth_token params[:auth]
   end
 
   def update

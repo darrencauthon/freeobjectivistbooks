@@ -1,9 +1,12 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
+  class AuthTokenInvalid < StandardError; end
+  class AuthTokenExpired < StandardError; end
+
   include ActiveModel::Validations
 
-  LETMEIN_EXPIRATION = 24.hours
+  AUTH_TOKEN_EXPIRATION = 24.hours
 
   attr_reader :password
 
@@ -53,6 +56,17 @@ class User < ActiveRecord::Base
 
   def self.find_by_email(email)
     with_email(email).first
+  end
+
+  def self.find_by_auth_token(token, expiration = AUTH_TOKEN_EXPIRATION)
+    begin
+      id, seconds = verifier.verify token
+      timestamp = Time.at seconds
+      raise AuthTokenExpired if Time.since(timestamp) > expiration
+      find id
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      raise AuthTokenInvalid
+    end
   end
 
   def self.search(query)
@@ -118,24 +132,15 @@ class User < ActiveRecord::Base
     password_digest.present? && BCrypt::Password.new(password_digest) == password
   end
 
-  def letmein_auth(timestamp)
-    Digest::SHA1.hexdigest "#{id}:#{timestamp}:#{Rails.application.config.secret_token}"
-  end
-
-  def letmein_params
-    timestamp = Time.now.iso8601
-    auth = letmein_auth timestamp
-    {id: id, timestamp: timestamp, auth: auth}
-  end
-
-  def letmein?(params)
-    timestamp = Time.parse params[:timestamp]
-    return :expired if Time.since(timestamp) > LETMEIN_EXPIRATION
-    auth = letmein_auth params[:timestamp]
-    auth == params[:auth] ? :valid : :invalid
+  def auth_token(timestamp = Time.now)
+    User.verifier.generate [id, timestamp.to_i]
   end
 
   def create_location_if_needed
     Location.find_or_create_by_name location
+  end
+
+  def self.verifier
+    @@verifier ||= ActiveSupport::MessageVerifier.new Rails.application.config.secret_token
   end
 end

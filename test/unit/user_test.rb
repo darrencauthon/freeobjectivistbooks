@@ -225,21 +225,21 @@ class UserTest < ActiveSupport::TestCase
     assert !@howard.can_request?
   end
 
-  # Letmein
+  # Auth token
 
-  test "letmein" do
-    params = @howard.letmein_params
-    assert_equal @howard.id, params[:id]
-    assert_equal :valid, @howard.letmein?(params)
+  test "auth token" do
+    assert_equal @howard, User.find_by_auth_token(@howard.auth_token)
   end
 
-  test "letmein invalid" do
-    params = @howard.invalid_letmein_params
-    assert_equal :invalid, @howard.letmein?(params)
+  test "auth token invalid" do
+    assert_raises User::AuthTokenInvalid do
+      User.find_by_auth_token "wrong"
+    end
   end
 
-  test "letmein expired" do
-    params = @howard.expired_letmein_params
-    assert_equal :expired, @howard.letmein?(params)
+  test "auth token expired" do
+    assert_raises User::AuthTokenExpired do
+      User.find_by_auth_token @howard.expired_auth_token
+    end
   end
 end

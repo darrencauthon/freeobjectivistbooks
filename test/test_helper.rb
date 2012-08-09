@@ -139,11 +139,7 @@ class ActionMailer::TestCase
 end
 
 class User
-  def invalid_letmein_params
-    letmein_params.merge auth: "wrong"
-  end
-
-  def expired_letmein_params
-    letmein_params.merge timestamp: 1.year.ago.iso8601
+  def expired_auth_token
+    auth_token (AUTH_TOKEN_EXPIRATION + 1.hour).ago
   end
 end
