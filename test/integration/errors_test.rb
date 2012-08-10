@@ -9,6 +9,12 @@ class ErrorsTest < ActionDispatch::IntegrationTest
     assert_select 'h1', /not found/i
   end
 
+  test "request not found" do
+    get "/requests/123456789"
+    assert_response :not_found
+    assert_select 'h1', /not found/i
+  end
+
   test "server error" do
     get "/test/exception"
     assert_response :internal_server_error
