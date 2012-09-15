@@ -33,6 +33,8 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
+  # Creates a Referral object to track this referral/landing; stores it in the
+  # session so it can be associated with any downstream signup.
   def store_referral
     return unless params[:utm_source] || params[:utm_medium]
     referral = Referral.create source: params[:utm_source], medium: params[:utm_medium], landing_url: request.url,

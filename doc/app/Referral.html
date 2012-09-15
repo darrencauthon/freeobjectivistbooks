@@ -248,6 +248,15 @@
 
   <div id="description" class="description">
     
+<p>Represents a referral from an external website to freeobjectivistbooks.org.</p>
+
+<p>We create one of these in <a
+href="ApplicationController.html#method-i-store_referral">ApplicationController#store_referral</a>
+whenever we have the utm_source or utm_medium params. We also store the
+referring URL and the landing URL. We then keep the <a
+href="Referral.html">Referral</a> in the session and associate it with any
+signups.</p>
+
   </div><!-- description -->
 
   
@@ -284,7 +293,7 @@
 
           
           <div class="method-source-code" id="tag-source">
-            <pre><span class="ruby-comment"># File app/models/referral.rb, line 6</span>
+            <pre><span class="ruby-comment"># File app/models/referral.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tag</span>
   <span class="ruby-node">&quot;#{source}:#{medium}&quot;</span>
 <span class="ruby-keyword">end</span></pre>

@@ -355,7 +355,7 @@
 
           
           <div class="method-source-code" id="allowed_users-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 62</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">allowed_users</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- allowed_users-source -->
@@ -384,7 +384,7 @@
 
           
           <div class="method-source-code" id="check_user-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 65</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">check_user</span>
   <span class="ruby-identifier">users</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">allowed_users</span>)
   <span class="ruby-identifier">require_user</span> <span class="ruby-identifier">users</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">users</span>.<span class="ruby-identifier">empty?</span>
@@ -452,7 +452,7 @@
 
           
           <div class="method-source-code" id="limit_and_offset-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 85</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 87</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">limit_and_offset</span>(<span class="ruby-identifier">relation</span>, <span class="ruby-identifier">default_limit</span> = <span class="ruby-value">100</span>)
   <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:offset</span>]
   <span class="ruby-identifier">limit</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:limit</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">default_limit</span>
@@ -494,7 +494,7 @@
 
           
           <div class="method-source-code" id="load_models-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 46</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_models</span>
   <span class="ruby-identifier">instance_variable_set</span> <span class="ruby-ivar">@model_ivar_name</span>, <span class="ruby-ivar">@model_class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@model_class</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>]
   <span class="ruby-ivar">@request</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:request_id</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:request_id</span>]
@@ -526,7 +526,7 @@
 
           
           <div class="method-source-code" id="log_errors-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 79</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">log_errors</span>(*<span class="ruby-identifier">models</span>)
   <span class="ruby-identifier">models</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;#{model.class} errors: #{model.errors.messages}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">invalid?</span>
@@ -558,7 +558,7 @@
 
           
           <div class="method-source-code" id="parse_params-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 43</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_params</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- parse_params-source -->
@@ -587,7 +587,7 @@
 
           
           <div class="method-source-code" id="render_error-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 146</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 148</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">render_error</span>(<span class="ruby-identifier">exception</span>)
   <span class="ruby-identifier">trace</span> = <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">frame</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;    #{frame}&quot;</span>}.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-node">&quot;Caught exception #{exception.class}: #{exception.message}\n#{trace}&quot;</span>
@@ -624,7 +624,7 @@
 
           
           <div class="method-source-code" id="render_forbidden-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 127</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">render_forbidden</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-keyword">do</span>
@@ -662,7 +662,7 @@
 
           
           <div class="method-source-code" id="render_not_found-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 139</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">render_not_found</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">template</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;errors/404&quot;</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">404</span> }
@@ -695,7 +695,7 @@
 
           
           <div class="method-source-code" id="render_unauthorized-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 114</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 116</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">render_unauthorized</span>
   <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-keyword">do</span>
@@ -734,7 +734,7 @@
 
           
           <div class="method-source-code" id="require_login-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 52</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">require_login</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">UnauthorizedException</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@current_user</span>
 <span class="ruby-keyword">end</span></pre>
@@ -764,7 +764,7 @@
 
           
           <div class="method-source-code" id="require_user-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 56</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">require_user</span>(*<span class="ruby-identifier">users</span>)
   <span class="ruby-identifier">require_login</span>
   <span class="ruby-identifier">users</span> = <span class="ruby-identifier">users</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
@@ -796,7 +796,7 @@
 
           
           <div class="method-source-code" id="save-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 72</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save</span>(*<span class="ruby-identifier">models</span>)
   <span class="ruby-identifier">models</span> = <span class="ruby-identifier">models</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
   <span class="ruby-identifier">valid</span> = <span class="ruby-identifier">models</span>.<span class="ruby-identifier">all?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">valid?</span>}
@@ -857,12 +857,14 @@
 
         <div class="method-description">
           
-          
+          <p>Creates a <a href="Referral.html">Referral</a> object to track this
+referral/landing; stores it in the session so it can be associated with any
+downstream signup.</p>
           
 
           
           <div class="method-source-code" id="store_referral-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 36</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">store_referral</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:utm_source</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:utm_medium</span>]
   <span class="ruby-identifier">referral</span> = <span class="ruby-constant">Referral</span>.<span class="ruby-identifier">create</span> <span class="ruby-identifier">source</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:utm_source</span>], <span class="ruby-identifier">medium</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:utm_medium</span>], <span class="ruby-identifier">landing_url</span><span class="ruby-operator">:</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>,
