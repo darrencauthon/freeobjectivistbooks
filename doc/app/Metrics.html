@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Class: Metrics</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/metrics.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-book_leaderboard">#book_leaderboard</a>
+    
+    <li><a href="#method-i-breakdown_by_time">#breakdown_by_time</a>
+    
+    <li><a href="#method-i-count_referrals">#count_referrals</a>
+    
+    <li><a href="#method-i-donation_metrics">#donation_metrics</a>
+    
+    <li><a href="#method-i-now">#now</a>
+    
+    <li><a href="#method-i-pipeline_breakdown">#pipeline_breakdown</a>
+    
+    <li><a href="#method-i-pledge_metrics">#pledge_metrics</a>
+    
+    <li><a href="#method-i-pledge_referrals">#pledge_referrals</a>
+    
+    <li><a href="#method-i-referral_counts">#referral_counts</a>
+    
+    <li><a href="#method-i-referral_metrics">#referral_metrics</a>
+    
+    <li><a href="#method-i-referral_metrics_keys">#referral_metrics_keys</a>
+    
+    <li><a href="#method-i-request_pipeline">#request_pipeline</a>
+    
+    <li><a href="#method-i-request_referrals">#request_referrals</a>
+    
+    <li><a href="#method-i-time_columns">#time_columns</a>
+    
+    <li><a href="#method-i-times">#times</a>
+    
+    <li><a href="#method-i-user_referrals">#user_referrals</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Admin.html">Admin</a>
+  
+    <li><a href="./Admin/CampaignTargetsController.html">Admin::CampaignTargetsController</a>
+  
+    <li><a href="./Admin/DonationsController.html">Admin::DonationsController</a>
+  
+    <li><a href="./Admin/EventsController.html">Admin::EventsController</a>
+  
+    <li><a href="./Admin/PledgesController.html">Admin::PledgesController</a>
+  
+    <li><a href="./Admin/ReferralsController.html">Admin::ReferralsController</a>
+  
+    <li><a href="./Admin/RequestsController.html">Admin::RequestsController</a>
+  
+    <li><a href="./Admin/ReviewsController.html">Admin::ReviewsController</a>
+  
+    <li><a href="./Admin/TestimonialsController.html">Admin::TestimonialsController</a>
+  
+    <li><a href="./Admin/UsersController.html">Admin::UsersController</a>
+  
+    <li><a href="./Reminders.html">Reminders</a>
+  
+    <li><a href="./Reminders/ConfirmReceipt.html">Reminders::ConfirmReceipt</a>
+  
+    <li><a href="./Reminders/ConfirmReceiptUnsent.html">Reminders::ConfirmReceiptUnsent</a>
+  
+    <li><a href="./Reminders/FulfillPledge.html">Reminders::FulfillPledge</a>
+  
+    <li><a href="./Reminders/ReadBooks.html">Reminders::ReadBooks</a>
+  
+    <li><a href="./Reminders/SendBooks.html">Reminders::SendBooks</a>
+  
+    <li><a href="./Mailgun.html">Mailgun</a>
+  
+    <li><a href="./Mailgun/Base.html">Mailgun::Base</a>
+  
+    <li><a href="./Mailgun/Campaign.html">Mailgun::Campaign</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./User/AuthTokenExpired.html">User::AuthTokenExpired</a>
+  
+    <li><a href="./User/AuthTokenInvalid.html">User::AuthTokenInvalid</a>
+  
+    <li><a href="./AdminController.html">AdminController</a>
+  
+    <li><a href="./AdminHelper.html">AdminHelper</a>
+  
+    <li><a href="./AnnouncementMailer.html">AnnouncementMailer</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./ApplicationMailer.html">ApplicationMailer</a>
+  
+    <li><a href="./ApplicationMailerHelper.html">ApplicationMailerHelper</a>
+  
+    <li><a href="./CampaignMailer.html">CampaignMailer</a>
+  
+    <li><a href="./CampaignTarget.html">CampaignTarget</a>
+  
+    <li><a href="./Donation.html">Donation</a>
+  
+    <li><a href="./DonationsController.html">DonationsController</a>
+  
+    <li><a href="./ErrorsController.html">ErrorsController</a>
+  
+    <li><a href="./Event.html">Event</a>
+  
+    <li><a href="./EventMailer.html">EventMailer</a>
+  
+    <li><a href="./FalseClass.html">FalseClass</a>
+  
+    <li><a href="./FlagsController.html">FlagsController</a>
+  
+    <li><a href="./ForbiddenException.html">ForbiddenException</a>
+  
+    <li><a href="./Geocoder.html">Geocoder</a>
+  
+    <li><a href="./Hash.html">Hash</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./Integer.html">Integer</a>
+  
+    <li><a href="./Location.html">Location</a>
+  
+    <li><a href="./LocationsController.html">LocationsController</a>
+  
+    <li><a href="./MessagesController.html">MessagesController</a>
+  
+    <li><a href="./MessagesHelper.html">MessagesHelper</a>
+  
+    <li><a href="./Metrics.html">Metrics</a>
+  
+    <li><a href="./NilClass.html">NilClass</a>
+  
+    <li><a href="./PasswordsController.html">PasswordsController</a>
+  
+    <li><a href="./Pledge.html">Pledge</a>
+  
+    <li><a href="./ProfileController.html">ProfileController</a>
+  
+    <li><a href="./Referral.html">Referral</a>
+  
+    <li><a href="./Reminder.html">Reminder</a>
+  
+    <li><a href="./ReminderEntity.html">ReminderEntity</a>
+  
+    <li><a href="./ReminderJob.html">ReminderJob</a>
+  
+    <li><a href="./ReminderMailer.html">ReminderMailer</a>
+  
+    <li><a href="./Request.html">Request</a>
+  
+    <li><a href="./RequestsController.html">RequestsController</a>
+  
+    <li><a href="./RequestsHelper.html">RequestsHelper</a>
+  
+    <li><a href="./Review.html">Review</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./StatusesController.html">StatusesController</a>
+  
+    <li><a href="./String.html">String</a>
+  
+    <li><a href="./TestController.html">TestController</a>
+  
+    <li><a href="./Testimonial.html">Testimonial</a>
+  
+    <li><a href="./TestimonialsController.html">TestimonialsController</a>
+  
+    <li><a href="./Time.html">Time</a>
+  
+    <li><a href="./TrueClass.html">TrueClass</a>
+  
+    <li><a href="./UnauthorizedException.html">UnauthorizedException</a>
+  
+    <li><a href="./UserMailer.html">UserMailer</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Metrics</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-book_leaderboard" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">book_leaderboard</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="book_leaderboard-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">book_leaderboard</span>
+  <span class="ruby-identifier">request_counts</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">group</span>(<span class="ruby-value">:book</span>).<span class="ruby-identifier">count</span>
+  <span class="ruby-identifier">donation_counts</span> = <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-value">:request</span>).<span class="ruby-identifier">group</span>(<span class="ruby-value">:book</span>).<span class="ruby-identifier">count</span>
+  <span class="ruby-identifier">rows</span> = <span class="ruby-identifier">request_counts</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">book</span>,<span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">book</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">:</span> {<span class="ruby-string">&quot;Requested&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span>, <span class="ruby-string">&quot;Donated&quot;</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">donation_counts</span>[<span class="ruby-identifier">book</span>] <span class="ruby-operator">||</span> <span class="ruby-value">0</span>)}}
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">sort_by!</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-operator">-</span><span class="ruby-identifier">row</span>[<span class="ruby-value">:values</span>][<span class="ruby-string">&quot;Requested&quot;</span>]}
+  {<span class="ruby-identifier">columns</span><span class="ruby-operator">:</span> [<span class="ruby-string">&quot;Requested&quot;</span>, <span class="ruby-string">&quot;Donated&quot;</span>], <span class="ruby-identifier">rows</span><span class="ruby-operator">:</span> <span class="ruby-identifier">rows</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- book_leaderboard-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- book_leaderboard-method -->
+
+    
+      <div id="method-i-breakdown_by_time" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">breakdown_by_time</span><span
+            class="method-args">(relation, timestamp_column = :created_at)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="breakdown_by_time-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">breakdown_by_time</span>(<span class="ruby-identifier">relation</span>, <span class="ruby-identifier">timestamp_column</span> = <span class="ruby-value">:created_at</span>)
+  <span class="ruby-identifier">time_columns</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>,<span class="ruby-identifier">column</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">time</span> = <span class="ruby-identifier">times</span>[<span class="ruby-identifier">column</span>]
+    <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">where</span>(<span class="ruby-node">&quot;#{timestamp_column} &lt; ?&quot;</span>, <span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">time</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">time</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">column</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">count</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- breakdown_by_time-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- breakdown_by_time-method -->
+
+    
+      <div id="method-i-count_referrals" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">count_referrals</span><span
+            class="method-args">(model)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="count_referrals-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">count_referrals</span>(<span class="ruby-identifier">model</span>)
+  <span class="ruby-identifier">counts</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-value">:referral</span>).<span class="ruby-identifier">group</span>(<span class="ruby-value">:source</span>, <span class="ruby-value">:medium</span>).<span class="ruby-identifier">count</span>
+  <span class="ruby-identifier">counts</span>.<span class="ruby-identifier">default</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">counts</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- count_referrals-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- count_referrals-method -->
+
+    
+      <div id="method-i-donation_metrics" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">donation_metrics</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="donation_metrics-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">donation_metrics</span>
+  <span class="ruby-identifier">calculate_metrics</span> [
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Flagged'</span>,      <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">flagged</span>.<span class="ruby-identifier">count</span>,      <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Not sent'</span>, <span class="ruby-identifier">denominator_value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">not_sent</span>.<span class="ruby-identifier">count</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Needs thanks'</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">needs_thanks</span>.<span class="ruby-identifier">count</span>, <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Received'</span>, <span class="ruby-identifier">denominator_value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">received</span>.<span class="ruby-identifier">count</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Thanked'</span>,      <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">thanked</span>.<span class="ruby-identifier">count</span>,      <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Active'</span>,   <span class="ruby-identifier">denominator_value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">count</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Reviewed'</span>,     <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Review</span>.<span class="ruby-identifier">count</span>,                <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Read'</span>,     <span class="ruby-identifier">denominator_value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">read</span>.<span class="ruby-identifier">count</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Recommended'</span>,  <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Review</span>.<span class="ruby-identifier">recommended</span>.<span class="ruby-identifier">count</span>,    <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Reviewed'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Canceled'</span>,     <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">canceled</span>.<span class="ruby-identifier">count</span>,     <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Total'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Total'</span>,        <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">count</span>},
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- donation_metrics-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- donation_metrics-method -->
+
+    
+      <div id="method-i-now" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">now</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="now-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">now</span>
+  <span class="ruby-ivar">@now</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- now-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- now-method -->
+
+    
+      <div id="method-i-pipeline_breakdown" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pipeline_breakdown</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pipeline_breakdown-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pipeline_breakdown</span>
+  {
+    <span class="ruby-identifier">columns</span><span class="ruby-operator">:</span> <span class="ruby-identifier">time_columns</span>,
+    <span class="ruby-identifier">rows</span><span class="ruby-operator">:</span> [
+      {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Open requests'</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">:</span> <span class="ruby-identifier">breakdown_by_time</span>(<span class="ruby-constant">Request</span>.<span class="ruby-identifier">not_granted</span>)},
+      {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Needs sending'</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">:</span> <span class="ruby-identifier">breakdown_by_time</span>(<span class="ruby-constant">Donation</span>.<span class="ruby-identifier">needs_sending</span>)},
+      {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'In transit'</span>,    <span class="ruby-identifier">values</span><span class="ruby-operator">:</span> <span class="ruby-identifier">breakdown_by_time</span>(<span class="ruby-constant">Donation</span>.<span class="ruby-identifier">in_transit</span>, <span class="ruby-value">:status_updated_at</span>)},
+      {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Reading'</span>,       <span class="ruby-identifier">values</span><span class="ruby-operator">:</span> <span class="ruby-identifier">breakdown_by_time</span>(<span class="ruby-constant">Donation</span>.<span class="ruby-identifier">reading</span>, <span class="ruby-value">:status_updated_at</span>)},
+    ],
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pipeline_breakdown-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pipeline_breakdown-method -->
+
+    
+      <div id="method-i-pledge_metrics" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pledge_metrics</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pledge_metrics-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pledge_metrics</span>
+  [
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Donors pledging'</span>,     <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Pledge</span>.<span class="ruby-identifier">count</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Books pledged'</span>,       <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Pledge</span>.<span class="ruby-identifier">sum</span>(<span class="ruby-value">:quantity</span>)},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Average pledge size'</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Pledge</span>.<span class="ruby-identifier">average</span>(<span class="ruby-value">:quantity</span>)},
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pledge_metrics-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pledge_metrics-method -->
+
+    
+      <div id="method-i-pledge_referrals" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pledge_referrals</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="pledge_referrals-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pledge_referrals</span>
+  <span class="ruby-ivar">@pledge_referrals</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">count_referrals</span> <span class="ruby-constant">Pledge</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pledge_referrals-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pledge_referrals-method -->
+
+    
+      <div id="method-i-referral_counts" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">referral_counts</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="referral_counts-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">referral_counts</span>
+  <span class="ruby-ivar">@referral_counts</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Referral</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">group</span>(<span class="ruby-value">:source</span>, <span class="ruby-value">:medium</span>).<span class="ruby-identifier">count</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- referral_counts-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- referral_counts-method -->
+
+    
+      <div id="method-i-referral_metrics" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">referral_metrics</span><span
+            class="method-args">(key)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="referral_metrics-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">referral_metrics</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">pair</span> = [<span class="ruby-identifier">key</span>[<span class="ruby-value">:source</span>], <span class="ruby-identifier">key</span>[<span class="ruby-value">:medium</span>]]
+  <span class="ruby-identifier">calculate_metrics</span> [
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Clicks'</span>,   <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-identifier">referral_counts</span>[<span class="ruby-identifier">pair</span>]},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Signups'</span>,  <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user_referrals</span>[<span class="ruby-identifier">pair</span>],    <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Clicks'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Requests'</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-identifier">request_referrals</span>[<span class="ruby-identifier">pair</span>], <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Signups'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Pledges'</span>,  <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-identifier">pledge_referrals</span>[<span class="ruby-identifier">pair</span>],  <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Signups'</span>},
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- referral_metrics-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- referral_metrics-method -->
+
+    
+      <div id="method-i-referral_metrics_keys" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">referral_metrics_keys</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="referral_metrics_keys-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">referral_metrics_keys</span>
+  <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">referral_counts</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">pair</span><span class="ruby-operator">|</span> {<span class="ruby-identifier">source</span><span class="ruby-operator">:</span> <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">first</span>, <span class="ruby-identifier">medium</span><span class="ruby-operator">:</span> <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">second</span>}}
+  <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort_by</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{key[:source]}#{key[:medium]}&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- referral_metrics_keys-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- referral_metrics_keys-method -->
+
+    
+      <div id="method-i-request_pipeline" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">request_pipeline</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="request_pipeline-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">request_pipeline</span>
+  <span class="ruby-identifier">calculate_metrics</span> [
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Active'</span>,   <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Request</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">count</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Granted'</span>,  <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Request</span>.<span class="ruby-identifier">granted</span>.<span class="ruby-identifier">count</span>,   <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Active'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Sent'</span>,     <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">sent</span>.<span class="ruby-identifier">count</span>,     <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Granted'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Received'</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">received</span>.<span class="ruby-identifier">count</span>, <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Sent'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Read'</span>,     <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">read</span>.<span class="ruby-identifier">count</span>,     <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Received'</span>},
+    {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Canceled'</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Request</span>.<span class="ruby-identifier">canceled</span>.<span class="ruby-identifier">count</span>,  <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Total'</span>,   <span class="ruby-identifier">denominator_value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Request</span>.<span class="ruby-identifier">count</span>},
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- request_pipeline-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- request_pipeline-method -->
+
+    
+      <div id="method-i-request_referrals" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">request_referrals</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="request_referrals-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">request_referrals</span>
+  <span class="ruby-ivar">@request_referrals</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">count_referrals</span> <span class="ruby-constant">Request</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- request_referrals-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- request_referrals-method -->
+
+    
+      <div id="method-i-time_columns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">time_columns</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="time_columns-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">time_columns</span>
+  <span class="ruby-ivar">@time_columns</span> <span class="ruby-operator">||=</span> [<span class="ruby-string">&quot;Total&quot;</span>, <span class="ruby-string">&quot;3 days&quot;</span>, <span class="ruby-string">&quot;1 wk&quot;</span>, <span class="ruby-string">&quot;2 wks&quot;</span>, <span class="ruby-string">&quot;3 wks&quot;</span>, <span class="ruby-string">&quot;1 mo&quot;</span>, <span class="ruby-string">&quot;2 mos&quot;</span>, <span class="ruby-string">&quot;3 mos&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- time_columns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- time_columns-method -->
+
+    
+      <div id="method-i-times" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">times</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="times-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">times</span>
+  <span class="ruby-ivar">@times</span> = <span class="ruby-identifier">time_columns</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>,<span class="ruby-identifier">column</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">time</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">column</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/total/</span> <span class="ruby-keyword">then</span> <span class="ruby-value">0</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">number</span>, <span class="ruby-identifier">unit</span> = <span class="ruby-identifier">column</span>.<span class="ruby-identifier">split</span>
+      <span class="ruby-identifier">method</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">unit</span>[<span class="ruby-value">0</span>]
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;d&quot;</span> <span class="ruby-keyword">then</span> <span class="ruby-value">:days</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;w&quot;</span> <span class="ruby-keyword">then</span> <span class="ruby-value">:weeks</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;m&quot;</span> <span class="ruby-keyword">then</span> <span class="ruby-value">:months</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">number</span>.<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">method</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">column</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- times-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- times-method -->
+
+    
+      <div id="method-i-user_referrals" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">user_referrals</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="user_referrals-source">
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">user_referrals</span>
+  <span class="ruby-ivar">@user_referrals</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">count_referrals</span> <span class="ruby-constant">User</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- user_referrals-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- user_referrals-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Class: Location</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/location.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-address_components">#address_components</a>
+    
+    <li><a href="#method-i-country">#country</a>
+    
+    <li><a href="#method-i-first_geocoder_result">#first_geocoder_result</a>
+    
+    <li><a href="#method-i-formatted_address">#formatted_address</a>
+    
+    <li><a href="#method-i-geocode-21">#geocode!</a>
+    
+    <li><a href="#method-i-geometry">#geometry</a>
+    
+    <li><a href="#method-i-lat">#lat</a>
+    
+    <li><a href="#method-i-locality-3F">#locality?</a>
+    
+    <li><a href="#method-i-location">#location</a>
+    
+    <li><a href="#method-i-lon">#lon</a>
+    
+    <li><a href="#method-i-types">#types</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Admin.html">Admin</a>
+  
+    <li><a href="./Admin/CampaignTargetsController.html">Admin::CampaignTargetsController</a>
+  
+    <li><a href="./Admin/DonationsController.html">Admin::DonationsController</a>
+  
+    <li><a href="./Admin/EventsController.html">Admin::EventsController</a>
+  
+    <li><a href="./Admin/PledgesController.html">Admin::PledgesController</a>
+  
+    <li><a href="./Admin/ReferralsController.html">Admin::ReferralsController</a>
+  
+    <li><a href="./Admin/RequestsController.html">Admin::RequestsController</a>
+  
+    <li><a href="./Admin/ReviewsController.html">Admin::ReviewsController</a>
+  
+    <li><a href="./Admin/TestimonialsController.html">Admin::TestimonialsController</a>
+  
+    <li><a href="./Admin/UsersController.html">Admin::UsersController</a>
+  
+    <li><a href="./Reminders.html">Reminders</a>
+  
+    <li><a href="./Reminders/ConfirmReceipt.html">Reminders::ConfirmReceipt</a>
+  
+    <li><a href="./Reminders/ConfirmReceiptUnsent.html">Reminders::ConfirmReceiptUnsent</a>
+  
+    <li><a href="./Reminders/FulfillPledge.html">Reminders::FulfillPledge</a>
+  
+    <li><a href="./Reminders/ReadBooks.html">Reminders::ReadBooks</a>
+  
+    <li><a href="./Reminders/SendBooks.html">Reminders::SendBooks</a>
+  
+    <li><a href="./Mailgun.html">Mailgun</a>
+  
+    <li><a href="./Mailgun/Base.html">Mailgun::Base</a>
+  
+    <li><a href="./Mailgun/Campaign.html">Mailgun::Campaign</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./User/AuthTokenExpired.html">User::AuthTokenExpired</a>
+  
+    <li><a href="./User/AuthTokenInvalid.html">User::AuthTokenInvalid</a>
+  
+    <li><a href="./AdminController.html">AdminController</a>
+  
+    <li><a href="./AdminHelper.html">AdminHelper</a>
+  
+    <li><a href="./AnnouncementMailer.html">AnnouncementMailer</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./ApplicationMailer.html">ApplicationMailer</a>
+  
+    <li><a href="./ApplicationMailerHelper.html">ApplicationMailerHelper</a>
+  
+    <li><a href="./CampaignMailer.html">CampaignMailer</a>
+  
+    <li><a href="./CampaignTarget.html">CampaignTarget</a>
+  
+    <li><a href="./Donation.html">Donation</a>
+  
+    <li><a href="./DonationsController.html">DonationsController</a>
+  
+    <li><a href="./ErrorsController.html">ErrorsController</a>
+  
+    <li><a href="./Event.html">Event</a>
+  
+    <li><a href="./EventMailer.html">EventMailer</a>
+  
+    <li><a href="./FalseClass.html">FalseClass</a>
+  
+    <li><a href="./FlagsController.html">FlagsController</a>
+  
+    <li><a href="./ForbiddenException.html">ForbiddenException</a>
+  
+    <li><a href="./Geocoder.html">Geocoder</a>
+  
+    <li><a href="./Hash.html">Hash</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./Integer.html">Integer</a>
+  
+    <li><a href="./Location.html">Location</a>
+  
+    <li><a href="./LocationsController.html">LocationsController</a>
+  
+    <li><a href="./MessagesController.html">MessagesController</a>
+  
+    <li><a href="./MessagesHelper.html">MessagesHelper</a>
+  
+    <li><a href="./Metrics.html">Metrics</a>
+  
+    <li><a href="./NilClass.html">NilClass</a>
+  
+    <li><a href="./PasswordsController.html">PasswordsController</a>
+  
+    <li><a href="./Pledge.html">Pledge</a>
+  
+    <li><a href="./ProfileController.html">ProfileController</a>
+  
+    <li><a href="./Referral.html">Referral</a>
+  
+    <li><a href="./Reminder.html">Reminder</a>
+  
+    <li><a href="./ReminderEntity.html">ReminderEntity</a>
+  
+    <li><a href="./ReminderJob.html">ReminderJob</a>
+  
+    <li><a href="./ReminderMailer.html">ReminderMailer</a>
+  
+    <li><a href="./Request.html">Request</a>
+  
+    <li><a href="./RequestsController.html">RequestsController</a>
+  
+    <li><a href="./RequestsHelper.html">RequestsHelper</a>
+  
+    <li><a href="./Review.html">Review</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./StatusesController.html">StatusesController</a>
+  
+    <li><a href="./String.html">String</a>
+  
+    <li><a href="./TestController.html">TestController</a>
+  
+    <li><a href="./Testimonial.html">Testimonial</a>
+  
+    <li><a href="./TestimonialsController.html">TestimonialsController</a>
+  
+    <li><a href="./Time.html">Time</a>
+  
+    <li><a href="./TrueClass.html">TrueClass</a>
+  
+    <li><a href="./UnauthorizedException.html">UnauthorizedException</a>
+  
+    <li><a href="./UserMailer.html">UserMailer</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Location</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-address_components" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">address_components</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="address_components-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">address_components</span>
+  <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'address_components'</span>] <span class="ruby-operator">||</span> []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- address_components-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- address_components-method -->
+
+    
+      <div id="method-i-country" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">country</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="country-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">country</span>
+  <span class="ruby-identifier">component</span> = <span class="ruby-identifier">address_components</span>.<span class="ruby-identifier">find</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">component</span><span class="ruby-operator">|</span> <span class="ruby-identifier">component</span>[<span class="ruby-string">'types'</span>].<span class="ruby-identifier">include?</span> <span class="ruby-string">&quot;country&quot;</span>}
+  <span class="ruby-identifier">component</span>[<span class="ruby-string">'long_name'</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">component</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- country-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- country-method -->
+
+    
+      <div id="method-i-first_geocoder_result" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">first_geocoder_result</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Parsing the geocoder results</p>
+          
+
+          
+          <div class="method-source-code" id="first_geocoder_result-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">first_geocoder_result</span>
+  <span class="ruby-keyword">return</span> {} <span class="ruby-keyword">if</span> <span class="ruby-identifier">geocoder_results</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">geocoder_results</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">geocoder_results</span>[<span class="ruby-value">0</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- first_geocoder_result-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- first_geocoder_result-method -->
+
+    
+      <div id="method-i-formatted_address" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">formatted_address</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="formatted_address-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">formatted_address</span>
+  <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'formatted_address'</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- formatted_address-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- formatted_address-method -->
+
+    
+      <div id="method-i-geocode-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">geocode!</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Actions</p>
+          
+
+          
+          <div class="method-source-code" id="geocode-21-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">geocode!</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">geocoder_results</span> = <span class="ruby-constant">Geocoder</span>.<span class="ruby-identifier">geocode</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">save!</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- geocode-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- geocode-21-method -->
+
+    
+      <div id="method-i-geometry" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">geometry</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="geometry-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">geometry</span>
+  <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'geometry'</span>] <span class="ruby-operator">||</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- geometry-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- geometry-method -->
+
+    
+      <div id="method-i-lat" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">lat</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="lat-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">lat</span>
+  <span class="ruby-identifier">location</span>[<span class="ruby-string">'lat'</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- lat-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- lat-method -->
+
+    
+      <div id="method-i-locality-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">locality?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Derived attributes</p>
+          
+
+          
+          <div class="method-source-code" id="locality-3F-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">locality?</span>
+  <span class="ruby-identifier">types</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;locality&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- locality-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- locality-3F-method -->
+
+    
+      <div id="method-i-location" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">location</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="location-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">location</span>
+  <span class="ruby-identifier">geometry</span>[<span class="ruby-string">'location'</span>] <span class="ruby-operator">||</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- location-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- location-method -->
+
+    
+      <div id="method-i-lon" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">lon</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="lon-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">lon</span>
+  <span class="ruby-identifier">location</span>[<span class="ruby-string">'lng'</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- lon-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- lon-method -->
+
+    
+      <div id="method-i-types" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">types</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="types-source">
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">types</span>
+  <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'types'</span>] <span class="ruby-operator">||</span> []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- types-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- types-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

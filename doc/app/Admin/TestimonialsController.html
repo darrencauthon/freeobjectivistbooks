@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>Class: Admin::TestimonialsController</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/admin/testimonials_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../AdminController.html">AdminController</a>
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-create">#create</a>
+    
+    <li><a href="#method-i-destroy">#destroy</a>
+    
+    <li><a href="#method-i-edit">#edit</a>
+    
+    <li><a href="#method-i-index">#index</a>
+    
+    <li><a href="#method-i-load_models">#load_models</a>
+    
+    <li><a href="#method-i-new">#new</a>
+    
+    <li><a href="#method-i-update">#update</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Admin.html">Admin</a>
+  
+    <li><a href="../Admin/CampaignTargetsController.html">Admin::CampaignTargetsController</a>
+  
+    <li><a href="../Admin/DonationsController.html">Admin::DonationsController</a>
+  
+    <li><a href="../Admin/EventsController.html">Admin::EventsController</a>
+  
+    <li><a href="../Admin/PledgesController.html">Admin::PledgesController</a>
+  
+    <li><a href="../Admin/ReferralsController.html">Admin::ReferralsController</a>
+  
+    <li><a href="../Admin/RequestsController.html">Admin::RequestsController</a>
+  
+    <li><a href="../Admin/ReviewsController.html">Admin::ReviewsController</a>
+  
+    <li><a href="../Admin/TestimonialsController.html">Admin::TestimonialsController</a>
+  
+    <li><a href="../Admin/UsersController.html">Admin::UsersController</a>
+  
+    <li><a href="../Reminders.html">Reminders</a>
+  
+    <li><a href="../Reminders/ConfirmReceipt.html">Reminders::ConfirmReceipt</a>
+  
+    <li><a href="../Reminders/ConfirmReceiptUnsent.html">Reminders::ConfirmReceiptUnsent</a>
+  
+    <li><a href="../Reminders/FulfillPledge.html">Reminders::FulfillPledge</a>
+  
+    <li><a href="../Reminders/ReadBooks.html">Reminders::ReadBooks</a>
+  
+    <li><a href="../Reminders/SendBooks.html">Reminders::SendBooks</a>
+  
+    <li><a href="../Mailgun.html">Mailgun</a>
+  
+    <li><a href="../Mailgun/Base.html">Mailgun::Base</a>
+  
+    <li><a href="../Mailgun/Campaign.html">Mailgun::Campaign</a>
+  
+    <li><a href="../User.html">User</a>
+  
+    <li><a href="../User/AuthTokenExpired.html">User::AuthTokenExpired</a>
+  
+    <li><a href="../User/AuthTokenInvalid.html">User::AuthTokenInvalid</a>
+  
+    <li><a href="../AdminController.html">AdminController</a>
+  
+    <li><a href="../AdminHelper.html">AdminHelper</a>
+  
+    <li><a href="../AnnouncementMailer.html">AnnouncementMailer</a>
+  
+    <li><a href="../ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="../ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="../ApplicationMailer.html">ApplicationMailer</a>
+  
+    <li><a href="../ApplicationMailerHelper.html">ApplicationMailerHelper</a>
+  
+    <li><a href="../CampaignMailer.html">CampaignMailer</a>
+  
+    <li><a href="../CampaignTarget.html">CampaignTarget</a>
+  
+    <li><a href="../Donation.html">Donation</a>
+  
+    <li><a href="../DonationsController.html">DonationsController</a>
+  
+    <li><a href="../ErrorsController.html">ErrorsController</a>
+  
+    <li><a href="../Event.html">Event</a>
+  
+    <li><a href="../EventMailer.html">EventMailer</a>
+  
+    <li><a href="../FalseClass.html">FalseClass</a>
+  
+    <li><a href="../FlagsController.html">FlagsController</a>
+  
+    <li><a href="../ForbiddenException.html">ForbiddenException</a>
+  
+    <li><a href="../Geocoder.html">Geocoder</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../HomeController.html">HomeController</a>
+  
+    <li><a href="../Integer.html">Integer</a>
+  
+    <li><a href="../Location.html">Location</a>
+  
+    <li><a href="../LocationsController.html">LocationsController</a>
+  
+    <li><a href="../MessagesController.html">MessagesController</a>
+  
+    <li><a href="../MessagesHelper.html">MessagesHelper</a>
+  
+    <li><a href="../Metrics.html">Metrics</a>
+  
+    <li><a href="../NilClass.html">NilClass</a>
+  
+    <li><a href="../PasswordsController.html">PasswordsController</a>
+  
+    <li><a href="../Pledge.html">Pledge</a>
+  
+    <li><a href="../ProfileController.html">ProfileController</a>
+  
+    <li><a href="../Referral.html">Referral</a>
+  
+    <li><a href="../Reminder.html">Reminder</a>
+  
+    <li><a href="../ReminderEntity.html">ReminderEntity</a>
+  
+    <li><a href="../ReminderJob.html">ReminderJob</a>
+  
+    <li><a href="../ReminderMailer.html">ReminderMailer</a>
+  
+    <li><a href="../Request.html">Request</a>
+  
+    <li><a href="../RequestsController.html">RequestsController</a>
+  
+    <li><a href="../RequestsHelper.html">RequestsHelper</a>
+  
+    <li><a href="../Review.html">Review</a>
+  
+    <li><a href="../SessionsController.html">SessionsController</a>
+  
+    <li><a href="../StatusesController.html">StatusesController</a>
+  
+    <li><a href="../String.html">String</a>
+  
+    <li><a href="../TestController.html">TestController</a>
+  
+    <li><a href="../Testimonial.html">Testimonial</a>
+  
+    <li><a href="../TestimonialsController.html">TestimonialsController</a>
+  
+    <li><a href="../Time.html">Time</a>
+  
+    <li><a href="../TrueClass.html">TrueClass</a>
+  
+    <li><a href="../UnauthorizedException.html">UnauthorizedException</a>
+  
+    <li><a href="../UserMailer.html">UserMailer</a>
+  
+    <li><a href="../UsersController.html">UsersController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Admin::TestimonialsController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
+  <span class="ruby-ivar">@testimonial</span> = <span class="ruby-constant">Testimonial</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:testimonial</span>]
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-node">&quot;Created \&quot;#{@testimonial.title}\&quot;&quot;</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_testimonials_url</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">:edit</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create-method -->
+
+    
+      <div id="method-i-destroy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">destroy</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="destroy-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
+  <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">destroy</span>
+  <span class="ruby-identifier">flash</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-node">&quot;Deleted \&quot;#{@testimonial.title}\&quot;&quot;</span>
+  <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_testimonials_url</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- destroy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- destroy-method -->
+
+    
+      <div id="method-i-edit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="edit-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- edit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- edit-method -->
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="index-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-ivar">@testimonials</span> = <span class="ruby-constant">Testimonial</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">'type desc'</span>).<span class="ruby-identifier">display_order</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- index-method -->
+
+    
+      <div id="method-i-load_models" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_models</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="load_models-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_models</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:source_type</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:source_id</span>]
+    <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:source_type</span>].<span class="ruby-identifier">constantize</span>
+    <span class="ruby-ivar">@source</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">find</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:source_id</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_models-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_models-method -->
+
+    
+      <div id="method-i-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@testimonial</span> = <span class="ruby-keyword">if</span> <span class="ruby-ivar">@source</span>
+    <span class="ruby-ivar">@source</span>.<span class="ruby-identifier">to_testimonial</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">Testimonial</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-value">:edit</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
+  <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">update_attributes</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:testimonial</span>]
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-node">&quot;Updated \&quot;#{@testimonial.title}\&quot;&quot;</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_testimonials_url</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">:edit</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
