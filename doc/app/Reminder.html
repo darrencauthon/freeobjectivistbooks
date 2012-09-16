@@ -313,12 +313,13 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>Finds all “key entities” that are eligible for reminders. Should be
+overridden by subclasses.</p>
           
 
           
           <div class="method-source-code" id="all_key_entities-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all_key_entities</span>
   []
 <span class="ruby-keyword">end</span></pre>
@@ -343,12 +344,18 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>Builds a set of <a href="Reminder.html">Reminder</a> objects based on
+all_key_entities.</p>
+
+<p>May include <a href="Reminders.html">Reminders</a> that shouldn’t actually
+be sent right now, e.g., because we just sent one, or because we’ve sent
+too many total. Use can_send? to determine if a reminder should actually be
+sent.</p>
           
 
           
           <div class="method-source-code" id="all_reminders-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all_reminders</span>
   <span class="ruby-identifier">all_key_entities</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">entity</span><span class="ruby-operator">|</span> <span class="ruby-identifier">new_for_entity</span> <span class="ruby-identifier">entity</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -366,20 +373,21 @@ href="Reminders.html">Reminders</a> module.</p>
         
         <div class="method-heading">
           <span class="method-name">new_for_entity</span><span
-            class="method-args">(donation)</span>
+            class="method-args">(entity)</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
         
 
         <div class="method-description">
           
-          
+          <p>Creates a new reminder based on the given “key entity”. Must be overridden
+by subclasses.</p>
           
 
           
           <div class="method-source-code" id="new_for_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 29</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_for_entity</span>(<span class="ruby-identifier">donation</span>)
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_for_entity</span>(<span class="ruby-identifier">entity</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- new_for_entity-source -->
@@ -439,12 +447,15 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>True if this reminder should actually be sent.</p>
+
+<p>May be false, e.g., if we just sent one of these reminders, or if we’ve
+sent too many reminders for the same thing.</p>
           
 
           
           <div class="method-source-code" id="can_send-3F-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 57</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_send?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">too_soon?</span>
     <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Too soon for #{self}&quot;</span>
@@ -491,7 +502,7 @@ href="Reminders.html">Reminders</a> module.</p>
 
           
           <div class="method-source-code" id="donation-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 86</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donation</span>
   <span class="ruby-identifier">donations</span>.<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -516,12 +527,15 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>The primary entity that this reminder is for. The <a
+href="Reminder.html#method-i-min_interval">#min_interval</a> and <a
+href="Reminder.html#method-i-max_reminders">#max_reminders</a> restrictions
+are in relation to this entity. Must be overridden by subclasses.</p>
           
 
           
           <div class="method-source-code" id="key_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 90</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">key_entity</span>
   <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -546,12 +560,12 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>The most recent reminder of this type sent for the key_entity.</p>
           
 
           
           <div class="method-source-code" id="latest_reminder-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 94</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">latest_reminder</span>
   <span class="ruby-identifier">key_entity</span>.<span class="ruby-identifier">reminders</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">type</span><span class="ruby-operator">:</span> <span class="ruby-identifier">type</span>, <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user</span>).<span class="ruby-identifier">reorder</span>(<span class="ruby-value">:created_at</span>).<span class="ruby-identifier">last</span>
 <span class="ruby-keyword">end</span></pre>
@@ -576,12 +590,13 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>The maximum amount of this type of reminder to send for a given entity. May
+be overridden by subclasses.</p>
           
 
           
           <div class="method-source-code" id="max_reminders-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 53</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">max_reminders</span>
   <span class="ruby-value">3</span>
 <span class="ruby-keyword">end</span></pre>
@@ -606,12 +621,13 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>The minimum amount of time to wait between reminders for the same entity.
+May be overridden by subclasses.</p>
           
 
           
           <div class="method-source-code" id="min_interval-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 49</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">min_interval</span>
   <span class="ruby-value">1</span>.<span class="ruby-identifier">week</span>
 <span class="ruby-keyword">end</span></pre>
@@ -636,12 +652,13 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>The total number of reminders of this type that have been sent for any of
+the related Donations or Pledges.</p>
           
 
           
           <div class="method-source-code" id="past_reminder_count-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 98</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 92</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">past_reminder_count</span>
   <span class="ruby-comment"># We want the minimum past reminder count among all entities this reminder is for.</span>
   <span class="ruby-identifier">entities</span> = <span class="ruby-identifier">donations</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">pledges</span>
@@ -673,7 +690,7 @@ href="Reminders.html">Reminders</a> module.</p>
 
           
           <div class="method-source-code" id="pledge-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 82</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 77</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pledge</span>
   <span class="ruby-identifier">pledges</span>.<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -703,7 +720,7 @@ href="Reminders.html">Reminders</a> module.</p>
 
           
           <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 104</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-node">&quot;#{type.demodulize} re #{key_entity.class} #{key_entity.id}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -728,12 +745,13 @@ href="Reminders.html">Reminders</a> module.</p>
 
         <div class="method-description">
           
-          
+          <p>Whether it is too soon to send this reminder. May be overridden by
+subclasses.</p>
           
 
           
           <div class="method-source-code" id="too_soon-3F-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 45</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">too_soon?</span>
   <span class="ruby-keyword">false</span>
 <span class="ruby-keyword">end</span></pre>

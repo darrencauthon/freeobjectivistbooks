@@ -260,6 +260,8 @@
 
   <div id="description" class="description">
     
+<p>Mailer for sending <a href="Reminders.html">Reminders</a>.</p>
+
   </div><!-- description -->
 
   
@@ -296,7 +298,7 @@
 
           
           <div class="method-source-code" id="send_to_target-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 3</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send_to_target</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">reminder</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">can_send?</span>
   <span class="ruby-identifier">mail</span> = <span class="ruby-keyword">super</span>
@@ -336,7 +338,7 @@
 
           
           <div class="method-source-code" id="confirm_receipt-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 43</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">confirm_receipt</span>(<span class="ruby-identifier">reminder</span>)
   <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">user</span>
   <span class="ruby-ivar">@donation</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">donation</span>
@@ -368,7 +370,7 @@
 
           
           <div class="method-source-code" id="confirm_receipt_unsent-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 36</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">confirm_receipt_unsent</span>(<span class="ruby-identifier">reminder</span>)
   <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">user</span>
   <span class="ruby-ivar">@donation</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">donation</span>
@@ -396,12 +398,12 @@
 
         <div class="method-description">
           
-          <p><a href="Reminder.html">Reminder</a> types</p>
+          
           
 
           
           <div class="method-source-code" id="fulfill_pledge-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 16</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fulfill_pledge</span>(<span class="ruby-identifier">reminder</span>)
   <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">user</span>
   <span class="ruby-ivar">@pledge</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">pledge</span>
@@ -434,7 +436,7 @@
 
           
           <div class="method-source-code" id="read_books-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 49</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">read_books</span>(<span class="ruby-identifier">reminder</span>)
   <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">user</span>
   <span class="ruby-ivar">@donation</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">donation</span>
@@ -467,7 +469,7 @@
 
           
           <div class="method-source-code" id="reminder_mail-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 10</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reminder_mail</span>(<span class="ruby-identifier">subject</span>)
   <span class="ruby-identifier">mail_to_user</span> <span class="ruby-ivar">@user</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-identifier">subject</span>
 <span class="ruby-keyword">end</span></pre>
@@ -497,7 +499,7 @@
 
           
           <div class="method-source-code" id="send_books-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_mailer.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">send_books</span>(<span class="ruby-identifier">reminder</span>)
   <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">user</span>
   <span class="ruby-ivar">@donations</span> = <span class="ruby-identifier">reminder</span>.<span class="ruby-identifier">donations</span>

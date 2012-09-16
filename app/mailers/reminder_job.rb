@@ -1,6 +1,11 @@
+# Sends reminders, typically as a delayed job.
+#
+# The schedule_reminders method is invoked via 'rake reminders:schedule', which is run by Heroku once a day.
+#
+# This class exists to work around https://github.com/collectiveidea/delayed_job/issues/306
 class ReminderJob
-  # This class exists to work around https://github.com/collectiveidea/delayed_job/issues/306
 
+  # All the Reminder types we send.
   TYPES = [
     Reminders::FulfillPledge,
     Reminders::SendBooks,
@@ -9,10 +14,12 @@ class ReminderJob
     Reminders::ReadBooks,
   ]
 
+  # Sends all reminders, inline. (Rarely used in production.)
   def self.send_all_reminders
     new.send_all_reminders
   end
 
+  # Schedules a Delayed::Job to send all reminders offline.
   def self.schedule_reminders
     Delayed::Job.enqueue new
   end
@@ -20,7 +27,9 @@ class ReminderJob
   def logger
     @logger ||= Rails.logger
   end
+  private :logger
 
+  # Sends all reminders of the given Reminder subclass.
   def send_reminders(type)
     method = type.type_name
 
@@ -39,12 +48,14 @@ class ReminderJob
     end
   end
 
+  # Sends all reminders.
   def send_all_reminders
     logger.info "Sending all reminders..."
     TYPES.each {|type| send_reminders type}
     logger.info "All reminders sent"
   end
 
+  # Performs reminder sending (invoked by the Delayed::Job subsystem).
   def perform
     send_all_reminders
   end

@@ -1,4 +1,4 @@
-Sat, 15 Sep 2012 17:58:52 -0700
+Sat, 15 Sep 2012 19:10:21 -0700
 doc/README_FOR_APP	Tue, 06 Dec 2011 21:24:15 -0800
 app/controllers/admin/campaign_targets_controller.rb	Thu, 19 Jan 2012 19:03:51 -0800
 app/controllers/admin/donations_controller.rb	Sat, 09 Jun 2012 18:28:16 -0700
@@ -34,8 +34,8 @@ app/mailers/announcement_mailer.rb	Thu, 07 Jun 2012 22:21:48 -0700
 app/mailers/application_mailer.rb	Thu, 07 Jun 2012 22:21:48 -0700
 app/mailers/campaign_mailer.rb	Thu, 19 Jan 2012 19:51:37 -0800
 app/mailers/event_mailer.rb	Thu, 07 Jun 2012 22:21:48 -0700
-app/mailers/reminder_job.rb	Thu, 07 Jun 2012 22:57:48 -0700
-app/mailers/reminder_mailer.rb	Thu, 07 Jun 2012 22:50:08 -0700
+app/mailers/reminder_job.rb	Sat, 15 Sep 2012 18:47:31 -0700
+app/mailers/reminder_mailer.rb	Sat, 15 Sep 2012 18:47:57 -0700
 app/mailers/user_mailer.rb	Thu, 09 Aug 2012 00:06:17 -0700
 app/models/campaign_target.rb	Sat, 15 Sep 2012 17:45:45 -0700
 app/models/donation.rb	Sat, 15 Sep 2012 17:42:51 -0700
@@ -44,7 +44,7 @@ app/models/location.rb	Sat, 15 Sep 2012 17:57:57 -0700
 app/models/metrics.rb	Sat, 15 Sep 2012 17:46:51 -0700
 app/models/pledge.rb	Sat, 15 Sep 2012 17:25:59 -0700
 app/models/referral.rb	Sat, 15 Sep 2012 00:41:40 -0700
-app/models/reminder.rb	Sat, 15 Sep 2012 17:52:11 -0700
+app/models/reminder.rb	Sat, 15 Sep 2012 18:58:09 -0700
 app/models/reminder_entity.rb	Sat, 15 Sep 2012 17:51:46 -0700
 app/models/reminders/confirm_receipt.rb	Sat, 15 Sep 2012 17:58:12 -0700
 app/models/reminders/confirm_receipt_unsent.rb	Sat, 15 Sep 2012 17:58:15 -0700

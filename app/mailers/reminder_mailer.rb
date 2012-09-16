@@ -1,3 +1,4 @@
+# Mailer for sending Reminders.
 class ReminderMailer < ApplicationMailer
   def self.send_to_target(method, reminder)
     return if !reminder.can_send?
@@ -11,7 +12,9 @@ class ReminderMailer < ApplicationMailer
     mail_to_user @user, subject: subject
   end
 
+  #--
   # Reminder types
+  #++
 
   def fulfill_pledge(reminder)
     @user = reminder.user

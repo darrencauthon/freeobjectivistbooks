@@ -74,8 +74,6 @@
     
     <li><a href="#method-c-send_all_reminders">::send_all_reminders</a>
     
-    <li><a href="#method-i-logger">#logger</a>
-    
     <li><a href="#method-i-perform">#perform</a>
     
     <li><a href="#method-i-send_all_reminders">#send_all_reminders</a>
@@ -258,6 +256,16 @@
 
   <div id="description" class="description">
     
+<p>Sends reminders, typically as a delayed job.</p>
+
+<p>The <a
+href="ReminderJob.html#method-c-schedule_reminders">::schedule_reminders</a>
+method is invoked via ‘rake reminders:schedule’, which is run by Heroku
+once a day.</p>
+
+<p>This class exists to work around <a
+href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/collectiveidea/delayed_job/issues/306</a></p>
+
   </div><!-- description -->
 
   
@@ -276,8 +284,7 @@
       
         <dt id="TYPES">TYPES
         
-        <dd class="description"><p>This class exists to work around <a
-href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/collectiveidea/delayed_job/issues/306</a></p>
+        <dd class="description"><p>All the <a href="Reminder.html">Reminder</a> types we send.</p>
         
       
       </dl>
@@ -303,12 +310,12 @@ href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/colle
 
         <div class="method-description">
           
-          
+          <p>Schedules a Delayed::Job to send all reminders offline.</p>
           
 
           
           <div class="method-source-code" id="schedule_reminders-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 16</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">schedule_reminders</span>
   <span class="ruby-constant">Delayed</span><span class="ruby-operator">::</span><span class="ruby-constant">Job</span>.<span class="ruby-identifier">enqueue</span> <span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
@@ -333,12 +340,12 @@ href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/colle
 
         <div class="method-description">
           
-          
+          <p>Sends all reminders, inline. (Rarely used in production.)</p>
           
 
           
           <div class="method-source-code" id="send_all_reminders-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 12</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send_all_reminders</span>
   <span class="ruby-identifier">new</span>.<span class="ruby-identifier">send_all_reminders</span>
 <span class="ruby-keyword">end</span></pre>
@@ -358,36 +365,6 @@ href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/colle
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="method-i-logger" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">logger</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code" id="logger-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 20</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">logger</span>
-  <span class="ruby-ivar">@logger</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- logger-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- logger-method -->
-
-    
       <div id="method-i-perform" class="method-detail ">
         
         <div class="method-heading">
@@ -399,12 +376,12 @@ href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/colle
 
         <div class="method-description">
           
-          
+          <p>Performs reminder sending (invoked by the Delayed::Job subsystem).</p>
           
 
           
           <div class="method-source-code" id="perform-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 48</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">perform</span>
   <span class="ruby-identifier">send_all_reminders</span>
 <span class="ruby-keyword">end</span></pre>
@@ -429,12 +406,12 @@ href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/colle
 
         <div class="method-description">
           
-          
+          <p>Sends all reminders.</p>
           
 
           
           <div class="method-source-code" id="send_all_reminders-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 42</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">send_all_reminders</span>
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-string">&quot;Sending all reminders...&quot;</span>
   <span class="ruby-constant">TYPES</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">type</span><span class="ruby-operator">|</span> <span class="ruby-identifier">send_reminders</span> <span class="ruby-identifier">type</span>}
@@ -461,12 +438,13 @@ href="https://github.com/collectiveidea/delayed_job/issues/306">github.com/colle
 
         <div class="method-description">
           
-          
+          <p>Sends all reminders of the given <a href="Reminder.html">Reminder</a>
+subclass.</p>
           
 
           
           <div class="method-source-code" id="send_reminders-source">
-            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 24</span>
+            <pre><span class="ruby-comment"># File app/mailers/reminder_job.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">send_reminders</span>(<span class="ruby-identifier">type</span>)
   <span class="ruby-identifier">method</span> = <span class="ruby-identifier">type</span>.<span class="ruby-identifier">type_name</span>
 
