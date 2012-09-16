@@ -1,3 +1,4 @@
+# Manages actions on Donations.
 class DonationsController < ApplicationController
   before_filter :require_login
   before_filter :require_can_cancel, only: [:cancel, :destroy]

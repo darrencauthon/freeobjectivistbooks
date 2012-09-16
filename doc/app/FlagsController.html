@@ -256,6 +256,8 @@
 
   <div id="description" class="description">
     
+<p>Manages flagging Donations and clearing those flags.</p>
+
   </div><!-- description -->
 
   
@@ -292,7 +294,7 @@
 
           
           <div class="method-source-code" id="allowed_users-source">
-            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 3</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">allowed_users</span>
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:action</span>]
   <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;new&quot;</span>, <span class="ruby-string">&quot;create&quot;</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">donor</span>
@@ -325,7 +327,7 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@event</span> = <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">flag</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:event</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">save</span> <span class="ruby-ivar">@donation</span>, <span class="ruby-ivar">@event</span>
@@ -361,7 +363,7 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 27</span>
+            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-ivar">@event</span> = <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">fix</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:donation</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:event</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">save</span> <span class="ruby-ivar">@donation</span>, <span class="ruby-ivar">@event</span>
@@ -397,7 +399,7 @@
 
           
           <div class="method-source-code" id="fix-source">
-            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fix</span>
   <span class="ruby-ivar">@event</span> = <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">fix_events</span>.<span class="ruby-identifier">build</span>
 <span class="ruby-keyword">end</span></pre>
@@ -427,7 +429,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 9</span>
+            <pre><span class="ruby-comment"># File app/controllers/flags_controller.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@event</span> = <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">flag_events</span>.<span class="ruby-identifier">build</span>
 <span class="ruby-keyword">end</span></pre>

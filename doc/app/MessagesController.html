@@ -254,6 +254,8 @@
 
   <div id="description" class="description">
     
+<p>Manages sending messages between students and their donors.</p>
+
   </div><!-- description -->
 
   
@@ -290,7 +292,7 @@
 
           
           <div class="method-source-code" id="allowed_users-source">
-            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 3</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">allowed_users</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:is_thanks</span>] <span class="ruby-operator">?</span> <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">student</span> <span class="ruby-operator">:</span> [<span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">student</span>, <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">donor</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -320,7 +322,7 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:event</span>].<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">user</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@current_user</span>)
   <span class="ruby-ivar">@event</span> = <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">message_events</span>.<span class="ruby-identifier">build</span> <span class="ruby-identifier">attributes</span>
@@ -358,7 +360,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 10</span>
+            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@event</span> = <span class="ruby-ivar">@donation</span>.<span class="ruby-identifier">message_events</span>.<span class="ruby-identifier">build</span> <span class="ruby-identifier">user</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@current_user</span>, <span class="ruby-identifier">is_thanks</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:is_thanks</span>]
   <span class="ruby-identifier">render_form</span>
@@ -389,7 +391,7 @@
 
           
           <div class="method-source-code" id="render_form-source">
-            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 6</span>
+            <pre><span class="ruby-comment"># File app/controllers/messages_controller.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">render_form</span>
   <span class="ruby-identifier">render</span> <span class="ruby-ivar">@event</span>.<span class="ruby-identifier">is_thanks?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;thank&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;new&quot;</span>
 <span class="ruby-keyword">end</span></pre>

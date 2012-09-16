@@ -1,9 +1,12 @@
+# Manages Requests, including the list of open requests at /donate.
 class RequestsController < ApplicationController
   before_filter :require_login
   before_filter :require_can_request, only: [:new, :create]
   before_filter :require_unsent_for_cancel, only: [:cancel, :destroy]
 
+  #--
   # Filters
+  #++
 
   def parse_params
     @from_read = params[:from_read].to_bool
@@ -30,7 +33,9 @@ class RequestsController < ApplicationController
     end
   end
 
+  #--
   # Actions
+  #++
 
   def index
     @requests = Request.not_granted.reorder('updated_at desc')

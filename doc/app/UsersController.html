@@ -256,6 +256,8 @@
 
   <div id="description" class="description">
     
+<p>Manages user signup of both students and donors.</p>
+
   </div><!-- description -->
 
   
@@ -292,7 +294,7 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 22</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-identifier">referral_id</span> = <span class="ruby-identifier">session</span>[<span class="ruby-value">:referral_id</span>]
   <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">referral_id</span> = <span class="ruby-identifier">referral_id</span>
@@ -338,7 +340,7 @@
 
           
           <div class="method-source-code" id="donate-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 18</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donate</span>
   <span class="ruby-ivar">@pledge</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">pledges</span>.<span class="ruby-identifier">build</span> <span class="ruby-identifier">quantity</span><span class="ruby-operator">:</span> <span class="ruby-value">5</span>
 <span class="ruby-keyword">end</span></pre>
@@ -368,7 +370,7 @@
 
           
           <div class="method-source-code" id="load_models-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 8</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 9</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_models</span>
   <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:user</span>]
   <span class="ruby-ivar">@request</span> = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">requests</span>.<span class="ruby-identifier">build</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:request</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:request</span>]
@@ -400,7 +402,7 @@
 
           
           <div class="method-source-code" id="read-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">read</span>
   <span class="ruby-ivar">@request</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">requests</span>.<span class="ruby-identifier">build</span>
 <span class="ruby-keyword">end</span></pre>
@@ -430,7 +432,7 @@
 
           
           <div class="method-source-code" id="seen_signup-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">seen_signup</span>
   <span class="ruby-identifier">session</span>[<span class="ruby-value">:seen_signup</span>] = <span class="ruby-keyword">true</span>
 <span class="ruby-keyword">end</span></pre>

@@ -1,3 +1,4 @@
+# Manages forgotten passwords and password resets.
 class PasswordsController < ApplicationController
   before_filter :validate_auth, only: [:edit, :update]
   rescue_from(User::AuthTokenExpired) { render :expired_reset }

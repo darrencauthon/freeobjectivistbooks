@@ -1,3 +1,4 @@
+# Manages changes to Donation status, like "sent" or "received".
 class StatusesController < ApplicationController
   before_filter :require_login
   before_filter :require_status
@@ -10,7 +11,9 @@ class StatusesController < ApplicationController
     @status ||= params[:status] || donation_status
   end
 
+  #--
   # Filters
+  #++
 
   def allowed_users
     case status
@@ -23,7 +26,9 @@ class StatusesController < ApplicationController
     render_not_found if status.blank?
   end
 
+  #--
   # Actions
+  #++
 
   def edit
     if status == "sent"

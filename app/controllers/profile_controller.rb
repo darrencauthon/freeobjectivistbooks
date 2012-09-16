@@ -1,3 +1,4 @@
+# Displays the logged-in-user homepage.
 class ProfileController < ApplicationController
   before_filter :require_login
 

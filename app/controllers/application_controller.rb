@@ -1,4 +1,7 @@
+# Thrown when a session with no current user tries something that requires login.
 class UnauthorizedException < StandardError; end
+
+# Thrown when a session wiwth a current user tries something that is not allowed for that user.
 class ForbiddenException < StandardError; end
 
 class ApplicationController < ActionController::Base

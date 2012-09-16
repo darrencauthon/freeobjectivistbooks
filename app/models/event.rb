@@ -80,6 +80,7 @@ class Event < ActiveRecord::Base
       student if is_thanks?
     end
   end
+  private :default_user
 
   #--
   # Derived attributes
@@ -119,6 +120,7 @@ class Event < ActiveRecord::Base
     to_donor? ? donor : student
   end
 
+  # True if the notification for this event has been sent.
   def notified?
     notified_at.present?
   end
@@ -127,15 +129,18 @@ class Event < ActiveRecord::Base
   # Actions
   #++
 
+  # Marks the event as notified.
   def notified
     self.notified_at = Time.now
   end
 
+  # Marks the event as notifies and saves.
   def notified!
     notified
     save!
   end
 
+  # Sends a notification email for this event.
   def notify
     return if !to || notified?
     Rails.logger.info "Sending notification for event #{id} (#{type} #{detail}) to #{to.name} (#{to.email})"

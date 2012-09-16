@@ -1,3 +1,4 @@
+# Manages user signup of both students and donors.
 class UsersController < ApplicationController
   before_filter :seen_signup, only: [:read, :donate]
 

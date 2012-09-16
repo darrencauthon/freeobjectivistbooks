@@ -1,3 +1,4 @@
+# Manages login and logout.
 class SessionsController < ApplicationController
   def parse_params
     @destination = params[:destination]

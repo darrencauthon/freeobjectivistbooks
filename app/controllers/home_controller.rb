@@ -1,3 +1,4 @@
+# Manages the unrecognized-user homepage.
 class HomeController < ApplicationController
   before_filter :require_login, only: :profile
 

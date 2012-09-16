@@ -1,3 +1,4 @@
+# Displays the "locations" page with a map of users around the world.
 class LocationsController < ApplicationController
   def index
     @users = Request.active.includes(:user).all.map {|request| request.user}.uniq

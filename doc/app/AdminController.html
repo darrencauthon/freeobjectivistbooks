@@ -248,6 +248,9 @@
 
   <div id="description" class="description">
     
+<p>Parent class for all admin controllers. Also manages the main admin
+dashboard at /admin.</p>
+
   </div><!-- description -->
 
   
@@ -284,7 +287,7 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin_controller.rb, line 8</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin_controller.rb, line 9</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-ivar">@user_count</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">count</span>
   <span class="ruby-ivar">@request_count</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">count</span>

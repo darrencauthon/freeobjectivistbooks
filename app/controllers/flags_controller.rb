@@ -1,3 +1,4 @@
+# Manages flagging Donations and clearing those flags.
 class FlagsController < ApplicationController
   def allowed_users
     case params[:action]
