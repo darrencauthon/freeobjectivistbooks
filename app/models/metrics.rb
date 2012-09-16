@@ -1,3 +1,4 @@
+# Calculates metrics and user analytics for the site.
 class Metrics
   def request_pipeline
     calculate_metrics [

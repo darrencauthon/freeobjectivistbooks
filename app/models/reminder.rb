@@ -1,20 +1,30 @@
+# Represents a reminder email sent to a user, e.g., when the ball is in their court to take the
+# next action on a Donation, or when they need to fulfill a Pledge. Used by the ReminderMailer.
+#
+# This is an "abstract" superclass, "implemented" by subclasses in the Reminders module.
 class Reminder < ActiveRecord::Base
   def self.type_name
     name.demodulize.underscore
   end
 
+  #--
   # Associations
+  #++
 
   belongs_to :user
   has_many :reminder_entities, dependent: :destroy
   has_many :pledges, through: :reminder_entities, source: :entity, source_type: 'Pledge'
   has_many :donations, through: :reminder_entities, source: :entity, source_type: 'Donation'
 
+  #--
   # Scopes
+  #++
 
   default_scope order(:created_at)
 
+  #--
   # Constructors
+  #++
 
   def self.new_for_entity(donation)
     raise NotImplementedError
@@ -28,7 +38,9 @@ class Reminder < ActiveRecord::Base
     all_key_entities.map {|entity| new_for_entity entity}
   end
 
+  #--
   # Can send?
+  #++
 
   def too_soon?
     false
@@ -63,7 +75,9 @@ class Reminder < ActiveRecord::Base
     true
   end
 
+  #--
   # Other derived attributes
+  #++
 
   def pledge
     pledges.first

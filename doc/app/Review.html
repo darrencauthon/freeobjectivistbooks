@@ -250,6 +250,9 @@
 
   <div id="description" class="description">
     
+<p>Represents a student’s answer to “What did you think?” of a given book,
+after they have read it.</p>
+
   </div><!-- description -->
 
   
@@ -286,7 +289,7 @@
 
           
           <div class="method-source-code" id="populate-source">
-            <pre><span class="ruby-comment"># File app/models/review.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/models/review.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">populate</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">id</span>
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">user</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">student</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">donation</span>
@@ -314,12 +317,12 @@
 
         <div class="method-description">
           
-          <p>Other methods</p>
+          <p>Creates a <a href="Testimonial.html">Testimonial</a> based on this review.</p>
           
 
           
           <div class="method-source-code" id="to_testimonial-source">
-            <pre><span class="ruby-comment"># File app/models/review.rb, line 32</span>
+            <pre><span class="ruby-comment"># File app/models/review.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_testimonial</span>
   <span class="ruby-constant">Testimonial</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">source</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> <span class="ruby-string">'student'</span>, <span class="ruby-identifier">title</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;On *#{book}*&quot;</span>, <span class="ruby-identifier">text</span><span class="ruby-operator">:</span> <span class="ruby-identifier">text</span>,
     <span class="ruby-identifier">attribution</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{user.name}, studying #{user.studying.downcase} at #{user.school}&quot;</span>

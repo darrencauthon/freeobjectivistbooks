@@ -278,6 +278,8 @@
 
   <div id="description" class="description">
     
+<p>Calculates metrics and user analytics for the site.</p>
+
   </div><!-- description -->
 
   
@@ -314,7 +316,7 @@
 
           
           <div class="method-source-code" id="book_leaderboard-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 78</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">book_leaderboard</span>
   <span class="ruby-identifier">request_counts</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">group</span>(<span class="ruby-value">:book</span>).<span class="ruby-identifier">count</span>
   <span class="ruby-identifier">donation_counts</span> = <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-value">:request</span>).<span class="ruby-identifier">group</span>(<span class="ruby-value">:book</span>).<span class="ruby-identifier">count</span>
@@ -350,7 +352,7 @@
 
           
           <div class="method-source-code" id="breakdown_by_time-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 38</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">breakdown_by_time</span>(<span class="ruby-identifier">relation</span>, <span class="ruby-identifier">timestamp_column</span> = <span class="ruby-value">:created_at</span>)
   <span class="ruby-identifier">time_columns</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>,<span class="ruby-identifier">column</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">time</span> = <span class="ruby-identifier">times</span>[<span class="ruby-identifier">column</span>]
@@ -384,7 +386,7 @@
 
           
           <div class="method-source-code" id="count_referrals-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 92</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">count_referrals</span>(<span class="ruby-identifier">model</span>)
   <span class="ruby-identifier">counts</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-value">:referral</span>).<span class="ruby-identifier">group</span>(<span class="ruby-value">:source</span>, <span class="ruby-value">:medium</span>).<span class="ruby-identifier">count</span>
   <span class="ruby-identifier">counts</span>.<span class="ruby-identifier">default</span> = <span class="ruby-value">0</span>
@@ -416,7 +418,7 @@
 
           
           <div class="method-source-code" id="donation_metrics-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 58</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donation_metrics</span>
   <span class="ruby-identifier">calculate_metrics</span> [
     {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Flagged'</span>,      <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">flagged</span>.<span class="ruby-identifier">count</span>,      <span class="ruby-identifier">denominator_name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Not sent'</span>, <span class="ruby-identifier">denominator_value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">not_sent</span>.<span class="ruby-identifier">count</span>},
@@ -454,7 +456,7 @@
 
           
           <div class="method-source-code" id="now-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 34</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">now</span>
   <span class="ruby-ivar">@now</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
 <span class="ruby-keyword">end</span></pre>
@@ -484,7 +486,7 @@
 
           
           <div class="method-source-code" id="pipeline_breakdown-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 46</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pipeline_breakdown</span>
   {
     <span class="ruby-identifier">columns</span><span class="ruby-operator">:</span> <span class="ruby-identifier">time_columns</span>,
@@ -522,7 +524,7 @@
 
           
           <div class="method-source-code" id="pledge_metrics-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 70</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pledge_metrics</span>
   [
     {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Donors pledging'</span>,     <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Pledge</span>.<span class="ruby-identifier">count</span>},
@@ -556,7 +558,7 @@
 
           
           <div class="method-source-code" id="pledge_referrals-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 106</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 107</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pledge_referrals</span>
   <span class="ruby-ivar">@pledge_referrals</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">count_referrals</span> <span class="ruby-constant">Pledge</span>
 <span class="ruby-keyword">end</span></pre>
@@ -586,7 +588,7 @@
 
           
           <div class="method-source-code" id="referral_counts-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 88</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">referral_counts</span>
   <span class="ruby-ivar">@referral_counts</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Referral</span>.<span class="ruby-identifier">unscoped</span>.<span class="ruby-identifier">group</span>(<span class="ruby-value">:source</span>, <span class="ruby-value">:medium</span>).<span class="ruby-identifier">count</span>
 <span class="ruby-keyword">end</span></pre>
@@ -616,7 +618,7 @@
 
           
           <div class="method-source-code" id="referral_metrics-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 115</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 116</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">referral_metrics</span>(<span class="ruby-identifier">key</span>)
   <span class="ruby-identifier">pair</span> = [<span class="ruby-identifier">key</span>[<span class="ruby-value">:source</span>], <span class="ruby-identifier">key</span>[<span class="ruby-value">:medium</span>]]
   <span class="ruby-identifier">calculate_metrics</span> [
@@ -652,7 +654,7 @@
 
           
           <div class="method-source-code" id="referral_metrics_keys-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 110</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 111</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">referral_metrics_keys</span>
   <span class="ruby-identifier">keys</span> = <span class="ruby-identifier">referral_counts</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">pair</span><span class="ruby-operator">|</span> {<span class="ruby-identifier">source</span><span class="ruby-operator">:</span> <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">first</span>, <span class="ruby-identifier">medium</span><span class="ruby-operator">:</span> <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">second</span>}}
   <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort_by</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{key[:source]}#{key[:medium]}&quot;</span>}
@@ -683,7 +685,7 @@
 
           
           <div class="method-source-code" id="request_pipeline-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 3</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">request_pipeline</span>
   <span class="ruby-identifier">calculate_metrics</span> [
     {<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Active'</span>,   <span class="ruby-identifier">value</span><span class="ruby-operator">:</span> <span class="ruby-constant">Request</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">count</span>},
@@ -720,7 +722,7 @@
 
           
           <div class="method-source-code" id="request_referrals-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 102</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 103</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">request_referrals</span>
   <span class="ruby-ivar">@request_referrals</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">count_referrals</span> <span class="ruby-constant">Request</span>
 <span class="ruby-keyword">end</span></pre>
@@ -750,7 +752,7 @@
 
           
           <div class="method-source-code" id="time_columns-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">time_columns</span>
   <span class="ruby-ivar">@time_columns</span> <span class="ruby-operator">||=</span> [<span class="ruby-string">&quot;Total&quot;</span>, <span class="ruby-string">&quot;3 days&quot;</span>, <span class="ruby-string">&quot;1 wk&quot;</span>, <span class="ruby-string">&quot;2 wks&quot;</span>, <span class="ruby-string">&quot;3 wks&quot;</span>, <span class="ruby-string">&quot;1 mo&quot;</span>, <span class="ruby-string">&quot;2 mos&quot;</span>, <span class="ruby-string">&quot;3 mos&quot;</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -780,7 +782,7 @@
 
           
           <div class="method-source-code" id="times-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">times</span>
   <span class="ruby-ivar">@times</span> = <span class="ruby-identifier">time_columns</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>,<span class="ruby-identifier">column</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">time</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">column</span>
@@ -823,7 +825,7 @@
 
           
           <div class="method-source-code" id="user_referrals-source">
-            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 98</span>
+            <pre><span class="ruby-comment"># File app/models/metrics.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">user_referrals</span>
   <span class="ruby-ivar">@user_referrals</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">count_referrals</span> <span class="ruby-constant">User</span>
 <span class="ruby-keyword">end</span></pre>

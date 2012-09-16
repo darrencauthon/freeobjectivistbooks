@@ -258,6 +258,11 @@
 
   <div id="description" class="description">
     
+<p>A note sent to a student when the donor hasn’t confirmed that they have
+sent the book. Asks if they have recieved the book, but gives them the
+option to cancel the donation if not (in which case they go back on the
+open requests list to try to find another donor.)</p>
+
   </div><!-- description -->
 
   
@@ -294,7 +299,7 @@
 
           
           <div class="method-source-code" id="all_key_entities-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 6</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 9</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all_key_entities</span>
   <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">needs_sending</span>.<span class="ruby-identifier">includes</span>(<span class="ruby-identifier">request</span><span class="ruby-operator">:</span> <span class="ruby-value">:user</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -324,7 +329,7 @@
 
           
           <div class="method-source-code" id="new_for_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_for_entity</span>(<span class="ruby-identifier">donation</span>)
   <span class="ruby-identifier">new</span> <span class="ruby-identifier">user</span><span class="ruby-operator">:</span> <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">student</span>, <span class="ruby-identifier">donations</span><span class="ruby-operator">:</span> [<span class="ruby-identifier">donation</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -360,7 +365,7 @@
 
           
           <div class="method-source-code" id="key_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 10</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">key_entity</span>
   <span class="ruby-identifier">donation</span>
 <span class="ruby-keyword">end</span></pre>
@@ -390,7 +395,7 @@
 
           
           <div class="method-source-code" id="max_reminders-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 24</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">max_reminders</span>
   <span class="ruby-value">3</span>
 <span class="ruby-keyword">end</span></pre>
@@ -420,7 +425,7 @@
 
           
           <div class="method-source-code" id="min_interval-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 20</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">min_interval</span>
   <span class="ruby-value">1</span>.<span class="ruby-identifier">week</span>
 <span class="ruby-keyword">end</span></pre>
@@ -445,12 +450,12 @@
 
         <div class="method-description">
           
-          <p>Can send?</p>
+          
           
 
           
           <div class="method-source-code" id="too_soon-3F-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 16</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/confirm_receipt_unsent.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">too_soon?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">donation</span>.<span class="ruby-identifier">student_can_cancel?</span>
 <span class="ruby-keyword">end</span></pre>

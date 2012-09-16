@@ -1,9 +1,12 @@
+# Stores geocoder results for a User location. Used by the LocationsController to display a map of users.
 class Location < ActiveRecord::Base
   serialize :geocoder_results
 
   after_create :geocode!
 
+  #--
   # Parsing the geocoder results
+  #++
 
   def first_geocoder_result
     return {} if geocoder_results.nil? || geocoder_results.empty?
@@ -43,13 +46,17 @@ class Location < ActiveRecord::Base
     first_geocoder_result['types'] || []
   end
 
+  #--
   # Derived attributes
+  #++
 
   def locality?
     types.include?("locality")
   end
 
+  #--
   # Actions
+  #++
 
   def geocode!
     self.geocoder_results = Geocoder.geocode name

@@ -300,6 +300,9 @@
 
   <div id="description" class="description">
     
+<p>Represents a donor’s granting of a student’s request (or stated intention
+to do so).</p>
+
   </div><!-- description -->
 
   
@@ -331,12 +334,12 @@
 
         <div class="method-description">
           
-          
+          <p>Whether the donation is still active, i.e., not canceled.</p>
           
 
           
           <div class="method-source-code" id="active-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 68</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">active?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">canceled?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -361,12 +364,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the given user can cancel the donation.</p>
           
 
           
           <div class="method-source-code" id="can_cancel-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 134</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 164</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_cancel?</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">user</span>
   <span class="ruby-keyword">when</span> <span class="ruby-identifier">donor</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">donor_can_cancel?</span>
@@ -395,12 +398,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if we should show the “flag” link to the donor.</p>
           
 
           
           <div class="method-source-code" id="can_flag-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 120</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 147</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_flag?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">sent?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">flagged?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -425,12 +428,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if we should show the “sent” button to the donor.</p>
           
 
           
           <div class="method-source-code" id="can_send-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 116</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_send?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">sent?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -460,7 +463,7 @@
 
           
           <div class="method-source-code" id="cancel-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 197</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 234</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">cancel</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">user</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">canceled?</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Can't cancel&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">can_cancel?</span> <span class="ruby-identifier">user</span>
@@ -491,12 +494,12 @@
 
         <div class="method-description">
           
-          
+          <p>Alias for the user who made the donation.</p>
           
 
           
           <div class="method-source-code" id="donor-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 72</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donor</span>
   <span class="ruby-identifier">user</span>
 <span class="ruby-keyword">end</span></pre>
@@ -521,12 +524,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the donor can cancel the donation.</p>
           
 
           
           <div class="method-source-code" id="donor_can_cancel-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 124</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 152</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donor_can_cancel?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">received?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -556,7 +559,7 @@
 
           
           <div class="method-source-code" id="donor_cannot_be_requester-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 26</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donor_cannot_be_requester</span>
   <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span> <span class="ruby-value">:base</span>, <span class="ruby-string">&quot;You can't donate to yourself!&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">donor</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">student</span>
 <span class="ruby-keyword">end</span></pre>
@@ -586,7 +589,7 @@
 
           
           <div class="method-source-code" id="fix-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 191</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 228</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fix</span>(<span class="ruby-identifier">attributes</span>, <span class="ruby-identifier">event_attributes</span> = {})
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">attributes</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">flagged</span> = <span class="ruby-keyword">false</span>
@@ -618,7 +621,7 @@
 
           
           <div class="method-source-code" id="flag-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 186</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 223</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">flag</span>(<span class="ruby-identifier">params</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">flagged</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-identifier">flag_events</span>.<span class="ruby-identifier">build</span> <span class="ruby-identifier">params</span>
@@ -644,12 +647,13 @@
 
         <div class="method-description">
           
-          
+          <p>The message from the donor the last time the donor flagged the request, if
+any.</p>
           
 
           
           <div class="method-source-code" id="flag_message-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 142</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 173</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">flag_message</span>
   <span class="ruby-identifier">event</span> = <span class="ruby-identifier">flag_events</span>.<span class="ruby-identifier">last</span>
   <span class="ruby-identifier">event</span>.<span class="ruby-identifier">message</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>
@@ -675,12 +679,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the book has been sent but not yet received.</p>
           
 
           
           <div class="method-source-code" id="in_transit-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 88</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">in_transit?</span>
   <span class="ruby-identifier">status</span>.<span class="ruby-identifier">sent?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -705,12 +709,13 @@
 
         <div class="method-description">
           
-          
+          <p>Whether we’re going to require the student to enter an address the next
+time they update the associated request.</p>
           
 
           
           <div class="method-source-code" id="needs_address-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 104</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">needs_address?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">flagged?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">sent?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -735,12 +740,12 @@
 
         <div class="method-description">
           
-          
+          <p>Whether the donation has been flagged for the student to respond.</p>
           
 
           
           <div class="method-source-code" id="needs_fix-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 108</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 132</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">needs_fix?</span>
   <span class="ruby-identifier">active?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">flagged?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -765,12 +770,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the ball is in the donor’s court to send the book.</p>
           
 
           
           <div class="method-source-code" id="needs_sending-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 112</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 137</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">needs_sending?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">sent?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">flagged?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -795,12 +800,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the book has been read.</p>
           
 
           
           <div class="method-source-code" id="read-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 100</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 121</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">read?</span>
   <span class="ruby-identifier">status</span>.<span class="ruby-identifier">read?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -825,12 +830,12 @@
 
         <div class="method-description">
           
-          
+          <p>The time the book was confirmed read, if any.</p>
           
 
           
           <div class="method-source-code" id="read_at-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 166</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 201</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">read_at</span>
   <span class="ruby-identifier">updated_at_for_status</span> <span class="ruby-string">&quot;read&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -855,12 +860,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the book has been received but not yet read.</p>
           
 
           
           <div class="method-source-code" id="reading-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 96</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 116</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reading?</span>
   <span class="ruby-identifier">status</span>.<span class="ruby-identifier">received?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -885,12 +890,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the book has been received.</p>
           
 
           
           <div class="method-source-code" id="received-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 92</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 111</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">received?</span>
   <span class="ruby-identifier">status</span>.<span class="ruby-identifier">received?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">status</span>.<span class="ruby-identifier">read?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -915,12 +920,12 @@
 
         <div class="method-description">
           
-          
+          <p>The time the book was confirmed received, if any.</p>
           
 
           
           <div class="method-source-code" id="received_at-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 162</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 196</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">received_at</span>
   <span class="ruby-identifier">updated_at_for_status</span> <span class="ruby-string">&quot;received&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -945,12 +950,13 @@
 
         <div class="method-description">
           
-          
+          <p>True if the book has been sent. (This is not the same as status = sent,
+since it is still true after the book has been received.)</p>
           
 
           
           <div class="method-source-code" id="sent-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 84</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 101</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sent?</span>
   <span class="ruby-identifier">status</span>.<span class="ruby-identifier">sent?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">status</span>.<span class="ruby-identifier">received?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">status</span>.<span class="ruby-identifier">read?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -975,12 +981,12 @@
 
         <div class="method-description">
           
-          
+          <p>The time the book was confirmed sent, if any.</p>
           
 
           
           <div class="method-source-code" id="sent_at-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 158</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 191</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sent_at</span>
   <span class="ruby-identifier">updated_at_for_status</span> <span class="ruby-string">&quot;sent&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1005,12 +1011,13 @@
 
         <div class="method-description">
           
-          
+          <p>Status of the donation: not_sent, sent, received, or read, as a
+StringInquirer.</p>
           
 
           
           <div class="method-source-code" id="status-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 80</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">status</span>
   <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">StringInquirer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>[<span class="ruby-value">:status</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1035,12 +1042,12 @@
 
         <div class="method-description">
           
-          
+          <p>Student the donation is for.</p>
           
 
           
           <div class="method-source-code" id="student-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 76</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">student</span>
   <span class="ruby-identifier">request</span>.<span class="ruby-identifier">user</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1065,12 +1072,12 @@
 
         <div class="method-description">
           
-          
+          <p>True if the student is allowed to cancel the donation.</p>
           
 
           
           <div class="method-source-code" id="student_can_cancel-3F-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 128</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 157</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">student_can_cancel?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">sent?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">flagged?</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">since</span>(<span class="ruby-identifier">created_at</span>) <span class="ruby-operator">&lt;</span> <span class="ruby-value">3</span>.<span class="ruby-identifier">weeks</span>
   <span class="ruby-identifier">reminder</span> = <span class="ruby-identifier">reminders</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">type</span><span class="ruby-operator">:</span> <span class="ruby-constant">Reminders</span><span class="ruby-operator">::</span><span class="ruby-constant">SendBooks</span>).<span class="ruby-identifier">reorder</span>(<span class="ruby-value">:created_at</span>).<span class="ruby-identifier">first</span>
@@ -1097,12 +1104,12 @@
 
         <div class="method-description">
           
-          <p>Actions</p>
+          
           
 
           
           <div class="method-source-code" id="update_status-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 172</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 209</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_status</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:status</span>]
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status_updated_at</span> = <span class="ruby-identifier">time</span>
@@ -1142,7 +1149,7 @@
 
           
           <div class="method-source-code" id="updated_at_for_status-source">
-            <pre><span class="ruby-comment"># File app/models/donation.rb, line 147</span>
+            <pre><span class="ruby-comment"># File app/models/donation.rb, line 178</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">updated_at_for_status</span>(<span class="ruby-identifier">status</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">created_at</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;not_sent&quot;</span>
 

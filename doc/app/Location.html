@@ -268,6 +268,10 @@
 
   <div id="description" class="description">
     
+<p>Stores geocoder results for a <a href="User.html">User</a> location. Used
+by the <a href="LocationsController.html">LocationsController</a> to
+display a map of users.</p>
+
   </div><!-- description -->
 
   
@@ -304,7 +308,7 @@
 
           
           <div class="method-source-code" id="address_components-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">address_components</span>
   <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'address_components'</span>] <span class="ruby-operator">||</span> []
 <span class="ruby-keyword">end</span></pre>
@@ -334,7 +338,7 @@
 
           
           <div class="method-source-code" id="country-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">country</span>
   <span class="ruby-identifier">component</span> = <span class="ruby-identifier">address_components</span>.<span class="ruby-identifier">find</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">component</span><span class="ruby-operator">|</span> <span class="ruby-identifier">component</span>[<span class="ruby-string">'types'</span>].<span class="ruby-identifier">include?</span> <span class="ruby-string">&quot;country&quot;</span>}
   <span class="ruby-identifier">component</span>[<span class="ruby-string">'long_name'</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">component</span>
@@ -360,12 +364,12 @@
 
         <div class="method-description">
           
-          <p>Parsing the geocoder results</p>
+          
           
 
           
           <div class="method-source-code" id="first_geocoder_result-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 8</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">first_geocoder_result</span>
   <span class="ruby-keyword">return</span> {} <span class="ruby-keyword">if</span> <span class="ruby-identifier">geocoder_results</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">geocoder_results</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-identifier">geocoder_results</span>[<span class="ruby-value">0</span>]
@@ -396,7 +400,7 @@
 
           
           <div class="method-source-code" id="formatted_address-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 22</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">formatted_address</span>
   <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'formatted_address'</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -421,12 +425,12 @@
 
         <div class="method-description">
           
-          <p>Actions</p>
+          
           
 
           
           <div class="method-source-code" id="geocode-21-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 54</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">geocode!</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">geocoder_results</span> = <span class="ruby-constant">Geocoder</span>.<span class="ruby-identifier">geocode</span> <span class="ruby-identifier">name</span>
   <span class="ruby-identifier">save!</span>
@@ -457,7 +461,7 @@
 
           
           <div class="method-source-code" id="geometry-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 26</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">geometry</span>
   <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'geometry'</span>] <span class="ruby-operator">||</span> {}
 <span class="ruby-keyword">end</span></pre>
@@ -487,7 +491,7 @@
 
           
           <div class="method-source-code" id="lat-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 34</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lat</span>
   <span class="ruby-identifier">location</span>[<span class="ruby-string">'lat'</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -512,12 +516,12 @@
 
         <div class="method-description">
           
-          <p>Derived attributes</p>
+          
           
 
           
           <div class="method-source-code" id="locality-3F-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 48</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">locality?</span>
   <span class="ruby-identifier">types</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;locality&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -547,7 +551,7 @@
 
           
           <div class="method-source-code" id="location-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 30</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">location</span>
   <span class="ruby-identifier">geometry</span>[<span class="ruby-string">'location'</span>] <span class="ruby-operator">||</span> {}
 <span class="ruby-keyword">end</span></pre>
@@ -577,7 +581,7 @@
 
           
           <div class="method-source-code" id="lon-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 38</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lon</span>
   <span class="ruby-identifier">location</span>[<span class="ruby-string">'lng'</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -607,7 +611,7 @@
 
           
           <div class="method-source-code" id="types-source">
-            <pre><span class="ruby-comment"># File app/models/location.rb, line 42</span>
+            <pre><span class="ruby-comment"># File app/models/location.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">types</span>
   <span class="ruby-identifier">first_geocoder_result</span>[<span class="ruby-string">'types'</span>] <span class="ruby-operator">||</span> []
 <span class="ruby-keyword">end</span></pre>

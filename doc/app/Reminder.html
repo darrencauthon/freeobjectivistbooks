@@ -274,6 +274,14 @@
 
   <div id="description" class="description">
     
+<p>Represents a reminder email sent to a user, e.g., when the ball is in their
+court to take the next action on a <a href="Donation.html">Donation</a>, or
+when they need to fulfill a <a href="Pledge.html">Pledge</a>. Used by the
+<a href="ReminderMailer.html">ReminderMailer</a>.</p>
+
+<p>This is an “abstract” superclass, “implemented” by subclasses in the <a
+href="Reminders.html">Reminders</a> module.</p>
+
   </div><!-- description -->
 
   
@@ -310,7 +318,7 @@
 
           
           <div class="method-source-code" id="all_key_entities-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all_key_entities</span>
   []
 <span class="ruby-keyword">end</span></pre>
@@ -340,7 +348,7 @@
 
           
           <div class="method-source-code" id="all_reminders-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 27</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all_reminders</span>
   <span class="ruby-identifier">all_key_entities</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">entity</span><span class="ruby-operator">|</span> <span class="ruby-identifier">new_for_entity</span> <span class="ruby-identifier">entity</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -365,12 +373,12 @@
 
         <div class="method-description">
           
-          <p>Constructors</p>
+          
           
 
           
           <div class="method-source-code" id="new_for_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 19</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_for_entity</span>(<span class="ruby-identifier">donation</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
 <span class="ruby-keyword">end</span></pre>
@@ -400,7 +408,7 @@
 
           
           <div class="method-source-code" id="type_name-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">type_name</span>
   <span class="ruby-identifier">name</span>.<span class="ruby-identifier">demodulize</span>.<span class="ruby-identifier">underscore</span>
 <span class="ruby-keyword">end</span></pre>
@@ -436,7 +444,7 @@
 
           
           <div class="method-source-code" id="can_send-3F-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 45</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_send?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">too_soon?</span>
     <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Too soon for #{self}&quot;</span>
@@ -483,7 +491,7 @@
 
           
           <div class="method-source-code" id="donation-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 72</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donation</span>
   <span class="ruby-identifier">donations</span>.<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -513,7 +521,7 @@
 
           
           <div class="method-source-code" id="key_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 76</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">key_entity</span>
   <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -543,7 +551,7 @@
 
           
           <div class="method-source-code" id="latest_reminder-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 80</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">latest_reminder</span>
   <span class="ruby-identifier">key_entity</span>.<span class="ruby-identifier">reminders</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">type</span><span class="ruby-operator">:</span> <span class="ruby-identifier">type</span>, <span class="ruby-identifier">user_id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user</span>).<span class="ruby-identifier">reorder</span>(<span class="ruby-value">:created_at</span>).<span class="ruby-identifier">last</span>
 <span class="ruby-keyword">end</span></pre>
@@ -573,7 +581,7 @@
 
           
           <div class="method-source-code" id="max_reminders-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 41</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">max_reminders</span>
   <span class="ruby-value">3</span>
 <span class="ruby-keyword">end</span></pre>
@@ -603,7 +611,7 @@
 
           
           <div class="method-source-code" id="min_interval-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">min_interval</span>
   <span class="ruby-value">1</span>.<span class="ruby-identifier">week</span>
 <span class="ruby-keyword">end</span></pre>
@@ -633,7 +641,7 @@
 
           
           <div class="method-source-code" id="past_reminder_count-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 84</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">past_reminder_count</span>
   <span class="ruby-comment"># We want the minimum past reminder count among all entities this reminder is for.</span>
   <span class="ruby-identifier">entities</span> = <span class="ruby-identifier">donations</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">pledges</span>
@@ -660,12 +668,12 @@
 
         <div class="method-description">
           
-          <p>Other derived attributes</p>
+          
           
 
           
           <div class="method-source-code" id="pledge-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 68</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pledge</span>
   <span class="ruby-identifier">pledges</span>.<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -695,7 +703,7 @@
 
           
           <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 90</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-node">&quot;#{type.demodulize} re #{key_entity.class} #{key_entity.id}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -720,12 +728,12 @@
 
         <div class="method-description">
           
-          <p>Can send?</p>
+          
           
 
           
           <div class="method-source-code" id="too_soon-3F-source">
-            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/models/reminder.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">too_soon?</span>
   <span class="ruby-keyword">false</span>
 <span class="ruby-keyword">end</span></pre>

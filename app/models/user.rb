@@ -1,5 +1,6 @@
 require 'bcrypt'
 
+# Represents a user, either student or donor.
 class User < ActiveRecord::Base
   class AuthTokenInvalid < StandardError; end
   class AuthTokenExpired < StandardError; end
@@ -10,7 +11,9 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  #--
   # Associations
+  #++
 
   has_many :requests
   has_many :pledges
@@ -19,7 +22,9 @@ class User < ActiveRecord::Base
   belongs_to :referral
   has_many :reminders
 
+  #--
   # Validations
+  #++
 
   validates_presence_of :name, :location, :email
   validates_uniqueness_of :email, case_sensitive: false, message: "There is already an account with this email."
@@ -48,7 +53,9 @@ class User < ActiveRecord::Base
     errors.add(:name, "please include full first and last name") if (!has_upper && !has_lower) || name.words.size < 2
   end
 
+  #--
   # Scopes and finders
+  #++
 
   default_scope order("created_at desc")
 
@@ -83,7 +90,9 @@ class User < ActiveRecord::Base
     Donation.needs_sending.includes(:user).map {|donation| donation.user}.uniq
   end
 
+  #--
   # Callbacks
+  #++
 
   before_validation do |user|
     [:name, :email, :location, :school, :studying].each do |attribute|
@@ -99,7 +108,9 @@ class User < ActiveRecord::Base
     Rails.logger.info "New user: #{@user.inspect}"
   end
 
+  #--
   # Derived attributes
+  #++
 
   def is_duplicate?
     query = User.with_email(email)
@@ -121,7 +132,9 @@ class User < ActiveRecord::Base
     requests.not_granted.empty?
   end
 
+  #--
   # Actions
+  #++
 
   def password=(password)
     @password = password

@@ -1,5 +1,8 @@
+# Represents a donor's granting of a student's request (or stated intention to do so).
 class Donation < ActiveRecord::Base
+  #--
   # Associations
+  #++
 
   belongs_to :request, autosave: true
   belongs_to :user
@@ -14,7 +17,9 @@ class Donation < ActiveRecord::Base
     end
   end
 
+  #--
   # Validations
+  #++
 
   validates_presence_of :request
   validates_presence_of :user
@@ -27,7 +32,9 @@ class Donation < ActiveRecord::Base
     errors.add :base, "You can't donate to yourself!" if donor == student
   end
 
+  #--
   # Scopes
+  #++
 
   default_scope order("created_at desc")
 
@@ -50,7 +57,9 @@ class Donation < ActiveRecord::Base
   scope :needs_sending, active.not_flagged.not_sent
   scope :needs_thanks, active.received.not_thanked
 
+  #--
   # Callbacks
+  #++
 
   before_validation do |donation|
     if donation.status.blank?
@@ -59,78 +68,99 @@ class Donation < ActiveRecord::Base
     end
   end
 
+  #--
   # Derived attributes
+  #++
 
   delegate :book, to: :request
   delegate :address, :address=, to: :student
   delegate :name, :name=, to: :student, prefix: true
 
+  # Whether the donation is still active, i.e., not canceled.
   def active?
     !canceled?
   end
 
+  # Alias for the user who made the donation.
   def donor
     user
   end
 
+  # Student the donation is for.
   def student
     request.user
   end
 
+  # Status of the donation: not_sent, sent, received, or read, as a StringInquirer.
   def status
     ActiveSupport::StringInquirer.new(self[:status] || "")
   end
 
+  # True if the book has been sent. (This is not the same as status = sent, since it is still true
+  # after the book has been received.)
   def sent?
     status.sent? || status.received? || status.read?
   end
 
+  # True if the book has been sent but not yet received.
   def in_transit?
     status.sent?
   end
 
+  # True if the book has been received.
   def received?
     status.received? || status.read?
   end
 
+  # True if the book has been received but not yet read.
   def reading?
     status.received?
   end
 
+  # True if the book has been read.
   def read?
     status.read?
   end
 
+  # Whether we're going to require the student to enter an address the next time they update the
+  # associated request.
   def needs_address?
     !flagged? && !sent?
   end
 
+  # Whether the donation has been flagged for the student to respond.
   def needs_fix?
     active? && flagged?
   end
 
+  # True if the ball is in the donor's court to send the book.
   def needs_sending?
     !sent? && !flagged?
   end
 
+  # True if we should show the "sent" button to the donor.
   def can_send?
     !sent?
   end
 
+  # True if we should show the "flag" link to the donor.
   def can_flag?
     !sent? && !flagged?
   end
 
+  # True if the donor can cancel the donation.
   def donor_can_cancel?
     !received?
   end
 
+  # True if the student is allowed to cancel the donation.
   def student_can_cancel?
     return false if sent? || flagged? || Time.since(created_at) < 3.weeks
     reminder = reminders.where(type: Reminders::SendBooks).reorder(:created_at).first
     reminder && Time.since(reminder.created_at) >= 1.week
   end
 
+  # True if the given user can cancel the donation.
   def can_cancel?(user)
     case user
     when donor then donor_can_cancel?
@@ -139,6 +169,7 @@ class Donation < ActiveRecord::Base
     end
   end
 
+  # The message from the donor the last time the donor flagged the request, if any.
   def flag_message
     event = flag_events.last
     event.message if event
@@ -154,20 +185,26 @@ class Donation < ActiveRecord::Base
       updated_at
     end
   end
+  private :updated_at_for_status
 
+  # The time the book was confirmed sent, if any.
   def sent_at
     updated_at_for_status "sent"
   end
 
+  # The time the book was confirmed received, if any.
   def received_at
     updated_at_for_status "received"
   end
 
+  # The time the book was confirmed read, if any.
   def read_at
     updated_at_for_status "read"
   end
 
+  #--
   # Actions
+  #++
 
   def update_status(params, time = Time.now)
     self.status = params[:status]

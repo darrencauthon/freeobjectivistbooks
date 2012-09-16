@@ -1,3 +1,6 @@
+# A note sent to a student when the donor hasn't confirmed that they have sent the book. Asks
+# if they have recieved the book, but gives them the option to cancel the donation if not (in
+# which case they go back on the open requests list to try to find another donor.)
 class Reminders::ConfirmReceiptUnsent < Reminder
   def self.new_for_entity(donation)
     new user: donation.student, donations: [donation]
@@ -11,7 +14,9 @@ class Reminders::ConfirmReceiptUnsent < Reminder
     donation
   end
 
+  #--
   # Can send?
+  #++
 
   def too_soon?
     !donation.student_can_cancel?

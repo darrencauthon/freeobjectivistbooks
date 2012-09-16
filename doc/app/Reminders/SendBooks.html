@@ -256,6 +256,10 @@
 
   <div id="description" class="description">
     
+<p><a href="../Reminder.html">Reminder</a> to a donor to send the specific
+books that they have promised, if they haven't yet confirmed that they have
+done so.</p>
+
   </div><!-- description -->
 
   
@@ -292,7 +296,7 @@
 
           
           <div class="method-source-code" id="all_key_entities-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 6</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 8</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all_key_entities</span>
   <span class="ruby-constant">User</span>.<span class="ruby-identifier">donors_with_unsent_books</span>
 <span class="ruby-keyword">end</span></pre>
@@ -322,7 +326,7 @@
 
           
           <div class="method-source-code" id="new_for_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 4</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new_for_entity</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-identifier">new</span> <span class="ruby-identifier">user</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">donations</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">donations</span>.<span class="ruby-identifier">needs_sending</span>
 <span class="ruby-keyword">end</span></pre>
@@ -358,7 +362,7 @@
 
           
           <div class="method-source-code" id="key_entity-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 10</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">key_entity</span>
   <span class="ruby-identifier">user</span>
 <span class="ruby-keyword">end</span></pre>
@@ -388,7 +392,7 @@
 
           
           <div class="method-source-code" id="max_reminders-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 20</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">max_reminders</span>
   <span class="ruby-value">5</span>
 <span class="ruby-keyword">end</span></pre>
@@ -413,12 +417,12 @@
 
         <div class="method-description">
           
-          <p>Can send?</p>
+          
           
 
           
           <div class="method-source-code" id="min_interval-source">
-            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 16</span>
+            <pre><span class="ruby-comment"># File app/models/reminders/send_books.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">min_interval</span>
   <span class="ruby-value">4</span>.<span class="ruby-identifier">days</span>
 <span class="ruby-keyword">end</span></pre>

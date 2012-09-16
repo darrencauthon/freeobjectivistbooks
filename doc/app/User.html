@@ -286,6 +286,8 @@
 
   <div id="description" class="description">
     
+<p>Represents a user, either student or donor.</p>
+
   </div><!-- description -->
 
   
@@ -355,7 +357,7 @@
 
           
           <div class="method-source-code" id="donors_with_unsent_books-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 82</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">donors_with_unsent_books</span>
   <span class="ruby-constant">Donation</span>.<span class="ruby-identifier">needs_sending</span>.<span class="ruby-identifier">includes</span>(<span class="ruby-value">:user</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">donation</span><span class="ruby-operator">|</span> <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">user</span>}.<span class="ruby-identifier">uniq</span>
 <span class="ruby-keyword">end</span></pre>
@@ -385,7 +387,7 @@
 
           
           <div class="method-source-code" id="find_by_auth_token-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 61</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_auth_token</span>(<span class="ruby-identifier">token</span>, <span class="ruby-identifier">expiration</span> = <span class="ruby-constant">AUTH_TOKEN_EXPIRATION</span>)
   <span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">id</span>, <span class="ruby-identifier">seconds</span> = <span class="ruby-identifier">verifier</span>.<span class="ruby-identifier">verify</span> <span class="ruby-identifier">token</span>
@@ -422,7 +424,7 @@
 
           
           <div class="method-source-code" id="find_by_email-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 57</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_email</span>(<span class="ruby-identifier">email</span>)
   <span class="ruby-identifier">with_email</span>(<span class="ruby-identifier">email</span>).<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -452,7 +454,7 @@
 
           
           <div class="method-source-code" id="login-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 77</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">login</span>(<span class="ruby-identifier">email</span>, <span class="ruby-identifier">password</span>)
   <span class="ruby-identifier">user</span> = <span class="ruby-identifier">find_by_email</span> <span class="ruby-identifier">email</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">user</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">password</span>)
@@ -483,7 +485,7 @@
 
           
           <div class="method-source-code" id="search-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 72</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">query</span>)
   <span class="ruby-identifier">pattern</span> = <span class="ruby-node">&quot;%#{query.downcase}%&quot;</span>
   <span class="ruby-identifier">where</span>(<span class="ruby-string">'lower(name) like :pattern or lower(email) like :pattern'</span>, <span class="ruby-identifier">pattern</span><span class="ruby-operator">:</span> <span class="ruby-identifier">pattern</span>)
@@ -514,7 +516,7 @@
 
           
           <div class="method-source-code" id="verifier-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 143</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 156</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">verifier</span>
   <span class="ruby-identifier">@@verifier</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageVerifier</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">application</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">secret_token</span>
 <span class="ruby-keyword">end</span></pre>
@@ -550,7 +552,7 @@
 
           
           <div class="method-source-code" id="auth_token-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 135</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 148</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">auth_token</span>(<span class="ruby-identifier">timestamp</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>)
   <span class="ruby-constant">User</span>.<span class="ruby-identifier">verifier</span>.<span class="ruby-identifier">generate</span> [<span class="ruby-identifier">id</span>, <span class="ruby-identifier">timestamp</span>.<span class="ruby-identifier">to_i</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -580,7 +582,7 @@
 
           
           <div class="method-source-code" id="authenticate-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 131</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 144</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">password</span>)
   <span class="ruby-identifier">password_digest</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">BCrypt</span><span class="ruby-operator">::</span><span class="ruby-constant">Password</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">password_digest</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">password</span>
 <span class="ruby-keyword">end</span></pre>
@@ -610,7 +612,7 @@
 
           
           <div class="method-source-code" id="can_request-3F-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 120</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_request?</span>
   <span class="ruby-identifier">requests</span>.<span class="ruby-identifier">not_granted</span>.<span class="ruby-identifier">empty?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -640,7 +642,7 @@
 
           
           <div class="method-source-code" id="create_location_if_needed-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 139</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 152</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_location_if_needed</span>
   <span class="ruby-constant">Location</span>.<span class="ruby-identifier">find_or_create_by_name</span> <span class="ruby-identifier">location</span>
 <span class="ruby-keyword">end</span></pre>
@@ -665,12 +667,12 @@
 
         <div class="method-description">
           
-          <p>Derived attributes</p>
+          
           
 
           
           <div class="method-source-code" id="is_duplicate-3F-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 104</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">is_duplicate?</span>
   <span class="ruby-identifier">query</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">with_email</span>(<span class="ruby-identifier">email</span>)
   <span class="ruby-identifier">query</span> = <span class="ruby-identifier">query</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">'id != ?'</span>, <span class="ruby-identifier">id</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">id</span>
@@ -702,7 +704,7 @@
 
           
           <div class="method-source-code" id="name_must_have_proper_format-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 34</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">name_must_have_proper_format</span>
   <span class="ruby-identifier">has_upper</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/[A-Z]/</span>
   <span class="ruby-identifier">has_lower</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/[a-z]/</span>
@@ -740,12 +742,12 @@
 
         <div class="method-description">
           
-          <p>Actions</p>
+          
           
 
           
           <div class="method-source-code" id="password-3D-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 126</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 139</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">password=</span>(<span class="ruby-identifier">password</span>)
   <span class="ruby-ivar">@password</span> = <span class="ruby-identifier">password</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">password_digest</span> = <span class="ruby-identifier">password</span>.<span class="ruby-identifier">present?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">BCrypt</span><span class="ruby-operator">::</span><span class="ruby-constant">Password</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">password</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>
@@ -776,7 +778,7 @@
 
           
           <div class="method-source-code" id="update_detail-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 110</span>
+            <pre><span class="ruby-comment"># File app/models/user.rb, line 121</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_detail</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">address_was</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">address</span>.<span class="ruby-identifier">present?</span>
     <span class="ruby-string">&quot;added a shipping address&quot;</span>

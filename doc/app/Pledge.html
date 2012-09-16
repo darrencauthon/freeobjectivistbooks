@@ -252,6 +252,8 @@
 
   <div id="description" class="description">
     
+<p>Represents a pledge by a donor to donate a specific number of books.</p>
+
   </div><!-- description -->
 
   
@@ -283,12 +285,12 @@
 
         <div class="method-description">
           
-          
+          <p>Returns all unfulfilled pledges.</p>
           
 
           
           <div class="method-source-code" id="unfulfilled-source">
-            <pre><span class="ruby-comment"># File app/models/pledge.rb, line 13</span>
+            <pre><span class="ruby-comment"># File app/models/pledge.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unfulfilled</span>
   <span class="ruby-identifier">includes</span>(<span class="ruby-value">:user</span>).<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">pledge</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">pledge</span>.<span class="ruby-identifier">fulfilled?</span> }
 <span class="ruby-keyword">end</span></pre>
@@ -319,12 +321,12 @@
 
         <div class="method-description">
           
-          
+          <p>Determines if the donor has donated at least as many books as pledged.</p>
           
 
           
           <div class="method-source-code" id="fulfilled-3F-source">
-            <pre><span class="ruby-comment"># File app/models/pledge.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/models/pledge.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fulfilled?</span>
   <span class="ruby-identifier">user</span>.<span class="ruby-identifier">donations</span>.<span class="ruby-identifier">active</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">quantity</span>
 <span class="ruby-keyword">end</span></pre>
@@ -349,12 +351,13 @@
 
         <div class="method-description">
           
-          
+          <p>Creates a <a href="Testimonial.html">Testimonial</a> based on this pledge
+and its “reason” text.</p>
           
 
           
           <div class="method-source-code" id="to_testimonial-source">
-            <pre><span class="ruby-comment"># File app/models/pledge.rb, line 21</span>
+            <pre><span class="ruby-comment"># File app/models/pledge.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_testimonial</span>
   <span class="ruby-constant">Testimonial</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">source</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">type</span><span class="ruby-operator">:</span> <span class="ruby-string">'donor'</span>, <span class="ruby-identifier">title</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;From a donor&quot;</span>, <span class="ruby-identifier">text</span><span class="ruby-operator">:</span> <span class="ruby-identifier">reason</span>, <span class="ruby-identifier">attribution</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{user.name}, #{user.location}&quot;</span>
 <span class="ruby-keyword">end</span></pre>

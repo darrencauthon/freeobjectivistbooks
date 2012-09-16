@@ -1,3 +1,4 @@
+# Reminder to a student to read their book and confirm that they have read it.
 class Reminders::ReadBooks < Reminder
   def self.new_for_entity(donation)
     new user: donation.student, donations: [donation]
@@ -11,7 +12,9 @@ class Reminders::ReadBooks < Reminder
     donation
   end
 
+  #--
   # Can send?
+  #++
 
   def too_soon?
     Time.since(donation.received_at) < 1.month

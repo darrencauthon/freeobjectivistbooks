@@ -1,16 +1,21 @@
+# Represents an action taken by the student or donor in the lifecycle of a Request.
 class Event < ActiveRecord::Base
   self.inheritance_column = 'class'  # anything other than "type", to let us use "type" for something else
 
   TYPES = %w{grant update flag fix message update_status cancel_donation cancel_request}
 
+  #--
   # Associations
+  #++
 
   belongs_to :request
   belongs_to :user
   belongs_to :donation
   has_one :testimonial, as: :source
 
+  #--
   # Validations
+  #++
 
   validates_presence_of :request, :user, :type
   validates_presence_of :donation, if: lambda {|e| e.type.in? %w{grant flag fix message update_status cancel_donation}}
@@ -34,14 +39,18 @@ class Event < ActiveRecord::Base
     end
   end
 
+  #--
   # Scopes
+  #++
 
   default_scope order(:happened_at)
 
   scope :reverse_order, reorder('happened_at desc')
   scope :public_thanks, where(is_thanks: true, public: true)
 
+  #--
   # Callbacks
+  #++
 
   after_initialize :populate
 
@@ -72,7 +81,9 @@ class Event < ActiveRecord::Base
     end
   end
 
+  #--
   # Derived attributes
+  #++
 
   delegate :book, to: :request
 
@@ -112,7 +123,9 @@ class Event < ActiveRecord::Base
     notified_at.present?
   end
 
+  #--
   # Actions
+  #++
 
   def notified
     self.notified_at = Time.now
@@ -139,7 +152,9 @@ class Event < ActiveRecord::Base
     Rails.logger.info "Event: #{inspect}"
   end
 
+  #--
   # Conversions
+  #++
 
   def to_testimonial
     Testimonial.new source: self, type: 'student', title: "A thank-you", text: message,

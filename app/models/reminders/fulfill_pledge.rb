@@ -1,3 +1,4 @@
+# Reminder to a donor to fulfill a Pledge.
 class Reminders::FulfillPledge < Reminder
   def self.new_for_entity(pledge)
     new user: pledge.user, pledges: [pledge]
@@ -11,7 +12,9 @@ class Reminders::FulfillPledge < Reminder
     pledge
   end
 
+  #--
   # Can send?
+  #++
 
   def too_soon?
     Time.since(pledge.created_at) < 1.week

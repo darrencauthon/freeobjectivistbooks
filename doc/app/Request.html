@@ -272,6 +272,8 @@
 
   <div id="description" class="description">
     
+<p>Represents a student’s request for a given book.</p>
+
   </div><!-- description -->
 
   
@@ -341,12 +343,12 @@
 
         <div class="method-description">
           
-          
+          <p>Whether the request is active (not canceled).</p>
           
 
           
           <div class="method-source-code" id="active-3F-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 74</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">active?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">canceled?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -371,12 +373,13 @@
 
         <div class="method-description">
           
-          
+          <p>Whether we’re going to require the student to enter an address the next
+time they update this request.</p>
           
 
           
           <div class="method-source-code" id="address_required-3F-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 86</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 103</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">address_required?</span>
   <span class="ruby-identifier">granted?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">flagged?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -406,7 +409,7 @@
 
           
           <div class="method-source-code" id="build_update_event-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 114</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 137</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">build_update_event</span>
   <span class="ruby-identifier">update_events</span>.<span class="ruby-identifier">build</span> <span class="ruby-identifier">detail</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">update_detail</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">changed?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -431,12 +434,12 @@
 
         <div class="method-description">
           
-          
+          <p>Whether we will show the student the option to cancel the request.</p>
           
 
           
           <div class="method-source-code" id="can_cancel-3F-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 102</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_cancel?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">sent?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">canceled?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -466,7 +469,7 @@
 
           
           <div class="method-source-code" id="can_update-3F-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 98</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">can_update?</span>
   <span class="ruby-identifier">active?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">sent?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -496,7 +499,7 @@
 
           
           <div class="method-source-code" id="cancel-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 118</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">cancel</span>(<span class="ruby-identifier">params</span> = {})
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">canceled?</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Can't cancel&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">can_cancel?</span>
@@ -526,12 +529,12 @@
 
         <div class="method-description">
           
-          
+          <p>Current donor who is going to grant this request, if any.</p>
           
 
           
           <div class="method-source-code" id="donor-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 70</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 83</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">donor</span>
   <span class="ruby-identifier">donation</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">user</span>
 <span class="ruby-keyword">end</span></pre>
@@ -556,12 +559,13 @@
 
         <div class="method-description">
           
-          <p>Actions</p>
+          <p>Grants the request, with the given user as the donor. Returns a new
+(unsaved) grant event.</p>
           
 
           
           <div class="method-source-code" id="grant-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 108</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">grant</span>(<span class="ruby-identifier">user</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">donation</span> = <span class="ruby-identifier">donations</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">user</span><span class="ruby-operator">:</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">flagged</span><span class="ruby-operator">:</span> <span class="ruby-identifier">address</span>.<span class="ruby-identifier">blank?</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">donation</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">donor</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">user</span>
   <span class="ruby-identifier">event</span> = <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">grant_events</span>.<span class="ruby-identifier">last</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">new_record?</span>
@@ -588,12 +592,12 @@
 
         <div class="method-description">
           
-          
+          <p>Whether the request has been granted, i.e., has a current donor.</p>
           
 
           
           <div class="method-source-code" id="granted-3F-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 78</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">granted?</span>
   <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">present?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -618,12 +622,12 @@
 
         <div class="method-description">
           
-          
+          <p>Whether we should prompt the student to thank their donor.</p>
           
 
           
           <div class="method-source-code" id="needs_thanks-3F-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 90</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">needs_thanks?</span>
   <span class="ruby-identifier">granted?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">thanked?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -648,12 +652,12 @@
 
         <div class="method-description">
           
-          
+          <p>Whether the request is still open, i.e., doesn’t have a current donor.</p>
           
 
           
           <div class="method-source-code" id="open-3F-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 82</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">open?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">granted?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -678,12 +682,12 @@
 
         <div class="method-description">
           
-          
+          <p>The <a href="Donation.html#method-i-status">Donation#status</a>, if any.</p>
           
 
           
           <div class="method-source-code" id="status-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 94</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 113</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">status</span>
   <span class="ruby-identifier">donation</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">donation</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">:</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">StringInquirer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -708,12 +712,12 @@
 
         <div class="method-description">
           
-          
+          <p>Alias for the user who created the request.</p>
           
 
           
           <div class="method-source-code" id="student-source">
-            <pre><span class="ruby-comment"># File app/models/request.rb, line 66</span>
+            <pre><span class="ruby-comment"># File app/models/request.rb, line 78</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">student</span>
   <span class="ruby-identifier">user</span>
 <span class="ruby-keyword">end</span></pre>
