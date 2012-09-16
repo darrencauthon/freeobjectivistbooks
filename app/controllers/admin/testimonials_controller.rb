@@ -1,3 +1,4 @@
+# Controls testimonial management by admins, allowing them to create, edit, reorder, and delete testimonials.
 class Admin::TestimonialsController < AdminController
   def load_models
     super

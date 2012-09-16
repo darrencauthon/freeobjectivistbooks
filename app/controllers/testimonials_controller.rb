@@ -1,3 +1,4 @@
+# Manages display of user testimonials and other quotes.
 class TestimonialsController < ApplicationController
   def load_models
     super

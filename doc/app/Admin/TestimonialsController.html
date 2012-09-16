@@ -260,6 +260,9 @@
 
   <div id="description" class="description">
     
+<p>Controls testimonial management by admins, allowing them to create, edit,
+reorder, and delete testimonials.</p>
+
   </div><!-- description -->
 
   
@@ -296,7 +299,7 @@
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
   <span class="ruby-ivar">@testimonial</span> = <span class="ruby-constant">Testimonial</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:testimonial</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">save</span>
@@ -332,7 +335,7 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 46</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">destroy</span>
   <span class="ruby-identifier">flash</span>[<span class="ruby-value">:notice</span>] = <span class="ruby-node">&quot;Deleted \&quot;#{@testimonial.title}\&quot;&quot;</span>
@@ -364,7 +367,7 @@
 
           
           <div class="method-source-code" id="edit-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 34</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- edit-source -->
@@ -393,7 +396,7 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 10</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
   <span class="ruby-ivar">@testimonials</span> = <span class="ruby-constant">Testimonial</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">'type desc'</span>).<span class="ruby-identifier">display_order</span>
 <span class="ruby-keyword">end</span></pre>
@@ -423,7 +426,7 @@
 
           
           <div class="method-source-code" id="load_models-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 2</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 3</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_models</span>
   <span class="ruby-keyword">super</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:source_type</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:source_id</span>]
@@ -457,7 +460,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@testimonial</span> = <span class="ruby-keyword">if</span> <span class="ruby-ivar">@source</span>
     <span class="ruby-ivar">@source</span>.<span class="ruby-identifier">to_testimonial</span>
@@ -492,7 +495,7 @@
 
           
           <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 36</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin/testimonials_controller.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
   <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">update_attributes</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:testimonial</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@testimonial</span>.<span class="ruby-identifier">save</span>
