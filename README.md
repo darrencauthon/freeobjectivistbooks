@@ -21,6 +21,7 @@ This README is a guide for developers who want to help out.
 
 ## A few practical tips
 
+* Make sure you're using Ruby 1.9.2 (on a Mac, you may have 1.8 installed by default).
 * The best way to run the app locally is using Foreman: `foreman start`. That runs both the server and a delayed_jobs worker thread. (This will run the app at port 5000, not 3000 as is the default when you run `rails server`.)
 * Documentation is available (via RDoc); find it in doc/app/index.html and regenerate it with `rake doc:app`.
 * We use Delayed::Jobs for long-running tasks. Worth reading up on if you're touching notifications/reminders.
