@@ -32,7 +32,7 @@ This README is a guide for developers who want to help out.
 * Follow Ruby & Rails conventions.
 * Develop for Ruby 1.9.2 (it's what we use in production on Heroku).
 * Write [fat models and skinny controllers](http://weblog.jamisbuck.org/2006/10/18/skinny-controller-fat-model).
-* Write tests for everything. We should be able to deploy with confidence without manual regression testing.
+* Write tests for everything. We should be able to deploy with confidence without manual regression testing. Run the tests (with `rake test`) and make sure they're all green before submitting a pull request.
 * Write brief class-level and (where appropriate) method-level comments suitable for RDoc.
 * Create custom Rake tasks for any management commands, including any scheduled tasks.
 * Use delayed jobs for any long-running task that can be done in the background.
