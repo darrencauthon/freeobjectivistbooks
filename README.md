@@ -12,7 +12,7 @@ This README is a guide for developers who want to help out.
 
 1. Read this README
 2. Fork the repo
-3. [Find an issue you want to tackle](https://github.com/jasoncrawford/freeobjectivistbooks/issues), or add one of your own
+3. Browse [issues](https://github.com/jasoncrawford/freeobjectivistbooks/issues) and [milestones](https://github.com/jasoncrawford/freeobjectivistbooks/issues/milestones); find an issue to tackle, or add one of your own
 4. Assign the issue to yourself
 5. Code it up, including tests
 6. Send me a pull request
