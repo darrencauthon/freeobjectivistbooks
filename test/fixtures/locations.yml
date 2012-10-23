@@ -2,28 +2,28 @@
 
 san_francisco:
   name: "San Francisco, CA"
-  geocoder_results: ---
-  - address_components:
-    - long_name: San Francisco
+  geocoder_results:
+    address_components:
+      long_name: San Francisco
       short_name: SF
       types:
-      - locality
-      - political
-    - long_name: San Francisco
+        locality
+        political
+      long_name: San Francisco
       short_name: San Francisco
       types:
-      - administrative_area_level_2
-      - political
-    - long_name: California
+        administrative_area_level_2
+        political
+      long_name: California
       short_name: CA
       types:
-      - administrative_area_level_1
-      - political
-    - long_name: United States
+        administrative_area_level_1
+        political
+      long_name: United States
       short_name: US
       types:
-      - country
-      - political
+        country
+        political
     formatted_address: San Francisco, CA, USA
     geometry:
       bounds:
@@ -45,5 +45,5 @@ san_francisco:
           lat: 37.70339999999999
           lng: -122.527
     types:
-    - locality
-    - political
+      locality
+      political
