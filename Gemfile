@@ -34,4 +34,6 @@ group :test do
   gem 'turn', require: false
   gem 'minitest'
   gem 'spinach'
+  gem 'spinach-rails'
+  gem 'timecop'
 end

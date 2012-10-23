@@ -1,10 +1,20 @@
 class AutoCancelOldRequests < Spinach::FeatureSteps
+
+  Spinach.hooks.before_scenario do |s|
+    Request.delete_all
+  end
+
+  Spinach.hooks.after_scenario do |s|
+    Timecop.return
+  end
+
   Given 'a request for a book was made' do
-    pending 'step not implemented'
+    @request = Request.create!(reason: 'I want to read it.',
+                               pledge: "1")
   end
 
   And 'three months passed' do
-    pending 'step not implemented'
+    Timecop.travel(Date.today + 30)
   end
 
   When 'requests are checked' do
