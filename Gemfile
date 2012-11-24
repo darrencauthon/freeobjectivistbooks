@@ -33,4 +33,7 @@ group :test do
   # Pretty printed test output
   gem 'turn', require: false
   gem 'minitest'
+  gem 'spinach'
+  gem 'spinach-rails'
+  gem 'timecop'
 end
